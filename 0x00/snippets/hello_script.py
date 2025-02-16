@@ -18,14 +18,16 @@ print(f"Hello Script! (python {platform.python_version()})")
     implicitly invokes the interpreter. This still requires permission to 
     execute, e.g. via 
             > chmod +x hello_script.py
-    Btw, use 
+    Use 
             > chmod -x hello_script.py
     to remove the execution flag again. 
-    Attention, it is not '/usr/bin/python' to include virtual environments.
-    ->  Omitted. First of all, the specification is only for the *nix 
-        faction and secondly, we will rarely run the script from the 
-        command line as executable.
+    Note:
+      - It is not '!/usr/bin/python' but '!/usr/bin/env python'.
+        to take virtual environments into account.
+      - The shebang is not necessary for the script to work.
+      - This specification is only for the *nix faction and we will 
+        rarely run the script from the command line as executable.
 
 (B) Encoding.
-    ->  Omitted. For Python 3.x UTF-8 is the default.
+    ->  For Python 3.x UTF-8 is the default.
 """
