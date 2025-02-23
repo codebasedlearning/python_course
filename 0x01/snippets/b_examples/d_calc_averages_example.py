@@ -30,7 +30,7 @@ def read_data_blocks(from_memory=True):                         # default params
         print(f"  | raw data block 1: {prices_block=}")
     except IOError as e:
         print(f" 2| io error: {e}")
-        fruits_block, prices_block = "-", "0"
+        fruits_block, prices_block = "?", "0"
     return fruits_block, prices_block                           # returns a tuple (x,y)
 
 def convert_data_blocks(fruits_block, prices_block):

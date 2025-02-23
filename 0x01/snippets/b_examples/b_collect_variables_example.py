@@ -13,6 +13,7 @@ def collect_variables():
 
     print(" 1| Enter variables in the form 'x=1' one after the other (w.o. '', end with <return>)")
     variables = {}                                              # a dictionary
+    # remember: the while-if-else structure here is for demonstration purposes only.
     while True:
         data = input(" 2| Input: ")
         idx = data.find("=")                                    # returns index or -1 if not found

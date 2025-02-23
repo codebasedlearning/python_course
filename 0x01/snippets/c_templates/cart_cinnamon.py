@@ -1,7 +1,7 @@
 # (C) 2025 ... you
 
 """
-This script can be used as a template for a standard Python script.
+This script can be used as a template for a standard Python script or task solution.
 """
 
 def task_name(name: str):

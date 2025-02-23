@@ -8,7 +8,7 @@ Please consider the code as an example of where we want to go.
 You do not need to understand every detail right away.
 """
 
-def read_data():
+def collect_numbers():
     variables = set()                                           # a set
     actions = []                                                # a list
     print(" 1| Collect numbers in a set and actions in a finite FIFO list")
@@ -28,4 +28,4 @@ def read_data():
             pass
 
 if __name__ == "__main__":
-    read_data()
+    collect_numbers()

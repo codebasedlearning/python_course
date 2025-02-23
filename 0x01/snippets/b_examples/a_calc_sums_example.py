@@ -21,8 +21,8 @@ def calc_sum_recursively(n):
 def calc_sum_fast(n):
     return n * (n + 1) // 2                                     # integer division
 
-def calculate_the_profit_for_the_day():
-    """ calculate the profit for the day in three ways """
+def calculate_all_sums():
+    """ calculate all sums in three ways """
     while True:                                                 # classical while-loop
         data = input(" 1| Enter n (end with <0): ")             # read a string
         end = int(data)                                         # convert it to int (possible exception)
@@ -36,4 +36,4 @@ def calculate_the_profit_for_the_day():
               f"      {sum_fast=}\n")
 
 if __name__ == "__main__":                                      # main-guard
-    calculate_the_profit_for_the_day()
+    calculate_all_sums()
