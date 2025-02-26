@@ -9,23 +9,39 @@ You do not need to understand every detail right away.
 """
 
 def collect_numbers():
-    variables = set()                                           # a set
-    actions = []                                                # a list
-    print(" 1| Collect numbers in a set and actions in a finite FIFO list")
-    while (line := input(" 2| Please enter n: ")) != "":
+    numbers = set()                                             # a set
+    inputs = []                                                 # a list
+    print(" 1| Collect numbers in a set and inputs in a 'finite' FIFO list")
+    while (data := input(" 2| Enter number n: ")) != "":
         try:
-            n = int(line)
-            if n in variables:
+            n = int(data)
+            if n in numbers:
                 print(f" 3| {n} already exists")
             # else:
-            variables.add(n)                                    # a set contains an element only once
-            if len(actions) >= 5:
+            numbers.add(n)                                      # a set contains an element only once
+            if len(inputs) >= 5:                                # if cond1 and cond2 or cond3; 'and' has higher precedence than `or`
                 # actions.pop(0)                                # returns the value
-                del actions[0]                                  # discards the value
-            actions.append(n)
-            print(f" 5| {variables=}, {actions=}")
+                del inputs[0]                                   # discards the value
+            inputs.append(n)
+            print(f" 5| {numbers=}, {inputs=}")
         except ValueError:
             pass
 
+
 if __name__ == "__main__":
     collect_numbers()
+
+
+"""
+Elements seen here
+  - walrus operator (:=)
+  - try-except
+  - if, and, or
+  - set operations
+  - list operations
+
+See also
+  - https://docs.python.org/3.13/
+  - https://docs.python.org/3.13/reference/index.html
+  - https://docs.python.org/3.13/library/index.html
+"""

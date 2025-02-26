@@ -25,14 +25,11 @@
   - `__name__`, `__main__`
 
 ## Sources
-
-- https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex
-- https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not
-- https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
+- https://docs.python.org/3.13/
+- https://docs.python.org/3.13/reference/index.html
+- https://docs.python.org/3.13/library/index.html
 - https://www.w3schools.com/python/python_strings_methods.asp
-- https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range
 - https://www.w3schools.com/python/python_lists_methods.asp
-- https://docs.python.org/3/library/stdtypes.html#mapping-types-dict
 - https://www.w3schools.com/python/python_dictionaries.asp
 
 ## Tasks

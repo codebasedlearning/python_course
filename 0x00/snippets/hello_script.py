@@ -13,21 +13,21 @@ import platform
 print(f"Hello Script! (python {platform.python_version()})")
 
 """
-(A) Shebang or Hash-Bang. 
-    This makes it possible to execute the file directly as a script that 
+Shebang or Hash-Bang
+  - This makes it possible to execute the file directly as a script that 
     implicitly invokes the interpreter. This still requires permission to 
     execute, e.g. via 
-            > chmod +x hello_script.py
+        > chmod +x hello_script.py
     Use 
-            > chmod -x hello_script.py
+        > chmod -x hello_script.py
     to remove the execution flag again. 
-    Note:
-      - It is not '!/usr/bin/python' but '!/usr/bin/env python'.
+  - Note:
+      * It is not '!/usr/bin/python' but '!/usr/bin/env python'.
         to take virtual environments into account.
-      - The shebang is not necessary for the script to work.
-      - This specification is only for the *nix faction and we will 
+      * The shebang is not necessary for the script to work.
+      * This specification is only for the *nix faction and we will 
         rarely run the script from the command line as executable.
 
-(B) Encoding.
-    ->  For Python 3.x UTF-8 is the default.
+Encoding
+  - For Python 3.x UTF-8 is the default.
 """
