@@ -4,6 +4,7 @@
 
 
 def fib_itr(n: int) -> int:
+    """ Iterative fibonacci function. """
     n1, n2 = 0, 1
     for _ in range(n - 1):                                      # default _
         n2, n1 = n2 + n1, n2
@@ -11,10 +12,12 @@ def fib_itr(n: int) -> int:
     return n2
 
 def fib_rec(n: int) -> int:
+    """ Recursive fibonacci function. """
     return 1 if n <= 2 else fib_rec(n - 2) + fib_rec(n - 1)
 
-def fib_mem(n: int) -> int:                                      # usually Memoization can be implemented using default
-    history: dict[int, int] = {}                                # parameters, but there is a problem with mutable defaults
+def fib_mem(n: int) -> int:                                     # usually Memoization can be implemented using def.pars
+    """ Fibonacci function with Memoization. """
+    history: dict[int, int] = {}                                # but there is a problem with mutable defaults
     def calc_fib(k: int) -> int:                                # local function
         return history.get(k) or history.setdefault(k, 1 if k <= 2 else calc_fib(k - 1) + calc_fib(k - 2)) # None->False
         # some variants:
@@ -30,6 +33,7 @@ def fib_mem(n: int) -> int:                                      # usually Memoi
     return calc_fib(n)
 
 def main():
+    """ Print all fibonacci functions. """
     n = int(input("n: "))
     print(f"Iteratively: {fib_itr(n)=}")
     print(f"Recursively: {fib_rec(n)=}")           # n>=36..

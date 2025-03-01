@@ -1,12 +1,16 @@
 #!/usr/bin/env python               # (A) Shebang, see below.
 # -*- coding: utf-8 -*-             # (B) Encoding, see below.
 
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
-#
-# Make executable:
-#   > chmod +x hello_script.py
-# Undo:
-#   > chmod -x hello_script.py
+"""
+Shows how to make a script runnable (on *nix).
+
+(C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+
+Make executable:
+  > chmod +x hello_script.py
+Undo:
+  > chmod -x hello_script.py
+"""
 
 import platform
 

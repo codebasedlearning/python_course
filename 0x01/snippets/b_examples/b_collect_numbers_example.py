@@ -9,6 +9,7 @@ You do not need to understand every detail right away.
 """
 
 def collect_numbers():
+    """ collect numbers from the console """
     numbers = set()                                             # a set
     inputs = []                                                 # a list
     print(" 1| Collect numbers in a set and inputs in a 'finite' FIFO list")
@@ -19,8 +20,8 @@ def collect_numbers():
                 print(f" 3| {n} already exists")
             # else:
             numbers.add(n)                                      # a set contains an element only once
-            if len(inputs) >= 5:                                # if cond1 and cond2 or cond3; 'and' has higher precedence than `or`
-                # actions.pop(0)                                # returns the value
+            if len(inputs) >= 5:                                # if cond1 and/or cond2; 'and' higher than `or`
+                # actions.pop(0)                                # remove and returns the value
                 del inputs[0]                                   # discards the value
             inputs.append(n)
             print(f" 5| {numbers=}, {inputs=}")

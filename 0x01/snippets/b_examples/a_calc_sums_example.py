@@ -9,16 +9,18 @@ You do not need to understand every detail right away.
 """
 
 def calc_sum_iteratively(n):                                    # function with parameter(s)
-    """calculates the sum iteratively"""                        # doc-string for the function
+    """ calculates the sum iteratively """                      # doc-string for the function
     result = 0                                                  # definition on-the-fly
     for i in range(1,n+1):                                      # for i=1; i<n+1; ++i
         result += i
     return result
 
 def calc_sum_recursively(n):
+    """ calculates the sum recursively """
     return 0 if n <= 0 else n + calc_sum_recursively(n - 1)     # recursive and conditional expression
 
 def calc_sum_directly(n):
+    """ calculates the sum directly """
     return n * (n + 1) // 2                                     # integer division
 
 def calculate_all_sums():
@@ -27,7 +29,7 @@ def calculate_all_sums():
     while True:                                                 # classical while-loop
         data = input(" 2| Enter n: ")                           # read a string
         n = int(data)                                           # convert it to int (possible exception)
-        if n < 0: break                                         # if as one-liner
+        if n < 0: break                                         # if as one-liner (enabled for Pylint)
         sum_iteratively = calc_sum_iteratively(n = n)           # call with named parameter
         sum_recursively = calc_sum_recursively(n = n)
         sum_directly = calc_sum_directly(n = n)

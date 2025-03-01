@@ -1,5 +1,7 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
+""" Check setup information. """
+
 import platform
 import sys
 import os
@@ -21,11 +23,11 @@ def main():
     """ Prints platform and setup information and attempts to import the cbl package. """
     print(f"{_m}python {platform.python_version()}{_M} {pretty_path(sys.executable)}")
     try:
-        import cbl
+        import cbl  # pylint: disable=import-outside-toplevel
         print(f"{_m}cbl {cbl.setup.about_package().version}{_M} {pretty_path(cbl.__file__)}")
     except ModuleNotFoundError:  # Error message replaced for didactic reasons.
-        return f"{_m}'cbl' package not installed{_M} ('> pip3 install cbl')"
+        print(f"{_m}'cbl' package not installed{_M} ('> pip3 install cbl')")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

@@ -10,7 +10,7 @@ You do not need to understand every detail right away.
 
 
 # multiline-string-literal, it models fruits (head) with prices per (line per) week
-fruit_data = """
+FRUIT_DATA = """
 Apple, Banana, Cherry, Mango, Pineapple
 
 [0.123, 0.678, 0.345, 0.980, 0.456]
@@ -19,12 +19,16 @@ Apple, Banana, Cherry, Mango, Pineapple
 [0.134, 0.789, 0.456, 0.234, 0.897]
 """
 
+def data_from_file():
+    """ read fruits from file """
+    with open("fruit_data.txt", mode="r", encoding="utf-8") as f:
+        return f.read()
 
 def read_data_blocks(from_memory=True):                         # default params
     """ read data from memory or from file and return the first two blocks as a tuple"""
     try:                                                        # try-except-finally
-        fruits_block, prices_block = ((fruit_data if from_memory
-                                       else open("fruit_data.txt", "r").read())
+        fruits_block, prices_block = ((FRUIT_DATA if from_memory
+                                       else data_from_file())
                                       .split("\n\n"))           # list of blocks assigned to two vars
         print(f" 1| raw data block 0: {fruits_block=}")
         print(f"  | raw data block 1: {prices_block=}")
@@ -55,7 +59,7 @@ def build_fruit_history(fruits_block, prices_block):
     # classical style (but skip)
     # num_rows = len(prices_week)
     # num_cols = len(prices_week[0])                            # assuming all rows have the same number of columns
-    # prices_fruit = [[0] * num_rows for _ in range(num_cols)]  # a list of lists, each with num_rows zeros; '_' is just a name
+    # prices_fruit = [[0] * num_rows for _ in range(num_cols)]  # a list of lists with num_rows zeros; '_' is a name
     # for row_index in range(num_rows):                         # x^T
     #     for col_index in range(num_cols):
     #         prices_fruit[col_index][row_index] = prices_week[row_index][col_index]
