@@ -11,7 +11,7 @@ You do not need to understand every detail right away.
 def collect_numbers():
     """ collect numbers from the console """
     numbers = set()                                             # a set
-    inputs = []                                                 # a list
+    inputs = []                                                 # a list (for didactic reasons, better would be a deque)
     print(" 1| Collect numbers in a set and inputs in a 'finite' FIFO list")
     while (data := input(" 2| Enter number n: ")) != "":
         try:
@@ -25,7 +25,8 @@ def collect_numbers():
                 del inputs[0]                                   # discards the value
             inputs.append(n)
             print(f" 5| {numbers=}, {inputs=}")
-        except ValueError:
+        except ValueError as e:
+            print(f" 6| error: {e}")
             pass
 
 

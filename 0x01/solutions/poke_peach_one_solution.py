@@ -2,18 +2,20 @@
 
 """ Task 'Poke Peach' """
 
+from functools import lru_cache
 
 def fib_itr(n: int) -> int:
-    """ Iterative fibonacci function. """
+    """ Iterative Fibonacci function. """
+    if n == 0:
+        return 0
     n1, n2 = 0, 1
-    for _ in range(n - 1):                                      # default _
-        n2, n1 = n2 + n1, n2
-        # old = n2; n2 = n2 + n1; n1 = old                      # comments?
+    for _ in range(n - 1):  # Handles n > 0 correctly
+        n1, n2 = n2, n1 + n2
     return n2
 
 def fib_rec(n: int) -> int:
     """ Recursive fibonacci function. """
-    return 1 if n <= 2 else fib_rec(n - 2) + fib_rec(n - 1)
+    return n if n < 2 else fib_rec(n - 2) + fib_rec(n - 1)
 
 def fib_mem(n: int) -> int:                                     # usually Memoization can be implemented using def.pars
     """ Fibonacci function with Memoization. """
@@ -32,12 +34,18 @@ def fib_mem(n: int) -> int:                                     # usually Memoiz
         # return m
     return calc_fib(n)
 
+@lru_cache(None)                                                # Least-recently-used cache decorator
+def fib_lru(n: int) -> int:
+    """ Cached fibonacci function. """
+    return n if n < 2 else fib_lru(n - 2) + fib_lru(n - 1)
+
 def main():
     """ Print all fibonacci functions. """
     n = int(input("n: "))
     print(f"Iteratively: {fib_itr(n)=}")
     print(f"Recursively: {fib_rec(n)=}")           # n>=36..
     print(f"Memoization: {fib_mem(n)=}")
+    print(f"LRU cached:  {fib_lru(n)=}")
 
 if __name__ == "__main__":
     main()

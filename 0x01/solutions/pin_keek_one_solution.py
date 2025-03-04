@@ -9,15 +9,18 @@ def counter_add(counter: dict, item):
 
 def counter_subtract(counter: dict, item):
     """ Decrements the count of an item in the provided counter dictionary. """
-    if item in counter:
-        counter[item] -= 1
-        if counter[item] <= 0:
-            del counter[item]
+    if (count := counter.get(item, 0)) > 1:
+        counter[item] = count - 1
+    else:
+        counter.pop(item, None)                                     # key is not found -> return default w.o. KeyError
+    # variant:
+    # if item in counter:
+    #     counter[item] -= 1
+    #     if counter[item] <= 0:
+    #         del counter[item]
 
 def counter_most_common(counter: dict):
     """ Returns the key of the most common item in the provided counter dictionary. """
-    # return max(counter.items(), key=lambda x: x[1])[0]        # short version using lambdas
-
     most_common_key = None
     max_count = float('-inf')
     for key in counter:
@@ -25,6 +28,8 @@ def counter_most_common(counter: dict):
             most_common_key = key
             max_count = counter[key]
     return most_common_key
+    # variant using lambdas:
+    # return max(counter.items(), key=lambda x: x[1])[0]
 
 def count_banana():
     """ How to use counters. """

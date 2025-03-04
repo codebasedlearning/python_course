@@ -2,11 +2,10 @@
 
 # Unit `0x01`
 
+> **Important:** To get you started quickly, we will touch on many topics and leave the details for later units. Think of the examples in `snippets` as templates for various Python features.
+
+
 ## Topics covered
-
----
-
-**Important:** To get you started quickly, we will touch on many topics and leave the details for later units. Think of the examples in `snippets` as templates for various Python features.
 
 - General structure of a Python program, e.g.
   - comments
@@ -24,6 +23,7 @@
 - Pythonic way, e.g.
   - `__name__`, `__main__`
 
+
 ## Sources
 - https://docs.python.org/3.13/
 - https://docs.python.org/3.13/reference/index.html
@@ -32,9 +32,10 @@
 - https://www.w3schools.com/python/python_lists_methods.asp
 - https://www.w3schools.com/python/python_dictionaries.asp
 
+
 ## Tasks
 
-Start with 'Garden Ash', then 'Queen Rose' and then as you like.
+Start with 'Garden Ash', then 'Queen Rose' and then as you like. Finish with 'Comprehension' and 'Lecture' Checks.
 
 ---
 
@@ -113,6 +114,11 @@ Check
   - Test your functions with `banana`.
 Note: There is a collection `Counter` working exactly like your functions.
 
+- Compare your solution with `pin_keek_one_solution.py` in `solutions`. 
+  - Is your solution correct and complete? 
+  - Do you have any ideas on how to improve your solution?
+  - Is there a detail where your solution is better or different? Tell us.
+
 ---
 
 ### 👉 Task 'Couch Potato' - Recurring homework.
@@ -121,23 +127,61 @@ Note: There is a collection `Counter` working exactly like your functions.
 
 ---
 
-### 👉 Comprehension Check
+### 👉 Comprehension Check - Talk with your Neighbor
 
+General
 - What are your options for running a Python program?
 - What are the programmes or modules `python3`, `pip3`, `pyenv` and `venv` good for?
 - What is behind the term 'PEP'?
-- What is the name of the function that prints text to the console?
 - Who actually invented Python?
-- What are the options for comments in source code?
 - What is the meaning of indentation in code?
+- What is the 'Pythonic way'?
+
+Language
+- What are the options for comments in source code?
 - What 'primitive' data types do you know?
 - Which 'container' data types do you know?
-- How do you convert between data types?
 - What do you understand by 'variable destruction'?
 - What do you understand by 'string interpolation'?
 - What does 'named parameter' mean?
-- What does the variable '\_\_name\_\_' mean?
-- What is the 'Pythonic way'?
+- What does the variable `__name__` mean?
+
+---
+
+### 👉 Lecture Check - Online Questionare
+
+Rating
+
+(0) Cannot decide or topic not presented // Not done
+
+(1) Understood everything // Fully completed <br>
+(2) Good, only small details missing // Worked <br>
+(3) Can do it, but can learn on my own // Half completed <br>
+(4) Have an idea, but nothing more, need help // First steps only <br>
+(5) Not a clue, please repeat or help me // Do not understand
+ 
+Python Environment
+
+- Can you run a script from the command line using a Python interpreter?
+- Have you successfully completed task 'Garden Ash' concerning a Python installation?
+
+Exercises
+
+- Have you successfully completed task 'Queen Rose'?
+- Have you successfully completed task 'Big Pea'?
+- Have you successfully completed task 'Poke Peach'?
+- Have you successfully completed task 'Pin Keek'?
+
+Lecture
+
+- Was anything unclear or difficult to follow? If so, what?
+- Were there any topics that you wished were covered in more detail?
+- Were there any topics that you felt were unnecessary or too detailed?
+- What related topics would you be interested in for future lectures?
+- Did the lecture encourage enough interaction and discussion?
+- Was the pace too fast, too slow, or just right?
+- How comfortable did you feel asking questions?
+- What is your biggest takeaway from this lecture?
 
 ---
 

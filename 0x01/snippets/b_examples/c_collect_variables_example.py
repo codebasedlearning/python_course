@@ -55,6 +55,9 @@ def sum_all_positives(variables):
             total += v
             print(f" 7| add {k}={v} => subtotal={total}")
     print(f" 8| {total=}")
+    # variant, more Pythonic?
+    # positive_values = {k: v for k, v in variables.items() if v > 0}
+    # total = sum(positive_values.values())
 
 
 if __name__ == "__main__":
