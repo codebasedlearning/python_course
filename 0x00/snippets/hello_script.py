@@ -1,22 +1,19 @@
-#!/usr/bin/env python               # (A) Shebang, see below.
-# -*- coding: utf-8 -*-             # (B) Encoding, see below.
+#!/usr/bin/env python               # Shebang, see below.
+# -*- coding: utf-8 -*-             # Encoding, see below.
 
-"""
-Shows how to make a script runnable (on *nix).
-
-(C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
-
-Make executable:
-  > chmod +x hello_script.py
-Undo:
-  > chmod -x hello_script.py
-"""
+""" Shows how to make a script runnable (on *nix). (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev """
 
 import platform
 
 print(f"Hello Script! (python {platform.python_version()})")
 
+
+###############################################################################
+
+
 """
+Summary
+
 Shebang or Hash-Bang
   - This makes it possible to execute the file directly as a script that 
     implicitly invokes the interpreter. This still requires permission to 

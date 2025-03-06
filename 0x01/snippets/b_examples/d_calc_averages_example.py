@@ -87,8 +87,13 @@ if __name__ == "__main__":
     calc_average_prices()
 
 
+###############################################################################
+
+
 """
-Elements seen here
+Summary
+
+Topics
   - default parameters
   - (file) open, read
   - split

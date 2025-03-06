@@ -4,6 +4,7 @@
 
 from functools import lru_cache
 
+
 def fib_itr(n: int) -> int:
     """ Iterative Fibonacci function. """
     if n == 0:
@@ -13,9 +14,11 @@ def fib_itr(n: int) -> int:
         n1, n2 = n2, n1 + n2
     return n2
 
+
 def fib_rec(n: int) -> int:
     """ Recursive fibonacci function. """
     return n if n < 2 else fib_rec(n - 2) + fib_rec(n - 1)
+
 
 def fib_mem(n: int) -> int:                                     # usually Memoization can be implemented using def.pars
     """ Fibonacci function with Memoization. """
@@ -34,10 +37,12 @@ def fib_mem(n: int) -> int:                                     # usually Memoiz
         # return m
     return calc_fib(n)
 
+
 @lru_cache(None)                                                # Least-recently-used cache decorator
 def fib_lru(n: int) -> int:
     """ Cached fibonacci function. """
     return n if n < 2 else fib_lru(n - 2) + fib_lru(n - 1)
+
 
 def main():
     """ Print all fibonacci functions. """
@@ -46,6 +51,7 @@ def main():
     print(f"Recursively: {fib_rec(n)=}")           # n>=36..
     print(f"Memoization: {fib_mem(n)=}")
     print(f"LRU cached:  {fib_lru(n)=}")
+
 
 if __name__ == "__main__":
     main()

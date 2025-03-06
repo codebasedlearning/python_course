@@ -9,9 +9,17 @@ print(f"Hello World! (python {platform.python_version()})")
 """
 Here this is a block comment, with three " " " (without spaces) before and after.
 Actually it is a string literal, not a comment in Python. However, whether it 
-behaves like a comment depends on how it is used (examples follow).
+behaves like a (doc)comment depends on how it is used (examples follow).
+"""
 
-Note: 
+
+###############################################################################
+
+
+""" 
+Summary
+
+Comments
   - Using triple-quoted strings outside of docstrings can confuse tools (like 
     linters or Pylint) and readers because they're typically associated with 
     docstrings.
@@ -24,24 +32,17 @@ Note:
     Python's multiline string literals as comments is a practical alternative 
     because they don't have the leading `#`. Because of this the warning is 
     disabled in Pylint (see .pylintrc).
-"""
-
-
-"""
-Summary
-
-Comments
   - More on comments in the next section.
   - https://docs.python.org/3/tutorial/introduction.html#comments
   - https://docs.python.org/3.13/reference/lexical_analysis.html#comments
 
-import
+'import'
   - The 'platform' module is loaded. 
   - A lot of functionality comes in libraries, i.e. modules. In Python this is 
     called 'batteries included'. We will see more snippets about 'import' later.
   - https://docs.python.org/3.13/reference/import.html
 
-print
+'print'
   - Output function with string literal and prefix 'f'. 
   - This allows for expressions to be enclosed in a {}. This type of formatting is 
     also known as 'string interpolation' (or 'variable interpolation', 

@@ -8,7 +8,6 @@ Please consider the code as an example of where we want to go.
 You do not need to understand every detail right away.
 """
 
-
 def try_parse(value, target_type):
     """ converts value into target_type or None """
     try:
@@ -64,8 +63,13 @@ if __name__ == "__main__":
     sum_all_positives(collect_variables())
 
 
+###############################################################################
+
+
 """
-Elements seen here
+Summary
+
+Topics
   - None
   - slicing, strip, partition
   - try-except

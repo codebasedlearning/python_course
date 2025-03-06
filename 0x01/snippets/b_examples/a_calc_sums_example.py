@@ -17,17 +17,21 @@ def calc_sum_iteratively(n):                                    # function with 
     # return sum(range(1, n + 1))
     return result
 
+
 def calc_sum_recursively(n):
     """ calculates the sum recursively """
     return 0 if n <= 0 else n + calc_sum_recursively(n - 1)     # recursive and conditional expression
+
 
 def calc_sum_recursively_tail(n, acc = 0):
     """ Tail-recursive sum calculation """
     return acc if n <= 0 else calc_sum_recursively_tail(n - 1, acc + n) # tail-recursive
 
+
 def calc_sum_directly(n):
     """ calculates the sum directly """
     return n * (n + 1) // 2                                     # integer division
+
 
 def calculate_all_sums():
     """ calculate all sums in three ways """
@@ -51,8 +55,13 @@ if __name__ == "__main__":                                      # main-guard
     calculate_all_sums()
 
 
+###############################################################################
+
+
 """
-Elements seen here
+Summary
+
+Topics
   - function definition and call
   - (named) parameter
   - conditional expression
@@ -61,7 +70,7 @@ Elements seen here
   - range
   - input
   - int-cast
-  
+
 See also
   - https://docs.python.org/3.13/
   - https://docs.python.org/3.13/reference/index.html

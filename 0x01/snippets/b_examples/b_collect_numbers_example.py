@@ -27,15 +27,19 @@ def collect_numbers():
             print(f" 5| {numbers=}, {inputs=}")
         except ValueError as e:
             print(f" 6| error: {e}")
-            pass
 
 
 if __name__ == "__main__":
     collect_numbers()
 
 
+###############################################################################
+
+
 """
-Elements seen here
+Summary
+
+Topics
   - walrus operator (:=)
   - try-except
   - if, and, or

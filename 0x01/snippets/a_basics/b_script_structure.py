@@ -1,8 +1,6 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-"""
-At this location this literal is a docstring, describing the script or module.
-"""
+""" At this location this literal is a docstring, describing the script or module. """
 
 import platform                                                 # hold mouse on 'platform'... (PyCharm)
 
@@ -39,6 +37,9 @@ def my_main():                                                  # definition of 
 
 if __name__ == "__main__":                                      # main guard, 'Pythonic way'
     my_main()                                                   # hold mouse on 'my_main'
+
+
+###############################################################################
 
 
 """
