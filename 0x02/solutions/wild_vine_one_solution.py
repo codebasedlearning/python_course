@@ -4,12 +4,14 @@
 
 import heapq
 
+
 GRAPH = {
     1: {2: 5, 3: 1},
     2: {1: 5, 3: 3},
     3: {1: 1, 2: 3, 4: 2},
     4: {3: 2}
 }
+
 
 def find_min_weight_neighbor(start_node):
     """ find minimum weight neighbor and corresponding weight """
@@ -50,6 +52,7 @@ def shortest_path_dijkstra(start_node):
                 heapq.heappush(priority_queue, (new_distance, neighbor))
 
     return distances
+
 
 def solve():
     """ solve all sub-tasks """
