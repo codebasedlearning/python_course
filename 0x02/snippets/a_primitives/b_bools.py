@@ -1,6 +1,14 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This snippet discusses bools. """
+"""
+This snippet discusses bools.
+
+Teaching focus
+  - Structured like the int-snippet, i.e. first some conversions and
+    basic operations, then some special stuff.
+  - Treating 'things' as 'True' or 'False'.
+  - Boolean operators, in particular short-circuiting.
+"""
 
 
 def using_bools():

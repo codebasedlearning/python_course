@@ -1,6 +1,14 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This snippet discusses floats. """
+"""
+This snippet discusses floats.
+
+Teaching focus
+  - It is structured like the int-snippet, i.e. first some conversions and
+    basic operations, then some special stuff.
+  - 'nan', 'inf'
+  - Pylint
+"""
 
 # pylint: disable=(comparison-with-itself)
 import math

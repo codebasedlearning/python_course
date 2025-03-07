@@ -1,6 +1,14 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This snippet discusses strings and string operations. """
+"""
+This snippet discusses strings and string operations.
+
+Teaching focus
+  - It is structured like the int-snippet, i.e. first some conversions and
+    basic operations, then some special stuff.
+  - Common operations, slicing, indexing, split.
+  - Bonus: String representation with encoding and decoding.
+"""
 
 import textwrap
 

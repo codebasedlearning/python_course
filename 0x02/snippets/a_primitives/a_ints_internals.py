@@ -1,6 +1,16 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This snippet discusses the internal representation of integers. """
+"""
+This snippet discusses the internal representation of integers.
+
+Teaching focus
+  - Integers can have an arbitrary number of digits.
+  - The base is 2^30.
+  - First contact to GIL and different interpreter variants.
+  - Reference counting.
+  - This is not the normal material from the textbook, but perhaps the
+    interesting part that distinguishes the course from an introduction.
+"""
 
 # pylint: disable=too-few-public-methods
 import ctypes

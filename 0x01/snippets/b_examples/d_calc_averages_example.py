@@ -1,11 +1,12 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This script is intended as a first look at various Python features
-(it is not optimal in an algorithmic sense).
+This script is intended as a first look at various Python features.
 
-Please consider the code as an example of where we want to go.
-You do not need to understand every detail right away.
+Teaching focus
+  - Consider the code as an example of where we want to go.
+  - You do not need to understand every detail right away.
+  - Code it is not optimal in an algorithmic sense.
 """
 
 

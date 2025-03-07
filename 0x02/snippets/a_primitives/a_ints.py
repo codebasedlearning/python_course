@@ -1,6 +1,15 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This snippet discusses integers and object equality. """
+"""
+This snippet discusses integers and object equality.
+
+Teaching focus
+  - The 'using_ints' function is discussed in detail, as its structure is
+    a template for the others.
+  - A notable feature is the discussion of equality in 'what_means_equal'.
+  - It is interesting to look at the internal representation of integers
+    in the next snippet.
+"""
 
 import math
 
