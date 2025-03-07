@@ -52,13 +52,15 @@ def shortest_path_dijkstra(start_node):
     return distances
 
 def solve():
+    """ solve all sub-tasks """
     print(f" 1| {GRAPH.keys()=}")
-    for node in GRAPH.keys():
+    for node in GRAPH:
         min_neighbor, min_weight = find_min_weight_neighbor(node)
         print(f" 2| ({node=}: {min_neighbor=},{min_weight=})")
 
     distances = shortest_path_dijkstra(1)
     print(f" 3| {distances=}")
+
 
 if __name__ == "__main__":
     solve()

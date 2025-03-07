@@ -86,8 +86,10 @@ def determine_subjects_everyone_passed():
     """ determine subjects everyone passed """
 
     # --- short variant ---
-    passed_subjects = {subject for subject in SUBJECTS
-                       if all(GRADES[student][subject] >= 40 for student in GRADES)}
+    passed_subjects = [subject for subject in SUBJECTS
+                       if all(grades[subject] >= 40 for grades in GRADES.values())]
+    # or:             [subject for subject in SUBJECTS
+    #                  if all(GRADES[student][subject] >= 40 for student in GRADES)]
 
     # --- explicit variant ---
     # passed_subjects = []
@@ -127,6 +129,7 @@ def sort_students_by_average_grade(average_grades):
 
 
 def solve():
+    """ solve all sub-tasks """
     average_grades = calc_average_grades()
     print(f" 1| {average_grades=}")
 
