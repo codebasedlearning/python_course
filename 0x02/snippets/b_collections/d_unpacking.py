@@ -1,4 +1,4 @@
-# (C) 2024 A.Voß, a.voss@fh-aachen.de, python@codebasedlearning.dev
+# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses (variable) unpacking.
@@ -10,6 +10,7 @@ Teaching focus
 
 
 def variable_unpacking():
+    """ variable unpacking (multiple variable assignment) """
     print("\nvariable_unpacking\n==================")
 
     x, y = 1, 2                                                 # component by component, destructuring assignment
@@ -32,7 +33,7 @@ def variable_unpacking():
     print(f" 5| x1,x2,*xn={values} -> {x1=}, {x2=}, {xn=}")
 
     dct = {1: "one", 2: "two"}
-    print(f" 6| for k,v in dict:")
+    print(" 6| for k,v in dict:")
     for k, v in dct.items():                                    # standard use case
         print(f"      k={k}, v={v}")
     print()

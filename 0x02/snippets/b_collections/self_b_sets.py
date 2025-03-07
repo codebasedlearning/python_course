@@ -78,7 +78,7 @@ def typical_set_ops():
     """ typical set operations """
     print("\ntypical_set_ops\n===============")
 
-    data1 = {1, 1, 2, 3, 5, 8, 13}                              # # pylint: disable=duplicate-value
+    data1 = {1, 1, 2, 3, 5, 8, 13}                              # pylint: disable=duplicate-value
     data2 = {8, 13, 21}
     data3 = {3, 5, 8}
 
