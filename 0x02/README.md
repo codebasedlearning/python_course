@@ -87,6 +87,7 @@ Task
 - Print the result for all nodes in `GRAPH`.
 
 - Bonus: Write a function to calculate the shortest path from a given starting node to all other nodes in the graph.
+  - Hint: 'Dijkstra', `heapq`.
 
 - Compare your solution with `wild_vine_one_solution.py` in `solutions`. 
   - Is your solution correct and complete? 
