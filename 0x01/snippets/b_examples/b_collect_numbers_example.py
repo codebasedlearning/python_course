@@ -13,7 +13,7 @@ Teaching focus
 def collect_numbers():
     """ collect numbers from the console """
     numbers = set()                                             # a set
-    inputs = []                                                 # a list (for didactic reasons, better would be a deque)
+    inputs: list[int] = []                                      # a list (for didactic reasons, better would be a deque)
     print(" 1| Collect numbers in a set and inputs in a 'finite' FIFO list")
     while (data := input(" 2| Enter number n: ")) != "":
         try:

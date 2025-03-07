@@ -123,7 +123,7 @@ def using_exceptions():
 
     print(" 6| division by 0...", end='')
     try:
-        n = 1/0
+        n = int(1/0)
         print(f" {n=}")
     except Exception as e:                                      # pylint: disable=broad-exception-caught
         print(f" => unknown error: {e}")                        # optional: e.with_traceback()

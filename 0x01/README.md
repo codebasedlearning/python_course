@@ -121,7 +121,7 @@ Note: There is a collection `Counter` working exactly like your functions.
 
 ---
 
-### 👉 Task 'Couch Potato' - Recurring homework.
+### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 

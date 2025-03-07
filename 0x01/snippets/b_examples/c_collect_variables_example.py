@@ -22,7 +22,7 @@ def collect_variables():
     """ collect variables from the console, format 'x=12' """
 
     print(" 1| Enter variables in the form 'x=1' one after the other (w.o. '', end with <return>)")
-    variables = {}                                              # a dictionary
+    variables: dict[str, int] = {}                              # a dictionary
 
     # classical style (but skip)
     #

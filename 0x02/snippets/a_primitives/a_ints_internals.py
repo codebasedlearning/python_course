@@ -35,35 +35,34 @@ GIL_REMOVED, _ = detect_python_gil_status()
 # PyLongObject (in CPython) represents the internal structure of a Python integer.
 # This may change in future Python versions.
 
-if not GIL_REMOVED:
-    class PyLongObject(ctypes.Structure):
-        """ PyLongObject for CPython with GIL """
+class PyLongObject(ctypes.Structure):
+    """ PyLongObject for CPython """
+
+    if not GIL_REMOVED:
         _fields_ = [
             ("ob_refcnt", ctypes.c_ssize_t),                    # Reference count
             ("ob_type", ctypes.c_void_p),                       # Pointer to PyTypeObject
             ("ob_size", ctypes.c_ssize_t),                      # Number of digits (negative for negative numbers)
             # ("ob_digit", ctypes.c_uint32 * n)                 # n digits (stored in base 2^30)
         ]
-else:
-    class PyVarObject(ctypes.Structure):
-        """ PyVarObject for CPython with GIL removed """
-        _fields_ = [
-            ('ob_tid', ctypes.c_void_p),                        # owning Thread id
-            ('__padding', ctypes.c_uint16),
-            ('ob_mutex', ctypes.c_uint8),
-            ('ob_gc_bits', ctypes.c_uint8),
-            ('ob_ref_local', ctypes.c_uint32),
-            ("ob_ref_shared", ctypes.c_ssize_t),
-            ("ob_type", ctypes.c_void_p)
-        ]
-    class PyLongObject(ctypes.Structure):
-        """ PyLongObject for CPython with GIL removed """
+    else:
+        class PyVarObject(ctypes.Structure):
+            """ PyVarObject for CPython with GIL removed """
+            _fields_ = [
+                ('ob_tid', ctypes.c_void_p),                    # owning Thread id
+                ('__padding', ctypes.c_uint16),
+                ('ob_mutex', ctypes.c_uint8),
+                ('ob_gc_bits', ctypes.c_uint8),
+                ('ob_ref_local', ctypes.c_uint32),
+                ("ob_ref_shared", ctypes.c_ssize_t),
+                ("ob_type", ctypes.c_void_p)
+            ]
+
         _fields_ = [
             ('ob_base', PyVarObject),
             ('lv_tag', ctypes.c_void_p)                         # bits 0,1 contains sign, from bit 3 it has the size
             # ("ob_digit", ctypes.c_uint32 * n)
         ]
-
 
 def get_long_info(num):
     """ extracts info from PyLongObject """

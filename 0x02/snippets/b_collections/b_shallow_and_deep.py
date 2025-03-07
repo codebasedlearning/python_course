@@ -32,13 +32,13 @@ def shallow_and_deep():
     x23_cpy = list(x23)                                         # creates a copy but element [1] refers to a list
     print(f" 5| cpy?: {x23=}, {x23_cpy=}, {(x23 == x23_cpy)=}, {(id(x23)==id(x23_cpy))=}, {(x23 is x23_cpy)=}")
 
-    x23[1][0] = 42                                              # affects both lists
+    x23[1][0] = 42                                              # affects both lists; btw. this is an error for mypy
     print(f" 6| ->42: {x23=}, {x23_cpy=}, {(x23 == x23_cpy)=}")
 
     y12 = ['Y', [12]]
     y12_deep = copy.deepcopy(y12)
     print(f" 7| deep: {y12=}, {y12_deep=}, {(y12 == y12_deep)=}, {(id(y12)==id(y12_deep))=}, {(y12 is y12_deep)=}")
-    y12[1][0] = 24                                            # affects both lists
+    y12[1][0] = 24                                            # affects both lists; same error for mypy here
     print(f" 8| ->24: {y12=}, {y12_deep=}, {(y12 == y12_deep)=}")
 
 
