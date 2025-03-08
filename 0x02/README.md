@@ -1,6 +1,6 @@
 [© 2025, A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x02`
+# Unit `0x02` – First Steps
 
 
 ## Topics covered
@@ -9,6 +9,9 @@
 - Collections
 - Control-flow
 - Function calling
+
+
+## General Comments
 
 ---
 
@@ -27,20 +30,6 @@
 - Some of the containers are mutable, others are not. For each container or collection, we first consider the operations that do not modify the data (e.g. read, find, contains, traverse, construction) and then the operations that modify the data (e.g. write, add/insert, delete). So, these are the operations that should always be on a cheat sheet if you are making one:
   - access or search a specific element (all cases)
   - add and remove an element (if mutable)
-
----
-
-### Control-Flow
-
-- In fact, nothing new here, just the well-known `if`, `while`, `for` and exceptions.
-- Pattern matching from Python 3.10 is discussed in a future unit.
-
----
-
-### Function calling
-
-- We focus on function calling with named and default parameters. 
-- `args` and `kwargs` are covered later.
 
 
 ## Tasks
@@ -175,43 +164,16 @@ You are tasked with analyzing student performance data stored in the dictionary 
 ### 👉 Comprehension Check - Talk with your Neighbor
 
 General
-- What are your options for running a Python program?
+- What are ...?
 
 Language
-- What are the options for comments in source code?
+- What are ...?
 
 ---
 
 ### 👉 Lecture Check - Online Questionare
 
-Rating
-
-(0) Cannot decide or topic not presented // Not done
-
-(1) Understood everything // Fully completed <br>
-(2) Good, only small details missing // Worked <br>
-(3) Can do it, but can learn on my own // Half completed <br>
-(4) Have an idea, but nothing more, need help // First steps only <br>
-(5) Not a clue, please repeat or help me // Do not understand
- 
-Python Environment
-
-- Can you run a script from the command line using a Python interpreter?
-
-Exercises
-
-- Have you successfully completed task 'Queen Rose'?
-
-Lecture
-
-- Was anything unclear or difficult to follow? If so, what?
-- Were there any topics that you wished were covered in more detail?
-- Were there any topics that you felt were unnecessary or too detailed?
-- What related topics would you be interested in for future lectures?
-- Did the lecture encourage enough interaction and discussion?
-- Was the pace too fast, too slow, or just right?
-- How comfortable did you feel asking questions?
-- What is your biggest takeaway from this lecture?
+- Please participate in the survey: -link-
 
 ---
 

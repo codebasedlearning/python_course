@@ -164,6 +164,9 @@ Topics
     isn't expected to throw exceptions. This can help improve the readability 
     of your code.
 
+Pattern Matching 
+  - This feature from Python 3.10 is discussed in a future unit.
+
 See also
   - https://docs.python.org/3/library/exceptions.html
 """

@@ -5,7 +5,6 @@ This snippet discusses function calling.
 
 Teaching focus
   - Call functions with positional and with named arguments is needed.
-  - More on this topic such as 'args' and 'kwargs' will follow later.
   - Default values are a common Pitfall.
 """
 
@@ -77,6 +76,7 @@ Parameters
         sin(12)
   - The ability to use named arguments affects the concrete manifestations 
     of certain patterns, e. g. the builder or factory pattern.
+  - More on this topic such as 'args' and 'kwargs' will follow later.
 
 Mutable Defaults
   - From JetBrains: You should avoid using mutable objects as default arguments 
