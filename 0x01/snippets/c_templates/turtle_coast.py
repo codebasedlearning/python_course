@@ -1,4 +1,4 @@
-# (C) 2025 ... you
+# (C) 2025 ... your name
 
 """
 This script can be used as a template for a standard Python script or task solution.
@@ -10,7 +10,7 @@ def task_name(name: str):
 
 
 if __name__ == "__main__":
-    task_name("Cart Cinnamon")
+    task_name("Turtle Coast")
 
 
 ###############################################################################

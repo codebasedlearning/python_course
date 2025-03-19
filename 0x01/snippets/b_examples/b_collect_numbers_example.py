@@ -12,8 +12,10 @@ Teaching focus
 
 def collect_numbers():
     """ collect numbers from the console """
+
     numbers = set()                                             # a set
-    inputs: list[int] = []                                      # a list (for didactic reasons, better would be a deque)
+    inputs: list[int] = []                                      # a list with type hint (better would be a deque)
+
     print(" 1| Collect numbers in a set and inputs in a 'finite' FIFO list")
     while (data := input(" 2| Enter number n: ")) != "":
         try:
@@ -23,7 +25,7 @@ def collect_numbers():
             # else:
             numbers.add(n)                                      # a set contains an element only once
             if len(inputs) >= 5:                                # if cond1 and/or cond2; 'and' higher than `or`
-                # actions.pop(0)                                # remove and returns the value
+                # actions.pop(0)                                # removes and returns the value
                 del inputs[0]                                   # discards the value
             inputs.append(n)
             print(f" 5| {numbers=}, {inputs=}")

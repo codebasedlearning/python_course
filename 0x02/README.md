@@ -49,7 +49,7 @@
 
 ---
 
-### 👉 Task 'Wild Vine'
+### 👉 Task 'Coral Cove'
 
 You are given a weighted, undirected graph. It is represented as a dictionary where the keys are node numbers, and the values are dictionaries. These nested dictionaries denote the neighbors of the given node and the weight of the edges that connect the node to its neighbors.
 
@@ -78,14 +78,15 @@ Task
 - Bonus: Write a function to calculate the shortest path from a given starting node to all other nodes in the graph.
   - Hint: 'Dijkstra', `heapq`.
 
-- Compare your solution with `wild_vine_one_solution.py` in `solutions`. 
+Check
+- Compare your solution with `coral_cove_one_solution.py` in `solutions`. 
   - Is your solution correct and complete? 
   - Do you have any ideas on how to improve your solution?
   - Is there a detail where your solution is better or different? Tell us.
 
 ---
 
-### 👉 Task 'Belle Zinnia'
+### 👉 Task 'Buxrose Edge'
 
 Student's data is given by (grade 100.0 is best, below 40.0 fail)
 ```
@@ -148,7 +149,8 @@ You are tasked with analyzing student performance data stored in the dictionary 
   - Result: `['Charlie', 'Alice', 'Eve', 'Bob', 'Diana']`
   - Hint: Use `sorted` on `average_grades` with a clever `key` and a 'list comprehension' to extract only the students.
 
-- Compare your solution with `bella_zinnia_one_solution.py` in `solutions`. 
+Check
+- Compare your solution with `buxrose_edge_one_solution.py` in `solutions`. 
   - Is your solution correct and complete? 
   - Do you have any ideas on how to improve your solution?
   - Is there a detail where your solution is better or different? Tell us.

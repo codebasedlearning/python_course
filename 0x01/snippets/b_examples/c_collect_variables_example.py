@@ -22,7 +22,7 @@ def collect_variables():
     """ collect variables from the console, format 'x=12' """
 
     print(" 1| Enter variables in the form 'x=1' one after the other (w.o. '', end with <return>)")
-    variables: dict[str, int] = {}                              # a dictionary
+    variables: dict[str, int] = {}                              # a dictionary with type hint
 
     # classical style (but skip)
     #
@@ -50,6 +50,7 @@ def collect_variables():
 def sum_all_positives(variables):
     """ sum all values >0 """
     print(" 6| sum values>0:")
+
     total = 0
     for k,v in variables.items():
         if v>0:

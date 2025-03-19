@@ -81,7 +81,7 @@ def calc_average_prices():
     fruits_block, prices_block = read_data_blocks(from_memory=True)
     fruit_history = build_fruit_history(fruits_block, prices_block)
     average_prices = [(fruit, sum(values) / len(values)) for fruit, values in fruit_history.items()]
-    print(f" 6| {average_prices=}")
+    print(f" 7| {average_prices=}")
 
 
 if __name__ == "__main__":

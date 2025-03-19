@@ -15,7 +15,7 @@ Rating
 Python Environment
 
 - Can you run a script from the command line using a Python interpreter?
-- Have you successfully completed task 'Garden Ash' concerning a Python installation?
+- Have you successfully completed task 'Cocoa Coast' concerning a Python installation?
 
 Exercises
 

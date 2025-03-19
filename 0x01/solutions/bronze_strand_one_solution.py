@@ -1,6 +1,14 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" Task 'Big Pea' """
+"""
+Task 'Bronze Strand'
+
+Topics
+  - functions
+  - dictionaries
+  - if-else
+  - for-loop
+"""
 
 
 def counter_add(counter: dict, item):

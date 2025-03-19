@@ -1,6 +1,12 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" Task 'Wild Vine' """
+"""
+Task 'Coral Cove'
+
+Topics
+  - heapq
+  - dijkstra's algorithm
+"""
 
 import heapq
 

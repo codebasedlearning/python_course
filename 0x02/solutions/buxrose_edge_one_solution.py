@@ -1,6 +1,13 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" Task 'Belle Zinnia' """
+"""
+Task 'Buxrose Edge'
+
+Topics
+  - dictionaries
+  - comprehensions
+  - sorting
+"""
 
 
 MATH = "Math"

@@ -1,6 +1,17 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" Task 'Big Pea' """
+"""
+Task 'Eastern Sands'
+
+Topics
+  - functions
+  - while-loop
+  - try-except
+  - input
+  - int-conversion
+  - print
+  - walrus operator (:=)
+"""
 
 
 def read_number():

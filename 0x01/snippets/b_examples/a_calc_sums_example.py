@@ -10,8 +10,8 @@ Teaching focus
 """
 
 
-def calc_sum_iteratively(n):                                    # function with parameter(s)
-    """ calculates the sum iteratively """                      # doc-string for the function
+def calc_sum_iteratively(n):                                    # function with parameter n
+    """ calculates 1+..+n iteratively """                       # doc-string for the function
     result = 0                                                  # definition on-the-fly
     for i in range(1,n+1):                                      # for i=1; i<n+1; ++i
         result += i
@@ -21,7 +21,7 @@ def calc_sum_iteratively(n):                                    # function with 
 
 
 def calc_sum_recursively(n):
-    """ calculates the sum recursively """
+    """ calculates 1+..+n recursively """
     return 0 if n <= 0 else n + calc_sum_recursively(n - 1)     # recursive and conditional expression
 
 
@@ -31,13 +31,14 @@ def calc_sum_recursively_tail(n, acc = 0):
 
 
 def calc_sum_directly(n):
-    """ calculates the sum directly """
+    """ calculates 1+..+n directly """
     return n * (n + 1) // 2                                     # integer division
 
 
 def calculate_all_sums():
-    """ calculate all sums in three ways """
+    """ calculate all sums differently """
     print(" 1| Sum 1..n (end with n<0)")
+
     while True:                                                 # classical while-loop
         data = input(" 2| Enter n: ")                           # read a string
         n = int(data)                                           # convert it to int (possible exception)

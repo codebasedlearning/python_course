@@ -1,6 +1,16 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" Task 'Poke Peach' """
+"""
+Task 'Sunny Coastline'
+
+Topics
+  - input
+  - if-else, if-expressions
+  - for-loop, range
+  - dictionaries
+  - recursion
+  - memoization, lru_cache
+"""
 
 from functools import lru_cache
 
