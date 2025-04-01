@@ -156,7 +156,7 @@ Language
 
 ### 👉 Lecture Check - Online Questionare
 
-- Please participate in the survey: -link-
+- Please participate in the survey: [Slido](https://wall.sli.do)
 
 ---
 
