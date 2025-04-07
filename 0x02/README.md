@@ -49,7 +49,7 @@
 
 ---
 
-### 👉 Task 'Coral Cove'
+### 👉 Task 'Coral Cove' (Graph)
 
 You are given a weighted, undirected graph. It is represented as a dictionary where the keys are node numbers, and the values are dictionaries. These nested dictionaries denote the neighbors of the given node and the weight of the edges that connect the node to its neighbors.
 
@@ -86,9 +86,10 @@ Check
 
 ---
 
-### 👉 Task 'Buxrose Edge'
+### 👉 Task 'Buxrose Edge' (Students)
 
-Student's data is given by (grade 100.0 is best, below 40.0 fail)
+You are tasked with analyzing student performance data stored in the dictionary `GRADES` (below, grade 100.0 is best, below 40.0 fail). Each student has scores across different subjects.
+
 ```
 MATH = "Math"
 ENGLISH = "English"
@@ -105,7 +106,7 @@ GRADES = {
 }
 ```
 
-The main solver looks like this
+Questions can be found in the main solver:
 
 ```
 def solve():
@@ -123,12 +124,9 @@ def solve():
 
     student_names_sorted = sort_students_by_average_grade(average_grades)
     print(f" 5| {student_names_sorted=}")
-
 ```
 
-You are tasked with analyzing student performance data stored in the dictionary `GRADES`. Each student has scores across different subjects. 
-
-> Each task should be solved in two ways: First, use only basic Python constructs such as loops, conditionals, and basic list/dictionary operations. Second, if you like, follow the hint (see Python docs) and solve it in a shorter way. If it does not work - no problem. We will come back to this particular approach in future lectures.
+> Each task should be solved in two ways: First, use only basic Python constructs such as loops, conditionals, and basic list/dictionary operations. Second, if you like, follow the hint (see Python docs!) and solve it in a shorter way. If it does not work right now - no problem. We will come back to this particular approach in future lectures.
 
 - `calc_average_grades`: Compute the average grade for each student and store these averages in a separate dictionary.
   - Result: `{'Alice': 85.0, 'Bob': 47.0, 'Charlie': 92.0, 'Diana': 36.0, 'Eve': 64.0}`
@@ -165,17 +163,22 @@ Check
 
 ### 👉 Comprehension Check - Talk with your Neighbor
 
-General
-- What are ...?
-
-Language
-- What are ...?
+- What are the known primitive data types and containers?
+- What are some important differences between containers?
+- What is the difference between '==' and 'is'?
+- What does 'short-circuiting' mean?
+- What is the difference between python-int and ints in other languages?
+- What does 'slicing' mean?
+- Is copying a list a shallow copy or a deep copy?
+- What is the difference between a list and a tuple?
+- What are 'frozensets' for?
+- What do I need to be aware of with a function's default arguments?
 
 ---
 
 ### 👉 Lecture Check - Online Questionare
 
-- Please participate in the survey: -link-
+- Please participate in the survey: [Slido](https://wall.sli.do)
 
 ---
 
