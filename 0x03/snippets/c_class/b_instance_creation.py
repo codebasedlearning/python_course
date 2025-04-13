@@ -11,7 +11,7 @@ Teaching focus
 
 class Person:
     """ simple person class """
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args, **kwargs):      # here not necessary, just to see the args
         print(f" a|   Person.new: {cls}, {args=}, {kwargs=}")
         # return object.__new__(cls)
         return super().__new__(cls)
@@ -22,6 +22,7 @@ class Person:
 
     def __del__(self):
         print(f" c|   Person.del: {self.name=}")
+        # super().__del__()     # object has no __del__
 
 
 def show_new_and_init():
@@ -43,6 +44,47 @@ def show_new_and_init():
     inner_func()
     print(f" 5| end")
 
+# problems?
+
+class DatabaseConnector:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)  # Call only the first time
+        return cls._instance
+
+    def __init__(self, connection_string):
+        self.connection_string = connection_string
+
+class ServiceDetector:
+    _instance = None
+    _initialized = False  # Track initialization
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)  # Create the instance only once
+        return cls._instance
+
+    def __init__(self, url):
+        if not self._initialized:
+            self.url = url  # Initialize only once
+            self._initialized = True  # Set the flag
+
+def define_a_singleton():
+    """ define a singleton """
+    print("\ndefine_a_singleton\n==================")
+
+    db_connector = DatabaseConnector(connection_string="aws.com")
+    database_access = DatabaseConnector(connection_string="azure.com")
+    print(f" 1|    {id(db_connector)=}, connected to: '{db_connector.connection_string}'")
+    print(f"    {id(database_access)=}, connected to: '{database_access.connection_string}'")
+
+
+    main_service = ServiceDetector(url="//server")
+    docker_service = ServiceDetector(url="//docker")
+    print(f" 2|   {id(main_service)=}, ask here: '{main_service.url=}'")
+    print(f"    {id(docker_service)=}, ask here: '{docker_service.url=}'")
 
 def last_function():
     """ dummy function to clean up before """
@@ -50,6 +92,7 @@ def last_function():
 
 if __name__ == '__main__':
     show_new_and_init()
+    define_a_singleton()
     last_function()
 
 
