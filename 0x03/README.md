@@ -154,10 +154,14 @@ different in Python than in other OO-languages.
 ### 👉 Comprehension Check - Talk with your Neighbor
 
 General
-- What are ...?
+- Any suggestions for working with an AI agent?
 
 Language
-- What are ...?
+- What are `types` for in Python and do you use them?
+- What are `args` and `kwargs`?
+- Do you know the difference between a 'regular' member function, a static method and a class method?
+- What kind of 'dunder' functions do you know and what are they for?
+- What is the idea of a data class?
 
 ---
 
