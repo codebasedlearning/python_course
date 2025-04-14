@@ -1,92 +1,49 @@
-# (C) 2023 A.Voß, a.voss@fh-aachen.de, python@codebasedlearning.dev
+# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This example shows a first use (!) of 'enums'. """
+"""
+This snippet discusses a special enum case with flags.
+"""
 
-from enum import Enum, Flag, auto, unique
-
-
-class DrinkConsts:                                                  # (A) class constants
-    TEA = 11
-    COFFEA = 22
+from enum import Flag, auto
 
 
-@unique
-class Drink(Enum):                                                  # (B) Enum, unique, extends
-    TEA = 11
-    COFFEA = 22
-
-
-def show_drinks():
-    print(f"01| DrinkConsts: Tea={DrinkConsts.TEA}, Coffea={DrinkConsts.COFFEA}\n")
-    print(f"02| Drinks:")
-    for drink in Drink:
-        print(f"      Drink: {drink}, name:{drink.name}, value:{drink.value}")
-
-    dv22 = Drink(22)
-    dn22 = Drink.COFFEA
-    print(f"03| access by value: {dv22}, and name: {dn22}")
-    print()
-
-
-class ColorId(Enum):
-    RED = auto()                                                    # auto means, start with 1
-    GREEN = auto()
-    BLUE = auto()
-
-
-ColorFunc = Enum('Color2', ['RED2', 'GREEN2', 'BLUE2'])             # functional syntax
-
-
-def show_colors():
-    print(f"04| ColorId:")
-    for colorId in ColorId:
-        print(f"      Color: {colorId}, name:{colorId.name}, value:{colorId.value}")
-    print(f"05| ColorFunc:")
-    for color in ColorFunc:
-        print(f"      Color: {color}, name:{color.connection_string}, value:{color.value}")
-    print()
-
-
-class ChModFlag(Flag):                                              # models file modes from 'chmod' command
+class ChModFlag(Flag):                      # models file modes from 'chmod' command
+    """ enum with flags """
     X = auto()
     W = auto()
     R = auto()
-    ALL = R | W | X                                                 # combine flags
-    U_shift = 6                                                     # owner
-    G_shift = 3                                                     # group
-    O_shift = 0                                                     # other
+    ALL = R | W | X                         # combine flags
+    U_shift = 6                             # owner
+    G_shift = 3                             # group
+    O_shift = 0                             # other
 
 
-def show_flags():
-    print(f"06| Flags:")
+def show_enums_with_flags():
+    """ test our class """
+    print("\nshow_enums_with_flags\n=====================")
+
+    print(" 1| Flags:")
     for flag in ChModFlag:
         print(f"      Flag: {flag}, name:{flag.name}, value:{flag.value}")
 
     mode = ((ChModFlag.W | ChModFlag.R).value << ChModFlag.U_shift.value) \
         + (ChModFlag.R.value << ChModFlag.G_shift.value) \
         + (ChModFlag.R.value << ChModFlag.O_shift.value)
-    print(f"07| chmod u+rw g+r o+r = {oct(mode)}")
-
-
-def print_all():
-    show_drinks()
-    show_colors()
-    show_flags()
+    print(f" 2| chmod u+rw g+r o+r = {oct(mode)}")
 
 
 if __name__ == "__main__":
-    print_all()
+    show_enums_with_flags()
+
+
+###############################################################################
+
 
 """
-# (A) class constants
-In principle, you can define constants as class variables. The class is then a kind of namespace.
-Iterating over all constants is not that easy. This is better done with an 'enum'.
-
-(B) Enum
-The class 'Enum' brings some convenience in dealing with the constants. 
-Without the @unique decorator, an equal value would also be possible.
-
-More on Enums can be found here:
+Summary
+  - In this special case you can also combine flags.
+  
+See also
     https://docs.python.org/3/howto/enum.html
     https://docs.python.org/3/library/enum.html
 """

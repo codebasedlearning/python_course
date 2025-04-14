@@ -17,6 +17,7 @@ class Person:                                                   # inherits impli
         print(f" a|   Person.init name='{self.name}', id={id(self)}")
 
     def introduce_myself(self):
+        """ print information """
         print(f" b|   --- Hello, I am {self.name} ---")
 
     def __del__(self):
@@ -24,6 +25,8 @@ class Person:                                                   # inherits impli
 
 
 class Employee(Person):                                         # with base class(es)
+    """ Employee class """
+
     def __init__(self, name, salary):
         super().__init__(name)                                  # super; Person.__init__(self, name)
         self.salary = salary
@@ -43,18 +46,18 @@ def create_team():
     """ create team with different persons """
     print("\ncreate_team\n===========")
 
-    print(f" 1| create Peter")
+    print(" 1| create Peter")
     peter = Person(name="Peter")
     peter.introduce_myself()
 
-    print(f" 2| and Mary")
+    print(" 2| and Mary")
     mary = Employee(name="Mary", salary=1000)
     mary.introduce_myself()
 
-    print(f" 3| end")
+    print(" 3| end")
 
 
-def introduce_MRO():
+def introduce_mro():
     """ introduce MRO """
     print("\nintroduce_MRO\n=============")
 
@@ -65,7 +68,7 @@ def introduce_MRO():
 
 if __name__ == '__main__':
     create_team()
-    introduce_MRO()
+    introduce_mro()
 
 
 ###############################################################################
@@ -115,7 +118,4 @@ MRO, method resolution order
     inherited methods. This comes in handy when you’re using super() because 
     the MRO tells you exactly where Python will look for a method you’re 
     calling with super() and in what order.
-
-See also
-  - 
 """

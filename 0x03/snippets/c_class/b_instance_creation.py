@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses classes, initializers and constructors.
@@ -29,7 +29,7 @@ def show_new_and_init():
     """ see new and del in action """
     print("\nshow_new_and_init\n=================")
 
-    print(f" 1| start")
+    print(" 1| start")
     peter = Person(name="Peter")
     print(f" 2| {peter.name=}")
 
@@ -42,11 +42,11 @@ def show_new_and_init():
         print(f" 4| {mary.name=}")
 
     inner_func()
-    print(f" 5| end")
+    print(" 5| end")
 
-# problems?
 
-class DatabaseConnector:
+class DatabaseConnector:                    # problems?
+    """ a class meant to be a singleton """
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -57,19 +57,22 @@ class DatabaseConnector:
     def __init__(self, connection_string):
         self.connection_string = connection_string
 
+
 class ServiceDetector:
+    """ a class meant to be a singleton - improved """
     _instance = None
-    _initialized = False  # Track initialization
+    _initialized = False
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = super().__new__(cls)  # Create the instance only once
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self, url):
         if not self._initialized:
-            self.url = url  # Initialize only once
-            self._initialized = True  # Set the flag
+            self.url = url
+            self._initialized = True
+
 
 def define_a_singleton():
     """ define a singleton """
@@ -80,15 +83,16 @@ def define_a_singleton():
     print(f" 1|    {id(db_connector)=}, connected to: '{db_connector.connection_string}'")
     print(f"    {id(database_access)=}, connected to: '{database_access.connection_string}'")
 
-
     main_service = ServiceDetector(url="//server")
     docker_service = ServiceDetector(url="//docker")
     print(f" 2|   {id(main_service)=}, ask here: '{main_service.url=}'")
     print(f"    {id(docker_service)=}, ask here: '{docker_service.url=}'")
 
+
 def last_function():
     """ dummy function to clean up before """
     print("\nlast_function\n=============")
+
 
 if __name__ == '__main__':
     show_new_and_init()
@@ -140,7 +144,7 @@ __new__, __init__
     and in almost all situations the standard  'objects.__new__' will be 
     sufficient.
 
-dtor, Destructors
+del(dtor), Destructors
   - Python also has destructors. 
   - From Python doc https://docs.python.org/2/reference/datamodel.html#basic-customization
       - '__del__(self)' is called when the instance is about to be destroyed. 
@@ -152,7 +156,10 @@ dtor, Destructors
     the only required property of Python's garbage collection is that it 
     happens after all references have been deleted, so it need not happen 
     immediately afterwards, and may not happen at all.
-
-See also
-  - 
+    
+pylint, error `too-few-public-methods`
+  - The class defines fewer public methods than the threshold specified by 
+    Pylint (default is 2 methods). Pylint considers that a class with too few 
+    public methods might be better represented as a simpler structure, such as 
+    a function or a named tuple, depending on its purpose.
 """

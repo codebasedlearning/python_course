@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses properties.
@@ -13,24 +13,27 @@ class Person:
     """ Simple person class """
 
     def __init__(self, name, age):
-        self._name = name                                       # now protected
+        self._name = name                           # now protected
         self._age = age
         self._artist = False
 
     def __repr__(self):
         return f"({self.__dict__}')"
 
-    def my_get_name(self) -> str:                               # 'hand-made' getter and setter
+    def my_get_name(self) -> str:                   # 'hand-made' getter and setter
+        """ name getter """
         print(f" a|   name getter '{self._name}'")
         return self._name
 
     def my_set_name(self, value: str) -> None:
+        """ name setter """
         print(f" b|   name setter '{self._name}', new '{value}'")
         self._name = value
 
-    name = property(my_get_name, my_set_name, None, "my doc str")   # properties
+    name = property(my_get_name, my_set_name, None, "my doc str")       # properties
 
-    artist = property(lambda self: self._artist, lambda self, val: setattr(self, '_artist', val))  # error: self._tag = val
+    artist = property(lambda self: self._artist,
+                      lambda self, val: setattr(self, '_artist', val))  # error for 'self._tag = val'
 
     @property                                                   # another way defining a getter
     def age(self):
@@ -86,7 +89,4 @@ Properties.
   - See https://docs.python.org/3/library/functions.html#property
   - Even Python's type hinting system shows a warning, it's better to 
     use more specific types.
-
-See also
-  - 
 """

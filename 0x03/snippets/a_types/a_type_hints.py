@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses the use of data types and data type references.
@@ -39,7 +39,7 @@ def test_mul():
     print(f" 3| {mul(2, 3)=}")
     print(f"    {mul('2', 3)=}")                                # bug or feature?
     try:
-        mul('2', '3')                                           # run-time error, now with IDE hint
+        mul('2', '3')                                           # run-time error, now with IDE hint (also mypy)
     except TypeError as e:
         print(f" 4| {e=}")
 
@@ -54,11 +54,13 @@ def vars_and_type_hints():
     n: int = 23                                                 # with type 'int'.
     if n > 0:
         print(f" 2| {n=}, {2*n=}")
-        n = -2.5                                                # assignment, with IDE hint
+        n = -2.5                                                # assignment, with IDE hint (also mypy)
         print(f" 3| {n=}")
 
 
 class Person:
+    """ simple person class """
+
     def __init__(self, name: str) -> None:
         self._name: str = name  # Internal name attribute with type hint
 
@@ -149,7 +151,4 @@ Type hints
   - There is a useful tool called mypy,
       - see https://pypi.org/project/mypy/
       - and https://www.mypy-lang.org
-
-See also
-  - 
 """

@@ -10,14 +10,15 @@ Teaching focus
 
 
 class TeamMember:
-    """ simple team member class """                            # class doc string
+    """ simple team member class """                # class doc string
 
-    def __init__(self, name: str, born_in: int):                # initializer (ctor), self = this
-        self.name = name                                        # instance attributes
+    def __init__(self, name: str, born_in: int):    # initializer (ctor), self = this
+        self.name = name                            # instance attributes
         self.born_in = born_in
         print(f" a|   TeamMember.init: {self.name=}, {self.born_in=}")
 
-    def greetings(self):                                        # methods, self
+    def greetings(self):                            # methods, self
+        """ greetings from name """
         print(f" b|   TeamMember.greetings: Hello, I am {self.name}, born in {self.born_in}.")
         return self
 
@@ -26,34 +27,36 @@ def create_team():
     """ first class instances """
     print("\ncreate_team\n===========")
 
-    alice = TeamMember("Alice", 2005)                           # What is most readable?
+    alice = TeamMember("Alice", 2005)               # What is most readable?
     alice.greetings()
-    print(f" 1| {alice=}")                                      # hmmm...
+    print(f" 1| {alice=}")                          # hmmm...
 
-    bob = TeamMember(name="Bob", born_in=2007)                  # or this?
+    bob = TeamMember(name="Bob", born_in=2007)      # or this?
     bob.greetings()
     print(f" 2| Bob={bob=}")
 
-    TeamMember("Charly", born_in=1999).greetings()              # chaining
+    TeamMember("Charly", born_in=1999).greetings()  # chaining
 
 
 class Person:
-    """ simple person class """                                 # class doc string
+    """ simple person class """                     # class doc string
 
     being_old = 99
 
-    def __init__(self, surname: str, age: int):                 # initializer (ctor), self = this
-        self.surname = surname                                  # instance attributes
+    def __init__(self, surname: str, age: int):     # initializer (ctor), self = this
+        self.surname = surname                      # instance attributes
         self.age = age
         print(f" a|   Person.init: {self}, {self=}")
 
     def one_year_older(self):
+        """ increases age by one """
         self.age += 1
         if self.age > Person.being_old:
             print(f" b|   Respect, {self.surname}!")
         return self
 
     def celebrate(self): # -> Self:
+        """ celebrate birthday """
         print(f" c|   Person.celebrate: Happy {self.age}th birthday, {self.surname}!")
         return self
 
@@ -78,15 +81,16 @@ def create_crowd():
 
 
 def show_instance_data():
+    """ discuss instance and dynamic data in __dict__ """
     print("\nshow_instance_data\n==================")
 
     doro = TeamMember("Doro", born_in=2000)
     mary = Person("Mary", age=25)
 
-    print(f" 1| {doro.__dict__=}")                              # this is an important observation
+    print(f" 1| {doro.__dict__=}")          # this is an important observation
     print(f" 2| {mary.__dict__=}")
 
-    doro.has_a_sister = True
+    doro.has_a_sister = True                # warning from pylint
     mary.has_a_brother = True
 
     print(f" 3| {doro.__dict__=}")
@@ -98,6 +102,7 @@ def show_instance_data():
 
 
 def show_class_data():
+    """ discuss class and static data """
     print("\nshow_class_data\n===============")
 
     mary = Person("Mary", age=25)
@@ -181,7 +186,4 @@ __str__, __repr__
   - In contrast to '__repr__' the function '__str__' is more informal and 
     suitable for output. The print statement uses __str__ to display an instance.
     In the course we will get to know more internal methods, such as operators.
-
-See also
-  - 
 """

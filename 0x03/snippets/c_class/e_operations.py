@@ -1,73 +1,114 @@
-# (C) 2023 A.Voß, a.voss@fh-aachen.de, python@codebasedlearning.dev
+# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" This snippet demonstrates some functions from the data model.  """
+"""
+This snippet discusses some functions from the data model.
+
+Teaching focus
+  - What do we need to implement a dictionary-like class with logging?
+  - Focus on element access.
+"""
 
 
 class LoggingDict:
-    def __init__(self):
+    """ the logging dict class """
+
+    def __init__(self):                                         # skip all other ways to initialize
         self.log_dict = {}
 
-    def __getitem__(self, key):                                     # (A) data model
-        print(f"0a| getitem, key={key}")
+    def __getitem__(self, key):
+        print(f" a|   getitem, key={key}")
         return self.log_dict[key]
 
     def __setitem__(self, key, value):      # also __delitem__
-        print(f"0b| setitem, key={key}, value={value}")
+        print(f" b|   setitem, key={key}, value={value}")
         self.log_dict[key] = value
-        #return super().__setitem__(key, value)
+
+    def __delitem__(self, key):
+        print(f" c|   delitem, key={key}")
+        del self.log_dict[key]
 
     def __len__(self):
-        print(f"0c| len")
+        print(" d|   len")
         return self.log_dict.__len__()
 
     def __iter__(self):
         return iter(self.log_dict)
 
-    # in
-    #def __contains__(self, name):
-    #    return name.lower() in self._spells
+    def __contains__(self, key):
+        print(" f|   in")
+        return key in self.log_dict
 
+    def __repr__(self):
+        return f"({self.log_dict})"
 
-    def items(self):                # same for keys(), values()
+    def items(self):                        # same for keys(), values()
+        """ forward items """
         return self.log_dict.items()
 
+    def get(self, key, default=None):
+        """ forward get """
+        return self.log_dict.get(key, default)
 
-def using_logging_dicts():
+
+def test_logging_dicts():
+    """ test our class """
+    print("\ntest_logging_dicts\n==================")
+
     ld = LoggingDict()
+    print(f" 1| {ld=}")
+
     ld[1] = "one"
     ld["two"] = 2
-    print(f"01| ld={ld}, len={len(ld)}")
+    ld[(1,2)] = 3
+    print(f" 2| ld={ld}, len={len(ld)}, {ld[1]=}, {ld.get(2,-1)=}")
 
-    for item in ld.log_dict:                                   # keys .keys()
+    print(f" 3| {1 in ld=}, {2 in ld=}")
 
-        print(f"02|   item={item}")
+    del ld[(1,2)]
+    print(f" 4| ld={ld}")
 
-    for i, item in ld.log_dict.items():                                   # keys
-        print(f"02|   i={i}, item={item}")
+    print(" 5| keys:", end='')
+    for key in ld.log_dict:                 # same as keys()
+        print(f" {key=}", end='')
+    print()
 
-    for item in ld:                           # keys, values
-        print(f"03|   item={item}")
+    print(" 6| keys:", end='')
+    for key in ld:                          # calls __iter__
+        print(f" {key=}", end='')
+    print()
 
-    for item in ld.items():                           # keys, values
-        print(f"03|   item={item}")
+    print(" 7| items:", end='')
+    for k, v in ld.items():
+        print(f" ({k},{v})", end='')
+    print()
 
-    #for i, item in enumerate(ld.items()):                           # keys, values
-    #    print(f"03|   i={i}, item={item}")
-
-    #ints = filter(lambda it: isinstance(it[1][0], int), enumerate(ld.items()))
-    #print(f"04| ints={ints}, *ints={[*ints]}\n")
-
-
-
-def main():
-    using_logging_dicts()
+    print(" 8| enumerate:", end='')
+    for i, item in enumerate(ld.items()):   # no, item
+        print(f" {i}|{item}", end='')
+    print()
 
 
 if __name__ == "__main__":
-    main()
+    test_logging_dicts()
+
+
+###############################################################################
 
 
 """
-(A) data model
-    see https://docs.python.org/3.6/reference/datamodel.html
+Summary
+
+Topics
+  - __getitem__, __setitem__, __delitem__
+  - __len__, __iter__
+  - __contains__
+
+Operations
+  - Python allows you to define special functions for index access, deletion
+    etc. These are __getitem__, __setitem__, __delitem__, __contains__.
+  - Moreover, we additionally can define an iterator by implementing __iter__.
+    This will be discussed in a later unit.
+   
+See also 
+    https://docs.python.org/3/reference/datamodel.html
 """

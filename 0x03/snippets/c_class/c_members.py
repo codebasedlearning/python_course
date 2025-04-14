@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses a simple class with attributes.
@@ -8,32 +8,38 @@ Teaching focus
   - access modifiers
   - see Python possibilities, like patching attributes or methods
     at runtime (uuuh) or 'modify' the access via __getattribute__
+  - a lot of pylint and mypy errors for didactic reasons
 """
 
 
 class Person:
     """ simple person class """
 
-    next_id = 1                                                 # class attribute
+    next_id = 1                             # class attribute
 
     def __init__(self, name):
-        self.name = name                                        # instance attribute
+        self.name = name                    # instance attribute
 
-        self._id = Person.next_id                               # protected, with prefix '_' (convention)
-        self.__secret_number = self._id * 23                    # private, two '__', not only a convention, - name manglin renamed to '_Person__secret_no'
+        self._id = Person.next_id           # protected, with prefix '_' (convention)
+        self.__secret_number = self._id*23  # private, two '__', not only a convention (renamed to '_Person__secret_no')
 
-        Person.next_id += 1                                     # access class attribute
+        Person.next_id += 1                 # access class attribute
         print(f" a|   Person.init: {self}")
 
     def __str__(self):
         return f"{self.__dict__}"
 
-    def secret(self): return self.__secret_number               # some sort of getter
+    def secret(self):
+        """ getter for private number """
+        return self.__secret_number
 
-    def __my_internal_secret(self): return self.__secret_number # also private
+    def __my_internal_secret(self):
+        """ secret function """
+        return self.__secret_number         # also private
 
-    @classmethod                                                # class method with decorator
+    @classmethod                            # class method with decorator
     def print_next_id(cls):
+        """ print class attribute """
         print(f" b|   {Person.next_id=}")
 
 
@@ -62,6 +68,7 @@ def class_vs_instance_attribute():
 
     Person.next_id = 2
 
+
 def show_access_modifiers():
     """ access different attributes """
     print("\nshow_access_modifiers\n=====================")
@@ -88,25 +95,25 @@ def patch_attributes():
           f"            {paul},\n"
           f"            {mary}")
 
-    peter.fan_of = "LFC"                                        # dynamically add attributes,
-    paul.mothers_name = "Eve"                                   # this is a proof of concept, not best practise!
+    peter.fan_of = "LFC"                    # dynamically add attributes,
+    paul.mothers_name = "Eve"               # this is a proof of concept, not best practise!
     mary.fan_of = "ManU"
     print(f" 2| modify: {peter},\n"
           f"            {paul},\n"
           f"            {mary}")
 
     fan_set = [f"{peter.name}:{peter.fan_of}",
-               f"{mary.name}:{mary.fan_of}"]                    # accessible...
+               f"{mary.name}:{mary.fan_of}"]            # accessible...
     try:
-        fan_set.append(f"{paul.name}:{paul.fan_of}")            # if exists...
+        fan_set.append(f"{paul.name}:{paul.fan_of}")    # if exists...
     except AttributeError:
         fan_set.append(f"{paul.name}:?")
     print(f" 3| fans: {fan_set}")
 
-    del peter.fan_of                                            # delete attribute...
+    del peter.fan_of                        # delete attribute...
     del mary.fan_of
     # del paul.mothers_name
-    paul.__dict__.pop("mothers_name")                           # or pop it from __dict__
+    paul.__dict__.pop("mothers_name")       # or pop it from __dict__
     print(f" 4| clear:  {peter},\n"
           f"            {paul},\n"
           f"            {mary}")
@@ -114,11 +121,11 @@ def patch_attributes():
 
     print(f" 5| secret orig:    {peter.secret()=}, {paul.secret()=}, {mary.secret()=}")
 
-    def secret(self): return self._id*-1
-    Person.secret = secret                                      # patch method
-    print(f" 6| secret patched: {peter.secret()=}, {paul.secret()=}, {mary.secret()=}")
+    def secret(self):
+        return self._id*-1
 
-    # or class method
+    Person.secret = secret                  # patch method
+    print(f" 6| secret patched: {peter.secret()=}, {paul.secret()=}, {mary.secret()=}")
 
 
 class AdultPerson:
@@ -128,7 +135,7 @@ class AdultPerson:
         self.name = name
         self.age = age
 
-    def __getattribute__(self, attr_name):                      # rarely overwritten...
+    def __getattribute__(self, attr_name):  # rarely overwritten...
         if attr_name != "age" or super().__getattribute__('age') >= 18:
             return super().__getattribute__(attr_name)
         return 18
@@ -144,15 +151,11 @@ def access_every_cinema():
           f"name: '{harry.name}', age: {harry.age}... or, real-age: {harry.__dict__['age']}\n")
 
 
-def main():
+if __name__ == '__main__':
     class_vs_instance_attribute()
     show_access_modifiers()
     patch_attributes()
     access_every_cinema()
-
-
-if __name__ == '__main__':
-    main()
 
 
 ###############################################################################
@@ -215,7 +218,4 @@ Class members
   - Additionally, there is also @staticmethod. This type of method takes 
     neither a self nor a cls parameter
     https://realpython.com/instance-class-and-static-methods-demystified/
-
-See also
-  - 
 """

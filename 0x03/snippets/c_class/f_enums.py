@@ -30,7 +30,7 @@ class ColorId(Enum):
     WHITE = 255
     EXTRA_WHITE = auto()                    # increments from 255
 
-class Defaults(Enum):
+class Defaults(Enum):                       # pylint complains about not being UPPERCASE
     """ different types """
     URL = "https://www.google.com"
     Port = 8080
@@ -38,6 +38,7 @@ class Defaults(Enum):
     Password = "<PASSWORD>"
 
 def work_with_enums():
+    """ show different enum examples """
     print("\nwork_with_enums\n===============")
 
     print(f" 1| just class consts: {DrinkConsts.TEA=}, {DrinkConsts.COFFEA=}")
@@ -49,33 +50,30 @@ def work_with_enums():
     coffea = Drink.COFFEA
     print(f" 3| access by value: {coconut22=}, or name: {coffea=}\n")
 
-    print(f" 4| enumerate Drinks:")
+    print(" 4| enumerate Drinks:")
     for drink in Drink:
         print(f"      drink={drink}, {drink=}, {drink.name=}, {drink.value=}")
 
-    print(f" 5| enumerate ColorIds:")
+    print(" 5| enumerate ColorIds:")
     for colorId in ColorId:
         print(f"      {colorId=}")
 
-    print(f" 6| enumerate Defaults:")
+    print(" 6| enumerate Defaults:")
     for item in Defaults:
         print(f"      {item=}")
 
 
 def show_internals():
+    """ note the dicts """
     print("\nshow_internals\n=============")
 
     print(f" 1| DrinkConsts: {DrinkConsts.__dict__}")
     print(f" 2| Drinks: {Drink.__dict__}")
 
 
-def print_all():
+if __name__ == "__main__":
     work_with_enums()
     show_internals()
-
-
-if __name__ == "__main__":
-    print_all()
 
 
 ###############################################################################
@@ -96,7 +94,7 @@ Enum
   - The class 'Enum' brings some convenience in dealing with the constants. 
     Without the @unique decorator, an equal value would be possible.
 
-Refs
-    https://docs.python.org/3/howto/enum.html
-    https://docs.python.org/3/library/enum.html
+See also
+  - https://docs.python.org/3/howto/enum.html
+  - https://docs.python.org/3/library/enum.html
 """
