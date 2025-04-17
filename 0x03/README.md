@@ -1,11 +1,11 @@
 [© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x03` – First Classes - Finalize Basics
+# Unit `0x03` – First Classes – Finalize Basics
 
 > This unit completes our basic knowledge. The aim is to model and solve simple algorithmic problems in unit 0x04.
 > - Unit 0x01: First Impression (examples)
 > - Unit 0x02: First Steps (variables, control-flow, functions)
-> - Unit 0x03: Finalize Basics (classes, inheritance, types)
+> - Unit 0x03: Finalize Basics (classes, inheritance)
 > - Unit 0x04: (coming) Puzzle-Driven Programming Challenges 
 
 
@@ -18,8 +18,6 @@
 - class functions
 - operators
 - single inheritance
-- types
-- args, kwargs
 
 
 ## Tasks
