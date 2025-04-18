@@ -2,20 +2,27 @@
 
 # Unit `0x04` – Puzzle-Driven Programming Challenges 
 
-> This unit contains tasks inspired by those from 'Advent of Code'. For scientific purposes, I have used only the basic concept and included 
-self-generated data specific to the task to prevent any legal issues.
-> For more information and to enjoy the engaging story, please visit [here](https://adventofcode.com) and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organised 'Advent of Code'.
+
+> Python is well known for its ability to quickly write scripts and proof of concepts. Today we are going to practise both, by building a quick solution to a problem (puzzle) and then doing a proper refactoring of it.
 
 
-## Tasks
+## Puzzle Structure
 
-Each original task consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritising speed over beauty - also known as a 'hack'. 
-The second part often involves a significant increase in complexity as the problem or solution space explodes. In many cases, it is essential to improve your solution concept, for example by developing or using a clever approach to reduce the order or number of algorithmic iterations.
+Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack.' 
+The second part often involves a significant increase in complexity as the problem or solution space explodes. In many cases, it is essential to improve your solution concept, for example, by developing or using a clever approach to reduce the order or number of algorithmic iterations.
 
 Here we add refactoring as the third part, so we have:
 - Complete Part 1 as quickly as possible.
 - Same for Part 2. It is explicitly allowed to simply 'hack' your solution.
-- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible.
+- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your algorithms and solutions, and considering best practices. 
+
+
+## Advent of Code
+
+These first puzzles are inspired by those from 'Advent of Code.' For scientific purposes, I have used only the basic concept and included 
+self-generated data specific to the task to prevent any legal issues.
+
+For more information and to enjoy the engaging story, please visit [here](https://adventofcode.com) and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organised 'Advent of Code.'
 
 
 ## Input Data
@@ -46,11 +53,11 @@ starting with an identifier (10), followed by a colon and then a list of integer
 - 'Tortoise Cove' – simulate winning scratchcards
 - 'AoC Originals' – hand-picked examples
 
-## Tasks
+## Puzzles
 
 ---
 
-### 👉 Task 'Tinted Coast' (Calibration Values)
+### 👉 Puzzle 'Tinted Coast' (Calibration Values)
 
 You are given a list of strings. Each line contains a mix of letters and digits. Your task is to extract digits from each line in a specific way and compute the sum of the results.
 
@@ -117,7 +124,7 @@ You will find the original task [here](https://adventofcode.com/2023/day/1)
 
 ---
 
-### 👉 Task 'Lonely Seafront' (Cube Games)
+### 👉 Puzzle 'Lonely Seafront' (Cube Games)
 
 You are given a list of 'games'. Each game consists of multiple rounds, and in each round, a number of colored cubes (red, green, blue) is shown.
 
@@ -190,7 +197,7 @@ You will find the original task [here](https://adventofcode.com/2023/day/2)
 
 ---
 
-### 👉 Task 'Stonenet Sands' (Symbols)
+### 👉 Puzzle 'Stonenet Sands' (Symbols)
 
 You are given a 2D grid where each cell contains one of:
 - A digit (0-9)
@@ -268,7 +275,7 @@ You will find the original task [here](https://adventofcode.com/2023/day/3)
 
 ---
 
-### 👉 Task 'Tortoise Cove' (Scratchcards)
+### 👉 Puzzle 'Tortoise Cove' (Scratchcards)
 
 Each line in your data represents a scratchcard. The format is:
 ```
@@ -351,7 +358,7 @@ You will find the original task [here](https://adventofcode.com/2023/day/4)
 
 ---
 
-### 👉 Task 'AoC Originals' 
+### 👉 Puzzles 'AoC Originals' 
 
 The examples selected in AoC are partly handmade and therefore not easy to simulate with own data, so I prefer to refer to the original task. Please note that you have to register to get the data.
 
@@ -380,4 +387,4 @@ My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraptio
 
 ---
 
-# Have fun !
+# Have fun!
