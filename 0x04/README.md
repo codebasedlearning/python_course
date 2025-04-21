@@ -5,6 +5,22 @@
 
 > Python is well known for its ability to quickly write scripts and proof of concepts. Today we are going to practise both, by building a quick solution to a problem (puzzle) and then doing a proper refactoring of it.
 
+> As well as the fun part, there is also a very practical side. Many companies use coding challenges as part of the application process for software developers; you are given a limited amount of time to find and present a solution to a specific problem. We also have such a situation at the well-known "Grosse Prog".
+
+
+## Inspiration
+
+### Advent of Code
+
+The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com) For scientific purposes, I have used only the basic concept and included 
+self-generated data specific to the task to avoid any legal issues.
+
+For more information and to enjoy the engaging story, please visit the website and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organized 'Advent of Code.'
+
+### LeetCode
+
+LeetCode is an online platform for improving coding skills, preparing for technical interviews, and solving algorithm and data structure problems. A sample list of questions can be found here [Top Interview 150](https://leetcode.com/studyplan/top-interview-150).
+
 
 ## Puzzle Structure
 
@@ -17,12 +33,6 @@ Here we add refactoring as the third part, so we have:
 - Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your algorithms and solutions, and considering best practices. 
 
 
-## Advent of Code
-
-These first puzzles are inspired by those from 'Advent of Code.' For scientific purposes, I have used only the basic concept and included 
-self-generated data specific to the task to prevent any legal issues.
-
-For more information and to enjoy the engaging story, please visit [here](https://adventofcode.com) and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organised 'Advent of Code.'
 
 
 ## Input Data
