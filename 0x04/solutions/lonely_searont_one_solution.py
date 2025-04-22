@@ -9,13 +9,25 @@ import time
 import textwrap
 from collections import defaultdict
 from math import prod
+from enum import Enum
+
+
+class CubeColor(str, Enum):
+    """ cube colors """
+    RED = "red"
+    GREEN = "green"
+    BLUE = "blue"
+
+    @staticmethod
+    def of(color_str: str):
+        return CubeColor(color_str.strip().lower())
 
 def parse_game(line):
     """ parse a single game line into (game_id, list of round dicts) """
     def parse_round(a_round):
         cubes = defaultdict(int)
         for num, color in (block.strip().split() for block in a_round.strip().split(",")):
-            cubes[color] += int(num)
+            cubes[CubeColor.of(color)] += int(num)
         return cubes
 
     header, _, tail = line.partition(":")
@@ -26,7 +38,7 @@ def parse_game(line):
 def solve_part1(lines):
     """ solve part 1 """
     def is_game_valid(game_data):
-        max_cubes = {'red': 12, 'green': 13, 'blue': 14}  # max allowed cubes per color
+        max_cubes = { CubeColor.RED: 12, CubeColor.GREEN: 13, CubeColor.BLUE: 14 } # max allowed cubes per color
         return all(num <= max_cubes[color] for round_data in game_data for color, num in round_data.items())
 
     return sum(game_id for line in lines for game_id, game_data in [parse_game(line)]
@@ -35,7 +47,7 @@ def solve_part1(lines):
 def solve_part2(lines):
     """ solve part 2 """
     def game_power(game_data):
-        return prod(max(a_round.get(color, 0) for a_round in game_data) for color in ['red', 'green', 'blue'])
+        return prod(max(a_round.get(color, 0) for a_round in game_data) for color in CubeColor)
 
     return sum(game_power(parse_game(line)[1]) for line in lines)
 
