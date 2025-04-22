@@ -1,7 +1,7 @@
 # (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This is a simple 'pythonic' solution for task 'Tinted Coast'.
+This is a simple 'pythonic' example solution for the task 'Tinted Coast'.
 """
 
 from pathlib import Path
