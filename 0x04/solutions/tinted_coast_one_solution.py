@@ -15,7 +15,8 @@ def solve_part1(lines):
         digits = [c for c in line if c.isdigit()]
         return int(digits[0] + digits[-1]) if digits else 0
 
-    return sum(extract_digits(line) for line in lines)
+    return sum([extract_digits(line) for line in lines])
+    # return sum(extract_digits(line) for line in lines)
 
 def solve_part2(lines):
     """ solve part 2 """
@@ -81,7 +82,7 @@ def solve_puzzle():
     """ solve the puzzle """
     print("\nsolve_puzzle\n============")
 
-    config = 'i2'
+    config = 'i1'
     lines, part, expected = input_data(config)
     print(f" 1| {puzzle=}, {config=}, {part=}, {expected=}")
 
