@@ -1,0 +1,4 @@
+# test 1.5 - a star => 1; {(S-D,)}
+A;D
+B;D
+C;D

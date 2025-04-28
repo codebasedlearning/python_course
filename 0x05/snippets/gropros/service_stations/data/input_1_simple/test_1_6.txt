@@ -1,0 +1,4 @@
+# test 1.6 - a ring => 2; {(S-B, S-C), (S-C, S-A), (S-B, S-A)}
+A;B
+B;C
+C;A

@@ -1,0 +1,4 @@
+# test 1.9 - three trains, three solutions (w.o. reduction) => 2; {(S-D, S-B), (S-C, S-B), (S-A, S-C)}
+A;B
+B;C
+C;D

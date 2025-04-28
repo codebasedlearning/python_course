@@ -1,0 +1,7 @@
+# test 3.1 - optimum w.o. most-used station => 3; {(S-A, S-C, S-B)}
+A;D
+B;D
+C;D
+A1;A
+B1;B
+C1;C

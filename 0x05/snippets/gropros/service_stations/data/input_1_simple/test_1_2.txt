@@ -1,0 +1,2 @@
+# test 1.2 - three stations, one train =>  1; {(S-A,), (S-B,), (S-C,)}
+A;B;C

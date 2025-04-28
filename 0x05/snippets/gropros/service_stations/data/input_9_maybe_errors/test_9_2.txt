@@ -1,0 +1,2 @@
+# test 9.2 - empty stations => 0; {}
+;

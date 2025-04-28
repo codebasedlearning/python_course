@@ -1,0 +1,7 @@
+# IHK Beispiel 1 => 2; {(S-FFM, S-HH), (S-FFM, S-B), (S-L, S-FFM), (S-H, S-FFM)}
+HH;H;B;L;HH;B
+K;FFM;S
+HH;H;FFM;N;M
+H;FFM;N
+DA;FFM;N
+HH;FFM;M

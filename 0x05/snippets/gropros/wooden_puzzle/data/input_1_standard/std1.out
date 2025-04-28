@@ -1,0 +1,18 @@
+// std 1 - all codes - python3, time: 0.000s
+//-------------------------------------------
+Dimension 2,2,4
+Anordnung der Teile
+Ebene 4
+2 1 F
+1 2 E
+Ebene 3
+0 2
+4 0
+G A
+Ebene 2
+4 0 H
+0 0 D
+Ebene 1
+4 2
+3 1
+C B

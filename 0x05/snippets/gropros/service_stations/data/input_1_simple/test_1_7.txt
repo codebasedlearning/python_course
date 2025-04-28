@@ -1,0 +1,5 @@
+# test 1.7 - two partitions => 2; {(S-E, S-B)}
+A;B
+B;C
+D;E
+E;F

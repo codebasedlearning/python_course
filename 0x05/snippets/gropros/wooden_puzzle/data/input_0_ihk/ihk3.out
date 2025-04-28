@@ -1,0 +1,18 @@
+// IHK 3
+//-------
+Dimension 2,2,4
+Anordnung der Teile
+Ebene 4
+1 1 C
+1 0 D
+Ebene 3
+0 4
+4 1
+F E
+Ebene 2
+1 0 B
+0 2 H
+Ebene 1
+2 3
+3 0
+G A

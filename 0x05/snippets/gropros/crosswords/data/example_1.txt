@@ -1,0 +1,2 @@
+# Beispiel 1, Platz<=28
+MATSE, NETT, ESSEN, HUNGER

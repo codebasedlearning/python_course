@@ -1,0 +1,2 @@
+# test 9.3 - what a train at what stations => 1; {(S-H#J,), (S-D-E$F"G,), (S-A,B,C,)}
+A,B,C;;D-E$F"G;H#J

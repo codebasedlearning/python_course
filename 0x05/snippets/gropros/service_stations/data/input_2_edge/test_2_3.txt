@@ -1,0 +1,3 @@
+# test 2.3 - two identical trains => 1; {(S-B,), (S-A,), (S-C,)}
+A;B;C
+C;B;A

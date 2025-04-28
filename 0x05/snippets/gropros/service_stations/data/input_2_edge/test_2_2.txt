@@ -1,0 +1,2 @@
+# test 2.2 - only one station, one train => 1; {(S-A,)}
+A

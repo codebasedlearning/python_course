@@ -1,0 +1,5 @@
+// Error 1 - dimensions wrong
+//----------------------------
+Dimension 1,2,2
+A 3
+B 0

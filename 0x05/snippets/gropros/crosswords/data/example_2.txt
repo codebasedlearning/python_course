@@ -1,0 +1,2 @@
+# Beispiel 2, Platz<=36
+AUTO, LADUNG, UNGARN, MILCH

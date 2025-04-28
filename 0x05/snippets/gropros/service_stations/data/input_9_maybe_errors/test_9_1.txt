@@ -1,0 +1,4 @@
+# test 9.1 - wired names => 2; {(S-A😀, S-🍏), (S-B😂, S-🍎), (S-A😀, S-🍎)}
+A😀;B😂
+🍏;🍎
+A😀;🍎

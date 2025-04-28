@@ -1,0 +1,2 @@
+# test 4.1 - reduction 1 => 1; {(S-B,), (S-C,), (S-A,)}
+A;B;C;A;B;C;B;C;A
