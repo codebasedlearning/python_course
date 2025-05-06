@@ -165,6 +165,26 @@ see also
   - https://docs.python.org/3/library/collections.abc.html
   - https://docs.python.org/3/library/typing.html
     
-mypy:
+mypy
     https://mypy.readthedocs.io/en/stable/index.html
+    
+Variants
+  - Variance controls how types behave in generic classes or functions when 
+    substituting subtypes. You most often encounter them in:
+      - TypeVar declarations in generic classes or protocols
+      - Function arguments and return types
+	
+  - Terminology
+      - Covariant (covariant=True): Subtypes are OK when producing values 
+        (e.g., return types).
+        Covariant means a type can be replaced with a more specific subtype 
+        (e.g., List[Dog] is acceptable where List[Animal] is expected).
+        "Outputs can be more specific."
+      - Contravariant (contravariant=True): Supertypes are OK when consuming 
+        values (e.g., argument types).
+        Contravariant means a type can be replaced with a more general supertype 
+        (e.g., a function accepting Animal can be used where one accepting Dog 
+        is expected).
+        "Inputs can be more general."
+	  - Invariant (default): No substitution allowed — types must match exactly.
 """

@@ -58,7 +58,7 @@ def recap_single_inheritance():
 def show_simple_multiple_inheritance():          # simplest form of multiple inheritance
     r"""
     B12 -> A1       B21 -> A2
-         \ A2           \ A1
+         \ A2            \ A1
     """
     print("\nshow_simple_multiple_inheritance\n================================")
 

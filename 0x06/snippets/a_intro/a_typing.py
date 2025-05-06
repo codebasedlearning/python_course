@@ -132,7 +132,7 @@ def show_structural_typing():
     quack(Person())
 
     class Snake:                            # Snake structurally (!) matches Quacker.
-        def quack(self) -> None:             # It fits the protocol!
+        def quack(self) -> None:            # It fits the protocol!
             print("'Quacksssss'")
 
     print(" 2| now you -> ", end='')

@@ -21,7 +21,7 @@ def discover_unnoticed_intruder():
     """ inheritance changed """
     print("\ndiscover_unnoticed_intruder\n===========================")
 
-    class Window:                                                   # (B) 'Window' setting
+    class Window:
         def draw(self): print("Window ", end='') # ; super().draw()
 
     class ColoredRectangle(Window):
