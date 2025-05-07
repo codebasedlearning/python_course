@@ -33,7 +33,7 @@ def recap_single_inheritance():
     class C(B):
         def __init__(self):
             print("C ", end='')
-            super().__init__()              # same as 'super(B,self).__init__()'
+            super().__init__()              # same as 'super(C,self).__init__()'
 
     print(" 1| init order: ", end='')
     C()
@@ -47,7 +47,7 @@ def recap_single_inheritance():
     class D(C):
         def __init__(self):
             print("D (skip C) ", end='')    # this is _not_ best practice...
-            super(C,self).__init__()        # look in mro, find 'Self' or here 'C', call next in mro
+            super(B,self).__init__()        # look in mro, find 'Self' or here 'C', call next in mro
 
     print(" 3| init order: ", end='')
     D()
@@ -91,7 +91,7 @@ def show_simple_multiple_inheritance():          # simplest form of multiple inh
 
 def show_diamond_problem():
     r"""
-    Cv12 -> B1 -> A     Cv21 -> B2 -> A
+    C12  -> B1 -> A      C21 -> B2 -> A
           \ B2 /              \ B1 /
     """
     print("\nshow_diamond_problem\n====================")

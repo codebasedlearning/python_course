@@ -138,6 +138,8 @@ def show_structural_typing():
     print(" 2| now you -> ", end='')
     quack(Snake())
 
+    # quack(SimpleNamespace(quack=lambda: print("'Quack!!!!!'"))
+
 
 if __name__ == "__main__":
     show_nominal_typing()
