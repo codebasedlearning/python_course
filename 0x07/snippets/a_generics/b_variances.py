@@ -26,20 +26,21 @@ From https://mypy.readthedocs.io/en/stable/protocols.html
     and structural subtyping in Python.
 """
 
-from typing import Protocol, TypeVar
-from typing import List
+from typing import Protocol
 
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 
 """
-Variance describes how subtyping between complex types relates to subtyping between their components.
-	•	Covariant: Preserves the subtype relationship.
-If Dog is a Animal, then List[Dog] is a List[Animal]. ✅
-	•	Contravariant: Reverses the subtype relationship.
-If Dog is a Animal, then Handler[Animal] is a Handler[Dog]. 🤯
-	•	Invariant: No subtyping allowed at all.
-List[Dog] is not a List[Animal]. ❌ (In Python, list is invariant)
+  - Variance describes how subtyping between complex types relates to subtyping 
+    between their components.
+  - Covariant: Preserves the subtype relationship.
+    If Dog is a Animal, then List[Dog] is a List[Animal].
+  - Contravariant: Reverses the subtype relationship.
+    If Dog is a Animal, then Handler[Animal] is a Handler[Dog].
+  - Invariant: No subtyping allowed at all.
+    List[Dog] is not a List[Animal].
+    (In Python, list is invariant)
 """
 
 from typing import TypeVar, Generic
@@ -281,7 +282,9 @@ if __name__ == "__main__":
 
 ###############################################################################
 
-"""
 
-Tip: You can reuse the same TypeVar across your entire module if it has the same meaning everywhere. It’s just a symbol, not a specific instantiation.
+"""
+  - Note: You can reuse the same TypeVar across your entire module if it 
+    has the same meaning everywhere. It’s just a symbol, not a specific 
+    instantiation.
 """
