@@ -72,7 +72,7 @@ def construct_generic_box():
 
 T = TypeVar('T')                            # a generic type placeholder named 'T'
 
-class Box(Generic[T]):
+class Box[T]:                               # Box(Generic[T])
     def __init__(self, value: T):
         self.value = value
 
@@ -88,14 +88,8 @@ class Box(Generic[T]):
         return f"{self.value}[{type(self.value).__name__}]"
 
 
-# we need a class hierarchy to discuss variance
-class Animal: pass
-class Dog(Animal): pass                     # a Dog is an Animal
-class Cat(Animal): pass                     # same for Cat
-
-
 def construct_generic_typesafe_box():
-    """ discuss a protocol example """
+    """ discuss a generic box """
     print("\nconstruct_generic_typesafe_box\n==============================")
 
     int_box = Box(42)                       # int_box: Box[int] = Box(42)
@@ -110,6 +104,12 @@ def construct_generic_typesafe_box():
 
     str_box.set(12.34)                      # mypy: incompatible type => that is what we wanted!
     print(f" 4| {str_box=} ???")            # remember: at runtime it works
+
+
+# we need a class hierarchy to discuss variance
+class Animal: pass
+class Dog(Animal): pass                     # a Dog is an Animal
+class Cat(Animal): pass                     # same for Cat
 
 
 def consider_variances():
@@ -132,7 +132,7 @@ def consider_variances():
 
     """
     1) Box is invariant, i.e. 'Box[Dog]' is not a 'Box[Animal]', these are
-       distinct types
+       distinct types.
     2) We only read Animal-related info, there is no mutation.
     3) We need a concept for when you can treat Box[Dog] as Box[Animal] (and vice versa)
     """

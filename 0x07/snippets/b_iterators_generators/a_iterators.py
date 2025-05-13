@@ -16,7 +16,7 @@ are iterables because they meet the iterable protocol. However, not all
 iterables are iterators — only those implementing the .__next__() method.
 """
 
-from collections.abc import Iterator, Iterable, Sequence
+from collections.abc import Iterator, Iterable
 
 
 def show_iterables():
