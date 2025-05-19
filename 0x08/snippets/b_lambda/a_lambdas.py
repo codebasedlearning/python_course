@@ -12,7 +12,7 @@ def show_lambdas():
     """ show lambdas """
     print("\nshow_lambdas\n============")
 
-    f_plus = lambda x, y: x+y                                       # (A) lambda
+    f_plus = lambda x, y: x+y                                       # lambda
     print(f" 1| {f_plus(2,3)=}")
 
     a = 2

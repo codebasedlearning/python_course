@@ -97,6 +97,14 @@ def close_a_context_manager():
         text = reader.readlines()
 ```
 
+### 👉 Task 'Eastern Rye'
+
+The `match` snippet contains the `from_chat` function, which decides which 
+formatter to create based on the arguments passed.
+- Change the function implementation to use only the `match` command for selection.
+
+Hint: The arguments can be part of the match condition.
+
 ---
 
 ### 👉 Task 'Self-Study'
@@ -122,6 +130,7 @@ def close_a_context_manager():
 General
 - What is the main reason behind a 'context manager'?
 - What is a 'scope,' and what kind of scopes do you know?
+- What happens exactly when you import something?
 
 ---
 
