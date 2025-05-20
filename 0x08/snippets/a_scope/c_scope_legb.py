@@ -26,7 +26,7 @@ print(f" 2| def. xyz: xyz='{xyz}', globals={non_dunder_names(globals())}")
 
 # application... to be discussed
 
-def win32_print(): print(" a| printing from Windows...")
+def windows_print(): print(" a| printing from Windows...")
 def darwin_print(): print(" b| printing from macOS...")
 def linux_print(): print(" c| printing from Linux...")
 
