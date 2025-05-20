@@ -24,7 +24,7 @@ LeetCode is an online platform for improving coding skills, preparing for techni
 
 ## Puzzle Structure
 
-Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack.' 
+Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack'.
 The second part often involves a significant increase in complexity as the problem or solution space explodes. In many cases, it is essential to improve your solution concept, for example, by developing or using a clever approach to reduce the order or number of algorithmic iterations.
 
 Here we add refactoring as the third part, so we have:
