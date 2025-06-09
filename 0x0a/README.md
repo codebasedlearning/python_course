@@ -108,35 +108,23 @@ This results in:
 04| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>), ('test_case3', <function test_case3 at 0x106a1b420>)])
 ```
 
-5) ⭐ Write your own `functools.lru_cache`. This [module](https://docs.python.org/3/library/functools.html#functools.lru_cache) comes with a '@lru_cache' decorator, which gives you the ability 
+5) Write a timer decorator class (!) that measures the execution time of a function
+and prints a label if one is given.
+
+Usage examples
+```
+@Timer
+def quick():
+    time.sleep(0.3)
+
+@Timer(label="slow!")
+def slow():
+    time.sleep(0.5)
+```
+
+6) ⭐ Write your own `functools.lru_cache`. This [module](https://docs.python.org/3/library/functools.html#functools.lru_cache) comes with a '@lru_cache' decorator, which gives you the ability 
 to cache the result of your functions using the Least Recently Used (LRU) strategy. 
 For more background see also [here](https://realpython.com/lru-cache-python/).
-
----
-
-### 👉 Task 'Raven Stickweed' 
-
-1) Write a decorator 'ClassInstanceMethod' 
-```
-    class C:
-        def __init__(self, base: int):
-            self.base = base
-
-        @ClassInstanceMethod
-        def mult(clsSelf, n_times):
-            cls, self = clsSelf
-            return f"{self.base*n_times=} in {cls}"
-
-    c7 = C(base=7)
-    print(f"01| class method:  {c7.mult(5)}")
-```
-such that it gets a first argument containing the class _and_ the object information.
-(Yes I know that the type information is contained in the object. It is also just a small example of a decorator.)
-It prints
-```
-01| class method:  self.base*n_times=35 in <class '__main__.simulate_class_instance_method.<locals>.C'>
-```
-Does your solution work with inherited classes?
 
 ---
 
@@ -161,8 +149,8 @@ Does your solution work with inherited classes?
 ### 👉 Comprehension Check – Talk with your Neighbor
 
 General
-- What kind of decorator you know?
-- ...
+- What kind of decorators do you know?
+- What is the reason for using `functools`?
 
 ---
 
