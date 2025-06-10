@@ -32,6 +32,7 @@ def use_singleton():
     s1 = LightSensor()
     s2 = LightSensor()
     print(f" 1| {id(s1)=}, {id(s2)=}, identical? {s1 is s2}\n")
+    print(f" 2| {type(LightSensor)=}")
 
 
 # here, the class itself is modified
@@ -59,6 +60,7 @@ def use_add_repr():
 
     d = Data(n=12)
     print(f" 1| d: {d}, is instance of 'Data'? {isinstance(d,Data)}")
+    print(f" 2| {type(Data)=}")
 
 
 if __name__ == "__main__":

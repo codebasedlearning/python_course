@@ -81,8 +81,10 @@ EXAMPLES = dict()
 
 def example(func):
     EXAMPLES[func.__name__] = func
+    # def wrapper():
+    #     func()
+    # return wrapper
     return func
-
 
 @example
 def test_case1():
@@ -143,8 +145,8 @@ def test_timer():
 def main():
     #test_debug()
     #test_slow_down()
-    #test_example_test_cases()
-    test_timer()
+    test_example_test_cases()
+    #test_timer()
 
 if __name__ == "__main__":
     main()

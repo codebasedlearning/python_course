@@ -214,7 +214,7 @@ Sensorwerte:
 ```
 
 Definieren Sie eine lokale Funktion `filter_data` in `sensors`, die eine Liste 
-von Werten (`values`) und einen Lambdaausdruck `limiter(int)->int` bekommt, 
+von Werten (`values`) und einen Lambdaausdruck `limiter(int)->bool` bekommt, 
 der die Werte auf Gültigkeit testet (filtert).
 
 Das Ergebnis von `filter_data` soll ein Dictionary sein, welches zu jedem Sensor 
