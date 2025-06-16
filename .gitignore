@@ -14,3 +14,6 @@ venv/
 # Exercises
 exercises/
 /archive/
+
+# credentials
+.env
