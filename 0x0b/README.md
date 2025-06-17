@@ -8,7 +8,7 @@
 - threads
 - libs
   - unit tests
-  - databases, supabase and FastAPI
+  - databases
   - SciPy and NumPy
   - MS Exchange
   - ChatGPT

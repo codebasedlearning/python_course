@@ -27,7 +27,7 @@ def query_chatgpt(question):
     try:
         # question = "What is the capital of France?"
         model = "gpt-3.5-turbo"
-        # from the terminal or in .venv (without 'export'):
+        # from the terminal or in .env (without 'export'):
         #   export OPENAI_API_KEY="key"
         api_key = os.getenv("OPENAI_API_KEY")
         client = OpenAI(api_key=api_key)
