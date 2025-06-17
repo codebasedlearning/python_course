@@ -58,7 +58,7 @@ def race_conditions(n: int):
         for i in range(n_):
             current = total_sum
             current = current + inc_
-            #if hasattr(worker, 'logger'): ... # or a call, or a print
+            # if hasattr(worker, 'logger'): ... # or a call, or a print
             total_sum = current
 
     print(f"{dt()}  1| start threads, {n=}")
@@ -85,7 +85,7 @@ def critical_regions(n: int):
 
     def worker(n_, inc_):
         nonlocal total_sum
-        # lock = threading.Lock()                                   # why is this not a good place?
+        # with lock                                                 # why is this not a good place?
         for i in range(n_):
             with lock:                                              # use contextmanager! (see below)
                 current = total_sum

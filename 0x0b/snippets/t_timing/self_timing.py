@@ -24,6 +24,15 @@ From Wikipedia https://en.wikipedia.org/wiki/Elapsed_real_time
 
 Note: Often time functions call platform-specific library functions, i.e. 
 these functions are platform-dependent under the hood.
+
+Also note:
+  - `time.process_time()` measures the total aggregated CPU time for 
+    all threads in the program.
+    This can make the value seem inflated if compared to wall-clock time 
+    for multi-threaded tasks.
+
+  - To measure CPU time on a per-thread basis, consider external libraries 
+    like `psutil`.
 """
 
 # we need a non-trivial task -> recursive fib(n)
@@ -73,6 +82,22 @@ def use_process_time():
     t1_ns = time.process_time_ns()
     print(f" 2| process_time_ns: fib({benchmark_n})={fib_n_ns} in {(t1_ns - t0_ns)/1e9:0.4f} seconds | t0={t0_ns}, t1={t1_ns}")
 
+def compare_timer():
+    """ compare timer """
+    print("\ncompare_timer\n=============")
+
+    t0 = time.perf_counter()
+    fib_n = fib(benchmark_n)
+    time.sleep(1)
+    t1 = time.perf_counter()
+    print(f" 1| perf_counter:   fib({benchmark_n}), sleep 1s in {t1 - t0:0.4f} seconds | {t0=}, {t1=}")
+
+    t0 = time.process_time()
+    fib_n = fib(benchmark_n)
+    time.sleep(1)
+    t1 = time.process_time()
+    print(f" 2| process_time:   fib({benchmark_n}), sleep 1s in {t1 - t0:0.4f} seconds | {t0=}, {t1=}")
+
 
 def use_timeit():
     """ use timeit (process time); 'timeit' can also be used from the command line """
@@ -86,6 +111,7 @@ if __name__ == "__main__":
     beware_of_small_deltas()
     use_perf_counter()
     use_process_time()
+    compare_timer()
     use_timeit()
 
 

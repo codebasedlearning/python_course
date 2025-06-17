@@ -43,7 +43,7 @@ def start_multiple_threads():
     print(f"{dt()}  3| joined - done here")
 
 
-def start_multiple_threads_from_pool():                                      # (A) ThreadPoolExecutor
+def start_multiple_threads_from_pool():
     """ start multiple threads from a thread pool """
     print("\nstart_multiple_threads_from_pool\n================================")
 
@@ -58,9 +58,29 @@ def start_multiple_threads_from_pool():                                      # (
     print(f"{dt()}  3| joined - done here")
 
 
+def threads_with_results():
+    """ start multiple threads and get a result """
+    print("\nthreads_with_results\n====================")
+
+    def added(n):
+        time.sleep(1)
+        return n+1
+
+    print(f"{dt()}  1| create new threads")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        future1 = executor.submit(added, 23)
+        future2 = executor.submit(added, 42)
+        res1 = 1 #future1.result()  # this may block
+        res2 = 2 #future2.result()
+        print(f"{dt()}  2| threads started {future1=}, {future2=}")
+        print(f"{dt()}  3| {res1} {res2}")
+    print(f"{dt()}  4| joined - done here")
+
+
 if __name__ == "__main__":
-    start_multiple_threads()
-    start_multiple_threads_from_pool()
+    #start_multiple_threads()
+    #start_multiple_threads_from_pool()
+    threads_with_results()
 
 """
 ThreadPoolExecutor
