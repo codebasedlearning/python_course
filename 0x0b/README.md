@@ -32,8 +32,7 @@ Python-specific information on threading can be found here:
 [Realpython intro](https://realpython.com/intro-to-python-threading),
 [Superfastpython guide](https://superfastpython.com/threading-in-python/).
 
-Here are a couple of terms from [Realpython](https://realpython.com/intro-to-python-threading), 
-in particular in relation to `async`, `await` and AsyncIO.
+Here are a couple of terms from [Realpython](https://realpython.com/intro-to-python-threading).
 
 ### Parallelism
 Parallelism consists of performing multiple operations at the same time. 
@@ -73,80 +72,6 @@ definition:
 - Asynchronous code, through the mechanism above, facilitates concurrent 
   execution. To put it differently, asynchronous code gives the look and 
   feel of concurrency.
-
-### Chess Example
-Async IO may at first seem counterintuitive and paradoxical. How does something 
-that facilitates concurrent code use a single thread and a single CPU core? 
-This is from Miguel Grinberg’s 2017 PyCon talk, which explains everything quite
-beautifully:
-
-Chess master Judit Polgár hosts a chess exhibition in which she plays multiple 
-amateur players. She has two ways of conducting the exhibition: synchronously 
-and asynchronously.
-
-Assumptions:
-- 24 opponents
-- Judit makes each chess move in 5 seconds
-- Opponents each take 55 seconds to make a move
-- Games average 30 pair-moves (60 moves total)
-
-### Synchronous version
-Judit plays one game at a time, never two at the same time, until the game 
-is complete. Each game takes (55 + 5) * 30 == 1800 seconds, or 30 minutes. 
-The entire exhibition takes 24 * 30 == 720 minutes or 12 hours.
-
-### Asynchronous version
-Judit moves from table to table, making one move at each table. She leaves 
-the table and lets the opponent make their next move during the wait time. 
-One move on all 24 games takes Judit 24 * 5 == 120 seconds, or 2 minutes. 
-The entire exhibition is now cut down to 120 * 30 == 3600 seconds or just 
-1 hour.
-
-There is only one Judit Polgár, who has only two hands and makes only one 
-move at a time by herself. But playing asynchronously cuts the exhibition 
-time down from 12 hours to one. 
-So, cooperative multitasking is a fancy way of saying that a program’s 
-event loop (more on that later) communicates with multiple tasks to let 
-each take turns running at the optimal time.
-
-### Coroutines
-At the heart of async IO are coroutines. A coroutine is a specialized version 
-of a Python generator function. A coroutine is a function that can suspend 
-its execution before reaching return, and it can indirectly pass control 
-to another coroutine for some time.
-
-### Event Loop 
-You can think of an event loop as something like a 'while True' loop that 
-monitors coroutines, taking feedback on what’s idle, and looking around for 
-things that can be executed in the meantime. It is able to wake up an idle 
-coroutine when whatever that coroutine is waiting on becomes available.
-
-```
-asyncio.run(main())  # Python 3.7+
-```
-
-Here are a few points worth stressing about the event loop.
-- Coroutines do little on their own until they are tied to the event loop.
-- By default, an async IO event loop runs in a single thread and on a 
-  single CPU core. 
-- Event loops are pluggable. That is, you could, if you really wanted, write
-  your own event loop implementation and have it run tasks just the same. 
-
-
-## Some Rules of Async IO
-
-- The keyword `await` passes function control back to the event loop. 
-  It suspends the execution of the surrounding coroutine.
-- A function that you introduce with `async def` is a coroutine. 
-- Using `await` creates a coroutine function. To call a coroutine function, 
-  you must `await` it to get its results.
-- Just like it’s a SyntaxError to use `yield` outside of a `def` function, 
-  it is a SyntaxError to use `await` outside of an `async def` coroutine. 
-  You can only use `await` in the body of coroutines.
-- Finally, when you use `await f()`, it’s required that `f()` be an object 
-  that is awaitable. 
-- An awaitable object is either (1) another coroutine or (2) an object 
-  defining an `.__await__()` dunder method.
 
 
 ## Tasks
