@@ -263,7 +263,9 @@ Take a look at the topics covered and think about how you can prepare.
 - Descriptors
 
 #### Unit 0x0d
-...
+- ast
+- dis
+- meta classes
 
 ---
 
