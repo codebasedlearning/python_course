@@ -161,7 +161,8 @@ Hier im Beispiel gibt es drei Attribute (`ingredient_name`,
 mit Namen und Datentyp zu modellieren.
 2. In der Klasse gibt es eine statische Fabrikmethode `of`, die aus
 einem String wie `ingredient_name|s` in `line1` ein Attribut generiert.
-3. Erzeugen Sie aus einem String, der aufgebaut ist wie `line1`, mittels einer 'list comprehension' eine Liste von Attributen.
+3. Erzeugen Sie aus einem String, der aufgebaut ist wie `line1`, mittels 
+einer 'list comprehension' eine Liste von Attributen.
 4. Nutzen Sie diese Liste, um aus einer Datenzeile wie `line2` ein Dictionary 
 zu generieren, mit dem Sie direkt eine `Ingredient` Instanz erzeugen können.
 Der Code für 3. und 4. sieht (unvollständig) so aus
