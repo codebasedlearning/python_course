@@ -10,27 +10,59 @@
 - Meta Classes (teaser)
 
 
-## Tasks
+## Exam – Golden Words
 
-### System
+### Randbedingungen
 
+#### System
 Für die Prüfung stehen (voraussichtlich) bereit:
 - Python 3.11.1
 - Visual Studio Code
 - Python Extensions
 - Terminal
 
+#### 'Kofferklausur'
+- Material: Bücher, Python-Code, Cheat-Sheets, keine Binaries
+- Offline, aber Abgabe per Mail (Online-Mail-Zugang notwendig)
+
+#### Ergebnisse
+- Veröffentlichung im Ilias (Python-Seite oder Ergebnis-Seite)
+- Bei der Identitäts- und Anmeldeprüfung zu Beginn der Prüfung bekommen 
+Sie ein Passwort für die Ilias-Ergebnis-Seite und eine Nummer in dieser Form
+  - 9C73, oder
+  - F48A,
+
+  die Sie sich notieren. Unter dieser Nummer wird das Ergebnis veröffentlicht.
+- Es gibt ein detailliertes Punkteschema (wie hier), sodass Sie selber
+mit der Angabe Ihrer (Teil)punkte kontrollieren können, was fehlt. 
+- Wenn sie hierbei Abweichungen feststellen, die Sie sich nicht erklären können, können Sie das in der Einsicht vorbringen.
+
+Beispiel
+- Schema: 
+  - A1.a 7P: 1P class, docstring; 2P initializer, parameter name; 2P protected name attribute, read-property name; 1P type hints; 1P `__repr__` with `__dict__`
+  - A1.b 3P: 1P abstract class; 2P abstract properties `cost`, `calories`
+
+- Ergebnisse
+  - 9C73 A1 .a 3/7 .b 1/3 ... A2 ... => 34/60 Note 3.7
+  - F48A A1 .a 7/7 .b 2/3 ... A2 ... => 58/60 Note 1.0
+
+### Topics?
+
+- ???
+
 ---
 
-### 👉 Task '🧑‍🍳 Cooking'
+## Tasks
+
+### 👉 Task 'A1 – 🧑‍🍳 Cooking'
 
 Sie entwickeln ein System zur Verwaltung und Analyse von Kochrezepten.
 Jedes Rezept besteht aus mehreren Zutaten. Dazu gibt es einen Preis und
 Kalorieninformationen.
 
-Aufgaben (A:7P, B:3P, C:4P, D:5P, E:3P, F:8P, Summe=30P), Zeit 1h.
+Aufgaben (a:7P, b:3P, d:4P, d:5P, e:3P, f:8P, Summe=30P), Zeit 1h.
 
-#### A) (7P)
+#### a) (7P)
 
 1. Definieren Sie die Klasse `CookingPart` mit einer Beschreibung der Klasse.
 2. Instanzen sollen (zunächst) wie folgt erzeugt werden können:
@@ -44,14 +76,14 @@ im weiteren Code nicht mehr erwartet, Sie dürfen aber.
 5. Geben Sie eine Instanz wie folgt aus. 
 
 ``` 
-	print(f"A) {part=}")
+	print(f"a) {part=}")
 ```
 Die Ausgabe soll dann das Dictionary der Instanz zeigen, bspw. so
 ```
-A) part={'_name': 'Test'}
+a) part={'_name': 'Test'}
 ```
 
-#### B) (3P)
+#### b) (3P)
 
 1. Erweitern Sie die Klasse `CookingPart` zu einer abstrakten Klasse.
 2. Fügen Sie zwei abstrakte, Nur-Lese-Properties `cost` (Fliesskomma) und
@@ -60,21 +92,21 @@ A) part={'_name': 'Test'}
 Anmerkung: Sie müssen ggf. Code auskommentieren, wo Sie Instanzen erzeugen,
 denn die Klasse ist nun abstrakt.
 
-#### C) (4P)
+#### c) (4P)
 
 1. Leiten Sie eine Klasse `Ingredient` von `CookingPart` ab und ergänzen Sie
 Ihren Code derart, dass in dieser Weise Instanzen erzeugt werden können
 ```
     flour = Ingredient(ingredient_name="Flour", price_per_unit=0.2, calories_per_unit=360)
 ```
-und die Ausgabe `print(f"C) {flour=}")` diesen Text ausgibt:
+und die Ausgabe `print(f"c) {flour=}")` diesen Text ausgibt:
 ```
-C) flour={'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}
+c) flour={'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}
 ```
 2. Für die beiden Nur-Lese-Properties nutzen Sie als Rückgabewert die
 entsprechenden Attribute.
 
-#### D) (5P)
+#### d) (5P)
 
 1. Leiten Sie weiter eine Klasse `Recipe` von `CookingPart` ab und ergänzen
 Sie Ihren Code derart, dass in dieser Weise Instanzen erzeugt werden können
@@ -85,9 +117,9 @@ Sie Ihren Code derart, dass in dieser Weise Instanzen erzeugt werden können
         ingredients={flour:2,butter:3}
     )
 ```
-und die Ausgabe `print(f"D) {flour_with_butter=}")` diesen Text ausgibt:
+und die Ausgabe `print(f"d) {flour_with_butter=}")` diesen Text ausgibt:
 ```
-D) flour_with_butter={'_name': 'Flour with butter', '_category': 'Dessert', '_ingredients': {{'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}: 2, {'_name': 'Butter', '_price_per_unit': 1.5, '_calories_per_unit': 720}: 3}}
+d) flour_with_butter={'_name': 'Flour with butter', '_category': 'Dessert', '_ingredients': {{'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}: 2, {'_name': 'Butter', '_price_per_unit': 1.5, '_calories_per_unit': 720}: 3}}
 ```
 Die Werte im Dictionary `ingredients` sind die zugehörigen Mengenangaben 
 der verwendeten Ingredienzien, d.h. hier 2 Einheiten `flour` und 3 Einheiten `butter`.
@@ -97,7 +129,7 @@ Berücksichtigung der Mengenangaben. Berechnen Sie beides und nutzen Sie
 hierzu `sum` mit einer 'generator expression'.
 Im Beispiel ergeben sich `cost=4.9` und `calories=2880`.
 
-#### E) (3P)
+#### e) (3P)
 
 Für den Umgang mit Rezepten ergänzen Sie die Klasse so, dass
 1.  der Indexzugriff die zugehörige Mengenangabe zurückgibt oder eine 
@@ -111,7 +143,7 @@ Beispiel
     for ingr, quantity in flour_with_butter:
         print(f" {ingr.name}:{quantity}", end='')
 ```
-#### F) (3P)
+#### f) (3P)
 
 Die folgende Zeile `line1` enthält Informationen zum Aufbau der Zeilen einer
 Datei. Attribute sind durch Kommata getrennt und jedes Attribut enthält 
@@ -128,8 +160,9 @@ Hier im Beispiel gibt es drei Attribute (`ingredient_name`,
 1. Entwerfen Sie eine Datenklasse `Attribute`, um ein solches Attribut
 mit Namen und Datentyp zu modellieren.
 2. In der Klasse gibt es eine statische Fabrikmethode `of`, die aus
-einem String wie `line1` ein Attribut generiert.
-3. Erzeugen Sie mittels einer 'list comprehension' eine Liste von Attributen.
+einem String wie `ingredient_name|s` in `line1` ein Attribut generiert.
+3. Erzeugen Sie mittels einer 'list comprehension' eine Liste von Attributen aus
+einem String aufgebaut wie `line1`.
 4. Nutzen Sie diese Liste, um aus einer Datenzeile wie `line2` ein Dictionary 
 zu generieren, mit dem Sie direkt eine `Ingredient` Instanz erzeugen können.
 Der Code für 3. und 4. sieht (unvollständig) so aus

@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 
 
 """
-A) 7P
+a) 7P
 1. 1P class, docstring
 2. 2P initializer, parameter name
 3. 2P protected name attribute, read-property name
@@ -32,7 +32,7 @@ class CookingPartAOnly:
         return f"{self.__dict__}"
 
 """
-B) 3P
+b) 3P
 1. 1P abstract class
 2. 2P abstract properties cost, calories
 """
@@ -62,7 +62,7 @@ class CookingPart(ABC):
         return f"{self.__dict__}"
 
 """
-C) 4P
+c) 4P
 example
     flour = Ingredient(ingredient_name="Flour", price_per_unit=0.2, calories_per_unit=360)
 1. 3P subclass Ingredient, initializers w. correct names (params, attributes), super calls init
@@ -86,7 +86,7 @@ class Ingredient(CookingPart):
         return self._calories_per_unit
 
 """
-D) 5P
+d) 5P
 example
     butter = Ingredient(ingredient_name="Butter", price_per_unit=1.5, calories_per_unit=720)
     flour_with_butter = Recipe(recipe_name="Flour with butter", category="Dessert", ingredients={flour:2,butter:3})
@@ -94,7 +94,7 @@ example
 1. 1P subclass Recipe, initializers w. correct names (params, attributes), super calls init
 2. 4P implement abstract methods cost & calories, use sum w. generator expression
 
-E) 3P
+e) 3P
 1. 1P __getitem__
 2. 1P __setitem__
 3. 1P __iter__ (return iterator)
@@ -131,7 +131,7 @@ class Recipe(CookingPart):
         return iter(self._ingredients.items())
 
 """
-F) 8P
+f) 8P
 1. 3P dataclass, 2 attributes, correct data types
 2. 2P of
 3. 1P list comprehension
@@ -160,30 +160,30 @@ class Attribute:
 def solve():
     """ Solve the exam task """
 
-    # A)
+    # a)
     part = CookingPartAOnly(name="Test")
-    print(f"A) {part=}")
+    print(f"a) {part=}")
     # __str__ => 'part=<__main__.CookingPart object at 0x3e1e250c010>'
 
-    # B)
+    # b)
     # abstract CookingPart
 
-    # C)
+    # c)
     flour = Ingredient(ingredient_name="Flour", price_per_unit=0.2, calories_per_unit=360)
-    print(f"C) {flour=}")
+    print(f"c) {flour=}")
 
-    # D)
+    # d)
     butter = Ingredient(ingredient_name="Butter", price_per_unit=1.5, calories_per_unit=720)
     flour_with_butter = Recipe(
         recipe_name="Flour with butter", category="Dessert",
         ingredients={flour:2,butter:3}
     )
-    print(f"D) {flour_with_butter=}")
+    print(f"d) {flour_with_butter=}")
 
     print(f"   {flour_with_butter.cost=}, {flour_with_butter.calories=}")
 
-    # E)
-    print(f"E) {flour_with_butter[butter]=}")
+    # e)
+    print(f"e) {flour_with_butter[butter]=}")
 
     flour_with_butter[butter] = 12
     print(f"   {flour_with_butter[butter]=}")
@@ -193,11 +193,11 @@ def solve():
         print(f" {ingr.name}:{quantity}", end='')
     print()
 
-    # F)
+    # f)
     line1 = "ingredient_name|s,price_per_unit|f,calories_per_unit|i"
     line2 = "Sugar, 0.5, 400"
     attributes = [Attribute.of(text) for text in line1.strip().split(",")]
-    print(f"F) {attributes=}")
+    print(f"f) {attributes=}")
 
     kwargs = {attributes[i].name: attributes[i].typ(s) for i, s in enumerate(line2.strip().split(","))}
     sugar = Ingredient(**kwargs)
