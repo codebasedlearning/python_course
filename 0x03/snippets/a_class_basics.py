@@ -112,6 +112,14 @@ __slots__
     with a more compact internal structure.
   - Using __slots__ prevents adding arbitrary attributes at runtime and can
     improve memory usage and attribute access speed.
+
+
+pylint, error `too-few-public-methods`
+  - The class defines fewer public methods than the threshold specified by
+    Pylint (default is 2 methods). Pylint considers that a class with too few
+    public methods might be better represented as a simpler structure, such as
+    a function or a named tuple, depending on its purpose.
+
 """
 
 from utils import print_function_header
