@@ -27,7 +27,7 @@ def read_file(filename):
 
 
 def main():
-    filename_r = "../snippets/c_language/ihk_exam_sample.txt"
+    filename_r = "../snippets/ihk_exam_sample.txt"
     read_file(filename_r)
 
 
