@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses inheritance vs. composition.
@@ -9,6 +9,8 @@ Teaching focus
 """
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
+
+from utils import print_function_header
 
 
 class Vehicle:
@@ -31,8 +33,8 @@ class Bike(Vehicle):
         return " c| - Riding a bike"
 
 
+@print_function_header
 def show_inheritance():
-    print("\nshow_inheritance\n================")
 
     print(" 1| inheritance")
     for v in [Vehicle("Vehicle"), Car("Car"), Bike("Bike")]:
@@ -60,8 +62,8 @@ class Boat:
         return " a| - Driving a boat with " + self.engine.start()
 
 
+@print_function_header
 def show_composite():
-    print("\nshow_composite\n==============")
 
     print(" 2| composite")
     engine = VolvoPenta("V8")

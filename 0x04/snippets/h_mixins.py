@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses mixins.
@@ -12,6 +12,35 @@ Teaching focus
 	    (behavior)
   - In Python, a mixin is a partial class you combine via multiple inheritance
     to add functionality, not define a type or contract.
+
+Summary
+
+Topics
+  - Mixins and interfaces
+
+Mixin
+  - One reason for the window hierarchy problems seen before ('ClickableArea')
+    is that it mixes two aspects in one class: Window representation and
+    Click behaviour.
+  - If you were to isolate one aspect and make it selectively available to
+    some windows, you would have a 'mixin' situation. These classes are
+    designed in such a way that they can be easily integrated into an existing
+    hierarchy (technically via multiple inheritance) and then provide very
+    specific and limited functionality. This is what we have modelled here,
+    using a click handler as an example.
+  - Some design rules:
+      - No __init__() unless you call super() properly.
+      - Stateless or assume state provided by other parents.
+      - Single purpose: A mixin should do one thing well.
+
+  - See also:
+    https://realpython.com/lessons/multiple-inheritance-python/
+    https://realpython.com/inheritance-composition-python/
+    https://realpython.com/python-super/
+
+Callable
+  - A signature of a method that receives a function, see
+    https://docs.python.org/3/library/typing.html#typing.Callable
 """
 
 from typing import Type, Callable
@@ -20,13 +49,15 @@ import json
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 
+from utils import print_function_header
+
 
 def extract_class_names(cls: Type[object]):
     return [item.__name__ for item in cls.__mro__]
 
+@print_function_header
 def show_clickable_mixin():
     """ discuss a mixin-example """
-    print("\nshow_clickable_mixin\n====================")
 
     class Window(ABC):
         @abstractmethod
@@ -70,9 +101,9 @@ def show_clickable_mixin():
     print(f" 2| Button.mro={extract_class_names(Button)}")
 
 
+@print_function_header
 def show_serializable_mixin():
     """ discuss another mixin-example """
-    print("\nshow_serializable_mixin\n=======================")
 
     class JsonMixin:
         """ assumes the object has a __dict__, which most classes do, and adds a to_json() method """
@@ -86,7 +117,7 @@ def show_serializable_mixin():
             self.name = name
 
     # You didn’t have to reimplement serialization logic in every subclass — just mixed it in.
-    # Maby not all subclasses of Animal should have that behavior (e.g., if some require custom serialization).
+    # Maybe not all subclasses of Animal should have that behavior (e.g., if some require custom serialization).
 
     class Dog(Animal, JsonMixin):
         """ a serializable dog """
@@ -104,37 +135,3 @@ if __name__ == "__main__":
     show_clickable_mixin()
     show_serializable_mixin()
 
-
-###############################################################################
-
-
-"""
-Summary
-
-Topics
-  - Mixins and interfaces
-
-Mixin
-  - One reason for the window hierarchy problems seen before ('ClickableArea') 
-    is that it mixes two aspects in one class: Window representation and 
-    Click behaviour.
-  - If you were to isolate one aspect and make it selectively available to 
-    some windows, you would have a 'mixin' situation. These classes are 
-    designed in such a way that they can be easily integrated into an existing 
-    hierarchy (technically via multiple inheritance) and then provide very 
-    specific and limited functionality. This is what we have modelled here, 
-    using a click handler as an example.
-  - Some design rules:
-      - No __init__() unless you call super() properly.
-      - Stateless or assume state provided by other parents.
-      - Single purpose: A mixin should do one thing well.
-
-  - See also:
-    https://realpython.com/lessons/multiple-inheritance-python/
-    https://realpython.com/inheritance-composition-python/
-    https://realpython.com/python-super/
-
-Callable
-  - A signature of a method that receives a function, see
-    https://docs.python.org/3/library/typing.html#typing.Callable
-"""

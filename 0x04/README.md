@@ -1,400 +1,273 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x04` – Puzzle-Driven Programming Challenges 
-
-
-> Python is well known for its ability to quickly write scripts and proof of concepts. Today we are going to practise both, by building a quick solution to a problem (puzzle) and then doing a proper refactoring of it.
-
-> As well as the fun part, there is also a very practical side. Many companies use coding challenges as part of the application process for software developers; you are given a limited amount of time to find and present a solution to a specific problem. We also have such a situation at the well-known "Grosse Prog".
+# Unit `0x04` – Types, Inheritance, and Composition
 
 
-## Inspiration
+## Types
 
-### Advent of Code
+> Python typing is primarily a static, opt-in system layered over a dynamic runtime.
+- Static: Type hints are used by static analysis tools (like mypy, pyright, IDEs) to catch type errors before running the code—without affecting how the code runs.
+- Opt-in: Type annotations are completely optional. You can write a fully functional Python program without using any types at all.
+- Layered over: The type system is not enforced by the Python interpreter. It’s an additional layer for developers, linters, and tools — not the runtime engine.
+- Dynamic runtime: Python still behaves as a dynamically typed language at runtime. Variables and objects can be reassigned to different types, and type errors only occur when you try something invalid — not when you declare it.
 
-The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com) For scientific purposes, I have used only the basic concept and included 
-self-generated data specific to the task to avoid any legal issues.
-
-For more information and to enjoy the engaging story, please visit the website and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organized 'Advent of Code.'
-
-### LeetCode
-
-LeetCode is an online platform for improving coding skills, preparing for technical interviews, and solving algorithm and data structure problems. A sample list of questions can be found here [Top Interview 150](https://leetcode.com/studyplan/top-interview-150).
+**Please have a look at the snippet 'a_intro/a_typing'.**
 
 
-## Puzzle Structure
+> At runtime, Python uses duck typing — objects are valid if they respond to the right methods, regardless of declared types.
+At 'compile time' (static analysis time with tools like mypy or Pyright), Python supports nominal and structural typing via type hints, abstract base classes, and protocols.
+These annotations don’t change program behavior but let type checkers catch bugs early and guide tooling—they describe what should work, not what will work.
 
-Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack.' 
-The second part often involves a significant increase in complexity as the problem or solution space explodes. In many cases, it is essential to improve your solution concept, for example, by developing or using a clever approach to reduce the order or number of algorithmic iterations.
+### Overview
 
-Here we add refactoring as the third part, so we have:
-- Complete Part 1 as quickly as possible.
-- Same for Part 2. It is explicitly allowed to simply 'hack' your solution.
-- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your algorithms and solutions, and considering best practices. 
+| Concept | Definition                                                       | Python Mechanism | Checked At | Use Case |
+|---------|------------------------------------------------------------------|------------------|------------|----------|
+| Nominal Typing | Types are identified by name (class declarations)                | Class inheritance | Static (mypy) | Ensure only explicitly related types are used
+Subtyping | A class inherits from another (OOP-style hierarchy) | class Dog(Animal)                                                 |  Static & runtime | Classic inheritance behavior, isinstance and issubclass
+| Duck Typing | 'If it quacks like a duck' - no type hints, just trust           | Regular Python (no hints) | Runtime | Idiomatic Python, dynamic typing without static safety |
+| Structural Typing | Types are compatible if they look right (method signatures match) | typing.Protocol | Static (mypy) | Flexible duck typing with static checking
+| Protocols | Structural interfaces: define what methods/attrs a type must have | Protocol (optionally @runtime_checkable) | Static + runtime | Use with mypy and optionally isinstance
+
+### Summary in One-Liner Definitions
+- Nominal Typing: "Are you explicitly declared to be this thing?"
+- Subtyping: "Are you a child of this thing?"
+- Duck Typing: "Can I just try calling your methods and hope?"
+- Structural Typing: "Do you look like this thing?"
+- Protocols: "You look like the thing — and I checked that at compile time."
 
 
+## Inheritance
+
+> Inheritance lets a class reuse behavior and structure from another class. A subclass inherits methods and attributes from its parent, optionally overriding or extending them.
+> Python supports multiple inheritance, meaning a class can inherit from more than one parent.
+> Python resolves conflicts via the method resolution order (MRO), which uses the C3 linearization algorithm.
+
+### Relationship between Inheritance and Typing
+
+Inheritance is tied closely to nominal typing and subtyping:
+- A subclass is always a valid instance of its superclass.
+- Abstract base classes (ABC) enforce method implementations in subclasses, supporting nominal typing contracts.
+- Multiple inheritance with Protocols (i.e., structural typing) is also valid and lets you define capabilities without needing inheritance trees.
 
 
-## Input Data
+## Composition
 
-Parts 1 and 2 typically introduce the problem and provide sample data before addressing the actual input data.
-All data is provided in the form of text files in `data/`, e.g. 
-```
-- tinted_coast_example1.txt
-- tinted_coast_example2.txt
-- tinted_coast_input.txt
-```
+Inheritance, and especially multiple inheritance, is controversial and can 
+quickly lead to a class explosion. If the primary goal is to provide classes
+with special functionality, interfaces or policies in the form of protocols or
+specialized abstract classes or mixins are a way of keeping the class
+hierarchy, and thus the complexity, small and manageable. The same can be
+achieved with composition, which also opens up the possibility of fine-tuning
+the interface of the individual class. A nice discussion can be found 
+[here](https://realpython.com/inheritance-composition-python). 
+The 'self*'-snippets are associated code to try out.
 
-If the format of a line is given, you can rely on it. For example, if the explanation states that a line has this form 
-```
-10: 23, 46
-```
-starting with an identifier (10), followed by a colon and then a list of integer numbers (23, 46) separated with commas, then there is no need to check syntax or semantics. Note, however, the text file may end with a line break.
 
-> As a rule, you cannot assume that the data you receive from an external source is in the correct format, even if someone claims that it is. In general, it is important to handle corrupt or malicious data.
+## Topics covered
 
-> Here, we want to improve our problem-solving skills and focus on the algorithmic side. So, all files are formatted as promised.
+- Typing (nominal typing, subtyping, duck typing, structural typing)
+- single and multiple inheritance, method resolution order MRO
+- inheritance vs. composition
 
-## Overview
 
-- 'Tinted Coast' – find numbers in strings
-- 'Lonely Seafront' – analyze game values
-- 'Stonenet Sands' – 2D grid symbol search
-- 'Tortoise Cove' – simulate winning scratchcards
-- 'AoC Originals' – hand-picked examples
-
-## Puzzles
-
----
-
-### 👉 Puzzle 'Tinted Coast' (Calibration Values)
-
-You are given a list of strings. Each line contains a mix of letters and digits. Your task is to extract digits from each line in a specific way and compute the sum of the results.
-
-#### Part 1
-
-From each line extract the first digit and the last digit that appears (ignore all letters) and combine them to form a two-digit number. For example:
-
-- "a1b2c3" → first digit is 1, last digit is 3 → number is 13.
-- "x8x" → 88.
-- "abc" → no digits → 0.
-
-Sum all the resulting two-digit numbers, this is the puzzle solution.
-
-#### Example 1
-
-```
-1hhex0xrcsn
-q0g0argw
-8osi6w
-6egyk5
-ordmc6ltizb1jutl
-```
-
-The puzzle solution is `10+0+86+65+61=222`.
-
-#### Part 2
-
-The twist: digits can be written as words, and those count too! So you must also consider:
-- "one" → 1, "two" → 2, …, "nine" → 9
-
-But here’s the catch:
-- The digit words may overlap or be embedded within other letters.
-- You still extract the first and last digit, now allowing digit words as valid digits too.
-
-What is now the sum of all values?
-
-#### Example 2
-
-``` 
-zeroioufourflthreegv
-uwonevtwoyythree6b
-uoe1eh9xsfivesml7e
-ra0twoyusixdjsixfoa7qy
-eoneyffoureightpa
-```
-
-The puzzle solution (part 2) is `3+16+17+7+18=61`.
-
-#### Part 3
-
-- Refactor your solution to be as Pythonic and object-oriented as possible.
-- Use `pylint` to detect issues.
-- Feed an AI agent (ChatGPT etc.) with your solution.
-
-You will find the original task [here](https://adventofcode.com/2023/day/1)
-
-#### Solutions
-
-|           |   Part 1 | Part 2 |
-|:---------:|---------:|-------:|
-| Example 1 |      222 |        |
-| Example 2 |       90 |     61 |
-|   Input   |    44161 |  51119 |
+## Tasks
 
 ---
 
-### 👉 Puzzle 'Lonely Seafront' (Cube Games)
+### 👉 Task 'Shrimp Edge' (Protocol)
 
-You are given a list of 'games'. Each game consists of multiple rounds, and in each round, a number of colored cubes (red, green, blue) is shown.
+> You are writing a logging system. You don’t care what kind of object is being
+logged — as long as it can produce a log message.
 
-Each game is described like this:
+Part 1 (Duck Typing, no Protocols)
 
-```
-Game 4: 5 red; 17 red, 15 blue; 12 red, 7 blue, 11 green
-```
+Write a function `log(obj)` that works with any object that has a method called
+`log_message`. In detail:
+- Define two classes (`User` and `Server`) that both have a `log_message` method.
+- Implement a `log(obj)` function that calls `obj.log_message()` and prints the result.
+- Call it with a `User` and `Server` instance.
+- Try passing something without a `log_message` method — see what happens.
 
-This means:
-- Game 4 has three rounds:
-- Round 1: 5 red
-- Round 2: 17 red, 15 blue
-- Round 3: 12 red, 7 blue, 11 green
+Part 2 (with Protocol)
 
-#### Part 1
+Convert your code to use a `Protocol` for static type safety:
+- Define a `Loggable` Protocol with a method `log_message() -> str`.
+- Annotate the `log` function to require a `Loggable`.
+- Test as in part 1.
+- Use `mypy` (or any checker) to confirm type conformance.
 
-You’re told that the maximum number of cubes available per color is:
-12 red, 13 green, 14 blue.
+Part 3 / Bonus (Optional)
 
-Parse each game and check if any round exceeds the allowed cube limits. If the game is possible (i.e. all rounds stay within the cube limits), then it’s valid.
+Try making `Loggable` `@runtime_checkable` and use `isinstance` to enforce the interface dynamically.
+See https://docs.python.org/3/library/typing.html#typing.runtime_checkable
 
-Determine the sum of the IDs of all valid games.
+Key Points from the Docs
+- `@runtime_checkable` can only be applied to Protocols.
+- It enables the use of `isinstance(obj, Protocol)` and `issubclass(cls, Protocol)`.
+- The Protocol must not contain non-method members (e.g., attributes without default values) to be runtime-checkable.
 
-#### Example 1
-
-```
-Game 1: 5 red, 2 green
-Game 2: 8 blue; 2 red, 5 blue, 8 green
-Game 3: 19 green, 3 blue, 4 red; 11 green; 11 red; 7 green, 7 red; 2 blue, 6 red
-Game 4: 5 red; 17 red, 15 blue; 12 red, 7 blue, 11 green
-Game 5: 11 red, 10 green; 16 blue, 11 green
-```
-
-Here only games 1 and 2 are valid, so the solution is `1+2=3`.
-
-#### Part 2
-
-For each game, determine the minimum number of cubes required to make all the rounds possible.
-- For each color, find the maximum count used in any round.
-- Multiply these three maximums to get the game’s 'power'.
-- Return the sum of all games’ powers.
-
-Example Game:
-```
-Game 4: 5 red; 17 red, 15 blue; 12 red, 7 blue, 11 green
-```
-Max red = 17, max green = 11, max blue = 15, so the 'power' is `17 × 11 × 15 = 2805`.
-
-Do this for every game and sum all powers.
-
-#### Example 1
-
-The sum of all powers in the example is `0+128+627+2805+1936=5496`.
-
-#### Part 3
-
-- Refactor your solution to be as Pythonic and object-oriented as possible.
-- Use `pylint` to detect issues.
-- Feed an AI agent (ChatGPT etc.) with your solution.
-
-You will find the original task [here](https://adventofcode.com/2023/day/2)
-
-#### Solutions
-
-|           | Part 1 |  Part 2 |
-|:---------:|-------:|--------:|
-| Example 1 |      3 |    5496 |
-|   Input   |    542 |  206969 |
+| Version | Type Safe? | Runtime Safe? | Notes |
+|---------|------------|------------|-|
+| Duck Typing | no | no | Fast and loose |
+| Protocol | yes | no | Best for static checking |
+| Protocol + @runtime_checkable | yes | yes | Safest for real-world use |
 
 ---
 
-### 👉 Puzzle 'Stonenet Sands' (Symbols)
+### 👉 Task 'Cornwin Bay' (Mixin)
 
-You are given a 2D grid where each cell contains one of:
-- A digit (0-9)
-- A period (.), which represents empty space
-- A symbol (any non-digit, non-period character), like *, #, +, etc.
+> You’re designing a system where various objects should be printable in a custom
+format. You want to use a mixin to provide a reusable .print() method and use
+multiple inheritance to apply it across different base classes.
 
-#### Part 1
-
-Find all numbers in the grid that are adjacent to a symbol. A number is a sequence of digits (123, 8, etc.) and it is considered adjacent to a symbol if any of its digits are directly next to a symbol in the 8 neighboring positions (up, down, left, right, and the 4 diagonals).
-
-Your task is to add up all these adjacent numbers.
-
-#### Example 1
-
-```
-...$......
-51..123...
-..*.#...15
-...23...24
-.......*..
-.....11.12
-```
-Explanation:
-- 51 is adjacent to *
-- 123 is adjacent to $ and #
-- 23 is adjacent to * and #
-- 24,11,12 are adjacent to *
-- 15 is not placed next to any of the symbols
-
-The sum is `51+123+23+24+11+12=244`.
-
-#### Example 2
-
-```
-...$..1...
-..305*+...
-+..121....
-.407#..80.
-.#6..*....
-....397..*
-.#..*....*
-..544.....
-.428.....+
-..184..339
-```
-
-The sum here is `2120`.
-
-#### Part 2
-
-Extra Rule: A gear is defined as a * symbol that is adjacent to exactly two numbers.
-
-For each gear, find the two adjacent numbers, and calculate their product (called the gear ratio).
-Sum all such gear ratios.
-
-#### Examples
-
-In the first grid the only gear ratio is `51*23=1173`. In the second example there is also only one, namely `397*544=215968`. In the final input data, there will be more than one of them.
-
-#### Part 3
-
-- Refactor your solution to be as Pythonic and object-oriented as possible.
-- Use `pylint` to detect issues.
-- Feed an AI agent (ChatGPT etc.) with your solution.
-
-You will find the original task [here](https://adventofcode.com/2023/day/3)
-
-#### Solutions
-
-|           |    Part 1 |         Part 2 |
-|:---------:|----------:|---------------:|
-| Example 1 |       244 |           1173 |
-| Example 2 |      2120 |         215968 |
-|   Input   |    290027 |       15524298 |
+- Create two base classes `User` and `Server` as in task 'Shrimp Edge.' Both
+implement `__str__`.
+- Define a mixin class `PrintableMixin` that adds a method `print` which prints
+`[PRINT] ` and then the result of `__str__`.
+- Define two subclasses of `User` and `Server` and mix-in `PrintableMixin` 
+using multiple inheritance to add printing behavior.
+- Test your mixin with appropriate instances of the subclasses.
 
 ---
 
-### 👉 Puzzle 'Tortoise Cove' (Scratchcards)
+### 👉⭐ Task 'Butterfly Hops' (inheritance, composition, and class design)
 
-Each line in your data represents a scratchcard. The format is:
-```
-Card No: winning_numbers | your_numbers
-```
-e.g.
-```
-Card 1: 17 43 71 97 | 8 33 37 56 71 73 96 97
-```
-where
-- No is the card number.
-- `winning_numbers` is a list of integers.
-- `your_numbers` is another list of integers.
+> The general goal is to model an amphibious vehicle consisting of a car and 
+a boat. It is to be solved once by composition (part 1, completely without
+inheritance) and once by inheritance (part 2, as far as possible). It should
+also be possible to create and parameterize individual cars and boats.
 
-#### Part 1
+Requirements for the classes:
+- A car (class `Car`) has wheels and an engine (class `Engine`) that can reach 
+a certain maximum speed.
+- Similarly, a boat (class `Boat`) has an engine and is either a hovercraft 
+or not. 
+- Both a car and a boat have a cabin (class `Cabin`) with a number of seats. 
+- An amphibious vehicle (class `amphibian`) has two (!) engines altogether 
+(car and boat), but only one (!) cabin.
 
-For each card:
-- Count how many numbers from `your_numbers` are in `winning_numbers`.
-- If you have at least one match:
-  - The first match gives you 1 point. 
-  - Each additional match doubles the points, i.e. 1 match = 1 point, 2 matches = 2 points, 3 matches = 4 points, 4 matches = 8 points, etc.
+A quick look at the tests illustrates the structure. Note that these three
+tests look the same for both parts!
 
-What is the total score of all scratchcards?
+#### Tests
 
-#### Example 1
+Since we have not yet discussed unittests, we will use a simple `assertEqual`
+method here:
 
 ```
-Card 1: 17 43 71 97 |  8 33 37 56 71 73 96 97
-Card 2: 36 68 84 97 |  2 13 36 47 68 75 84 97
-Card 3:  2 13 64 93 |  3  4  7 31 44 64 87 94
-Card 4: 11 21 42 44 | 10 12 22 38 47 62 74 87
-Card 5: 17 57 70 94 |  5 34 50 51 57 70 80 100
+def assertEqual(first, second):
+    if first != second:
+        raise AssertionError(f"{first} != {second}")
 ```
 
-Explanation:
-- Card 1 has 2 matching numbers ⇒ 2^1 = 2 points.
-- Card 2 has 4 matches ⇒ 2^3 = 8 points.
-- Card 3 has 1 match ⇒ 1 point.
-- Card 4 has no match ⇒ 0 point.
-- Card 5 has 2 match ⇒ 2^1 = 2 point.
+Here are the tests you can run from 'main'-guard. The `car` and `boat` tests
+simply check the properties, while the `amphibian` test also checks that the
+engines are different but the cabin is the same.
 
-The total score is `2+8+1+0+2=13`.
+```
+def test_car():
+    print(f"\n 1| {Car.__mro__=}")
+    car = Car(seats=3, max_speed_car=350, wheels=4)
 
-#### Part 2
+    assertEqual(car.cabin.seats, 3)
+    assertEqual(car.engine_car.max_speed, 350)
+    assertEqual(car.wheels, 4)
 
-This time, scratchcards can generate copies of other (following) scratchcards.
-- Start with 1 of each card.
-- If a card has k matching numbers, you win 1 copy of each of the next k cards.
-- These extra cards can themselves generate further copies recursively.
+def test_boat():
+    print(f"\n 2| {Boat.__mro__=}")
+    boat = Boat(seats=2, max_speed_boat=75, hovercraft=True)
 
-Simulate this until all the cascading copies are resolved. How many total scratchcards do you end up with?
+    assertEqual(boat.cabin.seats, 2)
+    assertEqual(boat.engine_boat.max_speed, 75)
+    assertEqual(boat.hovercraft, True)
 
-Important notes:
-- You don’t 'play' beyond the last card — i.e., if you’re on Card 99 and win 3, you can only copy up to Card 100.
-- Cards don’t generate more copies of themselves — only of following cards.
+def test_amphibian():
+    print(f"\n 3| {Amphibian.__mro__=}")
+    amphibian = Amphibian(seats=4, max_speed_car=250, max_speed_boat=50, wheels=4, hovercraft=True)
 
-#### Example 1
+    assertEqual(amphibian.cabin.seats, 4)
+    assertEqual(amphibian.car.engine_car.max_speed, 250)
+    assertEqual(amphibian.car.wheels, 4)
+    assertEqual(amphibian.boat.engine_boat.max_speed, 50)
+    assertEqual(amphibian.boat.hovercraft, True)
 
-Card 1 has 2 matches, and you have 1 copy of Card 1:
-- You gain 1 copy each of Card 2 and Card 3.
-- Then, those new cards also add more cards based on their own matches!
+    assertEqual(id(amphibian.car.cabin)==id(amphibian.boat.cabin),True)
+    assertEqual(id(amphibian.car.engine_car)==id(amphibian.boat.engine_boat),False)
+```
 
-In this example you end up with 
-`(1)+(1+1)+(1+1+2)+(1+2+4)+(1+2)=17`.
 
-#### Part 3
+#### Preparation
+- Create a separate solution file for Part 1 and Part 2.
 
-- Refactor your solution to be as Pythonic and object-oriented as possible.
-- Use `pylint` to detect issues.
-- Feed an AI agent (ChatGPT etc.) with your solution.
+#### Constraints
+- The tests can, of course, be commented in and out, but they will not be
+changed in any other way.
+- Of course, you are free to use properties as well.
 
-You will find the original task [here](https://adventofcode.com/2023/day/4)
+#### Parts
 
-#### Solutions
+Part I (Composition)
 
-|           | Part 1 |          Part 2 |
-|:---------:|-------:|----------------:|
-| Example 1 |     13 |              17 |
-|   Input   |    503 | 203450115848628 |
+- Model the five classes (`Cabin`, `Engine`, `Car`, `Boat`, `Amphibian`) 
+using only compositions, i.e., a car has a cabin and an engine, and 
+an amphibian has a car and a boat, etc.
+- Design the class, its attributes, properties, and methods according to the tests.
+
+> The MROs for `Car`, `Boat` and `Amphibian` are as follows
+> - 'Car', 'object'
+> - 'Boat', 'object'
+> - 'Amphibian', 'object'
+ 
+Part II (Inheritance)
+
+- Model the five classes using (multiple) inheritance, i.e., 
+  - an amphibian is a car and a boat and, with a bit of imagination, 
+  - a car 'is' a kind of extension of a cabin, and
+  - a boat is also an extension of a cabin, but
+  - the car and the boat share the cabin (diamond problem), but not the engine!
+- Design the classes, attributes, properties, and methods according to the
+tests, taking into account the MRO (hint: `kwargs`). 
+
+> The MROs for `Car`, `Boat` and `Amphibian` are as follows
+> - 'Car', 'Cabin', 'object'
+> - 'Boat', 'Cabin', 'object'
+> - 'Amphibian', 'Car', 'Boat', 'Cabin', 'object'
 
 ---
 
-### 👉 Puzzles 'AoC Originals' 
+### 👉 Task 'Self-Study'
 
-The examples selected in AoC are partly handmade and therefore not easy to simulate with own data, so I prefer to refer to the original task. Please note that you have to register to get the data.
-
-There are a lot of 2D puzzles, so having a good and reusable class structure to deal with them might help.
-
-My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraption' and 'Sand Slabs'.
-
-### Level-1-Puzzle
-
-- [2023 - Day 11 - Cosmic Expansion](https://adventofcode.com/2023/day/11)
-- [2023 - Day 13 - Point of Incidence](https://adventofcode.com/2023/day/13)
-- [2024 - Day 04 - Ceres Search](https://adventofcode.com/2024/day/4)
-- [2024 - Day 25 - Code Chronicle - Part 1](https://adventofcode.com/2024/day/25)
-
-### Level-1+-Puzzle
-
-- [2023 - Day 21 - Step Counter - Part 1](https://adventofcode.com/2023/day/21)
-- [2024 - Day 13 - Claw Contraption - Part 1](https://adventofcode.com/2024/day/13)
-- [2024 - Day 17 - Chronospatial Computer - Part 1](https://adventofcode.com/2024/day/17)
-
-### Level-2-Puzzle
-
-- [2023 - Day 19 - Aplenty](https://adventofcode.com/2023/day/19)
-- [2023 - Day 22 - Sand Slabs](https://adventofcode.com/2023/day/22)
-- [2023 - Day 23 - A Long Walk](https://adventofcode.com/2023/day/23)
+- Review all snippets from the lecture. Ask if there are any outstanding questions.
 
 ---
 
-# Have fun!
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+
+---
+
+### 👉 Task 'Couch Potato' - Recurring homework
+
+- If you did not finish the essential tasks in the exercise, finish them at home.
+
+---
+
+### 👉 Comprehension Check - Talk with your Neighbor
+
+General
+- Characterize 'single inheritance', 'multiple inheritance' and 'composition'.
+- Characterize 'abstract classes', 'mixins' and 'protocols'.
+- What is 'nominal typing', 'structural typing' and 'duck typing'?
+- What is the famous phrase for 'duck typing'? And what does it mean?
+- What is the problem with the 'MRO' and calling the `super` function?
+
+---
+
+### 👉 Lecture Check - Online Questionare
+
+- Please participate in the survey: [Slido](https://wall.sli.do)
+
+---
+
+End of `Unit 0x06`

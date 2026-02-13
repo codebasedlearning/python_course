@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses 'protocols'.
@@ -24,16 +24,81 @@ From https://mypy.readthedocs.io/en/stable/protocols.html
     Mypy provides support for structural subtyping via protocol classes
     described below. See PEP 544 for the detailed specification of protocols
     and structural subtyping in Python.
+
+Summary
+
+Topics
+  - protocol
+  - mypy
+
+Protocol
+
+From https://en.wikipedia.org/wiki/Nominal_type_system
+  - In computer science, a type system is a nominal or nominative type system
+    (or name-based type system) if compatibility and equivalence of data types
+    is determined by explicit declarations and/or the name of the types.
+    Nominal systems are used to determine if types are equivalent, as well as
+    if a type is a subtype of another.
+    Nominal type systems contrast with structural systems, where comparisons
+    are based on the structure of the types in question and do not require
+    explicit declarations.
+
+See also
+  - https://peps.python.org/pep-0484/   type hints, type metadata for static type checkers, only specifies the semantics of nominal subtyping
+  - https://peps.python.org/pep-0544/   specify static and runtime semantics of protocol classes that will provide a support for structural subtyping (static duck typing).
+
+  - https://mypy.readthedocs.io/en/stable/protocols.html#predefined-protocols-reference
+  - https://auth0.com/blog/protocol-types-in-python/
+
+Predefined-protocols
+    Iterable[T]     def __iter__(self) -> Iterator[T]
+    Iterator[T]     def __next__(self) -> T
+                    def __iter__(self) -> Iterator[T]
+    Sized           def __len__(self) -> int
+    Container[T]    def __contains__(self, x: object) -> bool       # in-operator
+
+    Sequence        def __getitem__(self, s)
+                    def __len__(self):
+
+see also
+  - https://docs.python.org/3/reference/datamodel.html
+  - https://docs.python.org/3/library/collections.abc.html
+  - https://docs.python.org/3/library/typing.html
+
+mypy
+    https://mypy.readthedocs.io/en/stable/index.html
+
+Variants
+  - Variance controls how types behave in generic classes or functions when
+    substituting subtypes. You most often encounter them in:
+      - TypeVar declarations in generic classes or protocols
+      - Function arguments and return types
+
+  - Terminology
+      - Covariant (covariant=True): Subtypes are OK when producing values
+        (e.g., return types).
+        Covariant means a type can be replaced with a more specific subtype
+        (e.g., List[Dog] is acceptable where List[Animal] is expected).
+        "Outputs can be more specific."
+      - Contravariant (contravariant=True): Supertypes are OK when consuming
+        values (e.g., argument types).
+        Contravariant means a type can be replaced with a more general supertype
+        (e.g., a function accepting Animal can be used where one accepting Dog
+        is expected).
+        "Inputs can be more general."
+      - Invariant (default): No substitution allowed -- types must match exactly.
 """
 
 from typing import Protocol, TypeVar
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 
+from utils import print_function_header
 
+
+@print_function_header
 def show_protocol_example():
     """ discuss a protocol example """
-    print("\nshow_protocol_example\n=====================")
 
     class LineProcessor(Protocol):
         def process_line(self, line: str) -> None: ...
@@ -74,9 +139,9 @@ def show_protocol_example():
     print(f" 2| words: {run_processor(UniqueWordCollector(), data)}")
 
 
+@print_function_header
 def show_generic_protocol_example():
     """ discuss a generic protocol example """
-    print("\nshow_generic_protocol_example\n=============================")
 
     T = TypeVar('T', covariant=True)        # for static check, a template variable that keeps track of the types
 
@@ -120,71 +185,3 @@ if __name__ == "__main__":
     show_protocol_example()
     show_generic_protocol_example()
 
-
-###############################################################################
-
-
-"""
-Summary
-
-Topics
-  - protocol
-  - mypy
-
-Protocol
-
-From https://en.wikipedia.org/wiki/Nominal_type_system
-  - In computer science, a type system is a nominal or nominative type system 
-    (or name-based type system) if compatibility and equivalence of data types 
-    is determined by explicit declarations and/or the name of the types. 
-    Nominal systems are used to determine if types are equivalent, as well as 
-    if a type is a subtype of another. 
-    Nominal type systems contrast with structural systems, where comparisons 
-    are based on the structure of the types in question and do not require 
-    explicit declarations.
-
-See also
-  - https://peps.python.org/pep-0484/   type hints, type metadata for static type checkers, only specifies the semantics of nominal subtyping
-  - https://peps.python.org/pep-0544/   specify static and runtime semantics of protocol classes that will provide a support for structural subtyping (static duck typing).
-
-  - https://mypy.readthedocs.io/en/stable/protocols.html#predefined-protocols-reference
-  - https://auth0.com/blog/protocol-types-in-python/
-
-Predefined-protocols
-    Iterable[T]     def __iter__(self) -> Iterator[T]
-    Iterator[T]     def __next__(self) -> T
-                    def __iter__(self) -> Iterator[T]
-    Sized           def __len__(self) -> int
-    Container[T]    def __contains__(self, x: object) -> bool       # in-operator
-
-    Sequence        def __getitem__(self, s)
-                    def __len__(self):
-
-see also
-  - https://docs.python.org/3/reference/datamodel.html
-  - https://docs.python.org/3/library/collections.abc.html
-  - https://docs.python.org/3/library/typing.html
-    
-mypy
-    https://mypy.readthedocs.io/en/stable/index.html
-    
-Variants
-  - Variance controls how types behave in generic classes or functions when 
-    substituting subtypes. You most often encounter them in:
-      - TypeVar declarations in generic classes or protocols
-      - Function arguments and return types
-	
-  - Terminology
-      - Covariant (covariant=True): Subtypes are OK when producing values 
-        (e.g., return types).
-        Covariant means a type can be replaced with a more specific subtype 
-        (e.g., List[Dog] is acceptable where List[Animal] is expected).
-        "Outputs can be more specific."
-      - Contravariant (contravariant=True): Supertypes are OK when consuming 
-        values (e.g., argument types).
-        Contravariant means a type can be replaced with a more general supertype 
-        (e.g., a function accepting Animal can be used where one accepting Dog 
-        is expected).
-        "Inputs can be more general."
-	  - Invariant (default): No substitution allowed — types must match exactly.
-"""

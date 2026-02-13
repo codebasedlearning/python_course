@@ -1,4 +1,4 @@
-# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses various ways of unpacking.
@@ -6,12 +6,29 @@ This snippet discusses various ways of unpacking.
 Teaching focus
   - recap unpacking
   - introduce *, **, args and kwargs (as arguments)
+
+Summary
+
+Topics
+  - unpacking
+  - starred expressions (* and **)
+
+Starred expressions
+  - They allow you to unpack or capture multiple elements from a sequence
+    (like a list, tuple, or other iterable) in a concise and flexible way.
+    The `*` operator can be used in various contexts, such as assignments,
+    function arguments, or list comprehensions.
+
+See also
+  - https://docs.python.org/3/reference/expressions.html#expression-lists
 """
 
+from utils import print_function_header
 
+
+@print_function_header
 def play_with_unpacking():
     """ examples with unpacking """
-    print("\nplay_with_unpacking\n===================")
 
     data1 = [2, 3, 4]
     data2 = (5, 6)
@@ -19,13 +36,13 @@ def play_with_unpacking():
     print(f" 1| {data17=}")
 
     data15 = [1, 2, 3, 4, 5]
-    a, *b, c = data15                                           # starred expression with variable unpacking, not greedy
+    a, *b, c = data15                       # starred expression with variable unpacking, not greedy
     print(f" 2| {a=}, {b=}, {c=}, {type(b)=}")                  # unpacked b is (always) a list (not a tuple)
 
     # note, this is an error: 'a, *b, *c = data26' - Why?
 
     bc = {"b": 2, "c": 3}
-    abcd = {"a": 1, **bc, "d": 4}                               # also unpacking, but now a dict
+    abcd = {"a": 1, **bc, "d": 4}           # also unpacking, but now a dict
     print(f" 3| {abcd=}, {type(abcd)=}\n")
 
     print(" => What is a,b,c,...?\n----------------------\n")
@@ -43,7 +60,7 @@ def play_with_unpacking():
     a, b, *_ = data26
     print(f" 6| {a=}, {b=}\n")
 
-    *b, = data26                                                # difference to b=data26 ?
+    *b, = data26                            # difference to b=data26 ?
     print(f" 7| {b=}\n")
 
     # b = *data26,                                              # ',' necessary, but potential code readability issue
@@ -53,7 +70,7 @@ def play_with_unpacking():
     b = [*range(4), 4]
     print(f" 9| {b=}\n")
 
-    b = *range(4), 4                                            # from Python 3.5
+    b = *range(4), 4                        # from Python 3.5
     print(f"10| {b=}\n")
 
 
@@ -61,9 +78,9 @@ def make_number(c2, c1, c0):
     """ consider c_i as 10-digits """
     return c2*100+c1*10+c0
 
+@print_function_header
 def summarize_function_calling():
     """ summarize standard callings """
-    print("\nsummarize_function_calling\n==========================")
 
     print(f" 1| positional: {make_number(1,2,3)=}")
     print(f" 2| named:      {make_number(c2=7,c1=5,c0=3)=}")
@@ -94,23 +111,3 @@ if __name__ == "__main__":
     play_with_unpacking()
     summarize_function_calling()
 
-
-###############################################################################
-
-
-"""
-Summary
-
-Topics
-  - unpacking
-  - starred expressions (* and **)
-
-Starred expressions
-  - They allow you to unpack or capture multiple elements from a sequence 
-    (like a list, tuple, or other iterable) in a concise and flexible way. 
-    The `*` operator can be used in various contexts, such as assignments, 
-    function arguments, or list comprehensions.
-
-See also
-  - https://docs.python.org/3/reference/expressions.html#expression-lists
-"""

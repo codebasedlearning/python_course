@@ -1,11 +1,66 @@
-# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses positional and keyword arguments.
 
 Teaching focus
   - understand the calling mechanics
+
+Summary
+
+Topics
+  - (mix of) args and kwargs
+  - positional-only and keyword-only arguments, '/' and '*'
+  - starred expressions
+
+iterable
+  - From Python doc: The for statement is used to iterate over the elements of
+    a sequence (such as a string, tuple or list) or other iterable object.
+  - https://docs.python.org/3/glossary.html#term-iterable
+
+args
+  - 'sum_varying_number' is a function that takes a varying number of
+    input arguments, *args bundles these arguments.
+  - Note that 'args' is just a name and could also be called something else.
+    The important thing is the '*'.
+  - The type of 'args' is a tuple!
+  - '*' is the unpacking operator.
+  - https://realpython.com/python-kwargs-and-args/
+
+kwargs
+  - Similar to args, this time 'kwargs' collects all parameters given as
+    keyword:value.
+  - https://realpython.com/python-kwargs-and-args/
+
+mix of args and kwargs
+  - The correct order is:
+      - Standard arguments
+      - *args arguments = positional args
+      - **kwargs arguments = keyword arguments
+  - '/': all parameters before are "positional-only" (from Python 3.8)
+  - '*': end of positional parameters, start of "keyword-only"
+
+starred expressions
+  - Python splits the right-hand side, with the 'starred expression' taking
+    the expanded arguments.
+  - Overall, however, it must fit, i.e. there must not be several
+    starred expressions, nor too many or too few variables. In summary
+      - *elements, = iterable       causes elements to be a list
+      - elements = *iterable,       causes elements to be a tuple
+  - https://realpython.com/python-kwargs-and-args/
+  - https://book.pythontips.com/en/latest/args_and_kwargs.html#
+  - https://peps.python.org/pep-0448/
+
+'_'
+  - Actually, there is nothing special here, because '_' is a quite normal
+    variable name. However, by convention, '_' stands for 'not needed'
+    ('discard').
+
+See also
+  - https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists
 """
+
+from utils import print_function_header
 
 
 def sum_iterables(iterable):
@@ -19,7 +74,7 @@ def sum_iterables(iterable):
     # variant 2
     return sum(iterable)
 
-def sum_varying_number(*args):                                                     # (A) iterable
+def sum_varying_number(*args):              # (A) iterable
     """ sum up a varying number of positional arguments """
     print(f" a|   {type(args)=}")
     # variant 1 (as before)
@@ -35,9 +90,9 @@ def sum_with_base(base, *args):
     """ sum up base and a varying number of positional arguments """
     return base + sum(args)
 
+@print_function_header
 def show_args():
     """ work with args """
-    print("\nshow_args\n=========")
 
     result = sum_iterables([1, 2, 3])
     print(f" 1| {result=}")
@@ -61,7 +116,7 @@ def concat_dict(dct):
     # return result
     #
     # variant 2
-    return "".join(dct.values())                                # ""=separator
+    return "".join(dct.values())            # ""=separator
 
 
 def concat_kwargs(**kwargs):
@@ -74,9 +129,9 @@ def concat_kwargs(**kwargs):
     return "".join(kwargs.values())
 
 
+@print_function_header
 def show_kwargs():
     """ work with keyword arguments """
-    print("\nshow_kwargs\n===========")
 
     result = concat_dict({'a': 'one', 'b': 'two'})
     print(f" 1| {result=}")
@@ -94,9 +149,9 @@ def concat_mixed(a, b, *args, **kwargs):
     return f"| {a=}, {b=}, args={lst}, kwargs={dct} |"
 
 
+@print_function_header
 def show_mixed1():
     """ work with positional and keyword arguments """
-    print("\nshow_mixed1\n===========")
 
     result = concat_mixed(1, 2, 3, 4, base=5)
     print(f" 1| {result=}")
@@ -124,9 +179,9 @@ def concat_pos_or_kw(pos1, pos2, /, pos_or_kw, *, kw):
     return f"| {pos1=}, {pos2=}, {pos_or_kw=}, {kw=} |"
 
 
+@print_function_header
 def show_mixed2():
     """ work with positional and keyword arguments """
-    print("\nshow_mixed2\n===========")
 
     result = concat_pos_or_kw(1, 2, 3, kw='key')
     print(f" 1| {result=}")
@@ -142,61 +197,3 @@ if __name__ == "__main__":
     show_mixed1()
     show_mixed2()
 
-
-###############################################################################
-
-
-"""
-Summary
-
-Topics
-  - (mix of) args and kwargs
-  - positional-only and keyword-only arguments, '/' and '*'
-  - starred expressions
-
-iterable
-  - From Python doc: The for statement is used to iterate over the elements of 
-    a sequence (such as a string, tuple or list) or other iterable object.
-  - https://docs.python.org/3/glossary.html#term-iterable
-
-args
-  - 'sum_varying_number' is a functions that takes a varying number of 
-    input arguments, *args bundles these arguments.
-  - Note that 'args' is just a name and could also be called something else. 
-    The important thing is the '*'.
-  - The type of 'args' is a tuple!
-  - '*' is the unpacking operator.
-  - https://realpython.com/python-kwargs-and-args/
-
-kwargs
-  - Similar to args, this time 'kwargs' collects all parameters given as 
-    keyword:value.
-  - https://realpython.com/python-kwargs-and-args/
-
-mix of args and kwargs
-  - The correct order is:
-      - Standard arguments
-      - *args arguments = positional args
-      - **kwargs arguments = keyword arguments
-  - '/': all parameters before are "positional-only" (from Python 3.8)
-  - '*': end of positional parameters, start of "keyword-only"
-
-starred expressions
-  - Python splits the right-hand side, with the 'starred expression' taking 
-    the expanded arguments. 
-  - Overall, however, it must fit, i.e. there must not be several 
-    starred expressions, nor too many or too few variables. In summary
-      - *elements, = iterable       causes elements to be a list
-      - elements = *iterable,       causes elements to be a tuple
-  - https://realpython.com/python-kwargs-and-args/
-  - https://book.pythontips.com/en/latest/args_and_kwargs.html#
-  - https://peps.python.org/pep-0448/
-  
-'_'
-  - Actually, there is nothing special here, because '_' is a quite normal 
-    variable name. However, by convention, '_' stands for 'not needed' 
-    ('discard').
-
-See also
-  - https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists
-"""

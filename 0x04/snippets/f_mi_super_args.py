@@ -1,24 +1,55 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses multiple inheritance with respect to arguments.
 
 Teaching focus
   - calling base-class functions with arguments (kwargs)
+
+Summary
+
+Topics
+  - calling base-class functions with arguments (kwargs)
+
+Signature Change
+  - The core of the problem here is the extension of the signature of the
+    'draw' method. This is not an uncommon situation in inheritance. Derived
+    classes often represent an extension and methods are augmented with
+    additional parameters.
+    However, we have learnt that this situation is very fragile and can
+    change at any time. Depending on the order in the MRO, it is not clear
+    which parameters 'super.draw' gets.
+
+kwargs Solution
+Basically, there are two possible solutions:
+  - One is to leave the signature of the overridable functions unchanged.
+    That way the arguments are clear and everything works as expected.
+  - If there are reasons not to do this, you can wrap all parameters as
+    'named parameters' in 'kwargs' and add '**kwargs' to the corresponding
+    signatures.
+    This will allow the methods called in the hierarchy to use 'their'
+    parameters from 'kwargs' and pass the remaining ones (or all) on. We
+    have already seen that the used parameters are removed from 'kwargs'.
+    Finally, the hierarchy is rounded off as before with a universal base
+    class 'Root', which consumes all 'kwargs'.
+  - Note: In principle, 'args' could also be used, but using 'positional
+    parameters' makes things worse rather than better (imho).
 """
 
 from typing import Type
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 
+from utils import print_function_header
+
 
 def extract_class_names(cls: Type[object]):
     return [item.__name__ for item in cls.__mro__]
 
 
+@print_function_header
 def extend_signature():
     """ signature change """
-    print("\nextend_signature\n================")
 
     class Root:
         def draw(self): print("Root ", end='')          # explicitly no call to super().draw()
@@ -62,9 +93,9 @@ def extend_signature():
     print()
 
 
+@print_function_header
 def extend_signature_with_kwargs():
     """ signature change """
-    print("\nextend_signature_with_kwargs\n============================")
 
     class Root:
         def draw(self, **kwargs):
@@ -141,37 +172,3 @@ if __name__ == "__main__":
     extend_signature()
     extend_signature_with_kwargs()
 
-
-###############################################################################
-
-
-"""
-Summary
-
-Topics
-  - calling base-class functions with arguments (kwargs)
-
-Signature Change
-  - The core of the problem here is the extension of the signature of the 
-    'draw' method. This is not an uncommon situation in inheritance. Derived 
-    classes often represent an extension and methods are augmented with 
-    additional parameters.
-    However, we have learnt that this situation is very fragile and can 
-    change at any time. Depending on the order in the MRO, it is not clear 
-    which parameters 'super.draw' gets.
-
-kwargs Solution
-Basically, there are two possible solutions:
-  - One is to leave the signature of the overridable functions unchanged. 
-    That way the arguments are clear and everything works as expected.
-  - If there are reasons not to do this, you can wrap all parameters as 
-    'named parameters' in 'kwargs' and add '**kwargs' to the corresponding 
-    signatures.
-    This will allow the methods called in the hierarchy to use 'their' 
-    parameters from 'kwargs' and pass the remaining ones (or all) on. We 
-    have already seen that the used parameters are removed from 'kwargs'.
-    Finally, the hierarchy is rounded off as before with a universal base 
-    class 'Root', which consumes all 'kwargs'.
-  - Note: In principle, 'args' could also be used, but using 'positional 
-    parameters' makes things worse rather than better (imho).
-"""

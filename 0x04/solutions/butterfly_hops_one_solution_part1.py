@@ -1,10 +1,10 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-Task 'Butterfly Hops - Part 2'
+Task 'Butterfly Hops - Part 1'
 
 Topics
-  - inheritance
+  - compositions
 """
 
 from typing import Type
@@ -26,9 +26,8 @@ def assertEqual(first, second):
 
 class Cabin:
     def __init__(self, seats):
-        super().__init__()                                          # we skip kwargs for simplicity reasons here
         self.seats = seats
-        print(f" a| - {Cabin.__str__(self)}")
+        print(f" a| - {self}")
 
     def __str__(self):
         return f"cabin{{seats={self.seats}|id={id_hex(self)}}}"
@@ -37,57 +36,46 @@ class Cabin:
 class Engine:
     def __init__(self, max_speed):
         self.max_speed = max_speed
-        print(f" b| - {Engine.__str__(self)}")
+        print(f" b| - {self}")
 
     def __str__(self):
         return f"engine{{max_speed={self.max_speed}|id={id_hex(self)}}}"
 
 
-class Car(Cabin):
-    def __init__(self, wheels, max_speed_car, seats, **kwargs):
-        kwargs['seats'] = seats
-        super().__init__(**kwargs)
+class Car:
+    def __init__(self, wheels, max_speed_car, cabin=None, seats=None):
+        self.cabin = cabin if cabin is not None else Cabin(seats if seats is not None else 1)
         self.wheels = wheels
         self.engine_car = Engine(max_speed_car)
-        print(f" c| - {Car.__str__(self)}")
-
-    @property
-    def cabin(self): return self
+        print(f" c| - {self}")
 
     def __str__(self):
-        return f"car{{wheels={self.wheels},{self.engine_car},{super().__str__()}}}"
+        return f"car{{wheels={self.wheels},{self.engine_car},{self.cabin}}}"
 
 
-class Boat(Cabin):
-    def __init__(self, hovercraft, max_speed_boat, seats, **kwargs):
-        kwargs['seats'] = seats
-        super().__init__(**kwargs)
+class Boat:
+    def __init__(self, hovercraft, max_speed_boat, cabin=None, seats=None):
+        self.cabin = cabin if cabin is not None else Cabin(seats if seats is not None else 1)
         self.hovercraft = hovercraft
         self.engine_boat = Engine(max_speed_boat)
-        print(f" d| - {Boat.__str__(self)}")
-
-    @property
-    def cabin(self): return self
+        print(f" d| - {self}")
 
     def __str__(self):
-        return f"boat{{hovercraft={self.hovercraft},{self.engine_boat},{super().__str__()}}}"
+        return f"boat{{hovercraft={self.hovercraft},{self.engine_boat},{self.cabin}}} "
 
 
-class Amphibian(Car, Boat):
+class Amphibian:
     def __init__(self, seats, max_speed_car, max_speed_boat, wheels, hovercraft):
-        dct = {'wheels': wheels, 'max_speed_car': max_speed_car, 'hovercraft': hovercraft,
-               'max_speed_boat': max_speed_boat, 'seats': seats}
-        super().__init__(**dct)
-        print(f" e| - {Amphibian.__str__(self)}")
+        self._cabin = Cabin(seats)
+        self.car = Car(wheels=wheels, max_speed_car=max_speed_car, cabin=self._cabin)
+        self.boat = Boat(hovercraft=hovercraft, max_speed_boat=max_speed_boat, cabin=self._cabin)
+        print(f" e| - {self}")
 
     @property
-    def car(self): return self
-
-    @property
-    def boat(self): return self
+    def cabin(self): return self._cabin
 
     def __str__(self):
-        return f"amphibian{{{super().__str__()}}}"
+        return f"amphibian{{{self.car},{self.boat}}}"
 
 
 def test_car():

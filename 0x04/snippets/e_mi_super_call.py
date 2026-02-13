@@ -1,10 +1,50 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses multiple inheritance - the super function.
 
 Teaching focus
   - inheritance order
+
+Summary
+
+Topics
+  - mro
+  - root class problem
+
+UI / Window
+  - In this snippet, and in all others on the subject of multiple inheritance,
+    we consider a highly simplified situation of specialised classes around a GUI.
+
+Inheritance
+  - Depending on the constellation, 'Window' is no longer the 'last' class
+    before 'object'. Here is the problem:
+      - If 'Window.draw' wants to call the parent function, this is not possible
+        with 'object', because this class does not know a 'draw' method.
+      - But if 'Window' is not in the last position and 'draw' does not call
+      'super.draw' there, this call is missing.
+    Note that the class 'Window' itself has not been changed in any way at all!
+    This is just due to "later" inheritance, and you can imagine that in larger
+    class hierarchies this can happen anytime.
+    So what can be done?
+  - The essential idea for solving the above problem is a universal 'Root' class
+    from which all classes that play a role in multiple inheritance must inherit.
+    In this way, 'Root' always moves to the last position in the MRO (before
+    'object') and can 'consume' all calls and later all parameters.
+  - This has serious design implications and must be considered in the context
+    of multiple inheritance. Especially by the classes involved. It is also said
+    that classes need to co-operate.
+  - https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
+  - https://fuhm.net/super-harmful/
+
+OrderedDict
+  - OrderedDict' only matters here insofar as it inherits from 'dict'. The
+    special thing about it is that the order in which the elements are inserted
+    is kept. This is something that a previous version of the 'dict' class could
+    not guarantee. In the meantime, however, this feature is also available in
+    an improved version of 'dict', though more by accident than necessity. The
+    story is here
+    https://realpython.com/python-ordereddict/
 """
 
 from typing import Type
@@ -12,14 +52,16 @@ from collections import OrderedDict
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 
+from utils import print_function_header
+
 
 def extract_class_names(cls: Type[object]):
     return [item.__name__ for item in cls.__mro__]
 
 
+@print_function_header
 def discover_unnoticed_intruder():
     """ inheritance changed """
-    print("\ndiscover_unnoticed_intruder\n===========================")
 
     class Window:
         def draw(self): print("Window ", end='') # ; super().draw()
@@ -46,9 +88,9 @@ def discover_unnoticed_intruder():
     print()
 
 
+@print_function_header
 def new_base_class_in_town():
     """ changing base classes """
-    print("\nnew_base_class_in_town\n======================")
 
     class Window:
         def draw(self): print("Window ", end='')            # ; super().draw() missing?
@@ -77,9 +119,9 @@ def new_base_class_in_town():
     print()
 
 
+@print_function_header
 def introduce_root_class():
     """ introduce a universal 'Root' class """
-    print("\nintroduce_root_class\n====================")
 
     # Only one path to Root is needed in the hierarchy.
 
@@ -112,12 +154,12 @@ def introduce_root_class():
     print()
 
 
+@print_function_header
 def show_non_cooperating_classes():
     """ example for non-cooperative classes """
-    print("\nshow_non_cooperating_classes\n============================")
 
-    class LogDict(dict):                                            # dict with logging new values
-        def __setitem__(self, key, value):                          # self[key] = value
+    class LogDict(dict):                    # dict with logging new values
+        def __setitem__(self, key, value):  # self[key] = value
             print(f" a| - LogDict['{key}']={value}")
             super().__setitem__(key, value)
 
@@ -149,49 +191,3 @@ if __name__ == "__main__":
     introduce_root_class()
     show_non_cooperating_classes()
 
-
-
-###############################################################################
-
-
-"""
-Summary
-
-Topics
-  - mro
-  - root class problem
-
-UI / Window
-  - In this snippet, and in all others on the subject of multiple inheritance, 
-    we consider a highly simplified situation of specialised classes around a GUI.
-
-Inheritance
-  - Depending on the constellation, 'Window' is no longer the 'last' class 
-    before 'object'. Here is the problem:
-      - If 'Window.draw' wants to call the parent function, this is not possible 
-        with 'object', because this class does not know a 'draw' method.
-      - But if 'Window' is not in the last position and 'draw' does not call 
-      'super.draw' there, this call is missing. 
-    Note that the class 'Window' itself has not been changed in any way at all!
-    This is just due to "later" inheritance, and you can imagine that in larger 
-    class hierarchies this can happen anytime.
-    So what can be done?
-  - The essential idea for solving the above problem is a universal 'Root' class 
-    from which all classes that play a role in multiple inheritance must inherit.
-    In this way, 'Root' always moves to the last position in the MRO (before 
-    'object') and can 'consume' all calls and later all parameters.
-  - This has serious design implications and must be considered in the context 
-    of multiple inheritance. Especially by the classes involved. It is also said 
-    that classes need to co-operate. 
-  - https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
-  - https://fuhm.net/super-harmful/
-
-OrderedDict
-  - OrderedDict' only matters here insofar as it inherits from 'dict'. The 
-    special thing about it is that the order in which the elements are inserted 
-    is kept. This is something that a previous version of the 'dict' class could 
-    not guarantee. In the meantime, however, this feature is also available in 
-    an improved version of 'dict', though more by accident than necessity. The 
-    story is here 
-    https://realpython.com/python-ordereddict/
-"""
