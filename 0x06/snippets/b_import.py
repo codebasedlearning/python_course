@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about import and scopes.
@@ -15,16 +15,16 @@ def non_dunder_names(dct):
     return [name for name in dct if not name.startswith('__')]
 
 
-_filename = pathlib.Path(__file__).stem                 # '_' means 'internal use'
+_filename = pathlib.Path(__file__).stem     # '_' means 'internal use'
 
 print(f" 1| start of '{_filename}', {__name__=}")
 
 print(f" 2| before import, globals={non_dunder_names(globals())}")
 
-import b_the_module as calc_module                      # known: calc_module.add1, calc_module.one
+import b_the_module as calc_module          # known: calc_module.add1, calc_module.one
 print(f" 3| after import module, globals={non_dunder_names(globals())}")
 
-from b_the_module import add1                           # known: add1
+from b_the_module import add1               # known: add1
 print(f" 4| after import add1, globals={non_dunder_names(globals())}\n"
       f"    ids {id(add1)=}, {id(calc_module.add1)=}")
 

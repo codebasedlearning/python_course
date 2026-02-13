@@ -1,25 +1,30 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet covers the scopes not affected by the LEGB rule.
 
 Teaching focus
   - LEGB
+
+comprehension
+  - The loop variable in a comprehension is only local to the structure.
 """
+
+from utils import print_function_header
 
 
 # comprehension variables Scope: lists, dictionaries and sets
 
+@print_function_header
 def show_comprehension_scope():
     """ show comprehension scope """
-    print("\nshow_comprehension_scope\n========================")
 
     s = 0
     for i in range(5):
         s += i
-    print(f" 1| locals={locals()}")                                 # 'i' is known (last value)
+    print(f" 1| locals={locals()}")         # 'i' is known (last value)
 
-    lst = [item*2 for item in range(5)]                             # (A) comprehensions, 'item' is not
+    lst = [item*2 for item in range(5)]     # (A) comprehensions, 'item' is not
     dct = {item: item**2 for item in range(5)}
     loc = [f"{locals()}" for item in range(1)]                      # try to access temp. locals()
     print(f" 2| locals={locals()}")
@@ -27,15 +32,15 @@ def show_comprehension_scope():
 
 # exception scope
 
+@print_function_header
 def show_exception_scope():
     """ show exception scope """
-    print("\nshow_exception_scope\n====================")
 
-    err = 1                                                         # 'err' is defined here...
+    err = 1                                 # 'err' is defined here...
     print(f" 1| {err=}, {locals()=}")
     try:
         raise RuntimeError("something wrong")
-    except RuntimeError as err:                                     # exception blocks, 'err' local to the block
+    except RuntimeError as err:             # exception blocks, 'err' local to the block
         print(f" 2| {err=}, {locals()=}")
     # print(err)
     print(f" 3| {err if 'err' in locals() else "?"}, {locals()=}")
@@ -49,7 +54,7 @@ def non_dunder_names(dct):
 # class scope, defining a class creates a new local Python scope with different rules
 
 class Base:
-    attr = 123                                                      # class attributes
+    attr = 123                              # class attributes
 
     def __init__(self, n):
         self.n = n
@@ -63,9 +68,9 @@ class Derived(Base):
         self.m = m
 
 
+@print_function_header
 def show_class_scope():
     """ show class scope """
-    print("\nshow_class_scope\n================")
 
     print(f" 1| Base.attr={Base.attr}\n"
           f"    Base.dict={non_dunder_names(Base.__dict__)}\n"
@@ -94,8 +99,3 @@ if __name__ == "__main__":
     show_comprehension_scope()
     show_exception_scope()
     show_class_scope()
-
-"""
-comprehension
-  - The loop variable in a comprehension is only local to the structure.
-"""

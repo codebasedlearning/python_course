@@ -1,14 +1,50 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about context managers.
 
 Teaching focus
   - with
+
+'with' use cases
+  - Open and close          e.g. file io
+  - Lock and release            mutex
+  - Change and reset            data
+  - Create and delete           temp. ressource
+  - Enter and exit              functions
+  - Start and stop              timer
+  - Setup and teardown          tests
+
+ContextManager
+From https://realpython.com/python-with-statement/
+  - The context manager object results from evaluating the expression after
+    with. In other words, expression must return an object that implements
+    the context management protocol. This protocol consists of two special methods:
+      - .__enter__() is called by the with statement to enter the runtime context.
+      - .__exit__() is called when the execution leaves the with code block.
+  - The 'as' specifier is optional. If you provide a target_var with as, then
+    the return value of calling .__enter__() on the context manager object is
+    bound to that variable.
+
+See
+    https://docs.python.org/3/reference/compound_stmts.html#the-with-statement
+    https://peps.python.org/pep-0343/
+    https://realpython.com/python-with-statement/
+
+@contextmanager
+  - A short form. Runs the code up to the 'yield' ('init' and 'enter') and the
+    code after that instead of 'exit'.
+
+closing
+  - Historically, there have been resources that do not support the ContextManager
+    protocol, but have a 'close' function to release the resources. With 'closing'
+    you build a ContextManager around it, see
+    https://docs.python.org/3/library/contextlib.html#contextlib.closing
 """
 
 import unittest
 from contextlib import contextmanager, closing
+from utils import print_function_header
 
 """
 'with' use cases
@@ -25,9 +61,9 @@ with expression as target_var:
 """
 
 
+@print_function_header
 def context_manager_examples():
     """ context manager examples """
-    print("\ncontext_manager_examples\n========================")
 
     # example 1 - see a_file_io.py
     # with open(filename, 'w') as writer:
@@ -45,16 +81,16 @@ def context_manager_examples():
     # more examples as tasks
 
 
+@print_function_header
 def new_context_managers():
     """ new context managers """
-    print("\nnew_context_managers\n====================")
 
-    class SimpleIncrementContextManager:                            # (A) ContextManager
+    class SimpleIncrementContextManager:    # (A) ContextManager
         def __init__(self, n: int):
             self.n = n + 1
             print(f" a|     init {n=}, {self.n=}")
 
-        def __enter__(self):                                        # context manager protocol
+        def __enter__(self):                # context manager protocol
             self.n = self.n + 1
             print(f" b|     enter {self.n=}")
             return self.n
@@ -84,7 +120,7 @@ def new_context_managers():
             print(*args, **kwargs)
 
     print(f" 3| use PrintContextManager")
-    with PrintContextManager(4) as pcm:                             # 'pcm' is the result of enter
+    with PrintContextManager(4) as pcm:     # 'pcm' is the result of enter
         pcm.print(f"more output... type pcm: {type(pcm)}")
     print(f" 4| after PrintContextManager")
 
@@ -100,8 +136,8 @@ def new_context_managers():
                 print(f">>>>>>>>>> IndexError... Really? Again?")
                 print(f"           block: {exc_type}")
                 print(f"<<<<<<<<<< message: {exc_value}")
-                return True                                         # 'swallow' exceptions
-            return False                                            # technically not necessary
+                return True                 # 'swallow' exceptions
+            return False                    # technically not necessary
 
         def __getitem__(self, key):
             return self.items[key]
@@ -114,11 +150,11 @@ def new_context_managers():
     print(f" 8| after Guard\n")
 
 
+@print_function_header
 def annotated_context_managers():
     """ annotated context managers """
-    print("\nannotated_context_managers\n==========================")
 
-    @contextmanager                                                 # (B) @contextmanager
+    @contextmanager                         # (B) @contextmanager
     def indent_context_manager(indent_level):
         spaces = ' ' * indent_level
         print(f"{spaces}Enter...")
@@ -131,9 +167,9 @@ def annotated_context_managers():
     print(f" 2| after indent_context_manager")
 
 
+@print_function_header
 def close_a_context_manager():
     """ close a context manager """
-    print("\nclose_a_context_manager\n=======================")
 
     class Resource:
         def close(self):
@@ -141,7 +177,7 @@ def close_a_context_manager():
 
     print(f" 1| use Resource")
     # with Resource():                                              # does not support protocol
-    with closing(Resource()) as res:                                # (C) closing
+    with closing(Resource()) as res:        # (C) closing
         print(f"    type res: {type(res)}")
     print(f" 2| after using Resource")
 
@@ -151,41 +187,3 @@ if __name__ == "__main__":
     new_context_managers()
     annotated_context_managers()
     close_a_context_manager()
-
-
-"""
-'with' use cases
-  - Open and close          e.g. file io
-  - Lock and release            mutex
-  - Change and reset            data
-  - Create and delete           temp. ressource
-  - Enter and exit              functions
-  - Start and stop              timer
-  - Setup and teardown          tests
-
-ContextManager
-From https://realpython.com/python-with-statement/
-  - The context manager object results from evaluating the expression after 
-    with. In other words, expression must return an object that implements 
-    the context management protocol. This protocol consists of two special methods:
-      - .__enter__() is called by the with statement to enter the runtime context.
-      - .__exit__() is called when the execution leaves the with code block.
-  - The 'as' specifier is optional. If you provide a target_var with as, then 
-    the return value of calling .__enter__() on the context manager object is 
-    bound to that variable.
-
-See
-    https://docs.python.org/3/reference/compound_stmts.html#the-with-statement
-    https://peps.python.org/pep-0343/
-    https://realpython.com/python-with-statement/
-
-@contextmanager
-  - A short form. Runs the code up to the 'yield' ('init' and 'enter') and the 
-    code after that instead of 'exit'.
-
-closing
-  - Historically, there have been resources that do not support the ContextManager 
-    protocol, but have a 'close' function to release the resources. With 'closing' 
-    you build a ContextManager around it, see
-    https://docs.python.org/3/library/contextlib.html#contextlib.closing
-"""

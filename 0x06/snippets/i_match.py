@@ -1,14 +1,35 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is a _first_ introduction to Python's match statement..
 
 Teaching focus
   - match
+
+match with structure
+From https://peps.python.org/pep-0636/
+    match 'subject', e.g. [action, obj]
+      - Verify that the subject has certain structure. In your case, the [action, obj] pattern matches any sequence of
+        exactly two elements. This is called matching.
+      - It will bind some names in the pattern to component elements of your subject. In this case, if the list has
+        two elements, it will bind action = subject[0] and obj = subject[1].
+    If there's no match, nothing happens and the statement after match is executed next.
+
+match with type and value
+  - A match is valid if the type and values match.
+
+The topic is not that easy. You can imagine that because of the number of PEPs:
+PEP 634 – Structural Pattern Matching: Specification
+    https://peps.python.org/pep-0634
+PEP 635 – Structural Pattern Matching: Motivation and Rationale
+    https://peps.python.org/pep-0635
+PEP 636 – Structural Pattern Matching: Tutorial
+    https://peps.python.org/pep-0636
 """
 
 from enum import Enum, auto
 from dataclasses import dataclass
+from utils import print_function_header
 
 
 class Color(Enum):
@@ -17,9 +38,9 @@ class Color(Enum):
     BLUE = auto()
 
 
+@print_function_header
 def classical_switch():                     # match like a switch
     """ classical_switch """
-    print("\nclassical_switch\n================")
 
     print(f" 1| switch-case-structure: color:", end='')
     color = Color.GREEN
@@ -32,9 +53,9 @@ def classical_switch():                     # match like a switch
             print("blue")
 
 
+@print_function_header
 def command_example():                      # match with structure
     """ command_example """
-    print("\ncommand_example\n===============")
 
     match "look here".split():              # try "look", "look here !" etc
         case [action]:
@@ -62,12 +83,12 @@ def command_example():                      # match with structure
         case ["run", _]:
             print(f"11| run unknown direction")
 
-    match {'index': 1, 'name': "Ben"}:                  # try; extra keys in the subject will be ignored
+    match {'index': 1, 'name': "Ben"}:      # try; extra keys in the subject will be ignored
         case {"index": index, "name": name}:            # keys need to be literals
             print(f"12| index={index}, name='{name}'")
         case {"sleep": duration}:
             print(f"13| sleep={duration}")
-        case {"text": str() as message}:                # check for types
+        case {"text": str() as message}:    # check for types
             print(f"14| text={message}")
 
     @dataclass
@@ -111,9 +132,9 @@ def from_chat(text: str | None = None, force_json: bool = False, force_xml: bool
         return None
 
 
+@print_function_header
 def formatter_example():
     """ command_example """
-    print("\nformatter_example\n=================")
 
     # the 'Eastern Rye' task provides unit tests for this
     print()
@@ -134,25 +155,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-"""
-match with structure
-From https://peps.python.org/pep-0636/
-    match 'subject', e.g. [action, obj]
-      - Verify that the subject has certain structure. In your case, the [action, obj] pattern matches any sequence of 
-        exactly two elements. This is called matching.
-      - It will bind some names in the pattern to component elements of your subject. In this case, if the list has 
-        two elements, it will bind action = subject[0] and obj = subject[1].
-    If there’s no match, nothing happens and the statement after match is executed next.
-
-match with type and value
-  - A match is valid if the type and values match.
-
-The topic is not that easy. You can imagine that because of the number of PEPs: 
-PEP 634 – Structural Pattern Matching: Specification
-    https://peps.python.org/pep-0634
-PEP 635 – Structural Pattern Matching: Motivation and Rationale
-    https://peps.python.org/pep-0635
-PEP 636 – Structural Pattern Matching: Tutorial
-    https://peps.python.org/pep-0636
-"""

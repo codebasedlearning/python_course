@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about scopes and the LEGB rule.
@@ -6,6 +6,22 @@ This snippet is about scopes and the LEGB rule.
 Teaching focus
   - import
   - LEGB
+
+closures
+
+From https://en.wikipedia.org/wiki/Closure_(computer_programming)
+  - In programming languages, a closure, also lexical closure or function
+    closure, is a technique for implementing lexically scoped name binding
+    in a language with first-class functions. Operationally, a closure is
+    a record storing a function[a] together with an environment.
+  - The environment is a mapping associating each free variable of the function
+    (variables that are used locally, but defined in an enclosing scope) with
+    the value or reference to which the name was bound when the closure was
+    created. Unlike a plain function, a closure allows the function to access
+    those captured variables through the closure's copies of their values or
+    references, even when the function is invoked outside their scope.
+
+See https://realpython.com/inner-functions-what-are-they-good-for/
 """
 
 # Recap: For the sake of clarity, let's look at the global namespace first,
@@ -20,7 +36,7 @@ def non_dunder_names(dct):
 
 
 print(f" 1| globals={non_dunder_names(globals())}")     # globals() = dict. impl. current module namespace
-globals()['xyz'] = "HiHo"                               # change globals is (tech.) ok (IDE is surprised...)
+globals()['xyz'] = "HiHo"                   # change globals is (tech.) ok (IDE is surprised...)
 print(f" 2| def. xyz: xyz='{xyz}', globals={non_dunder_names(globals())}")
 
 
@@ -31,16 +47,18 @@ def darwin_print(): print(" b| printing from macOS...")
 def linux_print(): print(" c| printing from Linux...")
 
 
-import platform                                             # https://docs.python.org/3/library/platform.html
+import platform                             # https://docs.python.org/3/library/platform.html
+from utils import print_function_header
+
 printer = globals()[platform.system().lower() + '_print']   # 'Linux', 'Darwin', 'Java', 'Windows'
 printer()
 
 
 # local
 
+@print_function_header
 def show_local_scope():
     """ show local scope """
-    print("\nshow_local_scope\n================")
 
     a = 1
     b = 2
@@ -63,9 +81,9 @@ def show_local_scope():
 
 # enclosing
 
+@print_function_header
 def show_enclosing_scope():
     """ show local scope """
-    print("\nshow_enclosing_scope\n====================")
 
     # 'local scope' of 'show_enclosing_scope' and 'enclosing scope' of 'f'
     y = 1
@@ -95,9 +113,9 @@ def doubled_power_factory(exp):             # closure fact., exp and scaling are
     return power                            # return a closure
 
 
+@print_function_header
 def show_enclosing_application():
     """ show enclosing scope and application of a closure """
-    print("\nshow_enclosing_application\n==========================")
 
     square = doubled_power_factory(2)
     cube = doubled_power_factory(3)
@@ -117,9 +135,9 @@ def create_func_tuple():
     return lambda _x: add_to_sum("f1", _x), lambda _x: add_to_sum("f2", _x + _x)
 
 
+@print_function_header
 def show_enclosing_edge_case():
     """ show enclosing scope and application of a closure """
-    print("\nshow_enclosing_edge_case\n========================")
 
     print(f" 1| create two closures with shared state")
     add_x, add_2x = create_func_tuple()
@@ -130,9 +148,9 @@ def show_enclosing_edge_case():
 
 # builtin
 
+@print_function_header
 def show_builtin_scope():
     """ show builtin scope """
-    print("\nshow_builtin_scope\n==================")
 
     print(f" 1| builtin: {non_dunder_names(__builtins__.__dict__)}\n")
     # change builtins ok
@@ -140,9 +158,9 @@ def show_builtin_scope():
     print(f" 2| new def.: {code_based}")
 
 
+@print_function_header
 def show_builtin_application():
     """ show builtin application """
-    print("\nshow_builtin_application\n========================")
 
     import builtins as std                  # in case of name conflicts
     print(f" 1| {std.abs(-5)=}")
@@ -155,22 +173,3 @@ if __name__ == "__main__":
     show_enclosing_edge_case()
     show_builtin_scope()
     show_builtin_application()
-
-"""
-
-closures
-
-From https://en.wikipedia.org/wiki/Closure_(computer_programming)
-  - In programming languages, a closure, also lexical closure or function 
-    closure, is a technique for implementing lexically scoped name binding 
-    in a language with first-class functions. Operationally, a closure is 
-    a record storing a function[a] together with an environment. 
-  - The environment is a mapping associating each free variable of the function 
-    (variables that are used locally, but defined in an enclosing scope) with 
-    the value or reference to which the name was bound when the closure was 
-    created. Unlike a plain function, a closure allows the function to access 
-    those captured variables through the closure's copies of their values or 
-    references, even when the function is invoked outside their scope.
-
-See https://realpython.com/inner-functions-what-are-they-good-for/
-"""

@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about scopes and the 'globals' and 'locals' dictionary.
@@ -10,6 +10,56 @@ Instead of running 'main', we will look at this script from top to bottom,
 explaining the terms one by one. We will summarize everything at the end.
 You can run the script by selecting Run from the context menu in the project
 tree (as there is no 'main guard' here).
+
+Closing remarks (almost)
+
+From https://realpython.com/python-scope-legb-rule/#using-scope-related-built-in-functions
+  - Python resolves names using the so-called LEGB rule, which is named after
+    the Python scope for names.
+  - The letters in LEGB stand for Local, Enclosing, Global, and Built-in.
+      - Local (or function) scope is the code block or body of any Python
+        function or lambda expression.
+      - Enclosing (or nonlocal) scope is a special scope that only exists
+        for nested functions.
+      - Global (or module) scope is the top-most scope in a Python program,
+        script, or module. This Python scope contains all of the names that
+        you define at the top level of a program or a module. Names in this
+        Python scope are visible from everywhere in your code.
+      - Built-in scope is a special Python scope that's created or loaded
+        whenever you run a script or open an interactive session. This scope
+        contains names such as keywords, functions, exceptions, and other
+        attributes that are built into Python.
+
+  - You'll find some Python structures where name resolution seems not to
+    fit into the LEGB rule for Python scopes. These structures include:
+      - Comprehensions
+      - Exception blocks
+      - Classes and instances
+    We now (in a minute) look at these different scopes.
+
+---
+dir() and vars():
+
+From https://docs.python.org/3/library/functions.html
+
+vars(object):
+  - Return the __dict__ attribute for a module, class, instance, or any other
+    object with a __dict__ attribute.
+
+dir(object)
+  - Without arguments, return the list of names in the current local scope.
+    With an argument, attempt to return a list of valid attributes for that
+    object.
+  - The default dir() mechanism behaves differently with different types
+    of objects, as it attempts to produce the most relevant, rather than
+    complete, information:
+      - If the object is a module object, the list contains the names of
+        the module's attributes.
+      - If the object is a type or class object, the list contains the names
+        of its attributes, and recursively of the attributes of its bases.
+      - Otherwise, the list contains the object's attributes' names, the
+        names of its class's attributes, and recursively of the attributes
+        of its class's base classes.
 """
 
 """
@@ -118,62 +168,10 @@ print(f" 7| local vars in 'access_x_v1': {access_x_v1.__code__.co_varnames}\n"
 
 # finally
 
-print(f" 8|   globals={globals()}\n"                    # globals()
+print(f" 8|   globals={globals()}\n"        # globals()
       f"      non_dunder={non_dunder_names(G)}\n"
-      f"       locals={locals()}\n"                     # at module level, locals and globals same dict.
+      f"       locals={locals()}\n"         # at module level, locals and globals same dict.
       f"       id(locals)={id(locals())}, id(globals)={id(globals())}\n"
-      f"         vars={vars()}\n"                       # here vars = globals = locals
+      f"         vars={vars()}\n"           # here vars = globals = locals
       f"    vars.keys={sorted(vars().keys())}\n"
-      f"          dir={sorted(dir())}")                 # here vars.key() = dir()
-
-"""
-Closing remarks (almost) 
-
-From https://realpython.com/python-scope-legb-rule/#using-scope-related-built-in-functions
-  - Python resolves names using the so-called LEGB rule, which is named after 
-    the Python scope for names. 
-  - The letters in LEGB stand for Local, Enclosing, Global, and Built-in.
-      - Local (or function) scope is the code block or body of any Python 
-        function or lambda expression.
-      - Enclosing (or nonlocal) scope is a special scope that only exists 
-        for nested functions.
-      - Global (or module) scope is the top-most scope in a Python program, 
-        script, or module. This Python scope contains all of the names that 
-        you define at the top level of a program or a module. Names in this 
-        Python scope are visible from everywhere in your code.
-      - Built-in scope is a special Python scope that’s created or loaded 
-        whenever you run a script or open an interactive session. This scope 
-        contains names such as keywords, functions, exceptions, and other 
-        attributes that are built into Python.
-
-  - You’ll find some Python structures where name resolution seems not to 
-    fit into the LEGB rule for Python scopes. These structures include:
-      - Comprehensions
-      - Exception blocks
-      - Classes and instances
-    We now (in a minute) look at these different scopes.
-
----
-dir() and vars():
-
-From https://docs.python.org/3/library/functions.html
-
-vars(object):
-  - Return the __dict__ attribute for a module, class, instance, or any other 
-    object with a __dict__ attribute.
-
-dir(object)
-  - Without arguments, return the list of names in the current local scope. 
-    With an argument, attempt to return a list of valid attributes for that 
-    object.
-  - The default dir() mechanism behaves differently with different types 
-    of objects, as it attempts to produce the most relevant, rather than 
-    complete, information:
-      - If the object is a module object, the list contains the names of 
-        the module’s attributes.
-      - If the object is a type or class object, the list contains the names 
-        of its attributes, and recursively of the attributes of its bases.
-      - Otherwise, the list contains the object’s attributes’ names, the 
-        names of its class’s attributes, and recursively of the attributes 
-        of its class’s base classes.
-"""
+      f"          dir={sorted(dir())}")     # here vars.key() = dir()
