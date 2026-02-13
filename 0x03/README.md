@@ -1,4 +1,4 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
 # Unit `0x03` – First Classes – Finalize Basics
 

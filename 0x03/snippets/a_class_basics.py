@@ -63,7 +63,7 @@ __str__, __repr__
 __new__, __init__
   - In fact, the process of creating and initialising an instance consists
     of several steps.
-    From Python doc https://docs.python.org/2/reference/datamodel.html#basic-customization
+    From Python doc https://docs.python.org/3/reference/datamodel.html#basic-customization
       - __new__(cls[, ...]) is called to create a new instance of class cls.
         __new__() is a static method (special-cased so you need not declare it
         as such) that takes the class of which an instance was requested as its
@@ -89,18 +89,18 @@ __new__, __init__
     we will tolerate this name when we talk about the '__init__' method
     because of the similarity to existing OOP concepts.
   - In addition, the definition of a custom '__new__' is a rare event,
-    and in almost all situations the standard 'objects.__new__' will be
+    and in almost all situations the standard 'object.__new__' will be
     sufficient.
 
 __del__ (Destructors)
   - Python also has destructors.
-  - From Python doc https://docs.python.org/2/reference/datamodel.html#basic-customization
+  - From Python doc https://docs.python.org/3/reference/datamodel.html#basic-customization
       - '__del__(self)' is called when the instance is about to be destroyed.
         This is also called a 'destructor'.
     It is only called when its reference count reaches zero. Some common
     situations may prevent the reference count of an object from going to
     zero, e.g. circular references between objects.
-  - According to https://docs.python.org/2/reference/datamodel.html
+  - According to https://docs.python.org/3/reference/datamodel.html
     the only required property of Python's garbage collection is that it
     happens after all references have been deleted, so it need not happen
     immediately afterwards, and may not happen at all.
@@ -124,21 +124,20 @@ pylint, error `too-few-public-methods`
 
 from utils import print_function_header
 
-
 """
 Topic: Class basics
 """
 
 
 class TeamMember:
-    """ simple team member class """                # class doc string
+    """ simple team member class """        # class doc string
 
     def __init__(self, name: str, born_in: int):    # initializer (ctor), self = this
-        self.name = name                            # instance attributes
+        self.name = name                    # instance attributes
         self.born_in = born_in
         print(f" a|   TeamMember.init: {self.name=}, {self.born_in=}")
 
-    def greetings(self):                            # methods, self
+    def greetings(self):                    # methods, self
         """ greetings from name """
         print(f" b|   TeamMember.greetings: Hello, I am {self.name}, born in {self.born_in}.")
         return self
@@ -148,9 +147,9 @@ class TeamMember:
 def create_team():
     """ first class instances """
 
-    alice = TeamMember("Alice", 2005)               # What is most readable?
+    alice = TeamMember("Alice", 2005)       # What is most readable?
     alice.greetings()
-    print(f" 1| {alice=}")                          # hmmm...
+    print(f" 1| {alice=}")                  # hmmm...
 
     bob = TeamMember(name="Bob", born_in=2007)      # or this?
     bob.greetings()
@@ -160,12 +159,12 @@ def create_team():
 
 
 class Person:
-    """ simple person class """                     # class doc string
+    """ simple person class """             # class doc string
 
     being_old = 99
 
     def __init__(self, surname: str, age: int):     # initializer (ctor), self = this
-        self.surname = surname                      # instance attributes
+        self.surname = surname              # instance attributes
         self.age = age
         print(f" a|   Person.init: {self}, {self=}")
 
@@ -282,11 +281,11 @@ def show_class_data():
 
     mary = Person("Mary", age=25)
     print(f" 1| {Person.__dict__=}")
-    mary.one_year_older()                                       # nothing happens
+    mary.one_year_older()                   # nothing happens
 
     Person.being_old = 18
     print(f" 2| {Person.__dict__=}")
-    mary.one_year_older()                                       # class-data has changed
+    mary.one_year_older()                   # class-data has changed
 
 
 class SlottedPerson:
@@ -417,6 +416,7 @@ if __name__ == '__main__':
     # Class basics
     create_team()
     create_crowd()
+    show_str_vs_repr()
 
     # Instance and class data
     show_instance_data()

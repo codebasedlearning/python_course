@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 Task 'Weymis Bay'
@@ -107,7 +107,7 @@ def cast_around():
 
     print(f" 6| {book.cast("Zap")=}")
 
-    print(f" 7| {'icebolt' in book=}\n")      # Contains
+    print(f" 7| {'icebolt' in book=}\n")    # Contains
 
     print(" 8| all spells:")
     for spell in book:
