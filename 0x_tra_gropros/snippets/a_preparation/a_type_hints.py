@@ -10,7 +10,7 @@ Teaching focus
 from typing import Self
 
 
-def add(a, b):                                                  # no types, see also 'test_add'
+def add(a, b):                              # no types, see also 'test_add'
     """ Calculates a+b """
     return a + b
 
@@ -20,9 +20,9 @@ def test_add():
     print("\ntest_add\n========")
 
     print(f" 1| {add(2, 3)=}")
-    print(f"    {add('2', '3')=}")                              # bug or feature?
+    print(f"    {add('2', '3')=}")          # bug or feature?
     try:
-        add('2', 3)                                             # run-time error, no IDE hint
+        add('2', 3)                         # run-time error, no IDE hint
     except TypeError as e:
         print(f" 2| {e=}")
 
@@ -37,9 +37,9 @@ def test_mul():
     print("\ntest_mul\n========")
 
     print(f" 3| {mul(2, 3)=}")
-    print(f"    {mul('2', 3)=}")                                # bug or feature?
+    print(f"    {mul('2', 3)=}")            # bug or feature?
     try:
-        mul('2', '3')                                           # run-time error, now with IDE hint (also mypy)
+        mul('2', '3')                       # run-time error, now with IDE hint (also mypy)
     except TypeError as e:
         print(f" 4| {e=}")
 
@@ -48,13 +48,13 @@ def vars_and_type_hints():
     """ variables and type hints """
     print("\nvars_and_type_hints\n===================")
 
-    s: str = "Python"                                           # variable definition with (optional) type hint
+    s: str = "Python"                       # variable definition with (optional) type hint
     print(f" 1| Hello '{s}'")
 
-    n: int = 23                                                 # with type 'int'.
+    n: int = 23                             # with type 'int'.
     if n > 0:
         print(f" 2| {n=}, {2*n=}")
-        n = -2.5                                                # assignment, with IDE hint (also mypy)
+        n = -2.5                            # assignment, with IDE hint (also mypy)
         print(f" 3| {n=}")
 
 
@@ -70,7 +70,7 @@ class Person:
         return self._name
 
     # def clear_name(self) -> "Person":
-    def clear_name(self) -> Self:                               # Python 3.11 and later
+    def clear_name(self) -> Self:           # Python 3.11 and later
         """ clears the name and returns the instance """
         self._name = ""
         return self

@@ -148,7 +148,7 @@ class IPOProblem(IPO):
 
     def solve(self, runtime_args: 'RuntimeArgs'= RuntimeArgs() ) -> list[tuple[Producer,InputData,ProcessData]]:
         results = []
-        for producer in self.producers:             # or with 'chain'
+        for producer in self.producers:     # or with 'chain'
             for input_data in producer.read(runtime_args):
                 print(f" a| - {f'read from {producer.__class__.__name__}:':<30} {input_data}")
 

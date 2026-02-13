@@ -25,11 +25,11 @@ def solve_square_add1_step_by_step():
     """
 
     print(" 1| read data...", end='')
-    input_data = ("data.in",3)                      # read()
+    input_data = ("data.in",3)              # read()
     print(f" -> read x={input_data[1]} from '{input_data[0]}'")
 
     print(" 2| process data...", end='')
-    process_data = input_data[1]                    # select
+    process_data = input_data[1]            # select
     process_data = process_data * process_data      # process in steps
     process_data = process_data + 1
     print(f" -> solve for x={input_data[1]}... -> y={process_data}")

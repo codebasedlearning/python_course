@@ -6,7 +6,7 @@ Here the main solver (=processor) for the IPO framework is defined.
 
 # import problem data and IPO framework
 from problem_a_data import RuntimeArgs, ProcessData     # InputData, OutputData
-from problem_b_ipo import  Processor                    # IPOSolver, Producer, Consumer
+from problem_b_ipo import  Processor        # IPOSolver, Producer, Consumer
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=missing-class-docstring
