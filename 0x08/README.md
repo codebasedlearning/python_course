@@ -1,109 +1,168 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x08` – Scopes and language features
+# Unit `0x08` – Threads and Libs
 
 
 ## Topics covered
 
-- scopes and LEGB rule
-- lambdas
-- file io
-- context managers
-- match
+- threads
+- libs
+  - unit tests
+  - databases
+  - SciPy and NumPy
+  - MS Exchange
+  - ChatGPT
+  - Timing
+
+
+## Terms
+
+Many terms and definitions related to multitasking, threading, or concurrency 
+are language-independent (language agnostic or language neutral). If this is 
+a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on processes and threads.
+
+You have to be careful where peculiarities of the programming language or 
+library come into play. For example, when you create a thread, sometimes it 
+will be started directly, but sometimes it will not, and you will have 
+to do it yourself.
+
+Python-specific information on threading can be found here:
+[Python docs](https://docs.python.org/3/library/threading.html),
+[Python gloassary](https://docs.python.org/3/glossary.html),
+[Realpython intro](https://realpython.com/intro-to-python-threading),
+[Superfastpython guide](https://superfastpython.com/threading-in-python/).
+
+Here are a couple of terms from [Realpython](https://realpython.com/intro-to-python-threading).
+
+### Parallelism
+Parallelism consists of performing multiple operations at the same time. 
+
+### Multiprocessing
+Multiprocessing is a means to affect parallelism, and it entails spreading 
+tasks over a computer’s central processing units (CPUs, or cores). 
+Multiprocessing is well-suited for CPU-bound tasks: tightly bound for loops 
+and mathematical computations usually fall into this category.
+
+### Concurrency
+Concurrency is a slightly broader term than parallelism. It suggests that 
+multiple tasks can run in an overlapping manner. It does not imply parallelism.
+
+### Threading
+Threading is a concurrent execution model whereby multiple threads take 
+turns executing tasks. One process can contain multiple threads. Python 
+has a complicated relationship with threading thanks to its GIL.
+
+### AsyncIO Package
+The asyncio package is described by the Python documentation as a library 
+to write concurrent code. However, async IO is not threading, nor is it 
+multiprocessing. It is not built on top of either of these.
+
+In fact, async IO is a single-threaded, single-process design: it uses 
+cooperative multitasking. 
+It has been said in other words that async IO gives a feeling of 
+concurrency despite using a single thread in a single process. Coroutines 
+(a central feature of async IO) can be scheduled concurrently, but they 
+are not inherently concurrent.
+
+### asynchronous
+What does it mean for something to be asynchronous? This isn’t a rigorous 
+definition:
+- Asynchronous routines are able to 'pause' while waiting on their ultimate 
+  result and let other routines run in the meantime.
+- Asynchronous code, through the mechanism above, facilitates concurrent 
+  execution. To put it differently, asynchronous code gives the look and 
+  feel of concurrency.
 
 
 ## Tasks
 
 ---
 
-### 👉 Task 'Ancestor Clove' 
+### 👉 Task 'Twin Tongue' 
 
-- Think about how you could design a 'Timer' class implementing the 'ContextManager' protocol to measure time. Test it.
-- What would a function 'timer' look like that uses '@contextmanager.' Also test it.
+Mathematical problems where either the algorithms or the data domains can 
+be divided are a typical application of parallel algorithms. An example is the
+[Trapezregel](https://de.wikipedia.org/wiki/Trapezregel)
+or [Trapezoidal rule](https://en.wikipedia.org/wiki/Trapezoidal_rule).
 
-In both cases you can use the `fib(n)` function as a workload.
+Use the function given in the example and the range `[a=0.0, b=2.0]` as 
+a benchmark.
+
 ```
-def fib(n):
-    return fib(n-1)+fib(n-2) if n >= 3 else 1 if n >= 1 else 0
+    math.pow(3, 3 * x - 1))
+    exact_0_2 = 728 / (9 * math.log(3))
 ```
+
+1) Implement the algorithm once serially and once parallelly using a technique
+   of your choice, e.g., a ThreadPoolExecutor with a set of Workers. 
+2) Measure both solutions and try to find a configuration where the parallel 
+   version is faster.
 
 ---
 
-### 👉 Task 'Barren Grass' 
+### 👉 Task 'Yellow Hemp' 
 
-- Implement a context manager `Note` so that you get output indented by level. Example:
+In the directory `data` you will find 120 small text files, all of which have 
+the following structure (example `test001.txt`):
+```
+# data 001
+8, 8, 3
+19
+```
+The first line contains the example number in the comment. The second line 
+contains the summands and the third line contains the sum. All files are 
+constructed in this way, there are no syntax errors or other 'niceties.'
 
-``` 
-def show_loops():
-    items = [2, 3, 5, 7, 11]
-    number = 24
-    with Note() as note:
-        note(" 1| start loops")
-        with note:
-            for i in items:
-                if number % i == 0:
-                    note(f"{i} | {number}")
-                    with note:
-                        if i == 3:
-                            note("found 3!")
-                note.print(f"{i} checked")
-        note.print(" 2| end")
-```
-
-Output:
-```
- 1| start loops
-    2 | 24
-    2 checked
-    3 | 24
-        found 3!
-    3 checked
-    5 checked
-    7 checked
-    11 checked
- 2| end
-```
+1) Read all the files and check that the given sum is correct in a serial 
+   and a parallel version. Use different variants, e.g., a 'ThreadPoolExecutor.'
 
 ---
 
-### 👉 Task 'Moon Ragweed' 
+### 👉 Task 'Marsh Wintercress' 
 
-- Write your own `my_closing` class and/or function so that this code works:
-```
-def close_a_context_manager():
-    class Resource:
-        def close(self):
-            print(" a|   clean me")
+Revise the `f_messaging` example to allow multiple producers and consumers 
+to be involved in exchanging messages.
 
-    print(f" 1| use Resource with closing ver 1")
-    with my_closing1(Resource()) as res:
-        print(f"    type res: {type(res)}")
-    print(f" 2| after using Resource")
-
-    print(f" 3| use Resource with closing ver 2")
-    with my_closing2(Resource()) as res:
-        print(f"    type res: {type(res)}")
-    print(f" 4| after using Resource")
-```
+1) Design appropriate consumer, producer, and hold-my-messages classes. 
+   Also allow more than one message to be ready to be picked up.
+   - It is crucial that you take care of the thread safety of your data structures. 
+   - Use so-called 'Condition Objects' (or 'Condition Variables') to synchronize. 
+     Details can be found [here](https://docs.python.org/3/library/threading.html#condition-objects).
 
 ---
 
-### 👉 Task 'Drowsy Pudina'
+### 👉 Task 'Cave Betty' 
 
-- Create a context manager `readable_file` so that this code both opens and closes the file.
+> Without a proposed solution.
 
-```
-    with readable_file(filename) as reader:
-        text = reader.readlines()
-```
+  - See if you can come up with a nice and sensible way to parallelize 
+    the prime sieve. 
+  - Measure a serial and a parallel variant.
 
-### 👉 Task 'Eastern Rye'
+---
 
-The `match` snippet contains the `from_chat` function, which decides which 
-formatter to create based on the arguments passed.
-- Change the function implementation to use only the `match` command for selection.
+### 👉 Task 'Creepy Wineberry' 
 
-Hint: The arguments can be part of the match condition.
+> Without a proposed solution.
+
+- Set up a database for your own and perform any SQL statements.
+
+---
+
+### 👉 Task 'Pest Cap' 
+
+> Without a proposed solution.
+
+  - Query mail, contact and/or calendar items from your (?) Microsoft 
+    Exchange account, if available.
+
+---
+
+### 👉 Task 'Red Castle' 
+
+> Without a proposed solution.
+
+  - Design a class or a function and write some unit tests.
 
 ---
 
@@ -128,9 +187,9 @@ Hint: The arguments can be part of the match condition.
 ### 👉 Comprehension Check – Talk with your Neighbor
 
 General
-- What is the main reason behind a 'context manager'?
-- What is a 'scope,' and what kind of scopes do you know?
-- What happens exactly when you import something?
+- What is special in Python concerning parallel execution?
+- What is the difference between a process and a thread?
+- What is a mutex for?
 
 ---
 
@@ -140,4 +199,4 @@ General
 
 ---
 
-End of `Unit 0x08`
+End of `Unit 0x0b`
