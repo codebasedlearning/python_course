@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 Task 'Bronze Strand'
@@ -21,7 +21,7 @@ def counter_subtract(counter: dict, item):
     if (count := counter.get(item, 0)) > 1:
         counter[item] = count - 1
     else:
-        counter.pop(item, None)                                     # key is not found -> return default w.o. KeyError
+        counter.pop(item, None)             # key is not found -> return default w.o. KeyError
     # variant:
     # if item in counter:
     #     counter[item] -= 1
@@ -47,10 +47,10 @@ def count_banana():
     banana = {}
     for c in "banana":
         counter_add(banana, c)
-    print(f" 1| {banana=}")                                     # {'b': 1, 'a': 3, 'n': 2}
+    print(f" 1| {banana=}")                 # {'b': 1, 'a': 3, 'n': 2}
 
     counter_subtract(banana, 'b')
-    print(f" 2| {banana=}")                                     # {'a': 3, 'n': 2}
+    print(f" 2| {banana=}")                 # {'a': 3, 'n': 2}
 
     print(f" 3| {counter_most_common(banana)=}")                # 'a'
 

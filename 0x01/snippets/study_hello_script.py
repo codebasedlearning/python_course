@@ -1,5 +1,5 @@
 #!/usr/bin/env python               # Shebang, see below.
-# -*- coding: utf-8 -*-             # Encoding, see below.
+# -*- coding: utf-8 -*-             # noqa: UP009
 
 """
 (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
@@ -15,7 +15,7 @@ Shebang or Hash-Bang
         > chmod -x study_hello_script.py
     to remove the execution flag again.
   - Note:
-      * It is not '!/usr/bin/python' but '!/usr/bin/env python'.
+      * It is not '#!/usr/bin/python' but '#!/usr/bin/env python'.
         to take virtual environments into account.
       * The shebang is not necessary for the script to work.
       * This specification is only for the *nix faction, and we will
