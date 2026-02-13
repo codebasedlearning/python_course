@@ -1,0 +1,48 @@
+[project]
+name = "python_course"
+version = "2.0.1"
+authors = [
+  { name="Alexander Voß", email="info@codebasedlearning.dev" },
+]
+description = "Python Course – CodeBasedLearning – FH Aachen"
+keywords = [
+  "cbl",
+  "codebasedlearning",
+  "learning",
+  "education",
+  "examples",
+  "tutorial",
+  "python"
+]
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.12"
+dependencies = [
+    "cbl==1.0.1",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "mypy",
+]
+
+[project.urls]
+Homepage = "https://github.com/codebasedlearning/python_course"
+Repository = "https://github.com/codebasedlearning/python_course"
+Issues = "https://github.com/codebasedlearning/python_course/issues"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E701"]
+
+[tool.mypy]
+check_untyped_defs = true
