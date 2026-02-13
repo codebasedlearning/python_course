@@ -149,7 +149,7 @@ from utils import print_function_header
 Topic: Console IO
 """
 
-@print_function_header                      # A decorator printing the function's name ("\nusing_print\n===========")
+@print_function_header                      # Preview: A decorator printing the function's name ("\nusing_print\n===========")
 def using_print():
     """ Various printings. """              # Docstring for the function, hold the mouse on 'using_print'.
 
@@ -212,7 +212,7 @@ def calc_sum_iteratively(n):
 def calc_sum_recursively(n):
     """ Calculates 1+..+n recursively. """
 
-    # Note the conditional expression, e.g. 'if'-'else' as expression.
+    # Preview: Note the conditional expression, e.g. 'if'-'else' as expression.
     return 0 if n <= 0 else n + calc_sum_recursively(n - 1)
 
 def calc_sum_tail_recursively(n, acc = 0):
@@ -260,7 +260,7 @@ def collect_numbers():
     inputs: list[int] = []                  # A list with type hint (better would be a deque).
 
     print(" 1| Collect numbers in a set and all inputs in list of size 5 (FIFO) (end with <Return>)")
-    while (data := input(" 2| Enter number n: ")) != "":        # Walrus operator (:=)
+    while (data := input(" 2| Enter number n: ")) != "":        # Preview: Walrus operator (:=)
         try:                                # Exception handling.
             n = int(data)
             if n in numbers:
@@ -289,7 +289,7 @@ def collect_variables():
     variables: dict[str, int] = {}          # A dictionary with type hint.
 
     while (data := input(" 2| Enter variable: ")) != "":
-        p1,p2,p3 = data.partition("=")      # Variable destructuring.
+        p1,p2,p3 = data.partition("=")      # Preview: Variable destructuring.
         if (name:=p1.strip())== "" or (p2 != "=") or (number:=try_parse(p3, int)) is None:
             print(f" 3|   format error ({name=},{number=})")    # Where is the problem here?
             continue
@@ -312,7 +312,7 @@ def sum_all_positives(variables):
             print(f" a| -> add {k}={v} => subtotal={total}")
     print(f" 2| {total=}")
 
-    # Or, more Pythonic?
+    # Or, more Pythonic? Preview: set comprehension
     positive_values = { v for v in variables.values() if v > 0}
     total = sum(positive_values)
     print(f" 3| {total=}")
@@ -330,7 +330,7 @@ def build_fruit_history(fruits_block, prices_block):
     #   for fruit in fruits_block.split(","):
     #       fruits.append(fruit.strip())
     #
-    # but with list comprehension:
+    # Preview: with list comprehension:
     fruits = [fruit.strip() for fruit in fruits_block.split(",")]
     print(f" a| {fruits=}")
 
@@ -390,5 +390,5 @@ if __name__ == "__main__":                  # 'main'-guard.
     collect_numbers()
     sum_all_positives(collect_variables())
 
-    # Preview list comprehension
+    # Preview
     calc_average_prices()

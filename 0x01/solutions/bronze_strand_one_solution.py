@@ -16,17 +16,12 @@ def counter_add(counter: dict, item):
     counter[item] = counter.get(item, 0) + 1
 
 
-def counter_subtract(counter: dict, item):
+def counter_sub(counter: dict, item):
     """ Decrements the count of an item in the provided counter dictionary. """
     if (count := counter.get(item, 0)) > 1:
         counter[item] = count - 1
-    else:
-        counter.pop(item, None)             # key is not found -> return default w.o. KeyError
-    # variant:
-    # if item in counter:
-    #     counter[item] -= 1
-    #     if counter[item] <= 0:
-    #         del counter[item]
+    elif item in counter:
+        del counter[item]
 
 
 def counter_most_common(counter: dict):
@@ -39,7 +34,7 @@ def counter_most_common(counter: dict):
             max_count = counter[key]
     return most_common_key
     # variant using lambdas:
-    # return max(counter.items(), key=lambda x: x[1])[0]
+    #   return max(counter.items(), key=lambda x: x[1])[0]
 
 
 def count_banana():
@@ -47,12 +42,12 @@ def count_banana():
     banana = {}
     for c in "banana":
         counter_add(banana, c)
-    print(f" 1| {banana=}")                 # {'b': 1, 'a': 3, 'n': 2}
+    print(f" 1| {banana=}")
 
-    counter_subtract(banana, 'b')
-    print(f" 2| {banana=}")                 # {'a': 3, 'n': 2}
+    counter_sub(banana, 'b')
+    print(f" 2| {banana=}")
 
-    print(f" 3| {counter_most_common(banana)=}")                # 'a'
+    print(f" 3| {counter_most_common(banana)=}")
 
 
 if __name__ == "__main__":
