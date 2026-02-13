@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """ Task 'Yellow Hemp' - see also the solution in Unit 0x0b """
 
@@ -22,7 +22,7 @@ def check_content(lines: list[str]):
 
 # as before
 def check_sample(n: int):
-    return check_content(read_file(Path(f"../../0x0b/data/test{n:03}.txt")))
+    return check_content(read_file(Path(f"../../0x08/data/test{n:03}.txt")))
 
 
 # as before

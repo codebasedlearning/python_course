@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about tasks and async processes.
@@ -10,6 +10,11 @@ Teaching focus
 
 Also note 'README.md' for terms and references, and
 'thread_helper.py' for relative time durations.
+
+Ref. to
+    https://docs.python.org/3/library/asyncio-task.html
+    https://docs.python.org/3/library/asyncio-future.html
+    https://www.integralist.co.uk/posts/python-generators/
 """
 
 import asyncio
@@ -89,10 +94,3 @@ async def exceptions_and_task_cancellation():
 if __name__ == "__main__":
     asyncio.run(using_a_task_group())
     asyncio.run(exceptions_and_task_cancellation())
-
-"""
-Ref. to
-    https://docs.python.org/3/library/asyncio-task.html
-    https://docs.python.org/3/library/asyncio-future.html
-    https://www.integralist.co.uk/posts/python-generators/
-"""

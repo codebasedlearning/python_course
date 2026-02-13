@@ -1,252 +1,304 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x09` – Test Exam
+# Unit `0x09` – Async and Descriptors
 
-## Prüfung Python – Dauer 120 Min.
 
-### Allgemeine Randbedingungen und Anforderungen
+## Topics covered
 
-- Beachten Sie: Bei jeder Aufgabe gibt es Abzüge, wenn das Programm nicht 
-kompiliert, wenn der Code grob ineffizient, kryptisch oder umständlich bzw. 
-unverständlich ist. Beachten Sie in Ihrer Implementierung immer auch Best Practices!
-- Generell gilt: Sollten Sie bei einer Teilaufgabe nicht auf die gefragte Lösung 
-kommen, haben aber eine Alternativlösung, so vermerken Sie das im Code und zur 
-Sicherheit als Hinweis auf dem Aufgabenblatt! Die Alternative wird ggf. mit 
-Abzügen gewertet, aber Sie kommen weiter. Gleiches gilt, falls die Aufgabenstellung 
-an einer Stelle unklar sein sollte.
-- Offline: Jede aktive Netzverbindung vor der Abgabe gilt als Täuschungsversuch.
-- KI: Jede aktive Form eines KI-unterstützten Code-Assistenten (AI Assistent, 
-Copilot etc.) gilt als Täuschungsversuch. Hinweise der IDE in Form von Warnungen 
-oder Code-Vervollständigung, z.B. beim Aufruf einer Funktion, sind erlaubt.
-- Abgabe: Es wird nur die `.py` Datei als Anhang per Mail an den Dozenten 
-gesendet, weitere Dateien werden nicht berücksichtigt! Der Betreff lautet:
-`Py_<MatrNr>_<Nachname>`, die Mail hat keinen weiteren Inhalt und geht an
-`pruefung.a.voss@fh-aachen.de für Aachen (Prof. Dr. A. Voß)`.
-Sollte sich Ihr Mailprogramm weigern, ein Python-Skript zu verschicken, nennen 
-Sie es um (`*.txt`) oder zippen Sie die Datei.
+- async, await
+- Descriptors
 
-Bitte zuerst den gesamten Text lesen! Viel Erfolg!
 
-## Start
+## Terms
 
-- Durchführung: Legen Sie in Ihrer Entwicklungsumgebung ein Projekt an und 
-bearbeiten Sie die Aufgaben in *genau einer* Quellcodedatei mit dem Namen
-`exam_<MatrNr>_<Nachname>.py`, wobei Sie natürlich die Platzhalter ersetzt haben. 
-- Geben Sie Ihren Namen und Ihre Matrikelnummer im Kopf dieser Datei an. 
+Many terms and definitions related to multitasking, threading, or concurrency 
+are language-independent (language agnostic or language neutral). If this is 
+a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on processes and threads.
 
-**Ohne diese Einträge oder bei falschem Dateinamen wird die Prüfung nicht gewertet!**
+You have to be careful where peculiarities of the programming language or 
+library come into play. For example, when you create a thread, sometimes it 
+will be started directly, but sometimes it will not, and you will have 
+to do it yourself.
 
-- [2P] Achten Sie hier auf Best Practices zum Aufbau des Skripts.
+Python-specific information on threading can be found here:
+[Python docs](https://docs.python.org/3/library/threading.html),
+[Python gloassary](https://docs.python.org/3/glossary.html),
+[Realpython intro](https://realpython.com/intro-to-python-threading),
+[Superfastpython guide](https://superfastpython.com/threading-in-python/).
 
-## Aufgabe A1 - Passwort-Validator 
+Here are a couple of terms from [Realpython](https://realpython.com/intro-to-python-threading), 
+in particular in relation to `async`, `await` and AsyncIO.
 
-### Beschreibung
+### Parallelism
+Parallelism consists of performing multiple operations at the same time. 
 
-Sie sollen eine Anwendung in Python erstellen, die Passwörter anhand spezifischer 
-Richtlinien überprüft. 
+### Multiprocessing
+Multiprocessing is a means to affect parallelism, and it entails spreading 
+tasks over a computer’s central processing units (CPUs, or cores). 
+Multiprocessing is well-suited for CPU-bound tasks: tightly bound for loops 
+and mathematical computations usually fall into this category.
 
-Die Zeilen der Eingabedaten enthalten Informationen, die die jeweilige Richtlinie 
-zur Überprüfung benötigt, sowie das Passwort.
-Jede nicht-leere Zeile entspricht genau dieser Form `Zahl1-Zahl2 Buchstabe: Passwort`. 
-Sie brauchen diesbezüglich keine Fehlerbehandlung zu implementieren. Die Zeichen 
-`-` und `:` sind garantierter Teil des Formats. 
+### Concurrency
+Concurrency is a slightly broader term than parallelism. It suggests that 
+multiple tasks can run in an overlapping manner. It does not imply parallelism.
 
-Beispiel Eingabedaten:
+### Threading
+Threading is a concurrent execution model whereby multiple threads take 
+turns executing tasks. One process can contain multiple threads. Python 
+has a complicated relationship with threading thanks to its GIL.
+
+### AsyncIO Package
+The asyncio package is described by the Python documentation as a library 
+to write concurrent code. However, async IO is not threading, nor is it 
+multiprocessing. It is not built on top of either of these.
+
+In fact, async IO is a single-threaded, single-process design: it uses 
+cooperative multitasking. 
+It has been said in other words that async IO gives a feeling of 
+concurrency despite using a single thread in a single process. Coroutines 
+(a central feature of async IO) can be scheduled concurrently, but they 
+are not inherently concurrent.
+
+### asynchronous
+What does it mean for something to be asynchronous? This isn’t a rigorous 
+definition:
+- Asynchronous routines are able to 'pause' while waiting on their ultimate 
+  result and let other routines run in the meantime.
+- Asynchronous code, through the mechanism above, facilitates concurrent 
+  execution. To put it differently, asynchronous code gives the look and 
+  feel of concurrency.
+
+### Chess Example
+Async IO may at first seem counterintuitive and paradoxical. How does something 
+that facilitates concurrent code use a single thread and a single CPU core? 
+This is from Miguel Grinberg’s 2017 PyCon talk, which explains everything quite
+beautifully:
+
+Chess master Judit Polgár hosts a chess exhibition in which she plays multiple 
+amateur players. She has two ways of conducting the exhibition: synchronously 
+and asynchronously.
+
+Assumptions:
+- 24 opponents
+- Judit makes each chess move in 5 seconds
+- Opponents each take 55 seconds to make a move
+- Games average 30 pair-moves (60 moves total)
+
+### Synchronous version
+Judit plays one game at a time, never two at the same time, until the game 
+is complete. Each game takes (55 + 5) * 30 == 1800 seconds, or 30 minutes. 
+The entire exhibition takes 24 * 30 == 720 minutes or 12 hours.
+
+### Asynchronous version
+Judit moves from table to table, making one move at each table. She leaves 
+the table and lets the opponent make their next move during the wait time. 
+One move on all 24 games takes Judit 24 * 5 == 120 seconds, or 2 minutes. 
+The entire exhibition is now cut down to 120 * 30 == 3600 seconds or just 
+1 hour.
+
+There is only one Judit Polgár, who has only two hands and makes only one 
+move at a time by herself. But playing asynchronously cuts the exhibition 
+time down from 12 hours to one. 
+So, cooperative multitasking is a fancy way of saying that a program’s 
+event loop (more on that later) communicates with multiple tasks to let 
+each take turns running at the optimal time.
+
+### Coroutines
+At the heart of async IO are coroutines. A coroutine is a specialized version 
+of a Python generator function. A coroutine is a function that can suspend 
+its execution before reaching return, and it can indirectly pass control 
+to another coroutine for some time.
+
+### Event Loop 
+You can think of an event loop as something like a 'while True' loop that 
+monitors coroutines, taking feedback on what’s idle, and looking around for 
+things that can be executed in the meantime. It is able to wake up an idle 
+coroutine when whatever that coroutine is waiting on becomes available.
+
 ```
-    1-3 a: abcde
-    1-3 b: cdefg
-    2-11 c: cccccccccccd
-```
-
-Die fiktiven (!) Richtlinien der NSA (`PolicyNSA`) und des MADs (`PolicyMAD`) 
-könnten wie folgt aussehen:
-
-- Für die NSA ist ein Passwort gültig, wenn der zu untersuchende Buchstabe 
-mindestens `Zahl1`-mal und höchstens `Zahl2`-mal vorkommt (jeweils inklusive). 
-Danach ist das erste Passwort (`a` kommt in `abcde` einmal vor) und das letzte 
-(`c` kommt in `cccccccccccd` 11-mal vor) gültig, das mittlere Passwort hingegen 
-nicht (`b` kommt in `cdefg` nicht mindestens einmal vor).
-
-- Dem MAD nach ist ein Passwort dann gültig, wenn im Passwort an den durch 
-`Zahl1` und `Zahl2` gegebenen Positionen (Start bei 1) genau einmal (!) der 
-angegebene Buchstabe vorkommt. Demnach ist nur das erste Passwort gültig, da 
-hier `a` nur an Position 1, nicht jedoch an Position 3 zu finden ist. Im letzten 
-Passwort kommt `c` sowohl an Position 2 als auch an Position 11 vor, d.h. nicht 
-genau einmal und deshalb ist es ungültig. Weitere Vorkommen des Buchstabens 
-sind für die Richtlinie unerheblich.
-
-### Aufgaben
-
-a) [4P] Definieren Sie ein `PasswordPolicy` Protokoll, das eine Methode 
-`is_valid` und eine statische Methode `name` deklariert. `is_valid` bekommt 
-ein Passwort übergeben und gibt einen Booleschen Wert zurück, ob es gültig 
-ist oder nicht. `name` gibt einen String mit dem Namen der Policy zurück. 
-Nutzen Sie (nur hier) Type Hints für die Signaturen der Methoden.
-
-b) [5P] Erstellen Sie eine abstrakte Basisklasse `PolicyBase`, die ein der 
-Initialisierung übergebenes Tuple als Attribut `_data` speichert.
-Ergänzen Sie als Doc-String der Initialisierungsfunktion, welche Funktion 
-der führende Unterstrich besitzt.
-
-c) [2P] Legen Sie zunächst die Klassen `PolicyNSA` und `PolicyMAD` nur an. 
-Beide erben von `PolicyBase`.
-
-d) [5P] Die Initialisierungsfunktionen der Klassen `PolicyNSA` bzw. `PolicyMAD` 
-besitzen die Parameter `min_count`, `max_count` und `letter` bzw. `pos1`, `pos2` 
-und `letter`. Legen Sie diese Werte jeweils als 3er-Tuple in der Basisklasse in 
-`_data` ab.
-Ergänzen Sie die Klassen nun *jeweils* um drei Nur-Lese-Properties, die die 
-abgelegten Daten einzeln zur Verfügung stellen. Die Namen der Properties entsprechen 
-dabei den Parametern der jeweiligen Initialisierungsfunktion, d.h. in `PolicyNSA` 
-gibt es das Property `min_count`, welches den Wert an Position 0 des Tuples `_data` 
-der Basis zurückgibt, `max_count` von Position 1 usw. und für `PolicyMAD` entsprechend.
-
-e) [5P] Implementieren Sie für beide Klassen das `PasswordPolicy` Protokoll 
-entsprechend der jeweiligen Richtlinie und testen Sie eine davon mit dem ersten 
-Passwort der Beispieldaten und einer geeigneten Ausgabe, die z.B. so aussehen könnte:
-```
-    policy.name()='NSA', policy.min_count=1, policy.max_count=3, policy.letter='a', policy.is_valid('abcde')=True
-```
-
-f) [7P] Implementieren Sie eine Klasse `PasswordEntry`, deren Instanzen sowohl 
-ein Attribut `policy` für die *Instanz* einer Passwortrichtlinie, als auch ein 
-Attribut `password` besitzen. 
-
-Ergänzen Sie die Klasse um eine *Klassenmethode* `from_string`, die eine Zeile 
-aus den Eingabedaten und die Passwortrichtlinie als Typ (Type-Hint wäre: `type`) 
-übergeben bekommt. 
-Diese Funktion erzeugt eine Instanz der Richtlinie mit den aus der Zeile 
-extrahierten jeweiligen Argumenten, anschliessend eine `PasswordEntry`-Instanz 
-mit Policy und Passwort und gibt diese zurück. 
-Testen Sie `from_string` mit einer geeigneten Ausgabe, z.B. dieser:
-```
-     entry.password='abcde', entry.policy.is_valid(entry.password)=True
+asyncio.run(main())  # Python 3.7+
 ```
 
-g) [4P] Implementieren Sie abschliessend eine Klasse `PasswordValidator`, 
-deren Initialisierungsfunktion eine Liste von Strings und eine Passwortrichtlinie 
-als Typ (!) akzeptiert. 
-Weiter stellt die Klasse eine Methode `count_valid_passwords` bereit, die die 
-Anzahl der gültigen Passwörter ermittelt und zurückgibt.
-
-In der Initialisierungsmethode überführen Sie die Liste von Strings mittels 
-List Comprehension in ein Attribut `entries`, einer Liste von `PasswordEntry`. 
-Dazu nutzen Sie natürlich `PasswordEntry.from_string`. Falls die Funktion fehlerhaft 
-ist, erzeugen Sie die `PasswordEntry`-Instanzen über die Initialisierungsmethode 
-von `PasswordEntry` (siehe auch f) ).
-
-In `count_valid_passwords` nutzen Sie `entries` und die Anzahl gültiger Passwörter 
-zu ermitteln und zurückzugeben.
-
-h) [3P] Testen Sie `PasswordValidator` mit beiden Richtlinien und den Beispieldaten 
-von oben in einer `solve` Funktion, die Sie aus dem main-Guard aufrufen.
-
---
+Here are a few points worth stressing about the event loop.
+- Coroutines do little on their own until they are tied to the event loop.
+- By default, an async IO event loop runs in a single thread and on a 
+  single CPU core. 
+- Event loops are pluggable. That is, you could, if you really wanted, write
+  your own event loop implementation and have it run tasks just the same. 
 
 
-## Aufgabe A2 - Generatoren
+## Some Rules of Async IO
 
-Platzieren Sie Ihren Code für Aufgabe A2 nach `solve` aus Aufgabe A1 und dem 
-main-Guard am Ende.
+- The keyword `await` passes function control back to the event loop. 
+  It suspends the execution of the surrounding coroutine.
+- A function that you introduce with `async def` is a coroutine. 
+- Using `await` creates a coroutine function. To call a coroutine function, 
+  you must `await` it to get its results.
+- Just like it’s a SyntaxError to use `yield` outside of a `def` function, 
+  it is a SyntaxError to use `await` outside of an `async def` coroutine. 
+  You can only use `await` in the body of coroutines.
+- Finally, when you use `await f()`, it’s required that `f()` be an object 
+  that is awaitable. 
+- An awaitable object is either (1) another coroutine or (2) an object 
+  defining an `.__await__()` dunder method.
 
-### Beschreibung
 
-Sie werden zu Beginn einen Sensor implementieren, der im Laufe der Aufgabe 
-modifiziert wird. Damit der ursprüngliche Code erhalten bleibt, kopieren 
-Sie diesen in einzelnen Teilaufgaben.
+## Tasks
 
-Ein Sensor liefert immer Tupel, bestehend aus einem String, der den Sensor 
-bezeichnet, und einem ganzzahligen Zufallswert, beispielsweise `('a', 23)` 
-für den Wert `23` des Sensors `'a'`.
+---
 
-### Aufgabenstellung
+### 👉 Task 'Yellow Hemp'—Again (see Unit 0x0b)
 
-a) [4P] Implementieren Sie eine Generatorfunktion `sensor_a`, die eine ganze 
-Zahl `n` übergeben bekommt und genau `n` Tupel, jeweils bestehend aus der 
-Sensorbezeichnung `'a'` und einer Zufallszahl aus dem Bereich `[0..100]` 
-(inkl. Ränder), liefert.
-
-Tipp 1: Wenn Sie nicht wissen, was eine Generatorfunktion ausmacht, erzeugen 
-Sie in `sensor_a` eine Liste von Tupeln. Das gilt auch für weitere 'Sensoren'.
-Tipp 2: Einen Zufallszahlengenerator für ganze Zahlen finden Sie in `random`. 
-
-b) [3P] Testen Sie Ihren Generator in einer Funktion `sensors`, die Sie 
-ebenfalls aus dem main-Guard aufrufen, und zwar in dieser Art:
+In the directory `data` you will find 120 small text files, all of which have 
+the following structure (example `test001.txt`):
 ```
-    random.seed(0)
-    n = 10
-    numbers_a = list(sensor_a(n))
-    print([...])
+# data 001
+8, 8, 3
+19
 ```
-Vervollständigen Sie das `print`-Kommando in `main` und nutzen Sie 
-String-Interpolation und Slicing, sodass genau 5 Tupel ausgegeben werden. 
-Die Ausgabe könnte so aussehen:
-```
-    [('a', 49), ('a', 97), ('a', 53), ('a', 5), ('a', 33)] 
-```
-Tipp: Die Initialisierung mittels `random.seed` führt dazu, dass immer die 
-gleichen Zufallszahlen erzeugt werden. 
+The first line contains the example number in the comment. The second line 
+contains the summands and the third line contains the sum. All files are 
+constructed in this way, there are no syntax errors or other 'niceties.'
 
-c) [4P -> Preview] Kopieren Sie die Generatorfunktion `sensor_a` zu `sensor_b` 
-und erzeugen Sie wie zuvor Tupel, nur mit der Sensorbezeichnung `'b'`. 
+1) Read all the files and check that the given sum is correct in an 'async' version. 
+2) Install a (free-threading-Python)[https://docs.python.org/3/howto/free-threading-python.html] in a virtual environment and compare
+your execution times.
 
-Implementieren Sie einen Decorator `profiler_decorator` und dekorieren Sie damit
-`sensor_b`. Der Decorator soll die Zeit messen, die von der Erzeugung des 
-ersten Werts bis zur Erzeugung des letzten Werts vergangen ist und abschliessend 
-diese Zeit ausgeben (`dt: ...`). Erweitern Sie `sensors` analog
-```
-    numbers_b = list(sensor_b(n))
-    print([...])
-```
-Die Ausgabe könnte dann so aussehen:
-```
-    dt: 5.0067901611328125e-06 s
-    [('b', 61), ('b', 45), ('b', 74), ('b', 27), ('b', 64)] 
-```
+---
 
-Tipp: `time.time()` liefert einen Zeitpunkt.
+### 👉 Task 'Judit' 
 
-d) [5P] Die erzeugten Daten aller Sensoren sollen nun gefiltert werden.
-Um unabhängig von den anderen Teilaufgaben zu sein, sei dies die Liste aller 
-Sensorwerte:
-```
-    values = [('a', 23), ('a', 28), ('a', 42), ('b', 48), ('b', 45), ('c', 25)]
-```
+Create a serial and an 'async' version of the story of Judith. Use one second 
+instead of one hour, so the serial version should take around 12 seconds and 
+the asynchronous version one second.
 
-Definieren Sie eine lokale Funktion `filter_data` in `sensors`, die eine Liste 
-von Werten (`values`) und einen Lambdaausdruck `limiter(int)->bool` bekommt, 
-der die Werte auf Gültigkeit testet (filtert).
+---
 
-Das Ergebnis von `filter_data` soll ein Dictionary sein, welches zu jedem Sensor 
-(Schlüssel) eine Liste (Wert) aller gültigen Werte dieses Sensors enthält. Dabei 
-sollen leere Listen nicht enthalten sein.
-Beispiel: Wir sind nur an den Werten im Bereich `[10..30]` interessiert. Rufen Sie 
-`filter_data` in `sensors` entsprechend auf und geben Sie das Ergebnis aus. Das 
-lautet hier:
-```
-    {'c': [('c', 25)], 'a': [('a', 23), ('a', 28)]}
-```
+### 👉 Task 'Colemark Cove'
 
-Bonus [3P] Erzeugen Sie das Ergebnis in `filter_data` als Dictionary Comprehension 
-in genau einer Zeile.
+Take any of your thread-based tasks from Unit 0x0b and create 
+an 'async' version of it.
 
-e) [3P] Implementieren Sie eine Klasse `MeasuredRegion`, die das Context Manager 
-Protokoll implementiert und die Zeit ermittelt und ausgibt, die zwischen Betreten 
-und Verlassen liegen.
-Testen Sie Ihre Klasse in `sensors`, z.B. mittels `sensor_a` oder `sensor_b` und 
-großem `n`. 
+---
 
-f) [4P -> Preview] Beim Verwenden von `sensor_a` mit mehreren Threads gibt es 
-merkwürdige Werte, berichtet jemand. Daher sollen alle Werte, die ein Sensor 
-dieser Art generiert, zusätzlich in einer gemeinsamen Liste abgelegt werden.
+### 👉 Task 'Exam Preparation' 
 
-Legen Sie in `sensors` eine leere Liste `log_numbers` an und kopieren Sie Ihre 
-Generatorfunktion `sensor_a` zu `sensor_c`. Erweitern Sie nun `sensor_c` geeignet, 
-sodass Ihr Code obige Anforderungen erfüllt und grundsätzlich für diese Art der 
-parallelen Nutzung geeignet ist.
-Testen Sie Ihre Implementierung in `sensors` aussagekräftig mit zwei Threads.
+Take a look at the topics covered and think about how you can prepare.
 
-Tipp: Falls Ihr `sensor_a` keine Generatorfunktion ist, sondern direkt eine Liste generiert, 
-können Sie diese Aufgabe dennoch vollkommen analog lösen.
+#### Course Content
 
---
+#### Unit 0x01
+- General structure of a Python program, e.g.
+  - comments, imports and modules, doc-strings, role of whitespaces
+- Examples with Python basics, e.g.
+  - primitives (int, float, string, bool)
+  - built-in containers (list, tuple, dict)
+  - type hints
+  - control flow (if, while, for, try-except)
+  - function calls with named parameters
+  - console input and output
+  - variable destruction
+- Pythonic way, e.g. 'main'-guard
+
+#### Unit 0x02
+- Primitives
+- Collections
+- Control-flow
+- Function calling
+
+#### Unit 0x03
+- Classes
+- Attributes
+- Properties
+- Member functions
+- Class functions
+- Operators
+- Single inheritance
+
+#### Unit 0x04
+- Advent of Code-puzzles
+
+#### Unit 0x05
+- GroPro-tasks
+
+#### Unit 0x06
+- Typing, nominal typing, subtyping, duck typing, structural typing
+- Single and multiple inheritance, method resolution order MRO
+- Inheritance vs. composition
+
+#### Unit 0x07
+- Iterators
+- Generators
+
+#### Unit 0x08
+- Scopes and LEGB rule
+- Lambdas
+- File io
+- Context managers
+- Match
+
+#### Unit 0x09
+- Test Exam
+
+#### Unit 0x0a
+- Decorators
+  - with parameters
+  - with return values
+  - with default values
+  - as classes
+  - for classes
+
+#### Unit 0x0b
+- Threads
+- Libs
+  - Unit tests
+  - Databases
+  - SciPy and NumPy
+  - MS Exchange
+  - ChatGPT
+  - Timing
+
+#### Unit 0x0c
+- async, await
+- Descriptors
+
+#### Unit 0x0d
+- ast
+- dis
+- meta classes
+
+---
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture. Ask if there are any outstanding questions.
+
+---
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+
+---
+
+### 👉 Task 'Couch Potato' - Recurring homework
+
+- If you did not finish the essential tasks in the exercise, finish them at home.
+
+---
+
+### 👉 Comprehension Check – Talk with your Neighbor
+
+General
+- What are the basic ideas behind 'async'?
+- In what use cases can you expect to be faster than in a synchronous version?
+
+---
+
+### 👉 Lecture Check - Online Questionare
+
+- Please participate in the survey: [Slido](https://wall.sli.do)
+
+---
+
+End of `Unit 0x0c`

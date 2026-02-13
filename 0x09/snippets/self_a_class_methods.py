@@ -1,13 +1,24 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about descriptor functions.
 
 Teaching focus
   - descriptor functions
+
+Most comments are embedded in the script. References:
+
+https://docs.python.org/3/howto/descriptor.html
+https://realpython.com/python-descriptors/
+https://python-reference.readthedocs.io/en/latest/docs/dunderdsc/
+
+https://towardsdatascience.com/python-descriptors-and-how-to-use-them-5167d506af84
+https://elfi-y.medium.com/python-descriptor-a-thorough-guide-60a915f67aa9
+https://blog.peterlamut.com/2018/11/04/python-attribute-lookup-explained-in-detail/
 """
 
 import types
+from utils import print_function_header
 
 """
 Most from https://docs.python.org/3/howto/descriptor.html#functions-and-methods
@@ -21,11 +32,11 @@ Most from https://docs.python.org/3/howto/descriptor.html#functions-and-methods
 # start with the conversion of a function into a method,
 # see https://docs.python.org/3/library/types.html#types.MethodType
 
+@print_function_header
 def bound_methods():
     """ ... """
-    print("\nbound_methods\n=============")
 
-    class MyMethodType:                                 # similar Objects/classobject.c
+    class MyMethodType:                     # similar Objects/classobject.c
         def __init__(self, func, obj):
             self.__func__ = func
             self.__self__ = obj
@@ -65,9 +76,9 @@ class Function:                                                     # similar Ob
 """
 
 
+@print_function_header
 def functions_are_non_data_descriptors():
     """ ... """
-    print("\nfunctions_are_non_data_descriptors\n==================================")
 
     # consider a regular function
     def f():
@@ -101,11 +112,11 @@ Unlike static methods, class methods prepend the class reference to the argument
 """
 
 
+@print_function_header
 def simulate_static_and_class_methods():
     """ ... """
-    print("\nsimulate_static_and_class_methods\n=================================")
 
-    class MyStaticMethod:                                             # not complete
+    class MyStaticMethod:                   # not complete
         def __init__(self, f):
             self.f = f
 
@@ -124,7 +135,7 @@ def simulate_static_and_class_methods():
     c = C()
     print(f" 1| static method: {c.f(12)=}")                         # same for C.f(12)
 
-    class MyClassMethod:                                              # not complete
+    class MyClassMethod:                    # not complete
         def __init__(self, f):
             self.f = f
 
@@ -148,16 +159,3 @@ if __name__ == "__main__":
     bound_methods()
     functions_are_non_data_descriptors()
     simulate_static_and_class_methods()
-
-
-"""
-Most comments are embedded in the script. References:
-
-https://docs.python.org/3/howto/descriptor.html
-https://realpython.com/python-descriptors/
-https://python-reference.readthedocs.io/en/latest/docs/dunderdsc/
-
-https://towardsdatascience.com/python-descriptors-and-how-to-use-them-5167d506af84
-https://elfi-y.medium.com/python-descriptor-a-thorough-guide-60a915f67aa9
-https://blog.peterlamut.com/2018/11/04/python-attribute-lookup-explained-in-detail/
-"""

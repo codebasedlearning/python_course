@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about descriptors.
@@ -8,21 +8,32 @@ Teaching focus
   - look up order
   - descriptor protocol
   - __get__(), __set__(), __delete__()
+
+References:
+
+https://docs.python.org/3/howto/descriptor.html
+https://realpython.com/python-descriptors/
+https://python-reference.readthedocs.io/en/latest/docs/dunderdsc/
+
+https://towardsdatascience.com/python-descriptors-and-how-to-use-them-5167d506af84
+https://elfi-y.medium.com/python-descriptor-a-thorough-guide-60a915f67aa9
+https://blog.peterlamut.com/2018/11/04/python-attribute-lookup-explained-in-detail/
 """
 
 import time
+from utils import print_function_header
 
 
+@print_function_header
 def recap_resolution_order():
     """ remember the resolution order """
-    print("\nrecap_resolution_order\n======================")
 
     class C:
         x = 42
 
     c = C()
     print(f" 1| {c.__dict__=}, {c.x=}, {C.x=}")         # remember the resolution order
-    c.x = 23                                            # or c.__dict__['x'] = 23
+    c.x = 23                                # or c.__dict__['x'] = 23
     print(f" 2| {c.__dict__=}, {c.x=}, {C.x=}")
     del c.x
     print(f" 3| {c.__dict__=}, {c.x=}, {C.x=}")
@@ -35,9 +46,9 @@ def recap_resolution_order():
     print(f" 4| {d.__dict__=}, {d.x=}, {D.x=}\n")       # another way to access x and another type in D
 
 
+@print_function_header
 def control_access():
     """ an attribute with min and max bounds """
-    print("\ncontrol_access\n==============")
 
     class BoundedBy:                        # see class 'Employee' below first
         def __init__(self, min_x: int, max_x: int):
@@ -143,9 +154,9 @@ Invocation from an instance
 # example: lazy property (from https://realpython.com/python-descriptors)
 # or functools.cached_property (from https://docs.python.org/3/library/functools.html)
 
+@print_function_header
 def lazy_property_example():
-    """ see the loop up in action """
-    print("\nlazy_property_example\n=====================")
+    """ see the look up in action """
 
     # what kind of descriptor is this and why does it work?
     class LazyProperty:
@@ -173,9 +184,9 @@ def lazy_property_example():
 # more descriptor examples
 
 
+@print_function_header
 def log_access_example():
     """ logging attribute access """
-    print("\nlog_access_example\n==================")
 
     class LoggingAttribute:                 # what kind of descriptor?
         def __get__(self, obj, typ=None) -> object:
@@ -194,9 +205,9 @@ def log_access_example():
     print(f" 2| {c.x=} or {C.x=}")
 
 
+@print_function_header
 def complete_example():
     """ play around with all functions in the descriptor protocol """
-    print("\ncomplete_example\n================")
 
     class UseAllProtocolMethods:
         def __init__(self):
@@ -264,15 +275,3 @@ if __name__ == "__main__":
     lazy_property_example()
     log_access_example()
     complete_example()
-
-"""
-References:
-
-https://docs.python.org/3/howto/descriptor.html
-https://realpython.com/python-descriptors/
-https://python-reference.readthedocs.io/en/latest/docs/dunderdsc/
-
-https://towardsdatascience.com/python-descriptors-and-how-to-use-them-5167d506af84
-https://elfi-y.medium.com/python-descriptor-a-thorough-guide-60a915f67aa9
-https://blog.peterlamut.com/2018/11/04/python-attribute-lookup-explained-in-detail/
-"""

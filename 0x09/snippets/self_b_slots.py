@@ -1,13 +1,50 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about slots.
 
 Teaching focus
   - slots
+
+From https://wiki.python.org/moin/UsingSlots and Python Language Reference:
+
+Default Values
+    __slots__ are implemented at the class level by creating descriptors ... for each variable name. As a result,
+class attributes cannot be used to set default values for instance variables defined by __slots__; otherwise,
+the class attribute would overwrite the descriptor assignment.
+Some readers might find this documentation confusing. It is not necessary for a user to implement descriptors in order
+to use __slots__. The point to remember is that default values for variables declared in __slots__ cannot be set
+using class attributes. If default values are desired, they must be set in the __init__(self) definition.
+However, it is not necessary to assign all variables a value in the __init__ function. As long as it has been declared
+in __slots__, a variable can be assigned a value using dot notation after the class has been instantiated.
+
+Why Not Use Slots?
+    There may be cases when you might not want to use __slots__; for example, if you would like for your class to use
+dynamic attribute creation or weak references. In those cases, you can add '__dict__' as the last element in the
+__slots__ declaration.
+
+Certain Python objects may depend on the __dict__ attribute. For example, descriptor classes depend on the __dict__
+attribute being present in the owner class. Programmers may want to avoid __slots__ in any case where another
+Python object requires __dict__ or __weak_ref__to be present. According to the Descriptor How To Guide for Python 3.9,
+the functools.cached_property() is another example that requires an instance dictionary to function correctly.
+
+Beyond The Basics
+    There are a few things to be aware of when going beyond the basics. Slots variables declared in parents are
+available in child classes. However, child subclasses will have __dict__ attributes unless they also define
+__slots__, which should only contain names of additional slots.
+    Multiple inheritance with multiple slotted parent classes can be used, but only one parent is allowed to
+have attributes created by slots. The other bases must have empty slot layouts.
+
+For additional details, please see the Python Language Reference.
+
+More refs:
+https://wiki.python.org/moin/UsingSlots
+https://python.land/python-class-slots
+https://medium.com/@stephenjayakar/a-quick-dive-into-pythons-slots-72cdc2d334e
 """
 
 from abc import ABC
+from utils import print_function_header
 
 """
 Most from https://wiki.python.org/moin/UsingSlots
@@ -23,9 +60,9 @@ used by instances. See:
 """
 
 
+@print_function_header
 def introducing_slots():
     """ ... """
-    print("\nintroducing_slots\n=================")
 
     class PointV1:
         __slots__ = ('x', 'y')              # known attributes
@@ -45,7 +82,7 @@ def introducing_slots():
     # Any alternative to __dict__? Yes, define them (at class level).
 
     class PointV2:
-        __slots__ = ('x', 'y', '__dict__')                          # now we have a dict and all freedom as before
+        __slots__ = ('x', 'y', '__dict__')  # now we have a dict and all freedom as before
 
         def __init__(self, x, y):
             self.x, self.y = x, y
@@ -54,7 +91,7 @@ def introducing_slots():
             return f"({self.x},{self.y})"
 
     p = PointV2(2, 3)
-    p.a = 1                                                         # dynamically added
+    p.a = 1                                 # dynamically added
     print(f" 2| {p=}\n"
           f"    dir={dir(p)}\n")
 
@@ -81,22 +118,22 @@ There are some disadvantages, see end.
 """
 
 
+@print_function_header
 def issues_default_values():
     """ ... """
-    print("\nissues_default_values\n====================")
 
     class A:
-        __slots__ = ('x', 'y')                                      # no default values
+        __slots__ = ('x', 'y')              # no default values
         # x = 12                                                    # class attribute would overwrite the descriptor
 
         def __init__(self):
-            self.x = 12                                             # use defaults here
+            self.x = 12                     # use defaults here
 
-    class B(A):                                                     # slots variables are available in child classes,
-        ...                                                         # but child subclasses will have __dict__ attributes
+    class B(A):                             # slots variables are available in child classes,
+        ...                                 # but child subclasses will have __dict__ attributes
 
-    class C(A):                                                     # unless they also define __slots__, which should
-        __slots__ = ('z',)                                          # only contain names of additional slots
+    class C(A):                             # unless they also define __slots__, which should
+        __slots__ = ('z',)                  # only contain names of additional slots
 
     a = A()
     b = B()
@@ -106,9 +143,9 @@ def issues_default_values():
           f"    {hasattr(c, '__dict__')=}")
 
 
+@print_function_header
 def issues_inheritance():
     """ ... """
-    print("\nissues_inheritance\n===================")
 
     class A1:
         __slots__ = ('a1',)
@@ -134,7 +171,7 @@ def issues_inheritance():
     class Mixin:
         __slots__ = ()
 
-    class C(BaseA, BaseB, Mixin):                                   # no conflict here
+    class C(BaseA, BaseB, Mixin):           # no conflict here
         __slots__ = 'x', 'y'
 
 
@@ -142,41 +179,3 @@ if __name__ == "__main__":
     introducing_slots()
     issues_default_values()
     issues_inheritance()
-
-"""
-From https://wiki.python.org/moin/UsingSlots and Python Language Reference:
-
-Default Values
-    __slots__ are implemented at the class level by creating descriptors ... for each variable name. As a result, 
-class attributes cannot be used to set default values for instance variables defined by __slots__; otherwise, 
-the class attribute would overwrite the descriptor assignment.
-Some readers might find this documentation confusing. It is not necessary for a user to implement descriptors in order 
-to use __slots__. The point to remember is that default values for variables declared in __slots__ cannot be set 
-using class attributes. If default values are desired, they must be set in the __init__(self) definition. 
-However, it is not necessary to assign all variables a value in the __init__ function. As long as it has been declared 
-in __slots__, a variable can be assigned a value using dot notation after the class has been instantiated.
-
-Why Not Use Slots?
-    There may be cases when you might not want to use __slots__; for example, if you would like for your class to use 
-dynamic attribute creation or weak references. In those cases, you can add '__dict__' as the last element in the 
-__slots__ declaration.
-
-Certain Python objects may depend on the __dict__ attribute. For example, descriptor classes depend on the __dict__ 
-attribute being present in the owner class. Programmers may want to avoid __slots__ in any case where another 
-Python object requires __dict__ or __weak_ref__to be present. According to the Descriptor How To Guide for Python 3.9, 
-the functools.cached_property() is another example that requires an instance dictionary to function correctly.
-
-Beyond The Basics
-    There are a few things to be aware of when going beyond the basics. Slots variables declared in parents are 
-available in child classes. However, child subclasses will have __dict__ attributes unless they also define 
-__slots__, which should only contain names of additional slots. 
-    Multiple inheritance with multiple slotted parent classes can be used, but only one parent is allowed to 
-have attributes created by slots. The other bases must have empty slot layouts. 
-
-For additional details, please see the Python Language Reference.
-
-More refs:
-https://wiki.python.org/moin/UsingSlots
-https://python.land/python-class-slots
-https://medium.com/@stephenjayakar/a-quick-dive-into-pythons-slots-72cdc2d334e
-"""

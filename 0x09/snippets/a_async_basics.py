@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about tasks and async processes.
@@ -9,6 +9,11 @@ Teaching focus
 
 Also note 'README.md' for terms and references, and
 'thread_helper.py' for relative time durations.
+
+Ref. to
+    https://docs.python.org/3/library/asyncio-task.html
+    https://docs.python.org/3/library/asyncio-future.html
+    https://www.integralist.co.uk/posts/python-generators/
 """
 
 import time
@@ -157,11 +162,3 @@ if __name__ == "__main__":
     asyncio.run(sometimes_it_keeps_serial())
     asyncio.run(make_it_parallel())
     # asyncio.run(characterizations())
-
-
-"""
-Ref. to
-    https://docs.python.org/3/library/asyncio-task.html
-    https://docs.python.org/3/library/asyncio-future.html
-    https://www.integralist.co.uk/posts/python-generators/
-"""

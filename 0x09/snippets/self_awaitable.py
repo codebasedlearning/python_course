@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about awaitables.
@@ -31,7 +31,6 @@ Futures
   with async/await.
 - Normally there is no need to create Future objects at the application level code.
 """
-import asyncio
 
 class WaitableMessage:
     def __init__(self, delay, message):

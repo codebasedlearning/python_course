@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about tasks and async processes.
@@ -18,6 +18,7 @@ import time
 import asyncio
 
 from thread_helper import dt
+from utils import print_function_header
 
 
 def heat_soup():
@@ -32,9 +33,9 @@ def fry_onions():
     time.sleep(0.2)
     print(f"{dt()}  d| - Onions are ready.")
 
+@print_function_header
 def synchronous_cooking():
     """ synchronous cooking """
-    print("\nsynchronous_cooking\n===================")
     dt(reset=True)
 
     print(f"{dt()}  1| start cooking")

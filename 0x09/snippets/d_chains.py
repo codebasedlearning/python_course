@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about chaining async processes.
@@ -10,16 +10,20 @@ Teaching focus
 
 Also note 'README.md' for terms and references, and
 'thread_helper.py' for relative time durations.
+
+Most content stems from:
+    https://realpython.com/async-io-python/
 """
 
 import time
 import asyncio
 from thread_helper import dt
+from utils import print_function_header
 
 
+@print_function_header
 def callback_hell():
     """ call me """
-    print("\ncallback_hell\n=============")
     dt(reset=True)
 
     def check_connection(cont_with):
@@ -93,9 +97,3 @@ async def call_me_when_done():
 if __name__ == "__main__":
     callback_hell()
     asyncio.run(call_me_when_done())
-
-
-"""
-Most content stems from:
-    https://realpython.com/async-io-python/
-"""
