@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about parameterized decorators.
@@ -6,19 +6,25 @@ This snippet is about parameterized decorators.
 Teaching focus
   - decorators with parameters, i.e. parameterize the decorator itself
   - but... how can we equip the decorator with parameters?
+
+partial:
+  - https://docs.python.org/3/library/functools.html
+  - https://stackoverflow.com/questions/5929107/decorators-with-parameters
 """
 
 import functools
 from functools import partial
 
+from utils import print_function_header
 
+
+@print_function_header
 def do_twice_or_more():
     """ decorate a function and call it a number of times """
-    print("\ndo_twice_or_more\n================")
 
     # remember do_twice
 
-    def do_repeat(some_f, n):                                             # first try
+    def do_repeat(some_f, n):               # first try
         @functools.wraps(some_f)
         def wrapper_do_repeat(*args, **kwargs):
             value = None
@@ -57,9 +63,9 @@ def do_twice_or_more():
     # must then be applied to g => increase level, return a decorator...
 
 
+@print_function_header
 def do_repeat_with_params():
     """ decorator function with parameters """
-    print("\ndo_repeat_with_params\n=====================")
 
     def do_repeat(n):
         # here is the decorator function
@@ -96,9 +102,9 @@ def do_repeat_with_params():
     # => error, pos. arg. missing...
 
 
+@print_function_header
 def do_repeat_flexible_style():
     """ do_repeat again, but with a flexible style """
-    print("\ndo_repeat_flexible_style\n========================")
 
     # remember: any argument after '*' must be specified using a keyword
 
@@ -141,7 +147,7 @@ def do_repeat_flexible_style():
     pow2 = partial(my_pow, base=2)          # partial -> fix some args (as in math.)
     print(f" 3| 2^3={my_pow(2, 3)}={pow2(n=3)}\n")
 
-    def do_repeat_alt(_f=None, *, n=2):                                  # one level less
+    def do_repeat_alt(_f=None, *, n=2):     # one level less
         if callable(_f):                    # the no-param case
             @functools.wraps(_f)
             def wrapper_repeat(*args, **kwargs):
@@ -149,8 +155,8 @@ def do_repeat_flexible_style():
                 for _ in range(n):
                     value = _f(*args, **kwargs)
                 return value
-            return wrapper_repeat                                       # _f is given
-        return partial(do_repeat_alt, n=n)                               # _f is still a free parameter, only n is fixed
+            return wrapper_repeat           # _f is given
+        return partial(do_repeat_alt, n=n)  # _f is still a free parameter, only n is fixed
 
     @do_repeat_alt(n=3)
     def p():
@@ -170,10 +176,3 @@ if __name__ == "__main__":
     do_repeat_with_params()
     do_repeat_flexible_style()
 
-
-
-"""
-partial:
-  - https://docs.python.org/3/library/functools.html
-  - https://stackoverflow.com/questions/5929107/decorators-with-parameters
-"""

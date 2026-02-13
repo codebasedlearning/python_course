@@ -1,19 +1,24 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about decorators for functions with parameters and return value.
 
 Teaching focus
   - decorators for functions with parameters
+
+See
+  - https://docs.python.org/3/library/functools.html
 """
 
 import functools
 import time
 
+from utils import print_function_header
 
+
+@print_function_header
 def do_twice_without_args():
     """ work with functions as objects """
-    print("\ndo_twice_without_args\n=====================")
 
     # 'decorator' that runs a function twice
     def do_twice(some_f):
@@ -36,9 +41,9 @@ But how?
 """
 
 
+@print_function_header
 def do_twice_with_args():
     """ work with functions as objects """
-    print("\ndo_twice_with_args\n==================")
 
     # version 1: first try, does it work?
 
@@ -122,7 +127,7 @@ def do_twice_with_args():
 
     # version 4: one more... what about this?
 
-    def do_twice_v4(some_f, text):                                            # not a solution, why?
+    def do_twice_v4(some_f, text):          # not a solution, why?
         def wrapper_do_twice():
             some_f(text)
             some_f(text)
@@ -140,9 +145,9 @@ Any idea?
 """
 
 
+@print_function_header
 def time_it_with_return():
     """ work with functions with return values """
-    print("\ntime_it_with_return\n===================")
 
     def time_it(some_f):
         def wrapper(*args, **kwargs):
@@ -164,9 +169,9 @@ def time_it_with_return():
     print(f" 2| {y=}")
 
 
+@print_function_header
 def who_am_I():
     """ solve the name problem with functools.wraps """
-    print("\nwho_am_I\n========")
 
     def time_it(some_f):
         @functools.wraps(some_f)
@@ -196,7 +201,3 @@ if __name__ == "__main__":
     time_it_with_return()
     who_am_I()
 
-"""
-See
-  - https://docs.python.org/3/library/functools.html
-"""

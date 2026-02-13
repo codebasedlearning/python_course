@@ -1,18 +1,37 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about classes as decorators.
 
 Teaching focus
   - classes (instead of functions) as decorators
+
+Whether to use a decorator function or a decorator class depends on your use case.
+  - Decorator functions are more commonly used in day-to-day Python programming
+    because of their simplicity and readability.
+      - Lightweight and concise.
+      - Ideal for simple use cases where the decorator doesn't need to manage
+        state or complex logic.
+
+  - Decorator Classes
+      - More flexible and powerful but involve more boilerplate code.
+      - Classes allow decorators to maintain state (via instance attributes) or
+        implement complex logic (beyond what's feasible with nested functions).
+      - Slightly less common when a decorator function suffices, but
+        indispensable in advanced use cases.
+
+wraps, update_wrapper
+  - See https://docs.python.org/3/library/functools.html
 """
 
 import functools
 
+from utils import print_function_header
 
+
+@print_function_header
 def use_class_as_decorator():
     """ using a class as decorator """
-    print("\nuse_class_as_decorator\n======================")
 
     def call_and_log(intro, some_f, *args):
         """ helper: log the call and return the result """
@@ -35,7 +54,7 @@ def use_class_as_decorator():
     print(f" 1| call 'f': {f(3)}, {type(f)=}, {f=}")
 
     class LogCallsWithIntro:
-        def __init__(self, intro:str):        # receives the parameters
+        def __init__(self, intro:str):      # receives the parameters
             self.intro = intro
 
         def __call__(self, some_f):         # receives the function to decorate
@@ -81,21 +100,3 @@ def use_class_as_decorator():
 if __name__ == "__main__":
     use_class_as_decorator()
 
-"""
-Whether to use a decorator function or a decorator class depends on your use case. 
-  - Decorator functions are more commonly used in day-to-day Python programming 
-    because of their simplicity and readability.
-      - Lightweight and concise.
-      - Ideal for simple use cases where the decorator doesn’t need to manage 
-        state or complex logic.
-
-  - Decorator Classes
-      - More flexible and powerful but involve more boilerplate code.
-      - Classes allow decorators to maintain state (via instance attributes) or 
-        implement complex logic (beyond what’s feasible with nested functions).
-      - Slightly less common when a decorator function suffices, but 
-        indispensable in advanced use cases.
-
-wraps, update_wrapper
-  - See https://docs.python.org/3/library/functools.html
-"""

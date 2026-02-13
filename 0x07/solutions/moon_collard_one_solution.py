@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """ Task 'Moon Collard' """
 
@@ -58,7 +58,7 @@ def slow_down_v2(_f=None, *, dt: float = 1):
     return partial(slow_down_v2, dt=dt)
 
 
-@slow_down_v2(dt=0.5)                                               # also works as: @slow_down_v2
+@slow_down_v2(dt=0.5)                       # also works as: @slow_down_v2
 def countdown_v2(from_number):
     if from_number < 1:
         print("--- Liftoff")

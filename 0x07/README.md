@@ -1,199 +1,133 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x07` – Iterators and Generators
+# Unit `0x07` – Decorators
 
 
 ## Topics covered
 
-- Iterators
-- Generators
+- decorators
+- with parameters
+- with return values
+- with default values
+- as classes
+- for classes
+
+
+todo: IPO decos
 
 
 ## Tasks
 
 ---
 
-### 👉 Task 'Rash Annie' 
+### 👉 Task 'Moon Collard' 
 
-- Implement a 'generator function' `factorial` (n!). It should generate this:
+1) Write a 'debug' decorator that prints all arguments and the result of a 
+decorated function. Example: 
 ```
-    list(factorial(8))
-        => [1, 1, 2, 6, 24, 120, 720, 5040, 40320]
+@debug
+def concat(a: str, b: int) -> str:
+    return f"{a}{b}"
+
+def test_debug():
+    result = concat("and the answer is: ", 42)
+    print(f"01| concat: '{result}'\n")
 ```
-- Same task for `fibonacci`. Its result is:
+this prints
 ``` 
-    list(fibonacci(8))
-        => [1, 1, 2, 3, 5, 8, 13, 21]
+>>> called concat('and the answer is: ', 42)
+<<< result 'and the answer is: 42'
+01| concat: 'and the answer is: 42'
 ```
 
----
-
-### 👉 Task 'Duck Corn' 
-
-> Reprogram some existing functions/iterators/generators. Most of them come from `itertools` or `builtins`.
-
-Remarks:
-- To get a specific number of values from a generator you can use `list(islice(iterable,number))`, returning 
-a list with `number` elements from `iterable`.
-- Most functions are described in `itertools`, along with the task description and a "roughly equivalent" implementation.
-Don't spoil yourself, try it first.
-
-Tasks:
-
-- Implement `count(start=0)`
-  - Make a generator function that returns evenly spaced (+1) values starting with number `start`.
+2) Write a 'slow_down_v1' decorator that prints a countdown from a given number 
+with a delay of 1s between each step. 
+Example:
 ```
-    list(islice(my_count(10), 6)) 
-        => [10, 11, 12, 13, 14, 15]
-```
+@slow_down_v1
+def countdown_v1(from_number):
+    if from_number < 1:
+        print("--- Liftoff")
+    else:
+        print(f"--- cnt: {from_number}...")
+        countdown_v1(from_number - 1)
 
-- `repeat(object[, times])`
-  - Make a generator function that returns `object` over and over again. Runs indefinitely unless the times argument 
-is specified.
+def test_slow_down():
+    n = 3
+    print(f"02| countdown from {n=} ...")
+    countdown_v1(n)
 ```
-    list(my_repeat(10, 3)) 
-        => [10, 10, 10]
-    list(map(pow, range(10), my_repeat(2))) 
-        => [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+this prints
 ```
+02| countdown from n=3 ...
+--- cnt: 3...
+--- cnt: 2...
+--- cnt: 1...
+--- Liftoff
+```
+with 1s delay between each line. Use `time.sleep(1)` for 1s delay.
 
-- `chain(*iterables)`
-  - Make a generator function that returns elements from the first iterable until it is exhausted, then proceeds to the 
-next iterable, until all the iterables are exhausted. Used for treating consecutive sequences as a single sequence.
+3) Extend the previous decorator to 'slow_down_v2'. You may or may not specify a time delay `dt` (default 1s).  
+That means, both 
 ```
-    def f_gen(): return (i*i for i in range(6))
-    rg = range(2,5,2)
-    list(my_chain(rg,f_gen())) 
-        => [2, 4, 0, 1, 4, 9, 16, 25]
+@slow_down_v2(dt=0.5)
+def countdown_v2(from_number):
+    ...
 ```
+and
+```
+@slow_down_v2
+def countdown_v2(from_number):
+    ...
+```
+are valid. 
 
-- `dropwhile(predicate, iterable)`
-  - Make a generator function that drops elements from the iterable as long as the predicate is true; afterwards, 
-returns every element. 
+4) Write an 'example' decorator that 'registers' a function in a global dictionary. 
+Here we use this idea to select a random test case (see `test_example_test_cases`).
+```
+EXAMPLES = dict()
+
+@example
+def test_case1():
+    return 23
+
+def other_function():
+    return -1
+
+@example
+def test_case3():
+    return 42
+
+[...]
+
+def test_example_test_cases():
+    print(f"03| call a random test case: test value={random.choice(list(EXAMPLES.values()))()}")
+    print(f"04| {EXAMPLES.items()}")
+
+```
+This results in:
 ``` 
-    data = [1, 4, 9, 16, 25]
-    pred = lambda x: x < 10
-    list(my_dropwhile(pred, data)) 
-        => [16, 25]
+03| call a random test case: test value=23
+04| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>), ('test_case3', <function test_case3 at 0x106a1b420>)])
 ```
 
-- `takewhile(predicate, iterable)`
-  - Make a generator function that returns elements from the iterable as long as the predicate is true. 
-``` 
-    data = [1, 4, 9, 16, 25]
-    pred = lambda x: x < 10
-    list(my_takewhile(pred, data)) 
-        => [1, 4, 9]
+5) Write a timer decorator class (!) that measures the execution time of a function
+and prints a label if one is given.
+
+Usage examples
+```
+@Timer
+def quick():
+    time.sleep(0.3)
+
+@Timer(label="slow!")
+def slow():
+    time.sleep(0.5)
 ```
 
-- `zip(iterable1, iterable2)`
-  - Make a generator function that returns tuples from both iterables, one at a time - see example. 
-For different lengths, use the minimum.
-```
-    chars = ['A', 'B', 'C']
-    numbers = [1, 2, 3]
-    list(my_zip(chars, numbers)) 
-        => [('A', 1), ('B', 2), ('C', 3)]
-```
-
-- `class cross(Iterator)`
-  - Make an iterator class that can be used in a similar way to `zip`, but taking elements from the second iterable 
-in reverse order.
-```
-    chars = ['A', 'B', 'C']
-    numbers = [1, 2, 3]
-    list(cross(chars, numbers)) 
-        => [('A', 3), ('B', 2), ('C', 1)]
-```
-
-- `compress(data, selectors)`
-  - Make a generator function that filters elements from data returning only those that have a corresponding element in 
-selectors that evaluates to True. Stops when either the data or selectors iterables has been exhausted 
-(remember 'Sieve-Prime'-Task).
-```
-    sieve = [1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1]
-    numbers = range(0, len(sieve))
-    list(my_compress(numbers, (1-i for i in sieve))) 
-        => [2, 3, 5, 7, 11]
-```
-
-- ⭐`product(*iterables)`
-  - Create a generator function that iterates the Cartesian product of input iterables. This is roughly equivalent 
-to nested for-loops in a generator expression, e.g.
-`product(A, B)` returns the same as `((x,y) for x in A for y in B)`.
-  - It is allowed to consume the iterables first.
-  - Can you implement a 'real' generator function that avoids consumption?
-```
-    major = [1, 2]
-    minor = [5, 6]
-    sub = ["alpha", "beta"]
-    list(my_product(major, minor, sub))
-        => [(1, 5, 'alpha'), (1, 5, 'beta'), (1, 6, 'alpha'), (1, 6, 'beta'), (2, 5, 'alpha'), (2, 5, 'beta'), (2, 6, 'alpha'), (2, 6, 'beta')]
-```
-
-- `enumerate(iterable)`
-  - Create a generator function that simulates the built-in `enumerate` function.
-```
-    numbers = ['A', 'B', 'C']
-    list(my_enumerate(numbers)) 
-        => [(0, 'A'), (1, 'B'), (2, 'C')]
-```
-
-- `splitlines(text: str)`
-  - Create a generator function that simulates the `string.splitlines` function.
-```
-  text = """Lorem ipsum... 
-    At vero eos et accusam... 
-    Stet clita kasd ..."""
- 
-    list(my_splitlines(text))
-        => ['Lorem ipsum... ', 'At vero eos et accusam... ', 'Stet clita kasd ...']
-```
-
-- Create generator expressions `select_from(operation, iterable)` and `where(predicate, iterable)` such that 
-this code works as expected:
-```
-    data = [1, 2, 3]
-    list(where(lambda x: x > 11, select_from(lambda x: (x + 10), data)))
-        => [12, 13]
-```
-
----
-
-### ⭐ Task 'Red Berry' 
-
-- Implement a `class PINQ(iterator)` so that the following code works as expected.
-- **Avoid any creation of data containers until the final evaluation, e.g. by `list`.**
-- Remember `select_from` and `where` from Task 'Duck Corn'.
-- 'PINQ' is inspired by [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) 😉.
-
-```
-    data = [1, 2, 3]
-    
-    gen = PINQ().From(data).Select(lambda x: (x+10)).Where(lambda x: x > 11).to_generator()
-    list(gen)
-        => [12, 13]
-
-    gen = PINQ().From(data).Select(lambda x: (x+10)).Where(lambda x: x > 11).to_list()
-    gen
-        => [12, 13]
-
-    gen = PINQ().From(data).Select(lambda x: (x+10)).Where(lambda x: x > 11)
-    list(gen)
-        => [12, 13]
-
-    gen = PINQ().From(data).Select(lambda x: (x+10, x+100)).Where(lambda x: x[0] > 11)
-    list(gen)
-        => [(12, 102), (13, 103)]
-
-    gen = PINQ().From(data).Select(lambda x: x*x).Select(lambda x: x+10).Where(lambda x: x > 11)
-    list(gen.to_list())
-        => [14, 19]
-
-    gen = PINQ().From(data).Select(lambda x: x*x).Select(lambda x: x+10).Where(lambda x: x > 11).Select(lambda x: x-4)
-    list(gen)
-        => [10, 15]
-```
+6) ⭐ Write your own `functools.lru_cache`. This [module](https://docs.python.org/3/library/functools.html#functools.lru_cache) comes with a '@lru_cache' decorator, which gives you the ability 
+to cache the result of your functions using the Least Recently Used (LRU) strategy. 
+For more background see also [here](https://realpython.com/lru-cache-python/).
 
 ---
 
@@ -215,11 +149,11 @@ this code works as expected:
 
 ---
 
-### 👉 Comprehension Check - Talk with your Neighbor
+### 👉 Comprehension Check – Talk with your Neighbor
 
 General
-- Describe 'iterators' and 'generators.' What are the benefits?
-- Are there any use cases you see for your projects or code?
+- What kind of decorators do you know?
+- What is the reason for using `functools`?
 
 ---
 
@@ -229,4 +163,4 @@ General
 
 ---
 
-End of `Unit 0x07`
+End of `Unit 0x0a`

@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about decorators for classes.
@@ -6,14 +6,19 @@ This snippet is about decorators for classes.
 Teaching focus
   - decorators for classes
   - decorate classes -> same, but class 'cls' instead of function 'f'
+
+wraps, update_wrapper
+  - See https://docs.python.org/3/library/functools.html
 """
 
 import functools
 from dataclasses import dataclass
 
+from utils import print_function_header
+
+@print_function_header
 def use_singleton():
     """ example for classes """
-    print("\nuse_singleton\n================")
 
     def singleton(cls):
         @functools.wraps(cls)
@@ -38,9 +43,9 @@ def use_singleton():
 # here, the class itself is modified
 
 
+@print_function_header
 def use_add_repr():
     """ modify class """
-    print("\nuse_add_repr\n================")
 
     def add_str(cls):
         def my_str(this):
@@ -67,7 +72,3 @@ if __name__ == "__main__":
     use_singleton()
     use_add_repr()
 
-"""
-wraps, update_wrapper
-  - See https://docs.python.org/3/library/functools.html
-"""

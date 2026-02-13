@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about simple decorators.
@@ -6,11 +6,23 @@ This snippet is about simple decorators.
 Teaching focus
   - first decorators - what is a decorator?
   - recap: functions are first-class objects (global and local)
+
+  - A decorator is a Python construct created when the decorator function
+    is applied to another function, often via the `@` syntax.
+  - The term "decorator" in Python is a somewhat flexible concept and can
+    refer to different aspects depending on the context.
+
+Refs:
+  - https://realpython.com/primer-on-python-decorators/#simple-decorators
+  - https://realpython.com/primer-on-python-decorators/
+  - https://peps.python.org/pep-0318/#background
 """
 
 from datetime import datetime
 from typing import Callable
 import time
+
+from utils import print_function_header
 
 
 def op_plus(a: int, b: int) -> int:
@@ -23,9 +35,9 @@ def call_op_with(a: int, b: int, op: Callable[[int, int], int]) -> int:
     return op(a, b)
 
 
+@print_function_header
 def functions_are_first_class_citizens():  # functions as arguments
     """ work with functions as objects """
-    print("\nfunctions_are_first_class_citizens\n==================================")
 
     n, m = 3, 2
 
@@ -43,9 +55,9 @@ def functions_are_first_class_citizens():  # functions as arguments
     print(f" 3| {n=}, {m=}, n**m={call_op_with(n, m, lambda a, b: a ** b)}")
 
 
+@print_function_header
 def functions_as_results():
     """ return functions as a result """
-    print("\nfunctions_as_results\n====================")
 
     def op_from_input(op_str):
         if op_str == "+":
@@ -62,7 +74,7 @@ def functions_as_results():
 
 """
 Assume we want to print some text before and after a function call.
-How can we archive this in a general way?
+How can we achieve this in a general way?
 """
 
 """
@@ -70,9 +82,9 @@ Hint: We need functions as arguments and return values.
 """
 
 
+@print_function_header
 def print_text_around():
     """ print some text before and after a function call """
-    print("\nprint_text_around\n=================")
 
     # A decorator function is a higher-order function that takes another
     # function as its argument and returns a new function (often wrapping
@@ -105,9 +117,9 @@ def print_text_around():
     print_more_text()
 
 
+@print_function_header
 def more_decorator_functions():
     """ more decorator functions """
-    print("\nmore_decorator_functions\n========================")
 
     def at_office_hours_only(some_f):  # another decorator function
         def wrapper():
@@ -146,9 +158,9 @@ def more_decorator_functions():
     print_fibs()
 
 
+@print_function_header
 def nested_decorator():
     """ decorator order matters """
-    print("\nnested_decorator\n================")
 
     def deco1(some_f):
         def wrapper():
@@ -183,14 +195,3 @@ if __name__ == "__main__":
     more_decorator_functions()
     nested_decorator()
 
-"""
-  - A decorator is a Python construct created when the decorator function 
-    is applied to another function, often via the `@` syntax.
-  - The term "decorator" in Python is a somewhat flexible concept and can 
-    refer to different aspects depending on the context.
-
-Refs:
-  - https://realpython.com/primer-on-python-decorators/#simple-decorators
-  - https://realpython.com/primer-on-python-decorators/
-  - https://peps.python.org/pep-0318/#background
-"""
