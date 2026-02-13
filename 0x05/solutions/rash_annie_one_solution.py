@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """ Task 'Rash Annie' """
 
@@ -7,7 +7,7 @@ from itertools import islice
 
 def gen_factorial():
     def factorial(n=None):
-        i, f = 0, 1                                                 # from n=0, 0!=1,..,5!=120
+        i, f = 0, 1                         # from n=0, 0!=1,..,5!=120
         while True:
             yield f
             if i == n:
@@ -21,7 +21,7 @@ def gen_factorial():
 
 def gen_fibonacci():
     def fibonacci(n=None):
-        i, f0, f1 = 1, 0, 1                                         # from n=1, fib_7 = 13
+        i, f0, f1 = 1, 0, 1                 # from n=1, fib_7 = 13
         while True:
             yield f1
             if i == n:

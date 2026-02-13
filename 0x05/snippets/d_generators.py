@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet introduces yield, generators and generator functions.
@@ -7,15 +7,72 @@ Teaching focus
   - yield
   - generators
   - generator functions
+
+process data one by one
+  - In many cases it is not necessary, or even possible, to get all the data
+    first and then process it one by one.
+    What we need is a technique that allows us to have only the data that we
+    want to process, no more and no less.
+    So-called 'generators', in various forms (see below), deal with exactly
+    this problem. You can think of them as a kind of intelligent iterator.
+
+generator function
+  - From https://realpython.com/python-iterators-iterables
+    In Python, you'll commonly use the term 'generators' to collectively refer
+    to two separate concepts: the generator function and the generator iterator.
+      - The generator function is the function that you define using the yield statement.
+      - The generator iterator is what this function returns.
+  - From https://docs.python.org/3/reference/simple_stmts.html:
+    Using yield in a function definition is sufficient to cause that definition
+    to create a generator function instead of a normal function.
+
+generator expression
+  - From https://realpython.com/introduction-to-python-generators
+    Like list comprehensions, generator expressions allow you to quickly
+    create a generator object in just a few lines of code. They're also
+    useful in the same cases where list comprehensions are used, with an
+    added benefit:
+      - you can create them without building and holding the entire object
+        in memory before iteration. In other words, you'll have no memory
+        penalty when you use generator expressions.
+
+lazy evaluated
+  - This is important. Note that in the examples the generator takes the new
+    element into account. This is only possible if the evaluation is not done
+    at definition but at use.
+
+reuse generator
+  - Also important to know. Once the generator is done, it is 'exhausted',
+    i.e. done. So you cannot use it twice in the same expression.
+  - Basically, we have three choices:
+      - Store values...
+      - Create a class with some kind of reset.
+      - Lambdas or functions to create a generator expression.
+
+yield from
+  - See https://docs.python.org/3/reference/simple_stmts.html
+    and https://docs.python.org/3/reference/expressions.html#yieldexpr
+    When yield from <expr> is used, the supplied expression must be an
+    iterable. The values produced by iterating that iterable are passed
+    directly to the caller of the current generator's methods.
+
+send
+  - In PEP 342, support was added for passing values into generator
+    https://github.com/qingkaikong/blog-1/blob/f453d320c06ac5b1a8d43380f9e6f9d9cf8c3022/content/2013-04-07-improve-your-python-yield-and-generators-explained.md
+
+  - Remarks: There are more functions like 'send', namely 'close' and 'throw'.
+    See https://realpython.com/introduction-to-python-generators
 """
 
 import itertools
 from inspect import isgeneratorfunction, isgenerator
 
+from utils import print_function_header
 
+
+@print_function_header
 def motivate_generators():
     """ motivate generators """
-    print("\nmotivate_generators\n===================")
 
     def read_data(base, lower_limit, upper_limit):
         print(" a| - (in read) ")
@@ -35,7 +92,7 @@ def motivate_generators():
     def generate_data(base, lower_limit, upper_limit):  # generator function and generator iterator
         print("(in generator) ", end='')
         for i in range(lower_limit, upper_limit+1):     # the 'algorithm'
-            yield i * base                              # instead of .append
+            yield i * base                  # instead of .append
 
     items_gen = generate_data(7, 1, 20)     # generator iterator = "generator" (is a iterator)
     print(f" 3| items_gen=...: ", end='')
@@ -70,9 +127,9 @@ def motivate_generators():
     print(f" 6| {isgeneratorfunction(generate_123)=} {isgenerator(item123)=}")
 
 
+@print_function_header
 def generator_function_examples():
     """ motivate generators """
-    print("\ngenerator_function_examples\n===========================")
 
     def gen_fib_seq(stop):                  # generator function with state
         fib_n0, fib_n1 = (1, 1)
@@ -103,9 +160,9 @@ def generator_function_examples():
     print(f" 6| => tuple {(*gen_fib_seq(10),)}")
 
 
+@print_function_header
 def show_generator_expressions():
     """ show generator expressions """
-    print("\nshow_generator_expressions\n==========================")
 
     squares = [i*i for i in range(1, 5)]    # list comprehension
     print(f" 1| {squares=}")
@@ -131,9 +188,9 @@ Generator (informal)    Often used to refer to      Usually means
 """
 
 
+@print_function_header
 def using_pipelines():
     """ show pipelines """
-    print("\nusing_pipelines\n===============")
 
     def to_square(numbers):
         return (number ** 2 for number in numbers)
@@ -150,13 +207,13 @@ def using_pipelines():
     print(f" 1| even_squared={list(even_squared)}\n")       # lazy evaluated
 
 
+@print_function_header
 def reuse_generators():
     """ discuss generator reuse """
-    print("\nreuse_generators\n================")
 
-    squares = (i * i for i in range(1, 5))                          # 1, 4, 9, 16; sum=30
+    squares = (i * i for i in range(1, 5))  # 1, 4, 9, 16; sum=30
     sum_squares_squared1 = sum(squares) * sum(squares)              # oops
-    print(f" 1| {sum_squares_squared1=}")                           # reuse generator - any idea?
+    print(f" 1| {sum_squares_squared1=}")   # reuse generator - any idea?
 
     # f_squares = lambda: (i * i for i in range(1, 5))              # lambda w.o. params, returns a generator expression
     def f_squares(): return (i * i for i in range(1, 5))            # see PEP8 for bound lambdas
@@ -164,9 +221,9 @@ def reuse_generators():
     print(f" 2| {sum_squares_squared2=}")
 
 
+@print_function_header
 def introducing_yield_from():
     """ introducing yield from """
-    print("\nintroducing_yield_from\n======================")
 
     def f_gen1(): return (i*i*i for i in range(1, 3))   # 1, 8
     def f_gen2(): return (i*i for i in range(3, 6))     # 9, 16, 25
@@ -174,7 +231,7 @@ def introducing_yield_from():
     gen_chained1 = itertools.chain(f_gen1(), f_gen2())  # how is this implemented?
     print(f" 1| chain1={list(gen_chained1)}")
 
-    def gen_combined(g1, g2):                           # first variant
+    def gen_combined(g1, g2):               # first variant
         for x in g1:
             yield x
         for x in g2:
@@ -183,7 +240,7 @@ def introducing_yield_from():
     gen_chained2 = gen_combined(f_gen1(), f_gen2())
     print(f" 2| chain2={list(gen_chained2)}")
 
-    def gen_from(g1, g2):                               # yield from
+    def gen_from(g1, g2):                   # yield from
         yield from g1
         yield from g2
 
@@ -191,11 +248,11 @@ def introducing_yield_from():
     print(f" 3| chain3={list(gen_chained3)}")
 
 
-def using_generator_send():                             # send... what?
+@print_function_header
+def using_generator_send():                 # send... what?
     """ using generator send """
-    print("\nusing_generator_send\n====================")
 
-    def count_from(n):                                  # idea: count, but set 'start'
+    def count_from(n):                      # idea: count, but set 'start'
         while True:
             m = yield n
             if isinstance(m, int):
@@ -210,8 +267,8 @@ def using_generator_send():                             # send... what?
     lst = [next(gen_n) for _ in range(1, 11)]           # which numbers?
     print(f" 2| {lst=}")
 
-    x0 = gen_n.send(100)                                # x0 = ?
-    x1 = next(gen_n)                                    # debug from 'send' with 'step into'
+    x0 = gen_n.send(100)                    # x0 = ?
+    x1 = next(gen_n)                        # debug from 'send' with 'step into'
     x2 = next(gen_n)
     lst = [x0, x1, x2] + [next(gen_n) for _ in range(1, 11-3)]
     print(f" 3| {lst=}")
@@ -256,59 +313,3 @@ if __name__ == "__main__":
     introducing_yield_from()
     using_generator_send()
 
-"""
-process data one by one
-  - In many cases it is not necessary, or even possible, to get all the data 
-    first and then process it one by one. 
-    What we need is a technique that allows us to have only the data that we 
-    want to process, no more and no less. 
-    So-called 'generators', in various forms (see below), deal with exactly 
-    this problem. You can think of them as a kind of intelligent iterator.
-
-generator function
-  - From https://realpython.com/python-iterators-iterables
-    In Python, you’ll commonly use the term 'generators' to collectively refer 
-    to two separate concepts: the generator function and the generator iterator. 
-      - The generator function is the function that you define using the yield statement. 
-      - The generator iterator is what this function returns.
-  - From https://docs.python.org/3/reference/simple_stmts.html:
-    Using yield in a function definition is sufficient to cause that definition 
-    to create a generator function instead of a normal function.
-
-generator expression
-  - From https://realpython.com/introduction-to-python-generators
-    Like list comprehensions, generator expressions allow you to quickly 
-    create a generator object in just a few lines of code. They’re also 
-    useful in the same cases where list comprehensions are used, with an 
-    added benefit: 
-      - you can create them without building and holding the entire object 
-        in memory before iteration. In other words, you’ll have no memory 
-        penalty when you use generator expressions. 
-
-lazy evaluated
-  - This is important. Note that in the examples the generator takes the new 
-    element into account. This is only possible if the evaluation is not done 
-    at definition but at use.
-
-reuse generator
-  - Also important to know. Once the generator is done, it is 'exhausted', 
-    i.e. done. So you cannot use it twice in the same expression.
-  - Basically, we have three choices:
-      - Store values... 
-      - Create a class with some kind of reset.
-      - Lambdas or functions to create a generator expression.
-
-yield from
-  - See https://docs.python.org/3/reference/simple_stmts.html
-    and https://docs.python.org/3/reference/expressions.html#yieldexpr
-    When yield from <expr> is used, the supplied expression must be an 
-    iterable. The values produced by iterating that iterable are passed 
-    directly to the caller of the current generator’s methods.
-
-send
-  - In PEP 342, support was added for passing values into generator
-    https://github.com/qingkaikong/blog-1/blob/f453d320c06ac5b1a8d43380f9e6f9d9cf8c3022/content/2013-04-07-improve-your-python-yield-and-generators-explained.md
-
-  - Remarks: There are more functions like 'send', namely 'close' and 'throw'. 
-    See https://realpython.com/introduction-to-python-generators
-"""

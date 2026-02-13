@@ -1,18 +1,22 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet shows some nice functions from itertools.
 
 Teaching focus
   - itertools
+
+See https://docs.python.org/3/library/itertools.html
 """
 
 import itertools                                                    #
 
+from utils import print_function_header
 
+
+@print_function_header
 def using_count():
     """ motivate generators """
-    print("\nusing_count\n===========")
 
     print(f" 1| count from 10: ", end='')
     for i in itertools.count(10):           # how can 'count' be implemented?
@@ -39,9 +43,9 @@ def using_count():
     print(f" 4| with my_count: {list(data4)}")
 
 
+@print_function_header
 def using_islice():
     """ motivate generators """
-    print("\nusing_islice\n============")
 
     def islice_light(iterable, cnt):
         for i, element in enumerate(iterable):
@@ -50,7 +54,7 @@ def using_islice():
             yield element
 
     gen1 = itertools.count(10)
-    data1 = [next(gen1) for _ in range(6)]                          # as before
+    data1 = [next(gen1) for _ in range(6)]  # as before
     print(f" 1| count with gen1: {data1}")
 
     gen2 = islice_light(itertools.count(10), 6)                     # 6 times
@@ -61,33 +65,33 @@ def using_islice():
     data3 = list(gen3)
     print(f"    count with gen3: {data3}")
 
-    rg1 = itertools.islice(range(2, 8), 4)                          # index 0..3: 2,3,4,5
+    rg1 = itertools.islice(range(2, 8), 4)  # index 0..3: 2,3,4,5
     print(f" 2| islice and range1: {list(rg1)}")
 
     rg2 = itertools.islice(range(2, 8), 4, 6)                       # index 0,1,2,3: 2,3,4,5; 4,5: yield 6,7; 6,7:8,9
     print(f"    islice and range2: {list(rg2)}")                    # -> be careful, it iterates from start to end
 
 
+@print_function_header
 def using_repeat():
     """ using itertools.repeat """
-    print("\nusing_repeat\n============")
 
     print(f" 1| repeat 10, 3: {list(itertools.repeat(10, 3))}\n"
           f"    repeat [1,2], 4: {list(itertools.repeat([1,2], 4))}\n"
           f"    repeat map pow 0..9, 2: {list(map(pow, range(10), itertools.repeat(1)))}\n")
 
 
+@print_function_header
 def using_chain():
     """ using itertools.chain """
-    print("\nusing_chain\n===========")
 
     gen = (i*i for i in range(6))
     print(f" 1| chain : {list(itertools.chain(range(2,5,2),gen))}\n")
 
 
+@print_function_header
 def using_drop_or_takewhile():
     """ using itertools.drop or takewhile """
-    print("\nusing_drop_or_takewhile\n=======================")
 
     data = [1, 4, 9, 16, 25, 23]
     pred = lambda x: x < 10
@@ -95,18 +99,18 @@ def using_drop_or_takewhile():
     print(f" 2| takewhile x<10, [1,4,9,16,25,23]: {list(itertools.takewhile(pred, data))}\n")
 
 
+@print_function_header
 def using_zip():
     """ using zip """
-    print("\nusing_zip\n=========")
 
     chars = ['A', 'B', 'C']
     numbers = [1, 2, 3]
     print(f" 1| zip: {list(zip(chars, numbers))}\n")                # zip not in itertools, but zip_longest
 
 
+@print_function_header
 def using_compress():
     """ using itertools.compress """
-    print("\nusing_compress\n==============")
 
     sieve = [1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1]                 # see Task
     numbers = range(0, len(sieve))
@@ -122,7 +126,3 @@ if __name__ == "__main__":
     using_zip()
     using_compress()
 
-
-"""
-See https://docs.python.org/3/library/itertools.html
-"""

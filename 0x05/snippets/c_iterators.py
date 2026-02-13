@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet explains iterables and iterators.
@@ -14,14 +14,43 @@ a .__next__() method that returns an item in every call.
 According to this internal structure, you can conclude that all iterators
 are iterables because they meet the iterable protocol. However, not all
 iterables are iterators — only those implementing the .__next__() method.
+
+check types
+  - From https://realpython.com/python-iterators-iterables
+    Iterables have an .__iter__() method that produce items on demand.
+    Iterators implement an .__iter__() method that typically returns self
+    and a .__next__() method that returns an item in every call.
+    According to this internal structure, you can conclude that all iterators
+    are iterables because they meet the iterable protocol. However, not all
+    iterables are iterators — only those implementing the .__next__() method.
+
+next item and StopIteration
+  - From https://realpython.com/python-iterators-iterables
+    You shouldn't use .__iter__() and .__next__() directly in your code.
+    Instead, you should use the built-in iter() and next() functions, which
+    fall back to calling the corresponding special methods.
+    The StopIteration is the way 'next' says it is done.
+
+see also:
+  - https://pypi.org/project/more-itertools
+
+Feature             Iterable            Iterator                    Generator
+Implements          __iter__()          __iter__() + __next__()     Same as iterator (auto)
+Works with iter()   yes                 yes (returns self)          yes
+Works with next()   no(need iter first) yes                         yes
+Reusable            yes                 no(consumed)                no(consumed)
+Built-in Example    list, str, dict     iter(list), file obj        Generator function
+Custom Example      Class w/ __iter__() Class w/ __next__()         Function w/ yield
 """
 
 from collections.abc import Iterator, Iterable
 
+from utils import print_function_header
 
+
+@print_function_header
 def show_iterables():
     """ discuss iterables """
-    print("\nshow_iterables\n==============")
 
     # All of these are 'Iterables': lists, tuples, strings, dicts, sets, ranges, etc.
     # they have an __iter__() method that produces items on demand
@@ -50,9 +79,9 @@ def show_iterables():
     # Precisely: Does obj.__class__ or any of its bases have an __iter__() method?
     # If yes then it’s an Iterable.
 
+@print_function_header
 def show_iterators():
     """ discuss iterators """
-    print("\nshow_iterators\n==============")
 
     # A list is an iterable, not an iterator — but it can give you one
     # if you call iter(list)
@@ -123,9 +152,9 @@ def check_its(obj):                         # check types
     return f"(iterable? {is_x}, iterator? {is_y})"
 
 
+@print_function_header
 def check_iterables_and_iterators():
     """ check for both types """
-    print("\ncheck_iterables_and_iterators\n=============================")
 
     lst = [2, 3, 5, 7, 11]
     print(f" 1| {lst=} | {check_its(lst)}")
@@ -185,32 +214,3 @@ if __name__ == "__main__":
     show_iterators()
     check_iterables_and_iterators()
 
-
-"""
-check types
-  - From https://realpython.com/python-iterators-iterables
-    Iterables have an .__iter__() method that produce items on demand. 
-    Iterators implement an .__iter__() method that typically returns self 
-    and a .__next__() method that returns an item in every call.
-    According to this internal structure, you can conclude that all iterators 
-    are iterables because they meet the iterable protocol. However, not all 
-    iterables are iterators — only those implementing the .__next__() method.
-
-next item and StopIteration
-  - From https://realpython.com/python-iterators-iterables
-    You shouldn’t use .__iter__() and .__next__() directly in your code. 
-    Instead, you should use the built-in iter() and next() functions, which 
-    fall back to calling the corresponding special methods.
-    The StopIteration is the way 'next' says it is done.
-
-see also:
-  - https://pypi.org/project/more-itertools
-
-Feature             Iterable            Iterator                    Generator
-Implements          __iter__()          __iter__() + __next__()     Same as iterator (auto)
-Works with iter()   yes                 yes (returns self)          yes
-Works with next()   no(need iter first) yes                         yes
-Reusable            yes                 no(consumed)                no(consumed)
-Built-in Example    list, str, dict     iter(list), file obj        Generator function
-Custom Example      Class w/ __iter__() Class w/ __next__()         Function w/ yield
-"""

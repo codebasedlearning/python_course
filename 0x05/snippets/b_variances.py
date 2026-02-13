@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses 'protocols'.
@@ -10,9 +10,9 @@ Teaching focus
 From https://mypy.readthedocs.io/en/stable/protocols.html
 
   - Nominal subtyping is strictly based on the class hierarchy. If class D
-    inherits class C, it’s also a subtype of C, and instances of D can be
+    inherits class C, it's also a subtype of C, and instances of D can be
     used when C instances are expected. This form of subtyping is used by
-    default in mypy, since it’s easy to understand and produces clear and
+    default in mypy, since it's easy to understand and produces clear and
     concise error messages, and since it matches how the native isinstance
     check works – based on class hierarchy.
 
@@ -24,6 +24,10 @@ From https://mypy.readthedocs.io/en/stable/protocols.html
     Mypy provides support for structural subtyping via protocol classes
     described below. See PEP 544 for the detailed specification of protocols
     and structural subtyping in Python.
+
+  - Note: You can reuse the same TypeVar across your entire module if it
+    has the same meaning everywhere. It's just a symbol, not a specific
+    instantiation.
 """
 
 from typing import Protocol
@@ -45,9 +49,12 @@ from typing import Protocol
 
 from typing import TypeVar, Generic
 
+from utils import print_function_header
+
+
+@print_function_header
 def construct_generic_box():
     """ construct a box as in 'boxing' """
-    print("\nconstruct_generic_box\n=====================")
 
     class AnyBox:
         """ class can hold any value """
@@ -88,9 +95,9 @@ class Box[T]:                               # Box(Generic[T])
         return f"{self.value}[{type(self.value).__name__}]"
 
 
+@print_function_header
 def construct_generic_typesafe_box():
     """ discuss a generic box """
-    print("\nconstruct_generic_typesafe_box\n==============================")
 
     int_box = Box(42)                       # int_box: Box[int] = Box(42)
     print(f" 1| {int_box=}")                # 42
@@ -112,9 +119,9 @@ class Dog(Animal): pass                     # a Dog is an Animal
 class Cat(Animal): pass                     # same for Cat
 
 
+@print_function_header
 def consider_variances():
     """ discuss variances """
-    print("\nconsider_variances\n==================")
 
     # consider subtypes as generic types (Animal, Dog, Cat)
 
@@ -176,9 +183,9 @@ def consider_variances():
     # => writing-only functions are safe when using contravariance
 
 
+@print_function_header
 def construct_co_boxes():
     """ construct covariant and contravariant boxes """
-    print("\nconstruct_co_boxes\n==================")
 
     T_co = TypeVar('T_co', covariant=True)
 
@@ -230,9 +237,9 @@ def construct_co_boxes():
     """
 
 
+@print_function_header
 def show_generic_protocol_example():
     """ discuss a generic protocol example """
-    print("\nshow_generic_protocol_example\n=============================")
 
     T_co = TypeVar('T_co', covariant=True)  # for static check, a template variable that keeps track of the types
 
@@ -279,12 +286,3 @@ if __name__ == "__main__":
     construct_co_boxes()
     show_generic_protocol_example()
 
-
-###############################################################################
-
-
-"""
-  - Note: You can reuse the same TypeVar across your entire module if it 
-    has the same meaning everywhere. It’s just a symbol, not a specific 
-    instantiation.
-"""

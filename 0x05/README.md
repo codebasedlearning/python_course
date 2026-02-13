@@ -1,172 +1,211 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x05` – GroPro-Setup
-
-> The aim is to model and solve GroPro (Grosse Programmieraufgabe IHK) problems in unit 0x05.
-> - Unit 0x01: First Impression (examples)
-> - Unit 0x02: First Steps (variables, control-flow, functions)
-> - Unit 0x03: Finalize Basics (classes, inheritance, types)
-> - Unit 0x04: Puzzle-Driven Programming Challenges 
-> - Unit 0x05: Softwaredesign principles, SOLID, GroPro with IPO
-
-> Note: the principles are not specific to Python, they must always be followed. But it's also about what you can prepare now, so that you have a framework for the exam (IPO) and don't have to think about everything from scratch.
-
-
-## SOLID
-
-> SOLID is a mnemonic for five fundamental principles of object-oriented software design, intended to make code:
-> - Flexible
-> - Reusable
-> - Maintainable
-> - Scalable
-
-It originated mainly with Robert C. Martin (Uncle Bob) and friends in the early 2000s.
-
-> SOLID is not about writing more code. It’s about writing code that survives changes, extensions, and teamwork.
-
-
-### Definition
-
-| Principle                | Short Definition                                                                  |
-|--------------------------|-----------------------------------------------------------------------------------|
-| S: Single Responsibility | A class should have only one reason to change.                                    |
-| O: Open/Closed           | Software should be open for extension, but closed for modification.               |
-| L: Liskov Substitution   | Subtypes must be substitutable for their base types without breaking the program. |
-| I: Interface Segregation | Prefer many small, specific interfaces over one big fat interface.                |
-| D: Dependency Inversion  | Depend on abstractions, not concrete implementations.                             |
-
-
-### Related to Python
-
-#### S: Single Responsibility Principle (SRP)
-
-A class (or function) should do one thing and do it well. In Python, this usually means:
-- Keep classes focused.
-- Split long functions into small helpers.
-- Modules should also have a focused purpose.
-
-('Doing just one thing' is not exactly the same as 'having one reason to change'—the former is about behavior, and the latter is about responsibility, but the former is 95% correct and practical.)
-
-
-#### O: Open/Closed Principle (OCP)
-
-You should be able to extend a class’s behavior without modifying its source. In Python, this often means:
-- Use inheritance, composition, or higher-order functions.
-- Prefer adding new classes/functions over editing old ones.
-
-
-#### L: Liskov Substitution Principle (LSP)
-
-Subclasses should behave like the parent class, without surprises. In Python:
-- When you extend a base class or protocol, you must not break expectations.
-- Inputs and outputs must still "make sense."
-
-```
-class Bird:
-    def fly(self):
-        print("Flying!")
-
-class Duck(Bird):
-    pass
-
-class Ostrich(Bird):
-    def fly(self):
-        raise NotImplementedError("Ostriches can't fly!")  # BAD!
-```
-
-So `Duck` is fine, `Ostrich` violates LSP. Better design would be a `FlyingBird` and `FlightlessBird` split, not a bad inheritance.
-
-
-#### I: Interface Segregation Principle (ISP)
-
-Users shouldn’t be forced to depend on interfaces they don’t use. In Python:
-- Keep base classes small.
-- Split large protocols (interfaces) into focused ones.
-
-
-#### D: Dependency Inversion Principle (DIP)
-
-Depend on abstractions, not concrete details." In Python:
-- Inject dependencies via constructors or functions.
-- Program to protocols / abstract classes, not implementations.
-
-```
-class Database(ABC):
-    @abstractmethod
-    def save(self, data): ...
-
-class MySQLDatabase(Database):
-    def save(self, data):
-        print(f"Saving {data} to MySQL")
-
-class Service:
-    def __init__(self, db: Database):
-        self.db = db
-
-    def process(self, data):
-        self.db.save(data)
-```
-
-This way it is easy to switch the database later. Hardcoding `MySQLDatabase` inside `Service` would be a bad design.
-
-
-### SOLID Design Checklist (Python Edition)
-
-#### Single Responsibility
-- Does this class only do one thing?
-- Would I need to change this class for more than one reason?
-- If yes → split it.
-
-#### Open/Closed
-- Can I extend behavior without modifying existing classes?
-- Am I adding new classes/functions instead of hacking old ones?
-- If not → refactor with inheritance or composition.
-
-#### Liskov Substitution
-- If I replace a parent class object with a child object, does the program still behave correctly?
-- If I replace a child object with a parent object (using only parent features), does the program still behave correctly?
-- Do all overridden methods behave consistently with expectations?
-- If not → split classes or rethink inheritance.
-
-#### Interface Segregation
-- Is this interface or base class small and focused?
-- Are users forced to implement methods they don’t need?
-- If yes → split interfaces into smaller ones.
-
-#### Dependency Inversion
-- Is this class depending on abstractions (interfaces/protocols) rather than concrete classes?
-- Can I swap implementations easily (e.g., MySQL ➔ Postgres ➔ Mock)?
-- If not → introduce abstract base classes or protocols.
+# Unit `0x05` – Iterators and Generators
 
 
 ## Topics covered
 
-- types
-- abstract methods
-- generator expressions
-- file IO
-- timing
-- IPO approach
+- Iterators
+- Generators
 
 
 ## Tasks
 
 ---
 
-### 👉 Task 'IPO'
+### 👉 Task 'Rash Annie' 
+
+- Implement a 'generator function' `factorial` (n!). It should generate this:
+```
+    list(factorial(8))
+        => [1, 1, 2, 6, 24, 120, 720, 5040, 40320]
+```
+- Same task for `fibonacci`. Its result is:
+``` 
+    list(fibonacci(8))
+        => [1, 1, 2, 3, 5, 8, 13, 21]
+```
+
+---
+
+### 👉 Task 'Duck Corn' 
+
+> Reprogram some existing functions/iterators/generators. Most of them come from `itertools` or `builtins`.
+
+Remarks:
+- To get a specific number of values from a generator you can use `list(islice(iterable,number))`, returning 
+a list with `number` elements from `iterable`.
+- Most functions are described in `itertools`, along with the task description and a "roughly equivalent" implementation.
+Don't spoil yourself, try it first.
+
+Tasks:
+
+- Implement `count(start=0)`
+  - Make a generator function that returns evenly spaced (+1) values starting with number `start`.
+```
+    list(islice(my_count(10), 6)) 
+        => [10, 11, 12, 13, 14, 15]
+```
+
+- `repeat(object[, times])`
+  - Make a generator function that returns `object` over and over again. Runs indefinitely unless the times argument 
+is specified.
+```
+    list(my_repeat(10, 3)) 
+        => [10, 10, 10]
+    list(map(pow, range(10), my_repeat(2))) 
+        => [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+
+- `chain(*iterables)`
+  - Make a generator function that returns elements from the first iterable until it is exhausted, then proceeds to the 
+next iterable, until all the iterables are exhausted. Used for treating consecutive sequences as a single sequence.
+```
+    def f_gen(): return (i*i for i in range(6))
+    rg = range(2,5,2)
+    list(my_chain(rg,f_gen())) 
+        => [2, 4, 0, 1, 4, 9, 16, 25]
+```
+
+- `dropwhile(predicate, iterable)`
+  - Make a generator function that drops elements from the iterable as long as the predicate is true; afterwards, 
+returns every element. 
+``` 
+    data = [1, 4, 9, 16, 25]
+    pred = lambda x: x < 10
+    list(my_dropwhile(pred, data)) 
+        => [16, 25]
+```
+
+- `takewhile(predicate, iterable)`
+  - Make a generator function that returns elements from the iterable as long as the predicate is true. 
+``` 
+    data = [1, 4, 9, 16, 25]
+    pred = lambda x: x < 10
+    list(my_takewhile(pred, data)) 
+        => [1, 4, 9]
+```
+
+- `zip(iterable1, iterable2)`
+  - Make a generator function that returns tuples from both iterables, one at a time - see example. 
+For different lengths, use the minimum.
+```
+    chars = ['A', 'B', 'C']
+    numbers = [1, 2, 3]
+    list(my_zip(chars, numbers)) 
+        => [('A', 1), ('B', 2), ('C', 3)]
+```
+
+- `class cross(Iterator)`
+  - Make an iterator class that can be used in a similar way to `zip`, but taking elements from the second iterable 
+in reverse order.
+```
+    chars = ['A', 'B', 'C']
+    numbers = [1, 2, 3]
+    list(cross(chars, numbers)) 
+        => [('A', 3), ('B', 2), ('C', 1)]
+```
+
+- `compress(data, selectors)`
+  - Make a generator function that filters elements from data returning only those that have a corresponding element in 
+selectors that evaluates to True. Stops when either the data or selectors iterables has been exhausted 
+(remember 'Sieve-Prime'-Task).
+```
+    sieve = [1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1]
+    numbers = range(0, len(sieve))
+    list(my_compress(numbers, (1-i for i in sieve))) 
+        => [2, 3, 5, 7, 11]
+```
+
+- ⭐`product(*iterables)`
+  - Create a generator function that iterates the Cartesian product of input iterables. This is roughly equivalent 
+to nested for-loops in a generator expression, e.g.
+`product(A, B)` returns the same as `((x,y) for x in A for y in B)`.
+  - It is allowed to consume the iterables first.
+  - Can you implement a 'real' generator function that avoids consumption?
+```
+    major = [1, 2]
+    minor = [5, 6]
+    sub = ["alpha", "beta"]
+    list(my_product(major, minor, sub))
+        => [(1, 5, 'alpha'), (1, 5, 'beta'), (1, 6, 'alpha'), (1, 6, 'beta'), (2, 5, 'alpha'), (2, 5, 'beta'), (2, 6, 'alpha'), (2, 6, 'beta')]
+```
+
+- `enumerate(iterable)`
+  - Create a generator function that simulates the built-in `enumerate` function.
+```
+    numbers = ['A', 'B', 'C']
+    list(my_enumerate(numbers)) 
+        => [(0, 'A'), (1, 'B'), (2, 'C')]
+```
+
+- `splitlines(text: str)`
+  - Create a generator function that simulates the `string.splitlines` function.
+```
+  text = """Lorem ipsum... 
+    At vero eos et accusam... 
+    Stet clita kasd ..."""
+ 
+    list(my_splitlines(text))
+        => ['Lorem ipsum... ', 'At vero eos et accusam... ', 'Stet clita kasd ...']
+```
+
+- Create generator expressions `select_from(operation, iterable)` and `where(predicate, iterable)` such that 
+this code works as expected:
+```
+    data = [1, 2, 3]
+    list(where(lambda x: x > 11, select_from(lambda x: (x + 10), data)))
+        => [12, 13]
+```
+
+---
+
+### ⭐ Task 'Red Berry' 
+
+- Implement a `class PINQ(iterator)` so that the following code works as expected.
+- **Avoid any creation of data containers until the final evaluation, e.g. by `list`.**
+- Remember `select_from` and `where` from Task 'Duck Corn'.
+- 'PINQ' is inspired by [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) 😉.
+
+```
+    data = [1, 2, 3]
+    
+    gen = PINQ().From(data).Select(lambda x: (x+10)).Where(lambda x: x > 11).to_generator()
+    list(gen)
+        => [12, 13]
+
+    gen = PINQ().From(data).Select(lambda x: (x+10)).Where(lambda x: x > 11).to_list()
+    gen
+        => [12, 13]
+
+    gen = PINQ().From(data).Select(lambda x: (x+10)).Where(lambda x: x > 11)
+    list(gen)
+        => [12, 13]
+
+    gen = PINQ().From(data).Select(lambda x: (x+10, x+100)).Where(lambda x: x[0] > 11)
+    list(gen)
+        => [(12, 102), (13, 103)]
+
+    gen = PINQ().From(data).Select(lambda x: x*x).Select(lambda x: x+10).Where(lambda x: x > 11)
+    list(gen.to_list())
+        => [14, 19]
+
+    gen = PINQ().From(data).Select(lambda x: x*x).Select(lambda x: x+10).Where(lambda x: x > 11).Select(lambda x: x-4)
+    list(gen)
+        => [10, 15]
+```
+
+---
+
+### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.
 
 ---
 
-### 👉 Task 'GroPro'
+### 👉 Task 'Recap'
 
-- Choose one (or more) of the GroPros:
-  - Crosswords
-  - Service Stations
-  - Wooden Puzzle
-
-Try to solve the problem(s), but also try to take the SOLID principles into account.
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
 
 ---
 
@@ -179,15 +218,15 @@ Try to solve the problem(s), but also try to take the SOLID principles into acco
 ### 👉 Comprehension Check - Talk with your Neighbor
 
 General
-- How would you build a solution for a GroPro?
-- What can you prepare in advance?
+- Describe 'iterators' and 'generators.' What are the benefits?
+- Are there any use cases you see for your projects or code?
 
 ---
 
 ### 👉 Lecture Check - Online Questionare
 
-- Please participate in the survey: [Slido](https://sli.do)
+- Please participate in the survey: [Slido](https://wall.sli.do)
 
 ---
 
-End of `Unit 0x05`
+End of `Unit 0x07`
