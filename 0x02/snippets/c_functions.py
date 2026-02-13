@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses function calling.
@@ -42,7 +42,6 @@ See also
 
 from utils import print_function_header
 
-
 """
 Topic: Functions
 """
@@ -68,7 +67,7 @@ def sum_up_named():
     print(f" 1| {sum1=}, {sum2=}")
 
 
-def add_positive_x_to_list(x, lst=[]):      # pylint: disable=dangerous-default-value
+def add_positive_x_to_list(x, lst=[]):      # noqa: B006
     """ add x to lst if x > 0 """
     if x > 0:
         lst.append(x)

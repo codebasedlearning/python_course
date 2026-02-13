@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 Task 'Coral Cove'
@@ -27,7 +27,7 @@ def find_min_weight_neighbor(start_node):
     # min_weight = GRAPH[start_node][min_neighbor]
 
     # --- explicit variant ---
-    min_weight = float('inf')                                   # ensures any weight is smaller
+    min_weight = float('inf')               # ensures any weight is smaller
     min_neighbor = None
 
     for neighbor, weight in GRAPH[start_node].items():

@@ -1,7 +1,6 @@
-[© 2025, A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
 # Unit `0x02` – First Steps
-
 
 ## Topics covered
 
@@ -10,10 +9,9 @@
 - Control-flow
 - Function calling
 
+---
 
 ## General Comments
-
----
 
 ### Primitives
 
@@ -21,8 +19,6 @@
 - Actually there are no 'primitives' in Python, only objects. You can see this by looking at the definition in builtins.py, e.g. via the 'PyCharm' context menu on `int`, then 'Go To Declaration'. 
 - `int` and `float` are so-called 'numeric types'.
 - Primitive types are immutable. This means that once a variable of a primitive type is assigned a value, the value itself cannot be changed. Instead, operations result in new objects being created.
-
----
 
 ### Collections
 
@@ -32,22 +28,20 @@
   - add and remove an element (if mutable)
 
 
-## Tasks
-
 ---
+
+## Tasks
 
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.
 - Run and understand all content from scripts that start with `self_`. Ask if you miss an idea.
 
----
 
 ### 👉 Task 'Recap'
 
 - Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
 
----
 
 ### 👉 Task 'Coral Cove' (Graph)
 
@@ -161,8 +155,9 @@ Check
 
 ---
 
-### 👉 Comprehension Check - Talk with your Neighbor
+## 👉 Comprehension Check
 
+Talk with your Neighbor.
 - What are the known primitive data types and containers?
 - What are some important differences between containers?
 - What is the difference between '==' and 'is'?
@@ -174,12 +169,3 @@ Check
 - What are 'frozensets' for?
 - What do I need to be aware of with a function's default arguments?
 
----
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x02`
