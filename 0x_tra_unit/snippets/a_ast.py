@@ -1,21 +1,28 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet is about pythons abstract syntax tree (ast).
+This snippet is about Python's abstract syntax tree (ast).
 
 Teaching focus
   - ast.parse
   - eval
+
+References
+  - https://docs.python.org/3/library/ast.html
+  - https://docs.python.org/3/library/functions.html#eval
+  - https://greentreesnakes.readthedocs.io/en/latest/tofrom.html
 """
 
 import ast
 
+from utils import print_function_header
+
 
 # parse and then show ast-structure with 'dump'
 
+@print_function_header
 def use_ast_parse_and_dump():
     """ dumps ast-structure of a code-snippet """
-    print("\nuse_ast_parse_and_dump\n======================")
 
     code = """
 x=20+22
@@ -32,9 +39,9 @@ x=20+22
     print()
 
 
+@print_function_header
 def ast_example_std_code():
     """ show ast-structure of a standard code-snippet """
-    print("\nast_example_std_code\n====================")
 
     code = """
 x = math.sin(1.0)
@@ -52,9 +59,9 @@ else:
     print()
 
 
+@print_function_header
 def ast_example_class():
     """ show ast-structure of a class-code-snippet """
-    print("\nast_example_class\n=================")
 
     code = """
 class C:
@@ -70,9 +77,9 @@ obj = C()
 
 # it can also be executed...
 
+@print_function_header
 def run_it():
     """ run a code-snippet """
-    print("\nrun_it\n======")
 
     code_exec = """
 x=20+22
@@ -83,7 +90,7 @@ print(f" a| - {x=}")
 
     global_vars = {'y': 1}
     code_eval = """1 + 1/2 + y"""
-    result = eval(code_eval, global_vars)                           # set the environment
+    result = eval(code_eval, global_vars)   # set the environment
     print(f" 1| {result=}")
 
 
@@ -92,9 +99,3 @@ if __name__ == "__main__":
     ast_example_std_code()
     ast_example_class()
     run_it()
-
-"""
-https://docs.python.org/3/library/ast.html
-https://docs.python.org/3/library/functions.html#eval
-https://greentreesnakes.readthedocs.io/en/latest/tofrom.html
-"""

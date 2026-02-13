@@ -1,6 +1,6 @@
-[© 2025, Alexander Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x0d` – Outlook and Preparation
+# Unit `0x_tra_unit` – Outlook and Preparation
 
 
 ## Topics covered

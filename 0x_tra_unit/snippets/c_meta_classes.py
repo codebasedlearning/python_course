@@ -1,4 +1,4 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about meta-classes.
@@ -6,6 +6,8 @@ This snippet is about meta-classes.
 Teaching focus
   - metaclass
 """
+
+from utils import print_function_header
 
 
 class RequiresRunMeta(type):
@@ -19,9 +21,9 @@ class Task(metaclass=RequiresRunMeta):
     def run(self):
         print("Running task...")
 
+@print_function_header
 def require_class_structure():
     """ example for RequiresRunMeta """
-    print("\nrequire_class_structure\n=======================")
 
     # class BrokenTask(metaclass=RequiresRunMeta): pass
 
@@ -46,9 +48,9 @@ class AnotherPlugin(BasePlugin):
     def run(self):
         print("Another plugin.")
 
+@print_function_header
 def register_all_classes():
     """ example for registering classes """
-    print("\nregister_all_classes\n====================")
 
     print(plugin_registry)
 

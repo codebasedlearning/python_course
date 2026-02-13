@@ -1,10 +1,17 @@
-# (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet is about modifying an ast.
+
+References
+  - https://docs.python.org/3/library/ast.html
+  - https://greentreesnakes.readthedocs.io/en/latest/index.html
+  - https://gist.github.com/jtpio/cb30bca7abeceae0234c9ef43eec28b4
 """
 
 import ast
+
+from utils import print_function_header
 
 
 # modify an ast? yes... but why?
@@ -22,7 +29,7 @@ class ExampleVisitor(ast.NodeVisitor):
     @classmethod
     def dec_indent(cls): cls._indent -= 2
 
-    # modify all nodes you are interested in
+    # visit all nodes you are interested in
 
     def visit_Constant(self, node):
         print(f"{ExampleVisitor.indent()}CONST {node.value}")
@@ -45,7 +52,7 @@ class ExampleVisitor(ast.NodeVisitor):
         if_node = node.body
         if if_node:
             ExampleVisitor.inc_indent()
-            self.generic_visit(if_node[0])                          # specific for the example, not general
+            self.generic_visit(if_node[0])  # specific for the example, not general
             ExampleVisitor.dec_indent()
 
         else_node = node.orelse
@@ -56,9 +63,9 @@ class ExampleVisitor(ast.NodeVisitor):
             ExampleVisitor.dec_indent()
 
 
+@print_function_header
 def visit_nodes():
     """ visit nodes of an ast and dump the structure """
-    print("\nvisit_nodes\n===========")
 
     code = """
 x = math.sin(1.0)
@@ -96,7 +103,7 @@ class LibConnectionMock(ast.NodeTransformer):
                     value=ast.Name(id='NewLib', ctx=ast.Load()),
                     attr='new_connect',
                     ctx=ast.Load()),
-                args=node.args,                                     # could be changed to new args
+                args=node.args,             # could be changed to new args
                 keywords=node.keywords)
             ast.copy_location(new_node, node)
             ast.fix_missing_locations(new_node)                     # set lineno and col_offset
@@ -104,9 +111,9 @@ class LibConnectionMock(ast.NodeTransformer):
         return node
 
 
+@print_function_header
 def modify_nodes():
     """ modify nodes of an ast and dump the structure """
-    print("\nmodify_nodes\n============")
 
     code = """
 db = lib.connect('url')
@@ -126,10 +133,3 @@ db = lib.connect('url')
 if __name__ == "__main__":
     visit_nodes()
     modify_nodes()
-
-
-"""
-https://docs.python.org/3/library/ast.html
-https://greentreesnakes.readthedocs.io/en/latest/index.html
-https://gist.github.com/jtpio/cb30bca7abeceae0234c9ef43eec28b4
-"""
