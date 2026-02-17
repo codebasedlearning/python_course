@@ -2,18 +2,21 @@
 
 # Unit `0x07` – Decorators
 
+## Overview
 
-## Topics covered
+This unit focuses on decorators, including variations with parameters, return values, and class-based usage.
 
-- decorators
-- with parameters
-- with return values
-- with default values
-- as classes
-- for classes
+### Focus
 
+Learn to wrap and enhance functions cleanly while preserving behavior and metadata.
 
-todo: IPO decos
+## Topics
+
+- Decorators (basics)
+- Decorators with parameters and return values
+- Default values and metadata preservation
+- Class-based decorators
+- Class decorators
 
 
 ## Tasks
@@ -143,6 +146,68 @@ For more background see also [here](https://realpython.com/lru-cache-python/).
 
 ---
 
+### 👉 Task 'AI Snapshot' – `functools.wraps`
+
+Prompt
+- "Which decorator preserves `__name__` and `__doc__`?"
+
+AI Answer A
+```python
+import functools
+
+def deco(fn):
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        return fn(*args, **kwargs)
+    return wrapper
+```
+
+AI Answer B
+```python
+def deco(fn):
+    def wrapper(*args, **kwargs):
+        return fn(*args, **kwargs)
+    return wrapper
+```
+
+Discuss
+- Which answer preserves metadata and why?
+- What breaks in tooling when metadata is lost?
+
+---
+
+### 👉 Task 'AI Snapshot' – Decorator Timing
+
+Prompt
+- "When is `decorating f` printed?"
+
+AI Answer A
+```python
+def deco(fn):
+    print("decorating", fn.__name__)
+    def wrapper(*a, **k):
+        print("calling")
+        return fn(*a, **k)
+    return wrapper
+
+@deco
+def f():
+    print("f")
+
+# Printed at definition/import time
+```
+
+AI Answer B
+```python
+# Printed only when `f()` is called
+```
+
+Discuss
+- Which answer is correct?
+- Why is this important for side effects at import time?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -154,6 +219,8 @@ For more background see also [here](https://realpython.com/lru-cache-python/).
 General
 - What kind of decorators do you know?
 - What is the reason for using `functools`?
+- Why is `functools.wraps` recommended in decorators?
+- When would you use a decorator with parameters?
 
 ---
 

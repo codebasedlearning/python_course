@@ -2,22 +2,28 @@
 
 # Unit `0x03` – First Classes – Finalize Basics
 
+## Overview
+
+This unit completes the fundamentals by introducing classes, attributes, properties, methods, operators, and single inheritance through several modeling tasks.
+
+### Focus
+
+Focus on solid OOP basics so you can design small class hierarchies and reason about object behavior.
+
+## Topics
+
+- Classes and attributes
+- Properties and encapsulation
+- Instance, class, and static methods
+- Operators and dunder methods
+- Single inheritance
+- Dataclasses (intro)
+
 > This unit completes our basic knowledge. The aim is to model and solve simple algorithmic problems in unit 0x04.
 > - Unit 0x01: First Impression (examples)
 > - Unit 0x02: First Steps (variables, control-flow, functions)
 > - Unit 0x03: Finalize Basics (classes, inheritance)
 > - Unit 0x04: (coming) Puzzle-Driven Programming Challenges 
-
-
-## Topics covered
-
-- classes
-- attributes
-- properties
-- member functions
-- class functions
-- operators
-- single inheritance
 
 
 ## Tasks
@@ -143,6 +149,68 @@ different in Python than in other OO-languages.
 
 ---
 
+### 👉 Task 'AI Snapshot' – Class vs Instance
+
+Prompt
+- "After this code, what are `Counter.count`, `c1.count`, and `c2.count`?"
+
+```python
+class Counter:
+    count = 0
+
+c1 = Counter()
+c2 = Counter()
+
+c1.count += 1
+```
+
+AI Answer A
+`Counter.count == 0, c1.count == 1, c2.count == 0`
+
+AI Answer B
+`Counter.count == 1, c1.count == 1, c2.count == 1`
+
+Discuss
+- Which answer is correct and why?
+- Explain how instance attributes shadow class attributes.
+
+---
+
+### 👉 Task 'AI Snapshot' – Property Validation
+
+Prompt
+- "Implement a `Temperature` class that rejects values below `-273.15` using a property."
+
+AI Answer A
+```python
+class Temperature:
+    def __init__(self, celsius):
+        self.celsius = celsius
+
+    @property
+    def celsius(self):
+        return self._celsius
+
+    @celsius.setter
+    def celsius(self, value):
+        if value < -273.15:
+            raise ValueError("below absolute zero")
+        self._celsius = value
+```
+
+AI Answer B
+```python
+class Temperature:
+    def __init__(self, celsius):
+        self.celsius = celsius
+```
+
+Discuss
+- Which answer enforces the constraint?
+- What happens if `Temperature(-300)` is created in Answer B?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -160,6 +228,9 @@ Language
 - Do you know the difference between a 'regular' member function, a static method and a class method?
 - What kind of 'dunder' functions do you know and what are they for?
 - What is the idea of a data class?
+- What is the difference between `__str__` and `__repr__`?
+- What is the difference between a class attribute and an instance attribute?
+- What is a property and why would you use it?
 
 ---
 

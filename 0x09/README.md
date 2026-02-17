@@ -2,10 +2,18 @@
 
 # Unit `0x09` – Async and Descriptors
 
+## Overview
 
-## Topics covered
+This unit introduces async programming with `async` and `await` and continues with descriptors as an advanced language feature.
 
-- async, await
+### Focus
+
+Develop a working mental model of cooperative concurrency and attribute control.
+
+## Topics
+
+- Async programming (`async`/`await`)
+- AsyncIO and task scheduling
 - Descriptors
 
 
@@ -281,6 +289,66 @@ Take a look at the topics covered and think about how you can prepare.
 
 ---
 
+### 👉 Task 'AI Snapshot' – `asyncio.sleep`
+
+Prompt
+- "What should be changed here?"
+
+```python
+import asyncio
+import time
+
+async def task():
+    time.sleep(1)
+```
+
+AI Answer A
+Replace `time.sleep(1)` with `await asyncio.sleep(1)`.
+
+AI Answer B
+No change is required.
+
+Discuss
+- Which answer is correct and why?
+- What happens to the event loop in the incorrect version?
+
+---
+
+### 👉 Task 'AI Snapshot' – Missing `await`
+
+Prompt
+- "What is printed, and how do you fix it?"
+
+AI Answer A
+```python
+async def fetch():
+    return 42
+
+async def main():
+    result = await fetch()
+    print(result)
+
+# 42
+```
+
+AI Answer B
+```python
+async def fetch():
+    return 42
+
+async def main():
+    result = fetch()
+    print(result)
+
+# <coroutine object ...>
+```
+
+Discuss
+- Which version actually runs the coroutine?
+- Why is forgetting `await` a common bug?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -292,6 +360,8 @@ Take a look at the topics covered and think about how you can prepare.
 General
 - What are the basic ideas behind 'async'?
 - In what use cases can you expect to be faster than in a synchronous version?
+- Why should blocking calls be avoided inside `async` functions?
+- What does `await` do in an async function?
 
 ---
 

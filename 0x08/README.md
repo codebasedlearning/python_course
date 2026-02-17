@@ -2,17 +2,20 @@
 
 # Unit `0x08` – Threads and Libs
 
+## Overview
 
-## Topics covered
+This unit introduces threads and selected libraries, covering concurrency concepts and practical tooling.
 
-- threads
-- libs
-  - unit tests
-  - databases
-  - SciPy and NumPy
-  - MS Exchange
-  - ChatGPT
-  - Timing
+### Focus
+
+Build awareness of Python's concurrency model and apply libraries safely and effectively.
+
+## Topics
+
+- Threads and concurrency basics
+- Locks and shared-state pitfalls
+- Selected libraries (tests, databases, NumPy/SciPy, Exchange, ChatGPT)
+- Timing and profiling
 
 
 ## Terms
@@ -178,6 +181,49 @@ to be involved in exchanging messages.
 
 ---
 
+### 👉 Task 'AI Snapshot' – Thread Safety
+
+Prompt
+- "Is this safe without a lock?"
+
+```python
+counter = 0
+
+def worker():
+    global counter
+    for _ in range(100000):
+        counter += 1
+```
+
+AI Answer A
+Not safe; protect the increment with a `threading.Lock`.
+
+AI Answer B
+Safe because the GIL makes increments atomic.
+
+Discuss
+- Which answer is correct and why?
+- Why is `counter += 1` not atomic?
+
+---
+
+### 👉 Task 'AI Snapshot' – Threads vs CPU
+
+Prompt
+- "Which workload benefits most from threads in Python: IO-bound or CPU-bound?"
+
+AI Answer A
+IO-bound workloads benefit most from threads.
+
+AI Answer B
+CPU-bound workloads benefit most from threads.
+
+Discuss
+- Which answer is correct?
+- When would you choose processes instead?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -190,6 +236,8 @@ General
 - What is special in Python concerning parallel execution?
 - What is the difference between a process and a thread?
 - What is a mutex for?
+- What is a race condition in threaded code?
+- What is the GIL and how does it affect CPU-bound threads in Python?
 
 ---
 

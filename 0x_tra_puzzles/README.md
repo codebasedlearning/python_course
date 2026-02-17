@@ -397,4 +397,52 @@ My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraptio
 
 ---
 
+## 👉 Comprehension Check
+
+- Why refactor after solving Part 1 and Part 2?
+- When does a reusable grid or graph helper class pay off?
+- Why are small custom test cases useful for puzzles?
+
+---
+
+## AI Tasks
+
+### 👉 Task 'AI Snapshot' – Shortest Path
+
+Prompt
+- "Which algorithm guarantees the shortest path in an unweighted grid: BFS or DFS?"
+
+AI Answer A
+BFS, because it explores nodes by distance layers.
+
+AI Answer B
+DFS, because it goes as deep as possible first.
+
+Discuss
+- Which answer is correct and why?
+- What would be a counterexample for the wrong answer?
+
+---
+
+### 👉 Task 'AI Snapshot' – Grid Parsing
+
+Prompt
+- "Which version builds a 2D grid of characters from `lines`?"
+
+AI Answer A
+```python
+grid = [list(line) for line in lines]
+```
+
+AI Answer B
+```python
+grid = list(lines)
+```
+
+Discuss
+- Which answer creates a list of lists of characters?
+- What does the incorrect version produce?
+
+---
+
 # Have fun!

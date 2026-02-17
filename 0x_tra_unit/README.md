@@ -2,12 +2,20 @@
 
 # Unit `0x_tra_unit` – Outlook and Preparation
 
+## Overview
 
-## Topics covered
+This unit previews advanced topics such as ASTs, the Python disassembler, and metaclasses while also covering exam preparation details.
 
-- Abstract Syntax Tree (AST) (teaser)
-- Python Disassembler (teaser)
-- Meta Classes (teaser)
+### Focus
+
+Get a high-level orientation to advanced introspection tools and organize your exam strategy.
+
+## Topics
+
+- AST (teaser)
+- Python disassembler (teaser)
+- Metaclasses (teaser)
+- Exam preparation
 
 
 ## Exam – Golden Words
@@ -178,6 +186,48 @@ Es sind hier keine Dateioperationen gefordert.
 ### 👉 Task 'Exam Preparation' 
 
 Think about how you can prepare.
+
+---
+
+### 👉 Task 'AI Snapshot' – Metaclass vs Decorator
+
+Prompt
+- "When should you use a metaclass instead of a class decorator?"
+
+AI Answer A
+Use a metaclass when you need to control class creation or enforce rules across subclasses.
+
+AI Answer B
+Use a metaclass whenever you want to add a method to a class.
+
+Discuss
+- Which answer is correct and why?
+- Why is a class decorator often sufficient?
+
+---
+
+### 👉 Task 'AI Snapshot' – `ast` vs `dis`
+
+Prompt
+- "Which tool inspects Python bytecode: `ast` or `dis`?"
+
+AI Answer A
+`dis` inspects bytecode; `ast` parses source into a syntax tree.
+
+AI Answer B
+`ast` inspects bytecode; `dis` parses source into a syntax tree.
+
+Discuss
+- Which answer is correct?
+- When would you prefer `ast` over `dis`?
+
+---
+
+## 👉 Comprehension Check
+
+- What does `dis` show that `ast` does not?
+- Why might you inspect bytecode during debugging?
+- What is a metaclass in Python?
 
 ---
 

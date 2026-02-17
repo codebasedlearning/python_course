@@ -2,6 +2,20 @@
 
 # Unit `0x0x_gropros` – GroPro-Setup
 
+## Overview
+
+This unit prepares you for GroPro-style tasks by emphasizing SOLID design principles and structured problem solving.
+
+### Focus
+
+Focus on designing maintainable solutions before coding, using clear responsibilities and abstractions.
+
+## Topics
+
+- SOLID design principles
+- IPO approach to problem solving
+- Designing maintainable solutions
+
 > The aim is to model and solve GroPro (Grosse Programmieraufgabe IHK) problems.
 
 > Note: the principles are not specific to Python, they must always be followed. But it's also about what you can prepare now, so that you have a framework for the exam (IPO) and don't have to think about everything from scratch.
@@ -134,16 +148,6 @@ This way it is easy to switch the database later. Hardcoding `MySQLDatabase` ins
 - If not → introduce abstract base classes or protocols.
 
 
-## Topics covered
-
-- types
-- abstract methods
-- generator expressions
-- file IO
-- timing
-- IPO approach
-
-
 ## Tasks
 
 ---
@@ -165,6 +169,40 @@ Try to solve the problem(s), but also try to take the SOLID principles into acco
 
 ---
 
+### 👉 Task 'AI Snapshot' – SRP Design
+
+Prompt
+- "Should a `ServiceStation` class handle pricing, IO, and reporting in one place?"
+
+AI Answer A
+No. Split responsibilities into focused classes such as `PricingPolicy`, `Receipt`, and `Station`.
+
+AI Answer B
+Yes. Keep everything in one large `ServiceStation` class to reduce complexity.
+
+Discuss
+- Which answer aligns with the Single Responsibility Principle?
+- What kinds of changes would break the one-class design?
+
+---
+
+### 👉 Task 'AI Snapshot' – Dependency Inversion
+
+Prompt
+- "Should a service depend directly on `MySQLDatabase`?"
+
+AI Answer A
+No. Depend on an abstraction (protocol/ABC) so the database can be swapped.
+
+AI Answer B
+Yes. Concrete dependencies are simpler and faster to build.
+
+Discuss
+- Which answer matches the Dependency Inversion Principle?
+- What benefit do you get from depending on an abstraction?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -176,6 +214,8 @@ Try to solve the problem(s), but also try to take the SOLID principles into acco
 General
 - How would you build a solution for a GroPro?
 - What can you prepare in advance?
+- How does the IPO approach help structure a solution?
+- Give one example of a Single Responsibility Principle (SRP) violation.
 
 ---
 

@@ -2,12 +2,21 @@
 
 # Unit `0x02` – First Steps
 
-## Topics covered
+## Overview
 
-- Primitives
-- Collections
-- Control-flow
-- Function calling
+This unit introduces Python's core data types, collections, control flow, and function calling, with practical exercises on graphs and student grade analysis.
+
+### Focus
+
+Build fluency with primitives and collections and apply them to small, well-defined problem solvers.
+
+## Topics
+
+- Primitives and numeric types
+- Collections (list, tuple, dict, set, range)
+- Control flow and loops
+- Functions and parameters
+- Basic exception handling
 
 ---
 
@@ -149,6 +158,63 @@ Check
 
 ---
 
+### 👉 Task 'AI Snapshot' – Averages
+
+Reference
+- Use the `GRADES` dataset from Task 'Buxrose Edge' above.
+
+Prompt
+- "Compute the average grade per student for `GRADES` and return a dictionary."
+
+AI Answer A
+```python
+average_grades = {}
+for name, grades in GRADES.items():
+    average = sum(grades.values()) / len(GRADES)
+    average_grades[name] = average
+```
+
+AI Answer B
+```python
+average_grades = {
+    name: sum(grades.values()) / len(grades)
+    for name, grades in GRADES.items()
+}
+```
+
+Discuss
+- Which answer is correct and why?
+- Find the bug in the other answer and fix it.
+- What small test would catch the bug immediately?
+
+---
+
+### 👉 Task 'AI Snapshot' – Sorting
+
+Prompt
+- "Sort students by average grade descending and return a list of names."
+
+AI Answer A
+```python
+student_names_sorted = sorted(average_grades)
+```
+
+AI Answer B
+```python
+student_names_sorted = sorted(
+    average_grades,
+    key=average_grades.get,
+    reverse=True,
+)
+```
+
+Discuss
+- Which answer matches the task requirements?
+- What does the incorrect version actually sort by?
+- Provide a corrected one-liner.
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -168,4 +234,6 @@ Talk with your Neighbor.
 - What is the difference between a list and a tuple?
 - What are 'frozensets' for?
 - What do I need to be aware of with a function's default arguments?
+- Why is `range` not the same as a list?
+- When would you use `any()` versus `all()`?
 

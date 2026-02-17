@@ -2,6 +2,20 @@
 
 # Unit `0x09` – Test Exam
 
+## Overview
+
+This unit simulates the exam environment, including rules, constraints, and a full set of tasks to complete in a single script.
+
+### Focus
+
+Practice correctness and clarity under time pressure while following exam conventions.
+
+## Topics
+
+- Exam rules and constraints
+- Multi-part programming tasks
+- Verification under time pressure
+
 ## Prüfung Python – Dauer 120 Min.
 
 ### Allgemeine Randbedingungen und Anforderungen
@@ -250,3 +264,47 @@ Tipp: Falls Ihr `sensor_a` keine Generatorfunktion ist, sondern direkt eine List
 können Sie diese Aufgabe dennoch vollkommen analog lösen.
 
 --
+---
+
+## AI Reflection (No AI in Exam)
+
+### 👉 Task 'AI Snapshot' – Exam Policy
+
+Prompt
+- "Is using AI assistance allowed during the exam?"
+
+AI Answer A
+No. Any active AI assistance is forbidden.
+
+AI Answer B
+Yes, if it is only used for test generation.
+
+Discuss
+- Which answer matches the exam rules?
+- What is the consequence of violating the policy?
+
+---
+
+### 👉 Task 'AI Snapshot' – Boundary Tests
+
+Prompt
+- "Which test strategy best verifies the password policy tasks?"
+
+AI Answer A
+Test min/max boundaries and off-by-one positions, plus at least one invalid case.
+
+AI Answer B
+Test one happy path and assume the rest is fine.
+
+Discuss
+- Which answer is more robust under time pressure?
+- What minimal set of tests would you run?
+
+## 👉 Comprehension Check
+
+- What file name format is required for the exam submission?
+- Why should you add small boundary tests before submitting?
+- Why must the solution be in a single `.py` file?
+
+---
+

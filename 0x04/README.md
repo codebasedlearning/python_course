@@ -2,6 +2,22 @@
 
 # Unit `0x04` – Types, Inheritance, and Composition
 
+## Overview
+
+This unit dives into typing, inheritance, composition, protocols, and mixins, connecting Python's dynamic runtime to its optional static type system.
+
+### Focus
+
+Learn how to structure reusable designs and express intent with types and abstractions.
+
+## Topics
+
+- Type hints and static typing tools
+- Inheritance vs composition
+- Abstract classes and protocols
+- Structural vs nominal typing
+- Mixins and MRO basics
+
 
 ## Types
 
@@ -61,13 +77,6 @@ achieved with composition, which also opens up the possibility of fine-tuning
 the interface of the individual class. A nice discussion can be found 
 [here](https://realpython.com/inheritance-composition-python). 
 The 'self*'-snippets are associated code to try out.
-
-
-## Topics covered
-
-- Typing (nominal typing, subtyping, duck typing, structural typing)
-- single and multiple inheritance, method resolution order MRO
-- inheritance vs. composition
 
 
 ## Tasks
@@ -247,6 +256,53 @@ tests, taking into account the MRO (hint: `kwargs`).
 
 ---
 
+### 👉 Task 'AI Snapshot' – Protocol Match
+
+Prompt
+- "Does a class have to inherit from a `Protocol` to satisfy it?"
+
+AI Answer A
+A class satisfies a `Protocol` if it has the required methods (structural typing).
+
+AI Answer B
+A class must explicitly inherit from a `Protocol` to satisfy it.
+
+Discuss
+- Which answer matches how `Protocol` works in Python typing?
+- What is the difference between structural and nominal typing?
+
+---
+
+### 👉 Task 'AI Snapshot' – `runtime_checkable`
+
+Prompt
+- "What does `isinstance(Duck(), Quackable)` return here?"
+
+```python
+from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class Quackable(Protocol):
+    def quack(self) -> None:
+        ...
+
+class Duck:
+    def quack(self) -> None:
+        print("quack")
+```
+
+AI Answer A
+`True`
+
+AI Answer B
+`False`
+
+Discuss
+- Why does `@runtime_checkable` matter here?
+- What changes if the decorator is removed?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -261,6 +317,8 @@ General
 - What is 'nominal typing', 'structural typing' and 'duck typing'?
 - What is the famous phrase for 'duck typing'? And what does it mean?
 - What is the problem with the 'MRO' and calling the `super` function?
+- What does `@runtime_checkable` enable for a `Protocol`?
+- When would you prefer composition over inheritance?
 
 ---
 

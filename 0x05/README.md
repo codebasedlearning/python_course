@@ -2,11 +2,20 @@
 
 # Unit `0x05` – Iterators and Generators
 
+## Overview
 
-## Topics covered
+This unit covers iterators and generators, with exercises that build lazy sequences and reimplement common iterator utilities.
 
-- Iterators
-- Generators
+### Focus
+
+Practice lazy evaluation and custom iteration patterns to control performance and memory usage.
+
+## Topics
+
+- Iterator protocol
+- Generators and generator expressions
+- Lazy evaluation and memory usage
+- Reimplementing iterator utilities (itertools/builtins)
 
 
 ## Tasks
@@ -209,6 +218,57 @@ this code works as expected:
 
 ---
 
+### 👉 Task 'AI Snapshot' – Lazy vs Eager
+
+Prompt
+- "Which expression is lazy: `(x*x for x in range(10))` or `[x*x for x in range(10)]`?"
+
+AI Answer A
+The generator expression `(x*x for x in range(10))` is lazy; the list comprehension is eager.
+
+AI Answer B
+Both compute all values immediately.
+
+Discuss
+- Which answer is correct and why?
+- How does this affect memory usage?
+
+---
+
+### 👉 Task 'AI Snapshot' – Iterator Output
+
+Prompt
+- "What does `list(CountDown(3))` return?"
+
+AI Answer A
+```python
+class CountDown:
+    def __init__(self, n):
+        self.n = n
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.n <= 0:
+            raise StopIteration
+        self.n -= 1
+        return self.n
+
+# list(CountDown(3)) == [2, 1, 0]
+```
+
+AI Answer B
+```python
+# list(CountDown(3)) == [3, 2, 1]
+```
+
+Discuss
+- Which answer matches the actual iteration order?
+- Where does the off-by-one come from?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -220,6 +280,9 @@ this code works as expected:
 General
 - Describe 'iterators' and 'generators.' What are the benefits?
 - Are there any use cases you see for your projects or code?
+- What is the difference between `iter()` and `next()`?
+- What happens when a generator is exhausted?
+- What is a generator expression?
 
 ---
 

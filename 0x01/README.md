@@ -21,24 +21,17 @@ to manage dependencies, and have practical experience with essential Python prog
 
 > To get you started quickly, we will touch on many topics and leave the details for later units. Think of the examples in `snippets` as templates for various Python features.
 
+## Topics
 
-### Topics touched
+- Program structure (comments, imports, docstrings, indentation)
+- Python basics (int, float, string, bool)
+- Core collections (list, tuple, dict, set)
+- Control flow and loops (if, while, for, try/except)
+- Functions and parameters
+- Console I/O (input, print)
+- Unpacking and string formatting
+- Pythonic style and conventions
 
-- General structure of a Python program, e.g.
-  - comments
-  - imports and modules
-  - doc-strings
-  - role of whitespaces (indentation)
-- Examples with Python basics, e.g.
-  - primitives (int, float, string, bool)
-  - built-in containers (list, tuple, dict, set)
-  - type hints
-  - control flow (if, while, for, try-except)
-  - function calls with named parameters
-  - console input and output
-  - variable unpacking
-  - string interpolation
-- Pythonic way
 
 ---
 
@@ -191,6 +184,60 @@ Check
 ---
 
 
+### 👉 Task 'AI Snapshot' – Main Guard
+
+Prompt
+- "Explain what `if __name__ == '__main__':` does and show a tiny example."
+
+AI Answer A
+```python
+def main():
+    print("run")
+
+if __name__ == "__main__":  # runs only when executed directly
+    main()
+```
+
+AI Answer B
+It prevents all code in the file from running unless the file is imported.
+
+Discuss
+- Which answer is correct and why?
+- What actually happens to top-level code when the file is imported?
+
+---
+
+### 👉 Task 'AI Snapshot' – Input Loop
+
+Reference
+- Use the input loop idea from Task 'Eastern Sands' above.
+
+Prompt
+- "Read integers until an empty line is entered. Print each number. Ignore invalid input."
+
+AI Answer A
+```python
+while (line := input("n: ")) != "":
+    try:
+        n = int(line)
+        print(n)
+    except ValueError:
+        print("invalid")
+```
+
+AI Answer B
+```python
+while (line := input("n: ")) != "":
+    n = int(line)
+    print(n)
+```
+
+Discuss
+- Which answer is robust for invalid input?
+- What is missing in the other answer?
+
+---
+
 ## Homework
 
 - It is absolutely necessary to have a working Python environment before the next unit.
@@ -223,3 +270,5 @@ Language
 - How do you handle exceptions in Python (`try` / `except` / `else` / `finally`, raising)?
 - What is the purpose of `if __name__ == "__main__":` compared to code that runs on import?
 - How do you document modules and functions in Python (docstrings)?
+- What is a virtual environment and why do we use it?
+- What is `pyproject.toml` used for in a Python project?

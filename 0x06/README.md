@@ -2,14 +2,21 @@
 
 # Unit `0x06` – Scopes and language features
 
+## Overview
 
-## Topics covered
+This unit explores scopes and related language features, including lambdas, file IO, context managers, and pattern matching.
 
-- scopes and LEGB rule
-- lambdas
-- file io
-- context managers
-- match
+### Focus
+
+Understand how name resolution and resource management work, and apply these tools in small utilities.
+
+## Topics
+
+- Scopes and the LEGB rule
+- Lambdas and closures
+- Context managers
+- File I/O patterns
+- Pattern matching (`match`)
 
 
 ## Tasks
@@ -119,6 +126,54 @@ Hint: The arguments can be part of the match condition.
 
 ---
 
+### 👉 Task 'AI Snapshot' – Late Binding
+
+Prompt
+- "What does this print?"
+
+```python
+funcs = [lambda: i for i in range(3)]
+print([f() for f in funcs])
+```
+
+AI Answer A
+`[2, 2, 2]`
+
+AI Answer B
+`[0, 1, 2]`
+
+Discuss
+- Which answer is correct and why?
+- How can you fix late binding in a loop?
+
+---
+
+### 👉 Task 'AI Snapshot' – `nonlocal`
+
+Prompt
+- "Why does this fail, and how do you fix it?"
+
+```python
+def make_counter():
+    n = 0
+    def inc():
+        n += 1
+        return n
+    return inc
+```
+
+AI Answer A
+Add `nonlocal n` inside `inc` to update the outer scope.
+
+AI Answer B
+No change needed; it already works.
+
+Discuss
+- Which answer works and why?
+- When would `global` be the wrong fix?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -131,6 +186,8 @@ General
 - What is the main reason behind a 'context manager'?
 - What is a 'scope,' and what kind of scopes do you know?
 - What happens exactly when you import something?
+- What does `nonlocal` do inside a nested function?
+- What does LEGB stand for?
 
 ---
 
