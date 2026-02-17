@@ -3,41 +3,55 @@
 # Unit `0x_tra_puzzles` – Puzzle-Driven Programming Challenges
 
 
-> Python is well known for its ability to quickly write scripts and proofs of concept. Today we will practice both by building a quick solution to a puzzle and then refactoring it properly.
+> Python is well known for its ability to quickly write scripts and proofs of concept. Today we will
+practice both by building a quick solution to a puzzle and then refactoring it properly.
 
-> Besides the fun part, there is also a very practical side. Many companies use coding challenges as part of the application process for software developers; you are given a limited amount of time to find and present a solution to a specific problem. We also have a similar situation in the well-known "GroPro".
+> Besides the fun part, there is also a very practical side. Many companies use coding challenges as
+part of the application process for software developers; you are given a limited amount of time to
+find and present a solution to a specific problem. We also have a similar situation in the
+well-known "GroPro".
 
 
 ## Inspiration
 
 ### Advent of Code
 
-The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com). For scientific purposes, I have used only the basic concept and included
+The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com).
+For scientific purposes, I have used only the basic concept and included
 self-generated data specific to the task to avoid any legal issues.
 
-For more information and to enjoy the engaging story, please visit the website and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organized 'Advent of Code.'
+For more information and to enjoy the engaging story, please visit the website and register for next
+Christmas! Finally, I would like to thank Eric Wastl, who invented and organized 'Advent of Code.'
 
 ### LeetCode
 
-LeetCode is an online platform for improving coding skills, preparing for technical interviews, and solving algorithm and data structure problems. A sample list of questions can be found here [Top Interview 150](https://leetcode.com/studyplan/top-interview-150).
+LeetCode is an online platform for improving coding skills, preparing for technical interviews, and
+solving algorithm and data structure problems. A sample list of questions can be found here [Top
+Interview 150](https://leetcode.com/studyplan/top-interview-150).
 
 
 ## Puzzle Structure
 
-Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack.'
-The second part often involves a significant increase in complexity as the problem or solution space explodes. In many cases, it is essential to improve your solution concept, for example, by developing or using a clever approach to reduce the order or number of algorithmic iterations.
+Each original puzzle consists of two parts. The first part can usually be completed fast with a
+straightforward approach, prioritizing speed over beauty — also known as a 'hack.'
+The second part often involves a significant increase in complexity as the problem or solution space
+explodes. In many cases, it is essential to improve your solution concept, for example, by
+developing or using a clever approach to reduce the order or number of algorithmic iterations.
 
 Here we add refactoring as the third part, so we have:
 - Complete Part 1 as quickly as possible.
 - Same for Part 2. It is explicitly allowed to simply 'hack' your solution.
-- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your algorithms and solutions, and considering best practices.
+- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This
+  means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your
+  algorithms and solutions, and considering best practices.
 
 
 
 
 ## Input Data
 
-Parts 1 and 2 typically introduce the problem and provide sample data before addressing the actual input data.
+Parts 1 and 2 typically introduce the problem and provide sample data before addressing the actual
+input data.
 All data is provided in the form of text files in `data/`, e.g.
 ```
 - tinted_coast_example1.txt
@@ -45,15 +59,21 @@ All data is provided in the form of text files in `data/`, e.g.
 - tinted_coast_input.txt
 ```
 
-If the format of a line is given, you can rely on it. For example, if the explanation states that a line has this form
+If the format of a line is given, you can rely on it. For example, if the explanation states that a
+line has this form
 ```
 10: 23, 46
 ```
-starting with an identifier (10), followed by a colon and then a list of integer numbers (23, 46) separated with commas, then there is no need to check syntax or semantics. Note, however, the text file may end with a line break.
+starting with an identifier (10), followed by a colon and then a list of integer numbers (23, 46)
+separated with commas, then there is no need to check syntax or semantics. Note, however, the text
+file may end with a line break.
 
-> As a rule, you cannot assume that the data you receive from an external source is in the correct format, even if someone claims that it is. In general, it is important to handle corrupt or malicious data.
+> As a rule, you cannot assume that the data you receive from an external source is in the correct
+format, even if someone claims that it is. In general, it is important to handle corrupt or
+malicious data.
 
-> Here, we want to improve our problem-solving skills and focus on the algorithmic side. So, all files are formatted as promised.
+> Here, we want to improve our problem-solving skills and focus on the algorithmic side. So, all
+files are formatted as promised.
 
 ## Overview
 
@@ -69,11 +89,13 @@ starting with an identifier (10), followed by a colon and then a list of integer
 
 ### 👉 Puzzle 'Tinted Coast' (Calibration Values)
 
-You are given a list of strings. Each line contains a mix of letters and digits. Your task is to extract digits from each line in a specific way and compute the sum of the results.
+You are given a list of strings. Each line contains a mix of letters and digits. Your task is to
+extract digits from each line in a specific way and compute the sum of the results.
 
 #### Part 1
 
-From each line extract the first digit and the last digit that appears (ignore all letters) and combine them to form a two-digit number. For example:
+From each line extract the first digit and the last digit that appears (ignore all letters) and
+combine them to form a two-digit number. For example:
 
 - "a1b2c3" → first digit is 1, last digit is 3 → number is 13.
 - "x8x" → 88.
@@ -136,7 +158,8 @@ You will find the original task [here](https://adventofcode.com/2023/day/1)
 
 ### 👉 Puzzle 'Lonely Seafront' (Cube Games)
 
-You are given a list of 'games'. Each game consists of multiple rounds, and in each round, a number of colored cubes (red, green, blue) is shown.
+You are given a list of 'games'. Each game consists of multiple rounds, and in each round, a number
+of colored cubes (red, green, blue) is shown.
 
 Each game is described like this:
 
@@ -155,7 +178,8 @@ This means:
 You’re told that the maximum number of cubes available per color is:
 12 red, 13 green, 14 blue.
 
-Parse each game and check if any round exceeds the allowed cube limits. If the game is possible (i.e. all rounds stay within the cube limits), then it’s valid.
+Parse each game and check if any round exceeds the allowed cube limits. If the game is possible
+(i.e. all rounds stay within the cube limits), then it’s valid.
 
 Determine the sum of the IDs of all valid games.
 
@@ -216,7 +240,9 @@ You are given a 2D grid where each cell contains one of:
 
 #### Part 1
 
-Find all numbers in the grid that are adjacent to a symbol. A number is a sequence of digits (123, 8, etc.) and it is considered adjacent to a symbol if any of its digits are directly next to a symbol in the 8 neighboring positions (up, down, left, right, and the 4 diagonals).
+Find all numbers in the grid that are adjacent to a symbol. A number is a sequence of digits (123,
+8, etc.) and it is considered adjacent to a symbol if any of its digits are directly next to a
+symbol in the 8 neighboring positions (up, down, left, right, and the 4 diagonals).
 
 Your task is to add up all these adjacent numbers.
 
@@ -265,7 +291,8 @@ Sum all such gear ratios.
 
 #### Examples
 
-In the first grid the only gear ratio is `51*23=1173`. In the second example there is also only one, namely `397*544=215968`. In the final input data, there will be more than one of them.
+In the first grid the only gear ratio is `51*23=1173`. In the second example there is also only one,
+namely `397*544=215968`. In the final input data, there will be more than one of them.
 
 #### Part 3
 
@@ -306,7 +333,8 @@ For each card:
 - Count how many numbers from `your_numbers` are in `winning_numbers`.
 - If you have at least one match:
   - The first match gives you 1 point.
-  - Each additional match doubles the points, i.e. 1 match = 1 point, 2 matches = 2 points, 3 matches = 4 points, 4 matches = 8 points, etc.
+  - Each additional match doubles the points, i.e. 1 match = 1 point, 2 matches = 2 points, 3
+    matches = 4 points, 4 matches = 8 points, etc.
 
 What is the total score of all scratchcards?
 
@@ -336,10 +364,12 @@ This time, scratchcards can generate copies of other (following) scratchcards.
 - If a card has k matching numbers, you win 1 copy of each of the next k cards.
 - These extra cards can themselves generate further copies recursively.
 
-Simulate this until all the cascading copies are resolved. How many total scratchcards do you end up with?
+Simulate this until all the cascading copies are resolved. How many total scratchcards do you end up
+with?
 
 Important notes:
-- You don’t 'play' beyond the last card — i.e., if you’re on Card 99 and win 3, you can only copy up to Card 100.
+- You don’t 'play' beyond the last card — i.e., if you’re on Card 99 and win 3, you can only copy up
+  to Card 100.
 - Cards don’t generate more copies of themselves — only of following cards.
 
 #### Example 1
@@ -370,9 +400,11 @@ You will find the original task [here](https://adventofcode.com/2023/day/4)
 
 ### 👉 Puzzles 'AoC Originals'
 
-The examples selected in AoC are partly handmade and therefore not easy to simulate with own data, so I prefer to refer to the original task. Please note that you have to register to get the data.
+The examples selected in AoC are partly handmade and therefore not easy to simulate with own data,
+so I prefer to refer to the original task. Please note that you have to register to get the data.
 
-There are a lot of 2D puzzles, so having a good and reusable class structure to deal with them might help.
+There are a lot of 2D puzzles, so having a good and reusable class structure to deal with them might
+help.
 
 My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraption' and 'Sand Slabs'.
 

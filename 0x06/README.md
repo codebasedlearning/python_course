@@ -4,11 +4,13 @@
 
 ## Overview
 
-This unit explores scopes and related language features, including lambdas, file IO, context managers, and pattern matching.
+This unit explores scopes and related language features, including lambdas, file IO, context
+managers, and pattern matching.
 
 ### Focus
 
-Understand how name resolution and resource management work, and apply these tools in small utilities.
+Understand how name resolution and resource management work, and apply these tools in small
+utilities.
 
 ## Topics
 
@@ -25,7 +27,8 @@ Understand how name resolution and resource management work, and apply these too
 
 ### 👉 Task 'Ancestor Clove' 
 
-- Think about how you could design a 'Timer' class implementing the 'ContextManager' protocol to measure time. Test it.
+- Think about how you could design a 'Timer' class implementing the 'ContextManager' protocol to
+  measure time. Test it.
 - What would a function 'timer' look like that uses '@contextmanager.' Also test it.
 
 In both cases you can use the `fib(n)` function as a workload.
@@ -122,7 +125,8 @@ Hint: The arguments can be part of the match condition.
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 

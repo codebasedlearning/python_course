@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit previews advanced topics such as ASTs, the Python disassembler, and metaclasses while also covering exam preparation details.
+This unit previews advanced topics such as ASTs, the Python disassembler, and metaclasses while also
+covering exam preparation details.
 
 ### Focus
 
@@ -43,11 +44,13 @@ Sie ein Passwort für die Ilias-Ergebnis-Seite und eine Nummer in dieser Form
   die Sie sich notieren. Unter dieser Nummer wird das Ergebnis veröffentlicht.
 - Es gibt ein detailliertes Punkteschema (wie hier), sodass Sie selber
 mit der Angabe Ihrer (Teil)punkte kontrollieren können, was fehlt. 
-- Wenn sie hierbei Abweichungen feststellen, die Sie sich nicht erklären können, können Sie das in der Einsicht vorbringen.
+- Wenn sie hierbei Abweichungen feststellen, die Sie sich nicht erklären können, können Sie das in
+  der Einsicht vorbringen.
 
 Beispiel
 - Schema: 
-  - A1.a 7P: 1P class, docstring; 2P initializer, parameter name; 2P protected name attribute, read-property name; 1P type hints; 1P `__repr__` with `__dict__`
+  - A1.a 7P: 1P class, docstring; 2P initializer, parameter name; 2P protected name attribute,
+    read-property name; 1P type hints; 1P `__repr__` with `__dict__`
   - A1.b 3P: 1P abstract class; 2P abstract properties `cost`, `calories`
 
 - Ergebnisse
@@ -127,7 +130,14 @@ Sie Ihren Code derart, dass in dieser Weise Instanzen erzeugt werden können
 ```
 und die Ausgabe `print(f"d) {flour_with_butter=}")` diesen Text ausgibt:
 ```
-d) flour_with_butter={'_name': 'Flour with butter', '_category': 'Dessert', '_ingredients': {{'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}: 2, {'_name': 'Butter', '_price_per_unit': 1.5, '_calories_per_unit': 720}: 3}}
+d) flour_with_butter={
+    '_name': 'Flour with butter',
+    '_category': 'Dessert',
+    '_ingredients': {
+        {'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}: 2,
+        {'_name': 'Butter', '_price_per_unit': 1.5, '_calories_per_unit': 720}: 3,
+    },
+}
 ```
 Die Werte im Dictionary `ingredients` sind die zugehörigen Mengenangaben 
 der verwendeten Ingredienzien, d.h. hier 2 Einheiten `flour` und 3 Einheiten `butter`.

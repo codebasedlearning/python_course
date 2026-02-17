@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit covers iterators and generators, with exercises that build lazy sequences and reimplement common iterator utilities.
+This unit covers iterators and generators, with exercises that build lazy sequences and reimplement
+common iterator utilities.
 
 ### Focus
 
@@ -29,6 +30,7 @@ Practice lazy evaluation and custom iteration patterns to control performance an
     list(factorial(8))
         => [1, 1, 2, 6, 24, 120, 720, 5040, 40320]
 ```
+- This example yields 0! through 8! (9 values).
 - Same task for `fibonacci`. Its result is:
 ``` 
     list(fibonacci(8))
@@ -39,12 +41,15 @@ Practice lazy evaluation and custom iteration patterns to control performance an
 
 ### 👉 Task 'Duck Corn' 
 
-> Reprogram some existing functions/iterators/generators. Most of them come from `itertools` or `builtins`.
+> Reprogram some existing functions/iterators/generators. Most of them come from `itertools` or
+`builtins`.
 
 Remarks:
-- To get a specific number of values from a generator you can use `list(islice(iterable,number))`, returning 
+- To get a specific number of values from a generator you can use `list(islice(iterable,number))`,
+  returning 
 a list with `number` elements from `iterable`.
-- Most functions are described in `itertools`, along with the task description and a "roughly equivalent" implementation.
+- Most functions are described in `itertools`, along with the task description and a "roughly
+  equivalent" implementation.
 Don't spoil yourself, try it first.
 
 Tasks:
@@ -57,7 +62,8 @@ Tasks:
 ```
 
 - `repeat(object[, times])`
-  - Make a generator function that returns `object` over and over again. Runs indefinitely unless the times argument 
+  - Make a generator function that returns `object` over and over again. Runs indefinitely unless
+    the times argument 
 is specified.
 ```
     list(my_repeat(10, 3)) 
@@ -67,8 +73,10 @@ is specified.
 ```
 
 - `chain(*iterables)`
-  - Make a generator function that returns elements from the first iterable until it is exhausted, then proceeds to the 
-next iterable, until all the iterables are exhausted. Used for treating consecutive sequences as a single sequence.
+  - Make a generator function that returns elements from the first iterable until it is exhausted,
+    then proceeds to the 
+next iterable, until all the iterables are exhausted. Used for treating consecutive sequences as a
+single sequence.
 ```
     def f_gen(): return (i*i for i in range(6))
     rg = range(2,5,2)
@@ -77,7 +85,8 @@ next iterable, until all the iterables are exhausted. Used for treating consecut
 ```
 
 - `dropwhile(predicate, iterable)`
-  - Make a generator function that drops elements from the iterable as long as the predicate is true; afterwards, 
+  - Make a generator function that drops elements from the iterable as long as the predicate is
+    true; afterwards, 
 returns every element. 
 ``` 
     data = [1, 4, 9, 16, 25]
@@ -87,7 +96,8 @@ returns every element.
 ```
 
 - `takewhile(predicate, iterable)`
-  - Make a generator function that returns elements from the iterable as long as the predicate is true. 
+  - Make a generator function that returns elements from the iterable as long as the predicate is
+    true. 
 ``` 
     data = [1, 4, 9, 16, 25]
     pred = lambda x: x < 10
@@ -106,7 +116,8 @@ For different lengths, use the minimum.
 ```
 
 - `class cross(Iterator)`
-  - Make an iterator class that can be used in a similar way to `zip`, but taking elements from the second iterable 
+  - Make an iterator class that can be used in a similar way to `zip`, but taking elements from the
+    second iterable 
 in reverse order.
 ```
     chars = ['A', 'B', 'C']
@@ -116,8 +127,10 @@ in reverse order.
 ```
 
 - `compress(data, selectors)`
-  - Make a generator function that filters elements from data returning only those that have a corresponding element in 
-selectors that evaluates to True. Stops when either the data or selectors iterables has been exhausted 
+  - Make a generator function that filters elements from data returning only those that have a
+    corresponding element in 
+selectors that evaluates to True. Stops when either the data or selectors iterables has been
+exhausted 
 (remember 'Sieve-Prime'-Task).
 ```
     sieve = [1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1]
@@ -127,7 +140,8 @@ selectors that evaluates to True. Stops when either the data or selectors iterab
 ```
 
 - ⭐`product(*iterables)`
-  - Create a generator function that iterates the Cartesian product of input iterables. This is roughly equivalent 
+  - Create a generator function that iterates the Cartesian product of input iterables. This is
+    roughly equivalent 
 to nested for-loops in a generator expression, e.g.
 `product(A, B)` returns the same as `((x,y) for x in A for y in B)`.
   - It is allowed to consume the iterables first.
@@ -137,7 +151,8 @@ to nested for-loops in a generator expression, e.g.
     minor = [5, 6]
     sub = ["alpha", "beta"]
     list(my_product(major, minor, sub))
-        => [(1, 5, 'alpha'), (1, 5, 'beta'), (1, 6, 'alpha'), (1, 6, 'beta'), (2, 5, 'alpha'), (2, 5, 'beta'), (2, 6, 'alpha'), (2, 6, 'beta')]
+        => [(1, 5, 'alpha'), (1, 5, 'beta'), (1, 6, 'alpha'), (1, 6, 'beta'),
+            (2, 5, 'alpha'), (2, 5, 'beta'), (2, 6, 'alpha'), (2, 6, 'beta')]
 ```
 
 - `enumerate(iterable)`
@@ -159,7 +174,8 @@ to nested for-loops in a generator expression, e.g.
         => ['Lorem ipsum... ', 'At vero eos et accusam... ', 'Stet clita kasd ...']
 ```
 
-- Create generator expressions `select_from(operation, iterable)` and `where(predicate, iterable)` such that 
+- Create generator expressions `select_from(operation, iterable)` and `where(predicate, iterable)`
+  such that 
 this code works as expected:
 ```
     data = [1, 2, 3]
@@ -174,7 +190,8 @@ this code works as expected:
 - Implement a `class PINQ(iterator)` so that the following code works as expected.
 - **Avoid any creation of data containers until the final evaluation, e.g. by `list`.**
 - Remember `select_from` and `where` from Task 'Duck Corn'.
-- 'PINQ' is inspired by [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) 😉.
+- 'PINQ' is inspired by
+  [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) 😉.
 
 ```
     data = [1, 2, 3]
@@ -199,7 +216,12 @@ this code works as expected:
     list(gen.to_list())
         => [14, 19]
 
-    gen = PINQ().From(data).Select(lambda x: x*x).Select(lambda x: x+10).Where(lambda x: x > 11).Select(lambda x: x-4)
+    gen = (PINQ()
+        .From(data)
+        .Select(lambda x: x*x)
+        .Select(lambda x: x+10)
+        .Where(lambda x: x > 11)
+        .Select(lambda x: x-4))
     list(gen)
         => [10, 15]
 ```
@@ -214,7 +236,8 @@ this code works as expected:
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 

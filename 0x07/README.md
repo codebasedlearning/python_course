@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit focuses on decorators, including variations with parameters, return values, and class-based usage.
+This unit focuses on decorators, including variations with parameters, return values, and
+class-based usage.
 
 ### Focus
 
@@ -70,7 +71,8 @@ this prints
 ```
 with 1s delay between each line. Use `time.sleep(1)` for 1s delay.
 
-3) Extend the previous decorator to 'slow_down_v2'. You may or may not specify a time delay `dt` (default 1s).  
+3) Extend the previous decorator to 'slow_down_v2'. You may or may not specify a time delay `dt`
+(default 1s).  
 That means, both 
 ```
 @slow_down_v2(dt=0.5)
@@ -111,7 +113,8 @@ def test_example_test_cases():
 This results in:
 ``` 
 03| call a random test case: test value=23
-04| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>), ('test_case3', <function test_case3 at 0x106a1b420>)])
+04| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>),
+    ('test_case3', <function test_case3 at 0x106a1b420>)])
 ```
 
 5) Write a timer decorator class (!) that measures the execution time of a function
@@ -128,7 +131,9 @@ def slow():
     time.sleep(0.5)
 ```
 
-6) ⭐ Write your own `functools.lru_cache`. This [module](https://docs.python.org/3/library/functools.html#functools.lru_cache) comes with a '@lru_cache' decorator, which gives you the ability 
+6) ⭐ Write your own `functools.lru_cache`. This
+[module](https://docs.python.org/3/library/functools.html#functools.lru_cache) comes with a
+'@lru_cache' decorator, which gives you the ability 
 to cache the result of your functions using the Least Recently Used (LRU) strategy. 
 For more background see also [here](https://realpython.com/lru-cache-python/).
 
@@ -142,7 +147,8 @@ For more background see also [here](https://realpython.com/lru-cache-python/).
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 

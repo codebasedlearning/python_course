@@ -70,7 +70,8 @@ und den Takt (`10`), in dem an diesem Punkt ein neuer Wagen erscheint.
 ### Abschnitt `Kreuzungen:`
 
 Jede Zeile, z.B. `D 1 0 A 1 B 1 C 2`, enthält den Namen der Kreuzung (`D`),
-die XY-Koordinaten (`1 0`), und eine Liste von Punkten, jeweils mit Gewicht, die mit der Kreuzung verbunden sind (`A 1`, `B 1`, `C 2`).
+die XY-Koordinaten (`1 0`), und eine Liste von Punkten, jeweils mit Gewicht, die mit der Kreuzung
+verbunden sind (`A 1`, `B 1`, `C 2`).
 
 Die Gewichte sind für die Wahl der folgenden Strasse relevant, wenn ein Fahrzeug
 an einer Kreuzung ankommt. Das Fahrzeug wählt eine der verfügbaren Straßen zufällig

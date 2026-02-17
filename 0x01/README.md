@@ -19,7 +19,8 @@ to manage dependencies, and have practical experience with essential Python prog
 
 ### Focus
 
-> To get you started quickly, we will touch on many topics and leave the details for later units. Think of the examples in `snippets` as templates for various Python features.
+> To get you started quickly, we will touch on many topics and leave the details for later units.
+Think of the examples in `snippets` as templates for various Python features.
 
 ## Topics
 
@@ -151,10 +152,12 @@ Check
 Topics: functions, loops, input, dictionaries, recursion
 
 - Create a `sunny_coastline.py` file in your solutions project.
-- Read a number `n` from the console and compute the nth Fibonacci number, see [Fibonacci](https://de.wikipedia.org/wiki/Fibonacci-Folge),
+- Read a number `n` from the console and compute the nth Fibonacci number, see
+  [Fibonacci](https://de.wikipedia.org/wiki/Fibonacci-Folge),
   - iteratively,
   - recursively,
-  - recursively with Memoization, i.e. a dictionary containing all the values calculated so far, so that you can use these values if the number has already been calculated.
+  - recursively with Memoization, i.e. a dictionary containing all the values calculated so far, so
+    that you can use these values if the number has already been calculated.
 
 Check
 - Compare your solution with `sunny_coastline_one_solution.py` in `solutions`. 
@@ -168,10 +171,16 @@ Check
 Topics: functions, dictionaries, loops
 
 - Create a `bronze_strand.py` file in your solutions project.
-- Create three functions that operate on a dictionary, called 'counter.' Its keys are elements such as characters and the corresponding values are the counts. Example: After adding all characters from `banana` the dictionary looks like `{'b': 1, 'a': 3, 'n': 2}`.
-  - Implement a function `counter_add(counter: dict, item)` that increases the count of `item` in the dictionary. If the `item` is not in the dictionary, it should be added with a count of 1. 
-  - Implement a function `counter_sub(counter: dict, item)` that decreases the count of `item` in the dictionary. If the `item`’s count becomes zero or negative, remove it from the dictionary (with `del counter[item]`). 
-  - Implement a function `counter_most_common(counter: dict)` that returns the element with the highest count. If the counter is empty, return `None`.
+- Create three functions that operate on a dictionary, called 'counter.' Its keys are elements such
+  as characters and the corresponding values are the counts. Example: After adding all characters
+  from `banana` the dictionary looks like `{'b': 1, 'a': 3, 'n': 2}`.
+  - Implement a function `counter_add(counter: dict, item)` that increases the count of `item` in
+    the dictionary. If the `item` is not in the dictionary, it should be added with a count of 1. 
+  - Implement a function `counter_sub(counter: dict, item)` that decreases the count of `item` in
+    the dictionary. If the `item`’s count becomes zero or negative, remove it from the dictionary
+    (with `del counter[item]`). 
+  - Implement a function `counter_most_common(counter: dict)` that returns the element with the
+    highest count. If the counter is empty, return `None`.
   - Test your functions with the characters from `banana`.
 Note: There is a collection `Counter` working exactly like your functions.
 

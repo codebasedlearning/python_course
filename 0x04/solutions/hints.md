@@ -17,9 +17,11 @@
 ### Task 'Comprehension Check'
 
 - Q: Characterize 'single inheritance', 'multiple inheritance' and 'composition'. <br>
-  A: Single inheritance has one base class, multiple inheritance has several, composition builds behavior by containing objects.
+  A: Single inheritance has one base class, multiple inheritance has several, composition builds
+  behavior by containing objects.
 - Q: Characterize 'abstract classes', 'mixins' and 'protocols'. <br>
-  A: Abstract classes define required methods, mixins add reusable behavior, protocols define structural interfaces.
+  A: Abstract classes define required methods, mixins add reusable behavior, protocols define
+  structural interfaces.
 - Q: What is 'nominal typing', 'structural typing' and 'duck typing'? <br>
   A: Nominal: explicit inheritance; structural: method shape matches; duck: runtime behavior only.
 - Q: What is the famous phrase for 'duck typing'? And what does it mean? <br>

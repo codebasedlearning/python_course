@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit dives into typing, inheritance, composition, protocols, and mixins, connecting Python's dynamic runtime to its optional static type system.
+This unit dives into typing, inheritance, composition, protocols, and mixins, connecting Python's
+dynamic runtime to its optional static type system.
 
 ### Focus
 
@@ -22,27 +23,42 @@ Learn how to structure reusable designs and express intent with types and abstra
 ## Types
 
 > Python typing is primarily a static, opt-in system layered over a dynamic runtime.
-- Static: Type hints are used by static analysis tools (like mypy, pyright, IDEs) to catch type errors before running the code—without affecting how the code runs.
-- Opt-in: Type annotations are completely optional. You can write a fully functional Python program without using any types at all.
-- Layered over: The type system is not enforced by the Python interpreter. It’s an additional layer for developers, linters, and tools — not the runtime engine.
-- Dynamic runtime: Python still behaves as a dynamically typed language at runtime. Variables and objects can be reassigned to different types, and type errors only occur when you try something invalid — not when you declare it.
+- Static: Type hints are used by static analysis tools (like mypy, pyright, IDEs) to catch type
+  errors before running the code—without affecting how the code runs.
+- Opt-in: Type annotations are completely optional. You can write a fully functional Python program
+  without using any types at all.
+- Layered over: The type system is not enforced by the Python interpreter. It’s an additional layer
+  for developers, linters, and tools — not the runtime engine.
+- Dynamic runtime: Python still behaves as a dynamically typed language at runtime. Variables and
+  objects can be reassigned to different types, and type errors only occur when you try something
+  invalid — not when you declare it.
 
 **Please have a look at the snippet 'a_intro/a_typing'.**
 
 
-> At runtime, Python uses duck typing — objects are valid if they respond to the right methods, regardless of declared types.
-At 'compile time' (static analysis time with tools like mypy or Pyright), Python supports nominal and structural typing via type hints, abstract base classes, and protocols.
-These annotations don’t change program behavior but let type checkers catch bugs early and guide tooling—they describe what should work, not what will work.
+> At runtime, Python uses duck typing — objects are valid if they respond to the right methods,
+regardless of declared types.
+At 'compile time' (static analysis time with tools like mypy or Pyright), Python supports nominal
+and structural typing via type hints, abstract base classes, and protocols.
+These annotations don’t change program behavior but let type checkers catch bugs early and guide
+tooling—they describe what should work, not what will work.
 
 ### Overview
 
-| Concept | Definition                                                       | Python Mechanism | Checked At | Use Case |
-|---------|------------------------------------------------------------------|------------------|------------|----------|
-| Nominal Typing | Types are identified by name (class declarations)                | Class inheritance | Static (mypy) | Ensure only explicitly related types are used |
-| Subtyping | A class inherits from another (OOP-style hierarchy) | class Dog(Animal) | Static & runtime | Classic inheritance behavior, isinstance and issubclass |
-| Duck Typing | 'If it quacks like a duck' - no type hints, just trust           | Regular Python (no hints) | Runtime | Idiomatic Python, dynamic typing without static safety |
-| Structural Typing | Types are compatible if they look right (method signatures match) | typing.Protocol | Static (mypy) | Flexible duck typing with static checking |
-| Protocols | Structural interfaces: define what methods/attrs a type must have | Protocol (optionally @runtime_checkable) | Static + runtime | Use with mypy and optionally isinstance |
+- Nominal Typing: Types are identified by name (class declarations). Mechanism: class
+  inheritance. Checked: static (mypy). Use case: ensure only explicitly related types
+  are used.
+- Subtyping: A class inherits from another (OOP-style hierarchy). Mechanism: class
+  inheritance (e.g., `class Dog(Animal)`). Checked: static and runtime. Use case:
+  classic inheritance behavior (`isinstance`, `issubclass`).
+- Duck Typing: "If it quacks like a duck". Mechanism: regular Python (no hints).
+  Checked: runtime. Use case: dynamic typing without static safety.
+- Structural Typing: Types are compatible if they match method signatures. Mechanism:
+  `typing.Protocol`. Checked: static (mypy). Use case: flexible duck typing with
+  static checking.
+- Protocols: Structural interfaces that define required methods/attributes. Mechanism:
+  `Protocol` (optionally `@runtime_checkable`). Checked: static + runtime. Use case:
+  use with mypy and optionally `isinstance`.
 
 ### Summary in One-Liner Definitions
 - Nominal Typing: "Are you explicitly declared to be this thing?"
@@ -54,16 +70,20 @@ These annotations don’t change program behavior but let type checkers catch bu
 
 ## Inheritance
 
-> Inheritance lets a class reuse behavior and structure from another class. A subclass inherits methods and attributes from its parent, optionally overriding or extending them.
+> Inheritance lets a class reuse behavior and structure from another class. A subclass inherits
+methods and attributes from its parent, optionally overriding or extending them.
 > Python supports multiple inheritance, meaning a class can inherit from more than one parent.
-> Python resolves conflicts via the method resolution order (MRO), which uses the C3 linearization algorithm.
+> Python resolves conflicts via the method resolution order (MRO), which uses the C3 linearization
+algorithm.
 
 ### Relationship between Inheritance and Typing
 
 Inheritance is tied closely to nominal typing and subtyping:
 - A subclass is always a valid instance of its superclass.
-- Abstract base classes (ABC) enforce method implementations in subclasses, supporting nominal typing contracts.
-- Multiple inheritance with Protocols (i.e., structural typing) is also valid and lets you define capabilities without needing inheritance trees.
+- Abstract base classes (ABC) enforce method implementations in subclasses, supporting nominal
+  typing contracts.
+- Multiple inheritance with Protocols (i.e., structural typing) is also valid and lets you define
+  capabilities without needing inheritance trees.
 
 
 ## Composition
@@ -107,13 +127,15 @@ Convert your code to use a `Protocol` for static type safety:
 
 Part 3 / Bonus (Optional)
 
-Try making `Loggable` `@runtime_checkable` and use `isinstance` to enforce the interface dynamically.
+Try making `Loggable` `@runtime_checkable` and use `isinstance` to enforce the interface
+dynamically.
 See https://docs.python.org/3/library/typing.html#typing.runtime_checkable
 
 Key Points from the Docs
 - `@runtime_checkable` can only be applied to Protocols.
 - It enables the use of `isinstance(obj, Protocol)` and `issubclass(cls, Protocol)`.
-- The Protocol must not contain non-method members (e.g., attributes without default values) to be runtime-checkable.
+- The Protocol must not contain non-method members (e.g., attributes without default values) to be
+  runtime-checkable.
 
 | Version | Type Safe? | Runtime Safe? | Notes |
 |---------|------------|------------|-|
@@ -252,7 +274,8 @@ tests, taking into account the MRO (hint: `kwargs`).
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 

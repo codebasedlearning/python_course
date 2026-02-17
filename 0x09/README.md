@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit introduces async programming with `async` and `await` and continues with descriptors as an advanced language feature.
+This unit introduces async programming with `async` and `await` and continues with descriptors as an
+advanced language feature.
 
 ### Focus
 
@@ -21,21 +22,18 @@ Develop a working mental model of cooperative concurrency and attribute control.
 
 Many terms and definitions related to multitasking, threading, or concurrency 
 are language-independent (language agnostic or language neutral). If this is 
-a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on processes and threads.
+a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on
+processes and threads.
 
 You have to be careful about the peculiarities of the programming language or 
-library you are using. For example, when you create a thread, sometimes it 
-will be started directly, but sometimes it will not, and you will have 
-to do it yourself.
+library you are using. In asyncio, creating a coroutine does not run it; you must `await` it or
+schedule it as a task.
 
-Python-specific information on threading can be found here:
-[Python docs](https://docs.python.org/3/library/threading.html),
-[Python glossary](https://docs.python.org/3/glossary.html),
-[Realpython intro](https://realpython.com/intro-to-python-threading),
-[Superfastpython guide](https://superfastpython.com/threading-in-python/).
+Python-specific information on asyncio can be found here:
+[Python docs](https://docs.python.org/3/library/asyncio.html),
+[Python glossary](https://docs.python.org/3/glossary.html).
 
-Here are a couple of terms from [Realpython](https://realpython.com/intro-to-python-threading), 
-in particular in relation to `async`, `await` and AsyncIO.
+Here are a couple of terms in relation to `async`, `await` and AsyncIO.
 
 ### Parallelism
 Parallelism consists of performing multiple operations at the same time. 
@@ -169,7 +167,8 @@ contains the summands and the third line contains the sum. All files are
 constructed in this way, there are no syntax errors or other 'niceties.'
 
 1) Read all the files and check that the given sum is correct in an 'async' version. 
-2) Install a (free-threading-Python)[https://docs.python.org/3/howto/free-threading-python.html] in a virtual environment and compare
+2) Install a (free-threading-Python)[https://docs.python.org/3/howto/free-threading-python.html] in
+a virtual environment and compare
 your execution times.
 
 ---
@@ -285,7 +284,8 @@ Take a look at the topics covered and think about how you can prepare.
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 

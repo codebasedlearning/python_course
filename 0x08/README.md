@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit introduces threads and selected libraries, covering concurrency concepts and practical tooling.
+This unit introduces threads and selected libraries, covering concurrency concepts and practical
+tooling.
 
 ### Focus
 
@@ -22,12 +23,12 @@ Build awareness of Python's concurrency model and apply libraries safely and eff
 
 Many terms and definitions related to multitasking, threading, or concurrency 
 are language-independent (language agnostic or language neutral). If this is 
-a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on processes and threads.
+a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on
+processes and threads.
 
 You have to be careful about the peculiarities of the programming language or 
-library you are using. For example, when you create a thread, sometimes it 
-will be started directly, but sometimes it will not, and you will have 
-to do it yourself.
+library you are using. For example, in Python a thread does not start when it is created; you must
+call `start()` explicitly.
 
 Python-specific information on threading can be found here:
 [Python docs](https://docs.python.org/3/library/threading.html),
@@ -130,7 +131,8 @@ to be involved in exchanging messages.
    Also allow more than one message to be ready to be picked up.
    - It is crucial that you take care of the thread safety of your data structures. 
    - Use so-called 'Condition Objects' (or 'Condition Variables') to synchronize. 
-     Details can be found [here](https://docs.python.org/3/library/threading.html#condition-objects).
+     Details can be found
+     [here](https://docs.python.org/3/library/threading.html#condition-objects).
 
 ---
 
@@ -177,7 +179,8 @@ to be involved in exchanging messages.
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 

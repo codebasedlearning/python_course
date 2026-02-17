@@ -11,7 +11,8 @@ To get started, you should first clone this project and read the docs in this or
 - [IDE](./docs/python_ide.pdf)
 - [Units](./docs/python_units.pdf)
 
-Your first goal should be to have the Python ecosystem in place and a working Python installation at the end. After that, you can start following the README in the units.
+Your first goal should be to have the Python ecosystem in place and a working Python installation at
+the end. After that, you can start following the README in the units.
 
 <hr>
 

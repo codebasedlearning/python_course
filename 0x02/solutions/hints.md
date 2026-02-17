@@ -10,14 +10,16 @@
 
 ### Task 'AI Snapshot' – Sorting
 
-- Correct idea: sort by values, not keys: `sorted(average_grades, key=average_grades.get, reverse=True)`.
+- Correct idea: sort by values, not keys: `sorted(average_grades, key=average_grades.get,
+  reverse=True)`.
 - Bug in Answer A: `sorted(average_grades)` sorts by names.
 - Quick test: first name should be `Charlie` (highest average).
 
 ### Task 'Comprehension Check'
 
 - Q: What are the known primitive data types and containers? <br>
-  A: Primitives: `int`, `float`, `bool`, `str`; containers: `list`, `tuple`, `dict`, `set`, `frozenset`, `range`.
+  A: Primitives: `int`, `float`, `bool`, `str`; containers: `list`, `tuple`, `dict`, `set`,
+  `frozenset`, `range`.
 - Q: What are some important differences between containers? <br>
   A: Mutability, ordering, uniqueness, and key/index access (e.g., list vs set vs dict).
 - Q: What is the difference between '==' and 'is'? <br>

@@ -2,9 +2,13 @@
 
 # Task `Wooden Puzzle`
 
-Sie sollen ein Holzpuzzle modellieren, und zwar dieses [Rombol](https://rombol.de/en/products/9-loch-puzzle-mittelschweres-interessantes-logik-puzzle-mit-praktischem-verschlussband) bzw. diese [LOGOPLAY Golf Puzzle](https://www.amazon.de/-/en/Wooden-Golf-Puzzle-Jigsaw-Intelligence/dp/B005PWAFQM).
+Sie sollen ein Holzpuzzle modellieren, und zwar dieses
+[Rombol](https://rombol.de/en/products/9-loch-puzzle-mittelschweres-interessantes-logik-puzzle-mit-praktischem-verschlussband)
+bzw. diese [LOGOPLAY Golf
+Puzzle](https://www.amazon.de/-/en/Wooden-Golf-Puzzle-Jigsaw-Intelligence/dp/B005PWAFQM).
 
-> Ermitteln Sie zu einer gegebenen Menge von Puzzleteilen eine mögliche Lösung des Puzzles, d.h. eine passende Anordnung der Puzzleteile.
+> Ermitteln Sie zu einer gegebenen Menge von Puzzleteilen eine mögliche Lösung des Puzzles, d.h.
+eine passende Anordnung der Puzzleteile.
 
 (Abschlussprüfung MATSE)
 
@@ -82,6 +86,7 @@ Im Ordner 'data' finden Sie weitere Beispiele.
 
 ## Aufgabe
 
-Implementieren Sie unter Einhaltung der beschriebenen Randbedingungen ein Program, das eine passende Anordnung der Puzzleteile bestimmt.
+Implementieren Sie unter Einhaltung der beschriebenen Randbedingungen ein Program, das eine passende
+Anordnung der Puzzleteile bestimmt.
 
 Viel Erfolg!

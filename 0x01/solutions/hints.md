@@ -5,8 +5,10 @@
 ### Task 'AI Snapshot' – Main Guard
 
 - Correct idea: the guard runs only when the file is executed as a script, not when imported.
-- Bug in Answer B: it claims the guard prevents all code from running; top-level code still runs on import.
-- Quick test: importing the module should not run the guarded code, but top-level statements still execute.
+- Bug in Answer B: it claims the guard prevents all code from running; top-level code still runs on
+  import.
+- Quick test: importing the module should not run the guarded code, but top-level statements still
+  execute.
 
 ### Task 'AI Snapshot' – Input Loop
 
@@ -17,7 +19,8 @@
 ### Task 'Comprehension Check'
 
 - Q: What ways can you run a Python program (script, module, REPL, IDE, notebook)? <br>
-  A: Script with `python file.py`, module with `python -m pkg`, REPL/interactive shell, IDE run, or a notebook.
+  A: Script with `python file.py`, module with `python -m pkg`, REPL/interactive shell, IDE run, or
+  a notebook.
 - Q: What is `uv` used for in Python projects? <br>
   A: It manages Python versions, virtual environments, dependencies, and runs scripts.
 - Q: What does the term “PEP” stand for, and why does it matter? <br>
@@ -29,9 +32,11 @@
 - Q: What does “Pythonic” mean (the “Pythonic way”)? <br>
   A: Idiomatic, readable, and explicit Python style following common conventions.
 - Q: What’s the difference between `import x` and `from x import y`? <br>
-  A: `import x` brings in the module; `from x import y` binds a name directly in the current namespace.
+  A: `import x` brings in the module; `from x import y` binds a name directly in the current
+  namespace.
 - Q: What comment styles can you use in Python? <br>
-  A: Use `#` for line comments; triple-quoted strings serve as docstrings and can be used as block comments.
+  A: Use `#` for line comments; triple-quoted strings serve as docstrings and can be used as block
+  comments.
 - Q: Which primitive/built-in scalar types do you know? <br>
   A: `int`, `float`, `bool`, `str`, and `NoneType` (via `None`).
 - Q: Which container/collection types do you know? <br>
@@ -45,7 +50,8 @@
 - Q: What does the `__name__` variable mean? <br>
   A: It is the module name; it is `__main__` when the file runs as a script.
 - Q: How do you handle exceptions in Python (`try` / `except` / `else` / `finally`, raising)? <br>
-  A: Use `try/except` for handling, `else` for success path, `finally` for cleanup, and `raise` to throw.
+  A: Use `try/except` for handling, `else` for success path, `finally` for cleanup, and `raise` to
+  throw.
 - Q: What is the purpose of `if __name__ == "__main__":` compared to code that runs on import? <br>
   A: It runs code only when the file is executed directly, not when imported.
 - Q: How do you document modules and functions in Python (docstrings)? <br>

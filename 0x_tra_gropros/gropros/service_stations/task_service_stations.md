@@ -184,6 +184,8 @@ Im Ordner 'data' finden Sie weitere Beispiele.
 
 ## Aufgabe
 
-Implementieren Sie unter Einhaltung der beschriebenen Randbedingungen ein Program, das anhand der vorgegebenen Streckenpläne die minimale Anzahl und die Standorte der benötigten Servicestationen bestimmt.
+Implementieren Sie unter Einhaltung der beschriebenen Randbedingungen ein Program, das anhand der
+vorgegebenen Streckenpläne die minimale Anzahl und die Standorte der benötigten Servicestationen
+bestimmt.
 
 Viel Erfolg!

@@ -4,11 +4,13 @@
 
 ## Overview
 
-This unit completes the fundamentals by introducing classes, attributes, properties, methods, operators, and single inheritance through several modeling tasks.
+This unit completes the fundamentals by introducing classes, attributes, properties, methods,
+operators, and single inheritance through several modeling tasks.
 
 ### Focus
 
-Focus on solid OOP basics so you can design small class hierarchies and reason about object behavior.
+Focus on solid OOP basics so you can design small class hierarchies and reason about object
+behavior.
 
 ## Topics
 
@@ -19,11 +21,12 @@ Focus on solid OOP basics so you can design small class hierarchies and reason a
 - Single inheritance
 - Dataclasses (intro)
 
-> This unit completes our basic knowledge. The aim is to model and solve simple algorithmic problems in unit 0x04.
+> This unit completes our basic knowledge. The aim is to model and solve simple algorithmic problems
+in unit 0x04.
 > - Unit 0x01: First Impression (examples)
 > - Unit 0x02: First Steps (variables, control-flow, functions)
 > - Unit 0x03: Finalize Basics (classes, inheritance)
-> - Unit 0x04: (coming) Puzzle-Driven Programming Challenges 
+> - Unit 0x04: Types, Inheritance, and Composition 
 
 
 ## Tasks
@@ -37,7 +40,8 @@ An Age and Seniority Tracker – Warm Up.
 Part 1
 - Create a class `Pet` that represents a pet with a `name` and `age`. Your class should be able to:
 	- Store the pet’s name and age.
-    - Determine whether the pet is a senior (age 7 or older) using a `@property` called `is_senior`. 
+    - Determine whether the pet is a senior (age 7 or older) using a `@property` called `is_senior`.
+      
     - Provide a method `celebrate_birthday` which increases the pet’s age by 1.
 - This `Pet("Fluffy", 6)` should create an instance and initialize the attributes.
 - Change it to a `dataclass`.
@@ -53,13 +57,15 @@ Part 2
 ### 👉 Task 'Blue Strand' (Random Rolls)
 
 Part 1
-- Implement a class `Dice` that simulates rolling a customizable die. It should also support tracking how many rolls have been made in total across all instances.
+- Implement a class `Dice` that simulates rolling a customizable die. It should also support
+  tracking how many rolls have been made in total across all instances.
 - `__init__(self, sides)` sets the number of sides (default is 6). 
 - Method roll() simulates a random roll and returns the result.
 - Track the total number of rolls in a class variable `total_rolls`. 
 - Store the roll history in a private instance attribute. 
 - Expose the history through a read-only property `history`. 
-- Add a static method `roll_multiple(n, sides)` that rolls n dice of a given size and returns the list of results. 
+- Add a static method `roll_multiple(n, sides)` that rolls n dice of a given size and returns the
+  list of results. 
 - Protect the internal roll history from modification.
 
 Part 2
@@ -73,7 +79,8 @@ Part 2
 ### 👉 Task 'Weymis Bay' (Spellbooks)
 
 Part 1
-- Create two classes: `Spell` and `Spellbook`. Spells have a `name`, `mana cost`, and `element` (e.g. fire, ice). 
+- Create two classes: `Spell` and `Spellbook`. Spells have a `name`, `mana cost`, and `element`
+  (e.g. fire, ice). 
 - A Spellbook stores a collection of known spells and allows the user to:
 	- `learn` and `forget` spells by name. 
     - `cast` a spell by name (returning a message). 
@@ -145,7 +152,8 @@ different in Python than in other OO-languages.
 
 ### 👉 Task 'Recap'
 
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do or have questions about?
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
 
 ---
 
@@ -225,7 +233,8 @@ General
 Language
 - What are `types` for in Python and do you use them?
 - What are `args` and `kwargs`?
-- Do you know the difference between a 'regular' member function, a static method and a class method?
+- Do you know the difference between a 'regular' member function, a static method and a class
+  method?
 - What kind of 'dunder' functions do you know and what are they for?
 - What is the idea of a data class?
 - What is the difference between `__str__` and `__repr__`?

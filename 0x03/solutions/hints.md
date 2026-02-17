@@ -22,7 +22,8 @@
   A: They provide hints for readability and tooling; Python does not enforce them at runtime.
 - Q: What are `args` and `kwargs`? <br>
   A: `*args` collects extra positional arguments; `**kwargs` collects keyword arguments.
-- Q: Do you know the difference between a 'regular' member function, a static method and a class method? <br>
+- Q: Do you know the difference between a 'regular' member function, a static method and a class
+  method? <br>
   A: Regular methods take `self`, static methods take no implicit arg, class methods take `cls`.
 - Q: What kind of 'dunder' functions do you know and what are they for? <br>
   A: Special methods like `__init__`, `__str__`, `__len__` define object behavior.

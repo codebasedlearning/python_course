@@ -25,5 +25,6 @@
 - Q: What is a race condition in threaded code? <br>
   A: Unsynchronized access causes unpredictable results.
 - Q: What is the GIL and how does it affect CPU-bound threads in Python? <br>
-  A: The Global Interpreter Lock allows only one thread to run bytecode at a time, limiting CPU-bound threads.
+  A: The Global Interpreter Lock allows only one thread to run bytecode at a time, limiting
+  CPU-bound threads.
 

@@ -4,7 +4,8 @@
 
 ## Overview
 
-This unit simulates the exam environment, including rules, constraints, and a full set of tasks to complete in a single script.
+This unit simulates the exam environment, including rules, constraints, and a full set of tasks to
+complete in a single script.
 
 ### Focus
 
@@ -119,7 +120,8 @@ e) [5P] Implementieren Sie für beide Klassen das `PasswordPolicy` Protokoll
 entsprechend der jeweiligen Richtlinie und testen Sie eine davon mit dem ersten 
 Passwort der Beispieldaten und einer geeigneten Ausgabe, die z.B. so aussehen könnte:
 ```
-    policy.name()='NSA', policy.min_count=1, policy.max_count=3, policy.letter='a', policy.is_valid('abcde')=True
+    policy.name()='NSA', policy.min_count=1, policy.max_count=3,
+    policy.letter='a', policy.is_valid('abcde')=True
 ```
 
 f) [7P] Implementieren Sie eine Klasse `PasswordEntry`, deren Instanzen sowohl 

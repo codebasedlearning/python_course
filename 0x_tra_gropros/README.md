@@ -4,11 +4,13 @@
 
 ## Overview
 
-This unit prepares you for GroPro-style tasks by emphasizing SOLID design principles and structured problem solving.
+This unit prepares you for GroPro-style tasks by emphasizing SOLID design principles and structured
+problem solving.
 
 ### Focus
 
-Focus on designing maintainable solutions before coding, using clear responsibilities and abstractions.
+Focus on designing maintainable solutions before coding, using clear responsibilities and
+abstractions.
 
 ## Topics
 
@@ -18,12 +20,15 @@ Focus on designing maintainable solutions before coding, using clear responsibil
 
 > The aim is to model and solve GroPro (Grosse Programmieraufgabe IHK) problems.
 
-> Note: the principles are not specific to Python, they must always be followed. But it's also about what you can prepare now, so that you have a framework for the exam (IPO) and don't have to think about everything from scratch.
+> Note: the principles are not specific to Python, they must always be followed. But it's also about
+what you can prepare now, so that you have a framework for the exam (IPO) and don't have to think
+about everything from scratch.
 
 
 ## SOLID
 
-> SOLID is a mnemonic for five fundamental principles of object-oriented software design, intended to make code:
+> SOLID is a mnemonic for five fundamental principles of object-oriented software design, intended
+to make code:
 > - Flexible
 > - Reusable
 > - Maintainable
@@ -31,18 +36,17 @@ Focus on designing maintainable solutions before coding, using clear responsibil
 
 It originated mainly with Robert C. Martin (Uncle Bob) and friends in the early 2000s.
 
-> SOLID is not about writing more code. It’s about writing code that survives changes, extensions, and teamwork.
+> SOLID is not about writing more code. It’s about writing code that survives changes, extensions,
+and teamwork.
 
 
 ### Definition
 
-| Principle                | Short Definition                                                                  |
-|--------------------------|-----------------------------------------------------------------------------------|
-| S: Single Responsibility | A class should have only one reason to change.                                    |
-| O: Open/Closed           | Software should be open for extension, but closed for modification.               |
-| L: Liskov Substitution   | Subtypes must be substitutable for their base types without breaking the program. |
-| I: Interface Segregation | Prefer many small, specific interfaces over one big fat interface.                |
-| D: Dependency Inversion  | Depend on abstractions, not concrete implementations.                             |
+- S: Single Responsibility — A class should have only one reason to change.
+- O: Open/Closed — Software should be open for extension, but closed for modification.
+- L: Liskov Substitution — Subtypes must be substitutable for base types.
+- I: Interface Segregation — Prefer many small, specific interfaces over one large one.
+- D: Dependency Inversion — Depend on abstractions, not concrete implementations.
 
 
 ### Related to Python
@@ -54,12 +58,14 @@ A class (or function) should do one thing and do it well. In Python, this usuall
 - Split long functions into small helpers.
 - Modules should also have a focused purpose.
 
-('Doing just one thing' is not exactly the same as 'having one reason to change'—the former is about behavior, and the latter is about responsibility, but the former is 95% correct and practical.)
+('Doing just one thing' is not exactly the same as 'having one reason to change'—the former is about
+behavior, and the latter is about responsibility, but the former is 95% correct and practical.)
 
 
 #### O: Open/Closed Principle (OCP)
 
-You should be able to extend a class’s behavior without modifying its source. In Python, this often means:
+You should be able to extend a class’s behavior without modifying its source. In Python, this often
+means:
 - Use inheritance, composition, or higher-order functions.
 - Prefer adding new classes/functions over editing old ones.
 
@@ -83,7 +89,8 @@ class Ostrich(Bird):
         raise NotImplementedError("Ostriches can't fly!")  # BAD!
 ```
 
-So `Duck` is fine, `Ostrich` violates LSP. Better design would be a `FlyingBird` and `FlightlessBird` split, not a bad inheritance.
+So `Duck` is fine, `Ostrich` violates LSP. Better design would be a `FlyingBird` and
+`FlightlessBird` split, not a bad inheritance.
 
 
 #### I: Interface Segregation Principle (ISP)
@@ -116,7 +123,8 @@ class Service:
         self.db.save(data)
 ```
 
-This way it is easy to switch the database later. Hardcoding `MySQLDatabase` inside `Service` would be a bad design.
+This way it is easy to switch the database later. Hardcoding `MySQLDatabase` inside `Service` would
+be a bad design.
 
 
 ### SOLID Design Checklist (Python Edition)
@@ -133,7 +141,8 @@ This way it is easy to switch the database later. Hardcoding `MySQLDatabase` ins
 
 #### Liskov Substitution
 - If I replace a parent class object with a child object, does the program still behave correctly?
-- If I replace a child object with a parent object (using only parent features), does the program still behave correctly?
+- If I replace a child object with a parent object (using only parent features), does the program
+  still behave correctly?
 - Do all overridden methods behave consistently with expectations?
 - If not → split classes or rethink inheritance.
 
