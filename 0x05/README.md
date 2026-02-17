@@ -275,7 +275,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check - Talk with your Neighbor
+## Comprehension Check
 
 General
 - Describe 'iterators' and 'generators.' What are the benefits?
@@ -285,11 +285,3 @@ General
 - What is a generator expression?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x07`

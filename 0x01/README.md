@@ -41,7 +41,7 @@ to manage dependencies, and have practical experience with essential Python prog
 Start with 'Cocoa Coast,' 'Harmony Bay,' 'Silent Strand,' 'Alsano Shore,' and 'Hope Edge' — in
 that exact order. After that, continue however you prefer. End with 'Comprehension 'Check.'
 
-There are basically the same setup tasks mentioned in the
+These are the same setup tasks mentioned in the
 [documentation](../xxx).
 
 
@@ -72,7 +72,7 @@ There are basically the same setup tasks mentioned in the
   ```
   uv python install 3.14.2
   ```
-- Then run a Python script from the Repo in both variants, e.g.
+- Then run a Python script from the repo in both variants, e.g.
   ```
   uv run --python 3.14 <path-to-repo>/0x01/preparation/print_python_setup.py
   ```
@@ -81,7 +81,7 @@ There are basically the same setup tasks mentioned in the
 ### ☝️ Task 'Silent Strand' – A new Project
 
 - Create a new folder, e.g. `my_project`, enter it.
-- Init the new project with a specific Python version
+- Initialize the new project with a specific Python version
   ```
   uv init --python 3.14
   ```
@@ -98,7 +98,7 @@ There are basically the same setup tasks mentioned in the
   ``` 
   uv add cbl
   ```
-- Run the script again and see, that `CBL` is found.
+- Run the script again and verify that `CBL` is found.
 - Remove the library and confirm that it is gone.
   ```
   uv remove cbl

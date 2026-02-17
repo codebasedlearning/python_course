@@ -38,11 +38,11 @@ These annotations don’t change program behavior but let type checkers catch bu
 
 | Concept | Definition                                                       | Python Mechanism | Checked At | Use Case |
 |---------|------------------------------------------------------------------|------------------|------------|----------|
-| Nominal Typing | Types are identified by name (class declarations)                | Class inheritance | Static (mypy) | Ensure only explicitly related types are used
-Subtyping | A class inherits from another (OOP-style hierarchy) | class Dog(Animal)                                                 |  Static & runtime | Classic inheritance behavior, isinstance and issubclass
+| Nominal Typing | Types are identified by name (class declarations)                | Class inheritance | Static (mypy) | Ensure only explicitly related types are used |
+| Subtyping | A class inherits from another (OOP-style hierarchy) | class Dog(Animal) | Static & runtime | Classic inheritance behavior, isinstance and issubclass |
 | Duck Typing | 'If it quacks like a duck' - no type hints, just trust           | Regular Python (no hints) | Runtime | Idiomatic Python, dynamic typing without static safety |
-| Structural Typing | Types are compatible if they look right (method signatures match) | typing.Protocol | Static (mypy) | Flexible duck typing with static checking
-| Protocols | Structural interfaces: define what methods/attrs a type must have | Protocol (optionally @runtime_checkable) | Static + runtime | Use with mypy and optionally isinstance
+| Structural Typing | Types are compatible if they look right (method signatures match) | typing.Protocol | Static (mypy) | Flexible duck typing with static checking |
+| Protocols | Structural interfaces: define what methods/attrs a type must have | Protocol (optionally @runtime_checkable) | Static + runtime | Use with mypy and optionally isinstance |
 
 ### Summary in One-Liner Definitions
 - Nominal Typing: "Are you explicitly declared to be this thing?"
@@ -309,7 +309,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check - Talk with your Neighbor
+## Comprehension Check
 
 General
 - Characterize 'single inheritance', 'multiple inheritance' and 'composition'.
@@ -321,11 +321,3 @@ General
 - When would you prefer composition over inheritance?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x06`

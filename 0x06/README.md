@@ -180,7 +180,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check – Talk with your Neighbor
+## Comprehension Check
 
 General
 - What is the main reason behind a 'context manager'?
@@ -190,11 +190,3 @@ General
 - What does LEGB stand for?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x08`

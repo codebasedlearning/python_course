@@ -1,6 +1,6 @@
 [© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x0x_gropros` – GroPro-Setup
+# Unit `0x_tra_gropros` – GroPro Setup
 
 ## Overview
 
@@ -209,7 +209,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check - Talk with your Neighbor
+## Comprehension Check
 
 General
 - How would you build a solution for a GroPro?
@@ -218,11 +218,3 @@ General
 - Give one example of a Single Responsibility Principle (SRP) violation.
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://sli.do)
-
----
-
-End of `Unit 0x05`

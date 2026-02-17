@@ -221,9 +221,9 @@ Discuss
 
 ---
 
-## 👉 Comprehension Check
+## Comprehension Check
 
-Talk with your Neighbor.
+Talk with your neighbor.
 - What are the known primitive data types and containers?
 - What are some important differences between containers?
 - What is the difference between '==' and 'is'?
@@ -236,4 +236,3 @@ Talk with your Neighbor.
 - What do I need to be aware of with a function's default arguments?
 - Why is `range` not the same as a list?
 - When would you use `any()` versus `all()`?
-

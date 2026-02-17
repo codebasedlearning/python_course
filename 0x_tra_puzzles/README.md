@@ -1,18 +1,18 @@
 [© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x_tra_puzzles` – Puzzle-Driven Programming Challenges 
+# Unit `0x_tra_puzzles` – Puzzle-Driven Programming Challenges
 
 
-> Python is well known for its ability to quickly write scripts and proof of concepts. Today we are going to practise both, by building a quick solution to a problem (puzzle) and then doing a proper refactoring of it.
+> Python is well known for its ability to quickly write scripts and proofs of concept. Today we will practice both by building a quick solution to a puzzle and then refactoring it properly.
 
-> As well as the fun part, there is also a very practical side. Many companies use coding challenges as part of the application process for software developers; you are given a limited amount of time to find and present a solution to a specific problem. We also have such a situation at the well-known "Grosse Prog".
+> Besides the fun part, there is also a very practical side. Many companies use coding challenges as part of the application process for software developers; you are given a limited amount of time to find and present a solution to a specific problem. We also have a similar situation in the well-known "GroPro".
 
 
 ## Inspiration
 
 ### Advent of Code
 
-The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com) For scientific purposes, I have used only the basic concept and included 
+The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com). For scientific purposes, I have used only the basic concept and included
 self-generated data specific to the task to avoid any legal issues.
 
 For more information and to enjoy the engaging story, please visit the website and register for next Christmas! Finally, I would like to thank Eric Wastl, who invented and organized 'Advent of Code.'
@@ -24,13 +24,13 @@ LeetCode is an online platform for improving coding skills, preparing for techni
 
 ## Puzzle Structure
 
-Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack.' 
+Each original puzzle consists of two parts. The first part can usually be completed fast with a straightforward approach, prioritizing speed over beauty — also known as a 'hack.'
 The second part often involves a significant increase in complexity as the problem or solution space explodes. In many cases, it is essential to improve your solution concept, for example, by developing or using a clever approach to reduce the order or number of algorithmic iterations.
 
 Here we add refactoring as the third part, so we have:
 - Complete Part 1 as quickly as possible.
 - Same for Part 2. It is explicitly allowed to simply 'hack' your solution.
-- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your algorithms and solutions, and considering best practices. 
+- Then, in Part 3, refactor your solution to be as Pythonic and object-oriented as possible. This means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your algorithms and solutions, and considering best practices.
 
 
 
@@ -38,14 +38,14 @@ Here we add refactoring as the third part, so we have:
 ## Input Data
 
 Parts 1 and 2 typically introduce the problem and provide sample data before addressing the actual input data.
-All data is provided in the form of text files in `data/`, e.g. 
+All data is provided in the form of text files in `data/`, e.g.
 ```
 - tinted_coast_example1.txt
 - tinted_coast_example2.txt
 - tinted_coast_input.txt
 ```
 
-If the format of a line is given, you can rely on it. For example, if the explanation states that a line has this form 
+If the format of a line is given, you can rely on it. For example, if the explanation states that a line has this form
 ```
 10: 23, 46
 ```
@@ -106,7 +106,7 @@ What is now the sum of all values?
 
 #### Example 2
 
-``` 
+```
 zeroioufourflthreegv
 uwonevtwoyythree6b
 uoe1eh9xsfivesml7e
@@ -305,7 +305,7 @@ where
 For each card:
 - Count how many numbers from `your_numbers` are in `winning_numbers`.
 - If you have at least one match:
-  - The first match gives you 1 point. 
+  - The first match gives you 1 point.
   - Each additional match doubles the points, i.e. 1 match = 1 point, 2 matches = 2 points, 3 matches = 4 points, 4 matches = 8 points, etc.
 
 What is the total score of all scratchcards?
@@ -348,7 +348,7 @@ Card 1 has 2 matches, and you have 1 copy of Card 1:
 - You gain 1 copy each of Card 2 and Card 3.
 - Then, those new cards also add more cards based on their own matches!
 
-In this example you end up with 
+In this example you end up with
 `(1)+(1+1)+(1+1+2)+(1+2+4)+(1+2)=17`.
 
 #### Part 3
@@ -368,7 +368,7 @@ You will find the original task [here](https://adventofcode.com/2023/day/4)
 
 ---
 
-### 👉 Puzzles 'AoC Originals' 
+### 👉 Puzzles 'AoC Originals'
 
 The examples selected in AoC are partly handmade and therefore not easy to simulate with own data, so I prefer to refer to the original task. Please note that you have to register to get the data.
 
@@ -397,7 +397,7 @@ My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraptio
 
 ---
 
-## 👉 Comprehension Check
+## Comprehension Check
 
 - Why refactor after solving Part 1 and Part 2?
 - When does a reusable grid or graph helper class pay off?

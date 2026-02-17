@@ -24,14 +24,14 @@ Many terms and definitions related to multitasking, threading, or concurrency
 are language-independent (language agnostic or language neutral). If this is 
 a new topic for you, do not miss the [video](https://www.youtube.com/watch?v=GNMDHr8hvSM) on processes and threads.
 
-You have to be careful where peculiarities of the programming language or 
-library come into play. For example, when you create a thread, sometimes it 
+You have to be careful about the peculiarities of the programming language or 
+library you are using. For example, when you create a thread, sometimes it 
 will be started directly, but sometimes it will not, and you will have 
 to do it yourself.
 
 Python-specific information on threading can be found here:
 [Python docs](https://docs.python.org/3/library/threading.html),
-[Python gloassary](https://docs.python.org/3/glossary.html),
+[Python glossary](https://docs.python.org/3/glossary.html),
 [Realpython intro](https://realpython.com/intro-to-python-threading),
 [Superfastpython guide](https://superfastpython.com/threading-in-python/).
 
@@ -230,7 +230,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check – Talk with your Neighbor
+## Comprehension Check
 
 General
 - What is special in Python concerning parallel execution?
@@ -240,11 +240,3 @@ General
 - What is the GIL and how does it affect CPU-bound threads in Python?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x0b`

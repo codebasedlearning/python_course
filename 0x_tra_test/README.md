@@ -1,6 +1,6 @@
 [© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x09` – Test Exam
+# Unit `0x_tra_test` – Test Exam
 
 ## Overview
 
@@ -300,11 +300,10 @@ Discuss
 - Which answer is more robust under time pressure?
 - What minimal set of tests would you run?
 
-## 👉 Comprehension Check
+## Comprehension Check
 
 - What file name format is required for the exam submission?
 - Why should you add small boundary tests before submitting?
 - Why must the solution be in a single `.py` file?
 
 ---
-

@@ -214,7 +214,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check – Talk with your Neighbor
+## Comprehension Check
 
 General
 - What kind of decorators do you know?
@@ -223,11 +223,3 @@ General
 - When would you use a decorator with parameters?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x0a`

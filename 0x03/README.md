@@ -217,7 +217,7 @@ Discuss
 
 ---
 
-### 👉 Comprehension Check - Talk with your Neighbor
+## Comprehension Check
 
 General
 - Any suggestions for working with an AI agent?
@@ -233,11 +233,3 @@ Language
 - What is a property and why would you use it?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x03`

@@ -223,18 +223,10 @@ Discuss
 
 ---
 
-## 👉 Comprehension Check
+## Comprehension Check
 
 - What does `dis` show that `ast` does not?
 - Why might you inspect bytecode during debugging?
 - What is a metaclass in Python?
 
 ---
-
-### 👉 Lecture Check - Online Questionare
-
-- Please participate in the survey: [Slido](https://wall.sli.do)
-
----
-
-End of `Unit 0x0d`
