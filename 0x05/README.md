@@ -228,6 +228,39 @@ this code works as expected:
 
 ---
 
+### 👉 Project 'Moving Blizzard' — Part 5
+
+> Continued from Part 4. Replace eager `read_all` with lazy generators. Build a full
+pipeline: stream → filter → moving average → anomaly detection. Nothing is loaded into
+memory all at once.
+
+Topics: generator functions, `yield`, lazy evaluation, pipeline composition
+
+Part 1
+- Change `DataSource` so it has a `stream(sensor_id)` method that yields `Reading` objects
+  one by one (instead of returning a list).
+- Implement `ListSource.stream` using `yield`.
+
+Part 2
+- Write generator functions for a three-stage pipeline:
+  - `filter_valid(readings, low, high)` — drop readings outside the valid range.
+  - `moving_average(readings, window=3)` — yield `(reading, avg)` tuples using a sliding
+    window buffer.
+  - `detect_anomalies(stream, deviation=3.0)` — yield `(reading, avg, diff)` when a value
+    deviates from the moving average by more than `deviation`.
+
+Part 3
+- Write `run_pipeline(source, sensor_id)` that chains all three stages.
+- Run it on `"temp_north"` and `"water_lvl"` and print the anomalies.
+- Verify that `type(raw_gen)` is a generator — nothing was fully materialised.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_5.py` in `solutions`.
+  - What happens if you replace `yield` with `return [...]` in `filter_valid`? Does the
+    pipeline still compose?
+
+---
+
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.

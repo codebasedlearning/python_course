@@ -193,6 +193,33 @@ Check
 ---
 
 
+### 👉 Project 'Moving Blizzard' — Part 1
+
+> A coastal research station monitors environmental sensors. This semester-long project starts
+with a simple temperature list and grows week by week — refactoring the same codebase with
+every new concept you learn.
+
+Topics: functions, loops, conditionals, basic types, `if __name__`
+
+Part 1
+- Create a list `READINGS` with at least 10 temperature values (floats), e.g.
+  `[18.2, 19.1, 17.8, 22.5, 18.9, 31.4, 19.0, 18.5, 20.1, 17.6]`.
+- Write a function `average(data)` that computes the mean using a loop (no `sum` yet).
+- Write `minimum(data)` and `maximum(data)` — again, no built-in `min`/`max`.
+
+Part 2
+- Write `detect_spikes(data, threshold=5.0)` that returns the indices where the reading
+  jumps by more than `threshold` from the previous value.
+- Write `summarize(data)` that prints count, average, min, max, and spike positions.
+- Call `summarize(READINGS)` from a proper `main()` with `__main__` guard.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_1.py` in `solutions`.
+  - Is your solution correct and complete?
+  - Does your `detect_spikes` handle an empty list?
+
+---
+
 ### 👉 Task 'AI Snapshot' – Main Guard
 
 Prompt

@@ -189,6 +189,34 @@ Check
 
 ---
 
+### 👉 Project 'Moving Blizzard' — Part 2
+
+> Continued from Part 1. The station now has multiple sensors — refactor the single list into
+a dictionary of sensor data and replace verbose loops with comprehensions.
+
+Topics: dictionaries, comprehensions, `sorted` with `key`, `sum`, `min`, `max`
+
+Part 1
+- Replace the single `READINGS` list with a dictionary `SENSORS` mapping sensor names to
+  value lists (e.g. `"temp_north"`, `"temp_south"`, `"humidity"`, `"water_lvl"`).
+- Write `per_sensor_stats(sensors)` that returns a dict of dicts containing count, avg, min,
+  max, and spike indices — using **dictionary and list comprehensions** throughout.
+- Rewrite `average` as a one-liner with `sum` and `len`.
+
+Part 2
+- Write `sorted_by_average(sensors)` that returns sensor names sorted by average reading,
+  descending. Use `sorted` with a `key` argument.
+- Write `filter_by_range(data, low, high)` that returns only values within `[low, high]` via
+  a list comprehension.
+- Print how many outliers were removed.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_2.py` in `solutions`.
+  - Did you manage to eliminate all explicit `for` loops in favour of comprehensions?
+  - Is your `sorted_by_average` a one-liner?
+
+---
+
 ### 👉 Task 'AI Snapshot' – Averages
 
 Reference

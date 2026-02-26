@@ -171,6 +171,36 @@ to be involved in exchanging messages.
 
 ---
 
+### 👉 Project 'Moving Blizzard' — Part 8
+
+> Continued from Part 7. Sensor polling is IO-bound (network delay) — perfect for threads.
+Compare serial vs. threaded performance.
+
+Topics: `ThreadPoolExecutor`, `as_completed`, `threading.Lock`, serial vs. parallel
+
+Part 1
+- Write `poll_sensor(sensor_id, delay=0.3)` that simulates a network call with
+  `time.sleep(delay)` and returns a list of `Reading` objects.
+- Write `poll_serial(sensor_ids)` that polls sensors one by one and times the total.
+
+Part 2
+- Create a `SensorCollector` class with a `threading.Lock` to safely accumulate results
+  from multiple threads.
+- Write `poll_threaded(sensor_ids)` using `ThreadPoolExecutor` and `as_completed`.
+
+Part 3
+- Compare serial vs. threaded execution time. Compute the speedup factor.
+- Verify that both versions return identical data.
+- Explain why the GIL does not prevent the speedup here (hint: `time.sleep` releases the
+  GIL).
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_8.py` in `solutions`.
+  - What happens if you remove the `Lock`? Is the result still correct? (It might be — but
+    it's not guaranteed.)
+
+---
+
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.

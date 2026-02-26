@@ -82,6 +82,7 @@ files are formatted as promised.
 - 'Stonenet Sands' – 2D grid symbol search
 - 'Tortoise Cove' – simulate winning scratchcards
 - 'AoC Originals' – hand-picked examples
+- 'Broken Stats' – pair debugging a buggy statistics calculator
 
 ## Puzzles
 
@@ -426,6 +427,47 @@ My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraptio
 - [2023 - Day 19 - Aplenty](https://adventofcode.com/2023/day/19)
 - [2023 - Day 22 - Sand Slabs](https://adventofcode.com/2023/day/22)
 - [2023 - Day 23 - A Long Walk](https://adventofcode.com/2023/day/23)
+
+---
+
+### 👉 Puzzle 'Broken Stats' (Pair Debugging)
+
+> This is not a puzzle you solve alone — grab a partner. One of you drives, the other
+navigates. The file `broken_stats_the_mess.py` in `solutions` computes mean, variance,
+standard deviation, median, and mode for a small dataset. It runs without errors. It
+produces output that *looks* plausible. But almost every result is wrong.
+
+Data: `[2, 7, 3, 8, 2, 5, 1, 9, 4, 6]`
+
+#### Correct results
+
+| Statistic | Value |
+|:---------:|------:|
+| mean | 4.7 |
+| variance (sample) | 8.5 (using n−1) |
+| stddev | ≈ 2.9155 |
+| median | 4.5 |
+| mode | 2 |
+
+#### Part 1 — Find the bugs
+
+- Run the script and compare its output to the table above.
+- Use `breakpoint()` or `print` debugging to trace through each function.
+- There are **at least 6 bugs** hiding across 5 functions. Categorise each one (e.g.
+  off-by-one, integer vs. float, mutation, precision).
+
+#### Part 2 — Fix it
+
+- Fix all bugs so that the output matches the correct results.
+- Add a simple self-check at the end (the script already has a partial one — make it
+  comprehensive).
+
+#### Part 3 — Discuss
+
+- Which bug was hardest to find? Why?
+- The `my_sqrt` function reimplements `math.sqrt` badly. When is rolling your own
+  numeric function justified?
+- How would `pytest` have caught these bugs if tests existed from the start?
 
 ---
 

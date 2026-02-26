@@ -266,6 +266,37 @@ tests, taking into account the MRO (hint: `kwargs`).
 
 ---
 
+### 👉 Project 'Moving Blizzard' — Part 4
+
+> Continued from Part 3. Decouple data acquisition from analysis using protocols and
+composition. The `Station` no longer cares *where* data comes from.
+
+Topics: `Protocol`, composition, structural typing, Open/Closed Principle
+
+Part 1
+- Define a `DataSource` protocol with a method `read_all(sensor_id: str) -> list[Reading]`.
+- Implement `ListSource` that wraps the old raw dict and satisfies the protocol.
+- Implement `RandomSource` that generates random readings (use `random.Random` with a seed
+  for reproducibility).
+
+Part 2
+- Define an `Analyzer` protocol with a method `analyze(readings) -> dict` and implement
+  `BasicAnalyzer` (count, avg, min, max).
+- Create a `Station` class composed of a name, sensor IDs, a `DataSource`, and an `Analyzer`.
+  Add a `report()` method that fetches data from the source and prints analysis results.
+
+Part 3
+- Create two stations: one with `ListSource`, one with `RandomSource`. Both use the same
+  `BasicAnalyzer`. Observe that `Station` did not change — only the source was swapped.
+- Explain how this demonstrates the Open/Closed Principle.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_4.py` in `solutions`.
+  - Does `ListSource` satisfy `DataSource` without inheriting from it?
+  - Could you add a `CSVSource` without touching `Station`?
+
+---
+
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.

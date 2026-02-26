@@ -139,6 +139,37 @@ For more background see also [here](https://realpython.com/lru-cache-python/).
 
 ---
 
+### 👉 Project 'Moving Blizzard' — Part 7
+
+> Continued from Part 6. Add decorators: `@timed` for profiling, `@retry` for flaky sources,
+`@validate_readings` for filtering generators, and `@register` for an analyzer registry.
+
+Topics: decorators, `functools.wraps`, parameterized decorators, decorator on generators
+
+Part 1
+- Write a `@timed` decorator that prints the execution time of the decorated function.
+- Write a `@retry(max_attempts=3, delay=0.1)` parameterized decorator that retries on
+  exception.
+
+Part 2
+- Create a `FlakySource` class whose `read_all` method randomly raises `ConnectionError`
+  (use `random.Random` with a seed). Decorate it with `@retry`.
+- Write a `@validate_readings(low, high)` decorator that wraps a generator function and
+  drops any `Reading` whose value is out of range (i.e. the decorator itself yields).
+
+Part 3
+- Write a `@register` decorator that adds the decorated function to a global `ANALYZERS`
+  dict. Register at least `count_readings`, `average_value`, and `max_value`.
+- In `main()`, iterate over `ANALYZERS` and run each analyzer on the valid readings.
+- Decorate the entire analysis run with `@timed` and observe the output.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_7.py` in `solutions`.
+  - Does `average_value.__name__` still show the original name? (It should, thanks to
+    `@functools.wraps`.)
+
+---
+
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.

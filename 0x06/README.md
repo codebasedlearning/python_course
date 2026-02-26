@@ -152,6 +152,39 @@ Hint: The arguments can be part of the match condition.
 
 ---
 
+### 👉 Project 'Moving Blizzard' — Part 6
+
+> Continued from Part 5. Add file I/O, closures for alert thresholds, and `match` for sensor
+type dispatch.
+
+Topics: context managers, `@contextmanager`, closures, `match`, file I/O
+
+Part 1
+- Create a `CSVDataSource` whose `open_stream(sensor_id)` method is a context manager
+  (use `@contextmanager`). It opens a CSV file, yields a generator of `Reading` objects
+  for the requested sensor, and closes the file on exit.
+- Write a helper `write_demo_csv(path)` that writes the raw data as CSV for testing.
+
+Part 2
+- Write `make_alert(label, min_val, max_val)` — a closure factory that returns a checker
+  function. The checker takes a `Reading` and returns an alert string if the value is out of
+  bounds, or `None` otherwise.
+- Write `describe_sensor(sensor_id)` that uses `match` on the sensor name prefix
+  (e.g. `"temp"` → `"Temperature sensor (°C)"`).
+
+Part 3
+- Write a `report_file(path)` context manager that opens a file, writes a header, yields the
+  file handle, and writes a footer on exit.
+- Combine everything: read data via `CSVDataSource`, check alerts via closures, write a
+  report via the context manager.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_6.py` in `solutions`.
+  - Does `CSVDataSource` close the file even if an exception occurs?
+  - What happens if you forget the `finally` clause?
+
+---
+
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.

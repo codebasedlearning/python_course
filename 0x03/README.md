@@ -176,6 +176,39 @@ different in Python than in other OO-languages.
 - Call `draw` on all elements of the list and test whether the correct function is called.
 
 
+### 👉 Project 'Moving Blizzard' — Part 3
+
+> Continued from Part 2. Promote raw dicts to proper classes: a `Reading` dataclass, a
+`SensorType` enum, and a `Sensor` class with operators.
+
+Topics: `@dataclass(frozen=True)`, `Enum`, `__repr__`, `__eq__`, `__lt__`, `__hash__`,
+`@total_ordering`
+
+Part 1
+- Create a `Reading` dataclass (frozen) with fields `value: float`, `timestamp: int`, and
+  `sensor_id: str`.
+- Create a `SensorType` enum with members `TEMPERATURE`, `HUMIDITY`, `WATER_LEVEL`.
+- Create a `Sensor` class with `sensor_id`, `sensor_type`, and a list of `Reading` objects.
+  Add an `add(value, timestamp)` method and properties `values` and `average`.
+
+Part 2
+- Implement `__repr__` so that `print(sensor)` shows id, type, count, and average.
+- Implement `__eq__` (compare by `sensor_id`), `__hash__`, and `__lt__` (compare by
+  average). Use `@total_ordering` to get `<=`, `>`, `>=` for free.
+- Sort a list of sensors by average and print the ranking.
+
+Part 3
+- Put sensors in a `set` to demonstrate that `__hash__` + `__eq__` deduplicate correctly.
+- Write a `build_sensors()` function that converts the old `RAW` dict into a list of `Sensor`
+  objects.
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_3.py` in `solutions`.
+  - Does `sorted(sensors)` produce the expected order?
+  - What happens if you forget `__hash__` and try to put sensors in a set?
+
+---
+
 ### 👉 Task 'Self-Study'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.

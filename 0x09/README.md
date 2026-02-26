@@ -253,7 +253,41 @@ Check
 
 ---
 
-### 👉 Task 'Exam Preparation' 
+### 👉 Project 'Moving Blizzard' — Part 9 (Final)
+
+> Final version. Replace threads with `async`/`await` for sensor polling, and add a `Bounded`
+descriptor for sensor configuration validation — tying into 'Cobalt Reef'.
+
+Topics: `async`/`await`, `asyncio.gather`, descriptors (`__get__`, `__set__`, `__set_name__`)
+
+Part 1
+- Create a `Bounded` descriptor class (reuse or adapt from 'Cobalt Reef') that enforces
+  min/max bounds on numeric attributes.
+- Create a `SensorConfig` class with descriptor-guarded attributes: `poll_interval`,
+  `min_valid`, and `max_valid`.
+
+Part 2
+- Write `async poll_sensor(config)` that uses `asyncio.sleep` (not `time.sleep`!) to
+  simulate the polling delay, then filters readings by the config's valid range.
+- Write `async poll_all(configs)` that uses `asyncio.gather` to poll all sensors
+  concurrently.
+
+Part 3
+- In `main()`, define configs for 4 sensors, run `asyncio.run(poll_all(configs))`, and
+  measure the total time. Compare to what serial polling would take.
+- Demonstrate descriptor validation: try setting `poll_interval = 999.0` (should raise
+  `ValueError`) and `poll_interval = "fast"` (should raise `TypeError`).
+
+Check
+- Compare your solution with `moving_blizzard_next_solution_part_9.py` in `solutions`.
+  - What happens if you use `time.sleep` instead of `asyncio.sleep`? Does `gather` still
+    help?
+  - Reflect: how has the project grown from a 30-line script to a full async pipeline with
+    validation?
+
+---
+
+### 👉 Task 'Exam Preparation'
 
 Take a look at the topics covered and think about how you can prepare.
 
