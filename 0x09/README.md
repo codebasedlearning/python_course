@@ -183,8 +183,73 @@ the asynchronous version one second.
 
 ### 👉 Task 'Colemark Cove'
 
-Take any of your thread-based tasks from Unit 0x0b and create 
+Take any of your thread-based tasks from Unit 0x0b and create
 an 'async' version of it.
+
+---
+
+### 👉 Task 'Cobalt Reef' (Descriptors)
+
+Topics: descriptor protocol (`__get__`, `__set__`, `__set_name__`), data descriptors, reusable
+validation
+
+Part 1
+- Create a descriptor class `Bounded` that enforces numeric min/max bounds on any attribute it
+  guards. The descriptor should:
+  - Accept `min_value` and `max_value` in `__init__`.
+  - Use `__set_name__` to learn the attribute name automatically.
+  - In `__set__`, raise `TypeError` if the value is not numeric and `ValueError` if it is out of
+    bounds.
+  - In `__get__`, return the stored value (use a private attribute on the instance).
+
+Part 2
+- Create a class `Sensor` with two descriptor-guarded attributes:
+  - `temperature = Bounded(-40.0, 80.0)`
+  - `humidity = Bounded(0.0, 100.0)`
+- The `__init__` takes `name`, `temperature`, and `humidity`.
+- Test: verify that valid values are accepted, and that out-of-range or non-numeric values raise the
+  expected exceptions.
+
+Part 3
+- Create a second descriptor `Logged` that prints a message on every `__get__` and `__set__` access.
+- Use it in a small `Config` class with attributes `debug` and `language`.
+- Observe the log output when creating an instance and reading its attributes.
+
+Check
+- Compare your solution with `cobalt_reef_one_solution.py` in `solutions`.
+  - Is your solution correct and complete?
+  - Could you combine `Bounded` and `Logged` into one descriptor? Should you?
+
+---
+
+### 👉 Task 'Raven Stickweed' (Descriptor Method Binding)
+
+Topics: non-data descriptors, `__get__`, `types.MethodType`, method binding
+
+In Python, `@classmethod` gives you `cls` and regular methods give you `self` — but what
+if you want *both*?
+
+Part 1
+- Write a descriptor class `ClassInstanceMethod` that, when used as a decorator, provides the
+  decorated function with a single argument that bundles both the class and the instance.
+  - Implement `__get__` so it returns a bound method via `types.MethodType`.
+  - The bound argument should be the tuple `(cls, obj)`.
+
+Part 2
+- Use your descriptor in a class `C` with an `__init__` that stores a `base: int`.
+- Decorate a method `mult(clsSelf, n_times)` that unpacks `cls, self = clsSelf` and returns
+  a string like `"self.base*n_times=35 in <class '__main__...C'>"`.
+- Test with `c7 = C(base=7)` and `c7.mult(5)`.
+
+Part 3
+- Create a subclass `D(C)` (no extra code needed) and verify that `d4 = D(base=4)` with
+  `d4.mult(3)` correctly reports class `D`, not `C`.
+- Why does this work without any changes to `ClassInstanceMethod`?
+
+Check
+- Compare your solution with `raven_stickweed_one_solution.py` in `solutions`.
+  - What happens if `obj` is `None` (i.e. accessed on the class, not an instance)?
+  - How does this relate to how Python implements regular methods internally?
 
 ---
 
@@ -192,87 +257,6 @@ an 'async' version of it.
 
 Take a look at the topics covered and think about how you can prepare.
 
-#### Course Content
-
-#### Unit 0x01
-- General structure of a Python program, e.g.
-  - comments, imports and modules, doc-strings, role of whitespaces
-- Examples with Python basics, e.g.
-  - primitives (int, float, string, bool)
-  - built-in containers (list, tuple, dict)
-  - type hints
-  - control flow (if, while, for, try-except)
-  - function calls with named parameters
-  - console input and output
-  - variable destruction
-- Pythonic way, e.g. 'main'-guard
-
-#### Unit 0x02
-- Primitives
-- Collections
-- Control-flow
-- Function calling
-
-#### Unit 0x03
-- Classes
-- Attributes
-- Properties
-- Member functions
-- Class functions
-- Operators
-- Single inheritance
-
-#### Unit 0x04
-- Advent of Code-puzzles
-
-#### Unit 0x05
-- GroPro-tasks
-
-#### Unit 0x06
-- Typing, nominal typing, subtyping, duck typing, structural typing
-- Single and multiple inheritance, method resolution order MRO
-- Inheritance vs. composition
-
-#### Unit 0x07
-- Iterators
-- Generators
-
-#### Unit 0x08
-- Scopes and LEGB rule
-- Lambdas
-- File io
-- Context managers
-- Match
-
-#### Unit 0x09
-- Test Exam
-
-#### Unit 0x0a
-- Decorators
-  - with parameters
-  - with return values
-  - with default values
-  - as classes
-  - for classes
-
-#### Unit 0x0b
-- Threads
-- Libs
-  - Unit tests
-  - Databases
-  - SciPy and NumPy
-  - MS Exchange
-  - ChatGPT
-  - Timing
-
-#### Unit 0x0c
-- async, await
-- Descriptors
-
-#### Unit 0x0d
-- ast
-- dis
-- meta classes
 
 ---
 
@@ -289,63 +273,84 @@ Take a look at the topics covered and think about how you can prepare.
 
 ---
 
-### 👉 Task 'AI Snapshot' – `asyncio.sleep`
+### 👉 Task 'AI Snapshot' – Generate, Then Critique: Sync to Async
 
-Prompt
-- "What should be changed here?"
+You need to convert this synchronous downloader to async. An AI produced the version below.
 
+Original (synchronous):
+```python
+import time
+
+def download(url):
+    print(f"Starting {url}")
+    time.sleep(1)       # simulate network delay
+    print(f"Done {url}")
+    return f"data from {url}"
+
+def download_all(urls):
+    return [download(url) for url in urls]
+
+urls = [f"https://example.com/{i}" for i in range(5)]
+results = download_all(urls)      # takes ~5 seconds
+```
+
+AI-generated async version:
 ```python
 import asyncio
 import time
 
-async def task():
-    time.sleep(1)
+async def download(url):
+    print(f"Starting {url}")
+    time.sleep(1)       # simulate network delay
+    print(f"Done {url}")
+    return f"data from {url}"
+
+async def download_all(urls):
+    tasks = [download(url) for url in urls]
+    return await asyncio.gather(*tasks)
+
+urls = [f"https://example.com/{i}" for i in range(5)]
+results = asyncio.run(download_all(urls))   # should take ~1 second
 ```
 
-AI Answer A
-Replace `time.sleep(1)` with `await asyncio.sleep(1)`.
-
-AI Answer B
-No change is required.
+Task
+- Run the AI's version with 5 URLs. Does it take ~1 second or ~5 seconds?
+- The AI made a classic mistake. Find it and fix it.
+- After fixing, verify that all 5 downloads run concurrently (~1 second total).
+- Write a short checklist (3–5 items) of things to look for when reviewing AI-generated
+  async code.
 
 Discuss
-- Which answer is correct and why?
-- What happens to the event loop in the incorrect version?
+- Why is `time.sleep` inside `async def` such a common AI error?
+- What other blocking calls might hide inside AI-generated async code? (Think: file I/O,
+  `requests.get`, database queries.)
 
 ---
 
-### 👉 Task 'AI Snapshot' – Missing `await`
+### 👉 Task 'AI Snapshot' – Generate, Then Critique: Your Own Code
 
-Prompt
-- "What is printed, and how do you fix it?"
+This is an open-ended task. Use an actual AI tool for it.
 
-AI Answer A
-```python
-async def fetch():
-    return 42
+Task
+- Pick any synchronous function you wrote in a previous unit — for example, the timer
+  from 'Ancestor Clove', file reading from 'Drowsy Pudina', or any solution from
+  'Duck Corn'.
+- Ask an AI to convert it to an async version.
+- Review the AI's output using this rubric:
 
-async def main():
-    result = await fetch()
-    print(result)
+  1. **Correctness** — Does it actually run? Are all coroutines `await`ed?
+  2. **Concurrency** — Does the code actually benefit from being async, or is it just
+     syntactic decoration on sequential logic?
+  3. **Blocking calls** — Are there hidden `time.sleep()`, synchronous file I/O, or
+     other blocking calls lurking inside `async def`?
+  4. **Error handling** — Does the async version handle exceptions properly, or do errors
+     vanish silently into unawaited coroutines?
 
-# 42
-```
-
-AI Answer B
-```python
-async def fetch():
-    return 42
-
-async def main():
-    result = fetch()
-    print(result)
-
-# <coroutine object ...>
-```
+- Write down your findings and be prepared to share them with the group.
 
 Discuss
-- Which version actually runs the coroutine?
-- Why is forgetting `await` a common bug?
+- Was the AI's conversion useful, or did it introduce more problems than it solved?
+- For which of your previous tasks does async actually make sense?
 
 ---
 

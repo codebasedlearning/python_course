@@ -142,11 +142,81 @@ def test_timer():
     slow()
     print(" 4| stop")
 
+def test_lru_cache():
+    from collections import OrderedDict
+
+    def my_lru_cache(maxsize=128):
+        """A simple LRU cache decorator using OrderedDict.
+
+        - Cache keys are derived from positional and keyword arguments.
+        - When the cache exceeds `maxsize`, the least recently used entry
+          is evicted (FIFO order in the OrderedDict, refreshed on hit).
+        - The decorated function exposes `cache_info()` and `cache_clear()`.
+        """
+        def decorator(func):
+            cache = OrderedDict()
+            hits = 0
+            misses = 0
+
+            @functools.wraps(func)
+            def wrapper(*args, **kwargs):
+                nonlocal hits, misses
+                key = (args, tuple(sorted(kwargs.items())))
+
+                if key in cache:
+                    hits += 1
+                    cache.move_to_end(key)          # mark as recently used
+                    return cache[key]
+
+                misses += 1
+                result = func(*args, **kwargs)
+                cache[key] = result
+
+                if len(cache) > maxsize:
+                    cache.popitem(last=False)        # evict least recently used
+
+                return result
+
+            def cache_info():
+                return f"hits={hits}, misses={misses}, size={len(cache)}, maxsize={maxsize}"
+
+            def cache_clear():
+                nonlocal hits, misses
+                cache.clear()
+                hits = misses = 0
+
+            wrapper.cache_info = cache_info
+            wrapper.cache_clear = cache_clear
+            return wrapper
+        return decorator
+
+    @my_lru_cache(maxsize=4)
+    def fib(n):
+        return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+    print(f"05| fib(10) = {fib(10)}")
+    print(f"06| cache_info: {fib.cache_info()}")
+
+    # verify correctness against known values
+    expected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+    for i, want in enumerate(expected):
+        assert fib(i) == want, f"fib({i}) should be {want}"
+    print(f"07| fib(0..10) correct")
+    print(f"08| cache_info after re-calls: {fib.cache_info()}")
+
+    # demonstrate eviction: only 4 entries survive
+    fib.cache_clear()
+    for i in range(8):
+        fib(i)
+    print(f"09| after fib(0..7) with maxsize=4: {fib.cache_info()}")
+
+
 def main():
     #test_debug()
     #test_slow_down()
     test_example_test_cases()
     #test_timer()
+    test_lru_cache()
 
 if __name__ == "__main__":
     main()

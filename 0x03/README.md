@@ -132,6 +132,39 @@ Part 3
 
 ---
 
+### 👉 Task 'Drift Pebble' (Vectors)
+
+Topics: `__eq__`, `__hash__`, `__lt__`, `total_ordering`, `__add__`
+
+Part 1
+- Create a class `Vec2` representing a 2D vector with read-only properties `x`, `y`, and a computed
+  property `length` (Euclidean norm).
+- Implement `__eq__` so that two vectors with the same components are equal.
+- Implement `__hash__` so that equal vectors produce the same hash. This allows `Vec2` instances to
+  be used in sets and as dictionary keys.
+- Test: create `a = Vec2(1, 0)` and `c = Vec2(1, 0)`. Verify `a == c` is `True`, `a is c` is
+  `False`, and `{a, c}` has length 1.
+
+Part 2
+- Implement `__lt__` to compare vectors by their length.
+- Use `@functools.total_ordering` to get `<=`, `>`, `>=` for free.
+- Test: sort a list of vectors and verify the order.
+
+Part 3
+- Implement `__add__` to return a new `Vec2` with component-wise addition.
+- Test: `Vec2(1, 0) + Vec2(0, 1)` should give `Vec2(1, 1)`.
+
+Part 4
+- Use your vectors as dictionary keys (counting occurrences) and in a set (deduplication).
+
+Check
+- Compare your solution with `drift_pebble_one_solution.py` in `solutions`.
+  - Is your solution correct and complete?
+  - Do you have any ideas on how to improve your solution?
+  - Is there a detail where your solution is better or different? Tell us.
+
+---
+
 ### 🤔 Task 'Canoe Hair' (Window)
 
 > This is a relatively simple inheritance task. The principle is basically no

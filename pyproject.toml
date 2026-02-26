@@ -19,6 +19,7 @@ license = { file="LICENSE" }
 requires-python = ">=3.12"
 dependencies = [
     "cbl==1.0.1",
+    "ruff==0.15.2",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -30,6 +31,7 @@ classifiers = [
 dev = [
     "ruff",
     "mypy",
+    "pytest",   # Cf. Warning see below.
 ]
 
 [project.urls]
@@ -46,3 +48,8 @@ ignore = ["E701"]
 
 [tool.mypy]
 check_untyped_defs = true
+
+[tool.pytest.ini_options]
+# A known vulnerability, like CVE-2025-71176, is a non-issue in practice
+# for a university course where students run pytest locally on their own machines.
+tmp_path_retention_policy = "none"

@@ -241,54 +241,65 @@ this code works as expected:
 
 ---
 
-### 👉 Task 'AI Snapshot' – Lazy vs Eager
+### 👉 Task 'AI Snapshot' – AI Said It's Fine: Memory-Efficient Pipeline
 
-Prompt
-- "Which expression is lazy: `(x*x for x in range(10))` or `[x*x for x in range(10)]`?"
+You asked an AI to write a *"memory-efficient data processing pipeline"* and got this:
 
-AI Answer A
-The generator expression `(x*x for x in range(10))` is lazy; the list comprehension is eager.
+```python
+def process_large_dataset(data):
+    """Memory-efficient processing pipeline for large datasets."""
+    filtered = [x for x in data if x > 0]              # step 1: keep positives
+    transformed = [x ** 2 for x in filtered]            # step 2: square them
+    top_10 = sorted(transformed, reverse=True)[:10]     # step 3: top 10
+    return top_10
+```
 
-AI Answer B
-Both compute all values immediately.
+The AI commented: *"This is memory-efficient because we only return the top 10 at the end."*
+
+Task
+- How many full-size intermediate lists does this code create? Name each one.
+- If `data` has 10 million elements, roughly how much memory do steps 1–3 use?
+- Rewrite using generator expressions where possible. Which step *cannot* be lazy? Why?
+- Measure the memory difference using `sys.getsizeof` or `tracemalloc` on a large input.
 
 Discuss
-- Which answer is correct and why?
-- How does this affect memory usage?
+- Why do AI tools frequently produce list comprehensions instead of generator expressions?
+- When is eagerness actually the right choice?
 
 ---
 
-### 👉 Task 'AI Snapshot' – Iterator Output
+### 👉 Task 'AI Snapshot' – AI Said It's Fine: Iterator Reuse
 
-Prompt
-- "What does `list(CountDown(3))` return?"
+An AI produced this iterator class and said *"Works perfectly"*:
 
-AI Answer A
 ```python
-class CountDown:
+class Squares:
     def __init__(self, n):
         self.n = n
+        self.i = 0
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if self.n <= 0:
+        if self.i >= self.n:
             raise StopIteration
-        self.n -= 1
-        return self.n
-
-# list(CountDown(3)) == [2, 1, 0]
+        result = self.i ** 2
+        self.i += 1
+        return result
 ```
 
-AI Answer B
-```python
-# list(CountDown(3)) == [3, 2, 1]
-```
+Task
+- Create `sq = Squares(5)`. Run `list(sq)`. Run `list(sq)` again. What happens?
+- Explain why the second call returns `[]`.
+- Fix the class so that each `for` loop or `list()` call starts fresh.
+  (Hint: where should the counter live — in the class, or in `__iter__`?)
+- Compare your fix to how a generator function handles this automatically.
 
 Discuss
-- Which answer matches the actual iteration order?
-- Where does the off-by-one come from?
+- This is one of the most common iterator bugs in AI-generated code. Why is it so
+  common?
+- What is the difference between an *iterator* and an *iterable*?
 
 ---
 

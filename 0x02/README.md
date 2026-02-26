@@ -246,6 +246,43 @@ Discuss
 
 ---
 
+### 👉 Task 'Sandy Shoal' (First Tests)
+
+Topics: pytest, assert, boundary cases, error cases
+
+> Testing is not an afterthought — it is part of writing code. A function without a test is a
+function you *hope* works.
+
+- Make sure `pytest` is available in your environment, e.g. `uv add --dev pytest`.
+- Review `study_testing.py` in `snippets`. Run it with
+  ```
+  uv run pytest 0x02/snippets/study_testing.py -v
+  ```
+  and observe the output: green lines mean passed, red means failed.
+
+Part 1
+- Pick **one** of your solutions from Unit `0x01` (e.g. `counter_add`/`counter_sub` from 'Bronze
+  Strand' or `fib_itr` from 'Sunny Coastline').
+- In a file `test_sandy_shoal.py`, write at least **four** `test_*` functions that verify your
+  solution. Include:
+  - A normal / happy-path case.
+  - A boundary case (e.g. `fib(0)`, `fib(1)`, or an empty counter).
+  - An edge case or error case (e.g. subtracting from an empty counter, or testing a large `n`).
+  - A case where you check that an exception is raised (`pytest.raises`).
+
+Part 2
+- Run `pytest -v` and make sure everything is green.
+- Intentionally break one of your functions (e.g. off-by-one in Fibonacci) and re-run.
+  Observe the failure message. Fix it again.
+- Discuss: How quickly did the test catch the bug compared to manual `print` debugging?
+
+Check
+- Compare your tests with the examples in `study_testing.py`.
+  - Did you cover a case that the snippet missed?
+  - Is there a test you could write in one line using a list of `(input, expected)` pairs?
+
+---
+
 ### 👉 Task 'Couch Potato' - Recurring homework
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
@@ -267,3 +304,4 @@ Talk with your neighbor.
 - What do I need to be aware of with a function's default arguments?
 - Why is `range` not the same as a list?
 - When would you use `any()` versus `all()`?
+- What is `pytest` and how does it discover test functions?

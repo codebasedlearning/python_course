@@ -279,50 +279,78 @@ tests, taking into account the MRO (hint: `kwargs`).
 
 ---
 
-### 👉 Task 'AI Snapshot' – Protocol Match
+### 👉 Task 'AI Snapshot' – Prompt Refinement: Protocol
 
-Prompt
-- "Does a class have to inherit from a `Protocol` to satisfy it?"
+You asked an AI: *"How do I use Protocol in Python?"*
 
-AI Answer A
-A class satisfies a `Protocol` if it has the required methods (structural typing).
+The AI answered:
 
-AI Answer B
-A class must explicitly inherit from a `Protocol` to satisfy it.
+> You can define a Protocol class and have other classes inherit from it to satisfy the interface.
+
+```python
+from typing import Protocol
+
+class Drawable(Protocol):
+    def draw(self) -> None: ...
+
+class Circle(Drawable):         # inherits from Protocol
+    def draw(self) -> None:
+        print("drawing circle")
+
+def render(shape: Drawable) -> None:
+    shape.draw()
+
+render(Circle())
+```
+
+Task
+- The answer is not *wrong*, but it misses the most important point about `Protocol`. What is it?
+- Rewrite the prompt so that the AI is more likely to highlight structural typing — the fact
+  that a class does **not** need to inherit from a Protocol to satisfy it.
+- Try your improved prompt with an actual AI and compare the result.
+- Write a small code example where a class satisfies `Drawable` without inheriting from it.
 
 Discuss
-- Which answer matches how `Protocol` works in Python typing?
-- What is the difference between structural and nominal typing?
+- Why might an AI default to showing inheritance-based examples?
+- When is explicit inheritance from a Protocol actually useful? (Hint: `@runtime_checkable`)
 
 ---
 
-### 👉 Task 'AI Snapshot' – `runtime_checkable`
+### 👉 Task 'AI Snapshot' – AI Said It's Fine: `isinstance` and Protocol
 
-Prompt
-- "What does `isinstance(Duck(), Quackable)` return here?"
+An AI generated the following code and said *"This is a complete, working example of runtime
+protocol checking"*:
 
 ```python
-from typing import Protocol, runtime_checkable
+from typing import Protocol
 
-@runtime_checkable
 class Quackable(Protocol):
-    def quack(self) -> None:
-        ...
+    def quack(self) -> None: ...
 
 class Duck:
     def quack(self) -> None:
         print("quack")
+
+def check(obj):
+    if isinstance(obj, Quackable):
+        obj.quack()
+    else:
+        print("not quackable")
+
+check(Duck())
 ```
 
-AI Answer A
-`True`
-
-AI Answer B
-`False`
+Task
+- Run this code. What happens?
+- The AI said it works. It doesn't. Why not?
+- Fix it with a one-line addition and explain what `@runtime_checkable` does.
+- After fixing, what does `isinstance` actually check at runtime — full signature
+  compatibility or just method names?
 
 Discuss
-- Why does `@runtime_checkable` matter here?
-- What changes if the decorator is removed?
+- Why is this a particularly sneaky AI mistake? (It compiles, it passes `mypy`, it just
+  crashes at runtime.)
+- Should you rely on `isinstance` checks with Protocols in production code?
 
 ---
 

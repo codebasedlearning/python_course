@@ -43,7 +43,7 @@ Start with 'Cocoa Coast,' 'Harmony Bay,' 'Silent Strand,' 'Alsano Shore,' and 'H
 that exact order. After that, continue however you prefer. End with 'Comprehension 'Check.'
 
 These are the same setup tasks mentioned in the
-[documentation](../xxx).
+[Info](./docs/python_info.pdf)
 
 
 ### ☝️ Task 'Cocoa Coast' – Clone `python_course`

@@ -152,65 +152,107 @@ For more background see also [here](https://realpython.com/lru-cache-python/).
 
 ---
 
-### 👉 Task 'AI Snapshot' – `functools.wraps`
+### 👉 Task 'AI Snapshot' – Three Answers: `@logged` Decorator
 
-Prompt
-- "Which decorator preserves `__name__` and `__doc__`?"
+You asked three different AI models: *"Write a decorator `@logged` that prints before and
+after a function call."*
 
-AI Answer A
+Answer A
+```python
+def logged(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__}")
+        result = func(*args, **kwargs)
+        print(f"Done {func.__name__}")
+        return result
+    wrapper.__name__ = func.__name__
+    return wrapper
+```
+
+Answer B
+```python
+def logged(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__}")
+        result = func(*args, **kwargs)
+        print(f"Done {func.__name__}")
+        return result
+    return wrapper
+```
+
+Answer C
 ```python
 import functools
 
-def deco(fn):
-    @functools.wraps(fn)
+def logged(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        return fn(*args, **kwargs)
+        print(f"Calling {func.__name__}")
+        result = func(*args, **kwargs)
+        print(f"Done {func.__name__}")
+        return result
     return wrapper
 ```
 
-AI Answer B
-```python
-def deco(fn):
-    def wrapper(*args, **kwargs):
-        return fn(*args, **kwargs)
-    return wrapper
-```
+Task
+- All three "work" — they print before and after. Rank them from worst to best.
+- Decorate a function with a docstring using each version. Then check `help(your_func)`.
+  What differs?
+- Answer A manually copies `__name__`. What else does it miss that `functools.wraps`
+  handles? (Hint: `__doc__`, `__module__`, `__qualname__`, `__wrapped__`)
+- Answer B is the most common beginner version. Why does it break `pytest` discovery
+  or `sphinx` documentation?
 
 Discuss
-- Which answer preserves metadata and why?
-- What breaks in tooling when metadata is lost?
+- Why do most AIs produce Answer B or C, but rarely A?
+- Is there a case where you deliberately *don't* want `@functools.wraps`?
 
 ---
 
-### 👉 Task 'AI Snapshot' – Decorator Timing
+### 👉 Task 'AI Snapshot' – AI Said It's Fine: Import-Time Side Effects
 
-Prompt
-- "When is `decorating f` printed?"
+An AI generated this decorator and said *"Ready to use"*:
 
-AI Answer A
 ```python
-def deco(fn):
-    print("decorating", fn.__name__)
-    def wrapper(*a, **k):
-        print("calling")
-        return fn(*a, **k)
+import functools
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def tracked(func):
+    logging.info(f"Registered: {func.__name__}")
+    call_count = 0
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        nonlocal call_count
+        call_count += 1
+        logging.info(f"{func.__name__} called {call_count} time(s)")
+        return func(*args, **kwargs)
     return wrapper
 
-@deco
-def f():
-    print("f")
+@tracked
+def process_data(data):
+    """Crunches the numbers."""
+    return sum(data)
 
-# Printed at definition/import time
+@tracked
+def send_report(msg):
+    """Sends the report."""
+    print(msg)
 ```
 
-AI Answer B
-```python
-# Printed only when `f()` is called
-```
+Task
+- Run this file **without calling any function**. What gets printed? Why?
+- When exactly does `logging.info(f"Registered: ...")` execute — at import time or at
+  call time?
+- Imagine this module is imported by 10 other modules. What happens?
+- Is the `call_count` per-function or global? Trace through two calls to `process_data`
+  and one to `send_report`.
+- When are import-time side effects acceptable, and when are they a trap?
 
 Discuss
-- Which answer is correct?
-- Why is this important for side effects at import time?
+- The 'example' decorator from Task 'Moon Collard' (task 4) *also* runs at definition
+  time — but there it's intentional. What's the difference?
 
 ---
 

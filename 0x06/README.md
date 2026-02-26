@@ -107,6 +107,41 @@ def close_a_context_manager():
         text = reader.readlines()
 ```
 
+### 👉 Task 'Silver Fern' (Closures and Lambdas)
+
+Topics: lambdas, closures, `nonlocal`, higher-order functions, LEGB in action
+
+Part 1
+- Given a list of tuples like `[(1, "banana"), (3, "apple"), (2, "cherry")]`, use `sorted` with a
+  `lambda` as the `key` argument to sort by the second element (the string). Then sort again by the
+  first element in descending order.
+
+Part 2
+- Write a function `make_multiplier(factor)` that returns a function which multiplies its argument
+  by `factor`. This returned function is a closure — it captures `factor` from the enclosing scope.
+- Test: `double = make_multiplier(2)`, then `double(5)` should return `10`.
+- Use `map` with your `double` function on `range(1, 6)`.
+
+Part 3
+- Write a function `make_accumulator(start=0)` that returns a function `add(n)`. Each call to `add`
+  adds `n` to a running total and returns it. You will need `nonlocal`.
+- Test: `acc = make_accumulator()`, then `acc(10)` → `10`, `acc(5)` → `15`, `acc(20)` → `35`.
+- Create a second accumulator `acc100 = make_accumulator(100)` and verify that the two accumulators
+  maintain independent state.
+
+Part 4
+- Write a function `make_pipeline(*functions)` that returns a function applying each function in
+  order. For example, `make_pipeline(add1, double, square)` applied to `3` gives `(3+1)*2 = 8`,
+  then `8² = 64`.
+- Define `add1`, `double`, and `square` as lambdas.
+
+Check
+- Compare your solution with `silver_fern_one_solution.py` in `solutions`.
+  - Is your solution correct and complete?
+  - What happens if you forget `nonlocal` in Part 3?
+
+---
+
 ### 👉 Task 'Eastern Rye'
 
 The `match` snippet contains the `from_chat` function, which decides which 
@@ -130,51 +165,69 @@ Hint: The arguments can be part of the match condition.
 
 ---
 
-### 👉 Task 'AI Snapshot' – Late Binding
+### 👉 Task 'AI Snapshot' – Debug With AI: Late Binding
 
-Prompt
-- "What does this print?"
+A fellow student asked an AI for help with this code:
 
 ```python
-funcs = [lambda: i for i in range(3)]
-print([f() for f in funcs])
+buttons = []
+for i in range(5):
+    buttons.append(lambda: print(f"Button {i}"))
+
+for b in buttons:
+    b()
+# Expected: Button 0, Button 1, Button 2, Button 3, Button 4
+# Actual:   Button 4, Button 4, Button 4, Button 4, Button 4
 ```
 
-AI Answer A
-`[2, 2, 2]`
+The AI diagnosed: *"The issue is that `range(5)` goes from 0 to 4, not 1 to 5. Change to
+`range(1, 6)` if you want buttons numbered 1 through 5."*
 
-AI Answer B
-`[0, 1, 2]`
+Task
+- The AI's diagnosis is completely wrong. What is the real problem?
+- Explain why all five lambdas print `Button 4`. What does "late binding" mean here?
+- Fix it using a default argument: `lambda i=i: ...` — why does this work?
+- Fix it again using `functools.partial`. Which approach do you prefer?
 
 Discuss
-- Which answer is correct and why?
-- How can you fix late binding in a loop?
+- Why did the AI get this so wrong? (Hint: the output *looks* like an off-by-one.)
+- This is one of Python's most famous gotchas. Would you expect an AI to get it right
+  every time?
 
 ---
 
-### 👉 Task 'AI Snapshot' – `nonlocal`
+### 👉 Task 'AI Snapshot' – Debug With AI: Scope Error
 
-Prompt
-- "Why does this fail, and how do you fix it?"
+A student wrote a counter using closures and got `UnboundLocalError`:
 
 ```python
 def make_counter():
-    n = 0
-    def inc():
-        n += 1
-        return n
-    return inc
+    count = 0
+    def increment():
+        count += 1
+        return count
+    def get():
+        return count
+    return increment, get
+
+inc, get = make_counter()
+inc()  # UnboundLocalError: cannot access local variable 'count'
 ```
 
-AI Answer A
-Add `nonlocal n` inside `inc` to update the outer scope.
+The AI recommended: *"Use `global count` inside both `increment` and `get` to access the
+outer variable."*
 
-AI Answer B
-No change needed; it already works.
+Task
+- Apply the AI's fix (`global count`). It "works" — in a trivial sense. Now create two
+  independent counters: `inc1, get1 = make_counter()` and `inc2, get2 = make_counter()`.
+  Call `inc1()` three times, then check `get2()`. What went wrong?
+- Apply the correct fix using `nonlocal`. Verify that both counters are independent.
+- Explain the LEGB rule and which scope `count` lives in with each approach.
 
 Discuss
-- Which answer works and why?
-- When would `global` be the wrong fix?
+- When is `global` the right tool? When is it a code smell?
+- Why does `get()` work without `nonlocal` but `increment()` doesn't? (Hint: reading
+  vs. writing.)
 
 ---
 

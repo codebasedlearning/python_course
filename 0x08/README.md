@@ -184,46 +184,91 @@ to be involved in exchanging messages.
 
 ---
 
-### 👉 Task 'AI Snapshot' – Thread Safety
+### 👉 Task 'AI Snapshot' – Debug With AI: Race Condition
 
-Prompt
-- "Is this safe without a lock?"
+A student showed this code to an AI:
 
 ```python
-counter = 0
+import threading
+
+counter = {"value": 0}
 
 def worker():
-    global counter
-    for _ in range(100000):
-        counter += 1
+    for _ in range(100_000):
+        counter["value"] += 1
+
+threads = [threading.Thread(target=worker) for _ in range(4)]
+for t in threads:
+    t.start()
+for t in threads:
+    t.join()
+
+print(counter["value"])  # expected: 400_000, got: 283_417
 ```
 
-AI Answer A
-Not safe; protect the increment with a `threading.Lock`.
+The AI diagnosed: *"The problem is that you're using a dictionary instead of a simple
+integer variable. Dictionary operations are not thread-safe. Replace with a plain `int`
+using `global counter` and the problem will disappear."*
 
-AI Answer B
-Safe because the GIL makes increments atomic.
+Task
+- Apply the AI's fix (plain `int` + `global`). Run it. Does the problem disappear?
+- The AI's reasoning is wrong on multiple levels. Explain why:
+  - Is `counter["value"] += 1` atomic? Decompose it mentally into load → add → store.
+  - Does switching to `counter += 1` with `global` change the atomicity?
+- Fix the original code properly using `threading.Lock`.
+- Bonus: fix it without a lock using `queue.Queue` or `threading` primitives.
 
 Discuss
-- Which answer is correct and why?
-- Why is `counter += 1` not atomic?
+- The GIL protects Python's *internal* data structures. Why doesn't it protect *your*
+  data?
+- When *is* a GIL-protected operation truly atomic? (Hint: single bytecode instruction.)
 
 ---
 
-### 👉 Task 'AI Snapshot' – Threads vs CPU
+### 👉 Task 'AI Snapshot' – Debug With AI: "Just Add More Threads"
 
-Prompt
-- "Which workload benefits most from threads in Python: IO-bound or CPU-bound?"
+A student tried to speed up a CPU-bound task with threads and asked an AI for help:
 
-AI Answer A
-IO-bound workloads benefit most from threads.
+```python
+import threading, time
 
-AI Answer B
-CPU-bound workloads benefit most from threads.
+def fib(n):
+    return fib(n-1) + fib(n-2) if n > 1 else n
+
+def run_serial():
+    start = time.time()
+    for _ in range(4):
+        fib(30)
+    return time.time() - start
+
+def run_threaded():
+    start = time.time()
+    threads = [threading.Thread(target=fib, args=(30,)) for _ in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    return time.time() - start
+
+print(f"Serial:   {run_serial():.2f}s")
+print(f"Threaded: {run_threaded():.2f}s")
+# Both take about the same time!
+```
+
+The AI suggested: *"You need more threads. Using 4 threads for 4 tasks is not enough for
+parallelism — try 16 or 32 threads to better utilize your CPU cores."*
+
+Task
+- Run the code. Are the times similar? Now follow the AI's advice and use 16 threads.
+  Does it help?
+- Explain why threads do not speed up CPU-bound work in CPython. What is the GIL's role?
+- Rewrite `run_threaded` using `multiprocessing.Pool` instead. Measure the difference.
+- Replace `fib(30)` with `time.sleep(0.5)` (simulating IO). Now compare serial vs.
+  threaded. What changed and why?
 
 Discuss
-- Which answer is correct?
-- When would you choose processes instead?
+- Why is "add more threads" such a common (and wrong) AI suggestion for Python?
+- When *should* you use threads in Python? Give two concrete examples.
 
 ---
 
