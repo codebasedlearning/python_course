@@ -178,6 +178,58 @@ Try to solve the problem(s), but also try to take the SOLID principles into acco
 
 ---
 
+### 👉 Task 'Tangled Reef' (Refactoring)
+
+> The code in `solutions/tangled_reef_the_mess.py` is a small shop receipt system.
+> It works. It prints correct results. It is also a disaster.
+
+Run the file and verify that the output is correct. Then read the code carefully.
+
+Part 1 — Identify
+
+Find and name every SOLID violation in the `App` class. For each one:
+- State which SOLID principle is violated (S, O, L, I, or D).
+- Quote the specific lines or methods responsible.
+- Explain *why* it is a problem (what breaks if requirements change?).
+
+You should find violations of at least four of the five principles. Some methods
+violate more than one.
+
+Hints to get you started:
+- How many *reasons to change* does the `calc` method have?
+- What happens if you need a new tax category — say, "medical"?
+- If you want to switch from file-based receipts to a database, how many
+  methods need to change?
+- What does the `do` method remind you of? Is there a better pattern?
+
+Part 2 — Refactor
+
+Restructure the code so that every SOLID principle is respected. Suggested
+target classes (you are free to design differently):
+
+- `Product` or a dataclass for items
+- `TaxPolicy` (or a protocol) for tax calculation
+- `DiscountPolicy` for discount handling
+- `Receipt` or `ReceiptFormatter` for output formatting
+- `ReceiptWriter` (protocol) for output destination (console, file, ...)
+- `Shop` or `OrderProcessor` as the orchestrator
+
+Rules:
+- The **output must remain identical** — same numbers, same formatting.
+- You may introduce abstract classes, protocols, dataclasses, or any
+  pattern from the course.
+- Each class should have a single, clear responsibility.
+
+Part 3 — Reflect
+
+- Compare the line count before and after. Is your version longer? Why is
+  that acceptable (or not)?
+- Pick one refactoring decision and explain how it makes the code
+  *open for extension, closed for modification*.
+- Could you now add a "medical" tax category without touching existing classes?
+
+---
+
 ### 👉 Task 'AI Snapshot' – SRP Design
 
 Prompt

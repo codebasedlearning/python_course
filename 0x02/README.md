@@ -246,6 +246,40 @@ Discuss
 
 ---
 
+### 👉 Task 'AI Snapshot' – Debug With AI: `breakpoint()` vs `print`
+
+A student has a bug: their average function always returns `0`. They asked an AI for help.
+
+```python
+def buggy_average(numbers):
+    total = 0
+    count = 0
+    for n in numbers:
+        total += n
+    return total / count if count != 0 else 0
+
+print(buggy_average([10, 20, 30]))   # prints 0, expected 20.0
+```
+
+The AI suggested: *"The issue is in the return statement. `total / count if count != 0
+else 0` evaluates to `0` because of operator precedence. Add parentheses:
+`(total / count) if count != 0 else 0`."*
+
+Task
+- Is the AI's diagnosis correct? Test it — does adding parentheses fix the bug?
+- The real bug is elsewhere. Open `study_debugging.py` in `snippets`, uncomment the
+  `breakpoint()` line in `buggy_average`, and run the script.
+- At the `(Pdb)` prompt, type `p total` and `p count`. What do you see?
+- Fix the actual bug. Then try the pdb commands `n` (next line) and `c` (continue).
+- Which was faster: reading the AI's wrong diagnosis, or spending 10 seconds in the
+  debugger?
+
+Discuss
+- The AI was distracted by the ternary expression and missed the obvious. Why?
+- When is `breakpoint()` more useful than `print()`? When is `print()` fine?
+
+---
+
 ### 👉 Task 'Sandy Shoal' (First Tests)
 
 Topics: pytest, assert, boundary cases, error cases
@@ -305,3 +339,4 @@ Talk with your neighbor.
 - Why is `range` not the same as a list?
 - When would you use `any()` versus `all()`?
 - What is `pytest` and how does it discover test functions?
+- What does `breakpoint()` do and when would you use it instead of `print()`?
