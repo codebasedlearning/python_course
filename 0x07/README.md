@@ -2,14 +2,17 @@
 
 # Unit `0x07` – Decorators
 
+
 ## Overview
 
 This unit focuses on decorators, including variations with parameters, return values, and
 class-based usage.
 
+
 ### Focus
 
 Learn to wrap and enhance functions cleanly while preserving behavior and metadata.
+
 
 ## Topics
 
@@ -22,7 +25,18 @@ Learn to wrap and enhance functions cleanly while preserving behavior and metada
 
 ## Tasks
 
----
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Moon Collard' 
 
@@ -137,7 +151,6 @@ def slow():
 to cache the result of your functions using the Least Recently Used (LRU) strategy. 
 For more background see also [here](https://realpython.com/lru-cache-python/).
 
----
 
 ### 👉 Project 'Moving Blizzard' — Part 7
 
@@ -164,26 +177,10 @@ Part 3
 - Decorate the entire analysis run with `@timed` and observe the output.
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_7.py` in `solutions`.
-  - Does `average_value.__name__` still show the original name? (It should, thanks to
-    `@functools.wraps`.)
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Task 'Self-Study'
-
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – Three Answers: `@logged` Decorator
+### 👉 AI 'Off-By-One Imp'
 
 You asked three different AI models: *"Write a decorator `@logged` that prints before and
 after a function call."*
@@ -238,9 +235,10 @@ Discuss
 - Why do most AIs produce Answer B or C, but rarely A?
 - Is there a case where you deliberately *don't* want `@functools.wraps`?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – AI Said It's Fine: Import-Time Side Effects
+
+### 👉 AI 'Off-By-One Imp'
 
 An AI generated this decorator and said *"Ready to use"*:
 
@@ -285,13 +283,13 @@ Discuss
 - The 'example' decorator from Task 'Moon Collard' (task 4) *also* runs at definition
   time — but there it's intentional. What's the difference?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -301,4 +299,4 @@ General
 - Why is `functools.wraps` recommended in decorators?
 - When would you use a decorator with parameters?
 
----
+[Hints](./solutions/hints.md)

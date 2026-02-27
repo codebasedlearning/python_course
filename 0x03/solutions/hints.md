@@ -2,13 +2,13 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Class vs Instance
+### AI 'Off-By-One Imp' – Class vs Instance
 
 - Correct result: `Counter.count` stays `0`, `c1.count` becomes `1`, `c2.count` stays `0`.
 - Bug in Answer B: it assumes updating `c1.count` mutates the class attribute for all instances.
 - Quick test: print `Counter.count`, `c1.count`, and `c2.count` after the increment.
 
-### Task 'AI Snapshot' – Property Validation
+### AI 'Off-By-One Imp' – Property Validation
 
 - Correct idea: enforce the constraint in a property setter and raise `ValueError` below `-273.15`.
 - Bug in Answer B: no validation; `Temperature(-300)` is allowed.

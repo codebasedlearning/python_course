@@ -2,17 +2,19 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Late Binding
+### AI 'Off-By-One Imp' – Debug With AI: Late Binding
 
-- Correct result: `[2, 2, 2]` because each lambda captures the same `i`.
-- Bug in Answer B: it assumes early binding per iteration.
-- Quick fix: use `lambda i=i: i` to bind the current value.
+- The AI's diagnosis (off-by-one in `range`) is completely wrong.
+- Real problem: late binding — all lambdas capture the SAME `i` variable, which is `4` after the loop.
+- Fix 1: `lambda i=i: print(...)` — default argument binds eagerly.
+- Fix 2: `functools.partial(print, f"Button {i}")` — also binds eagerly.
 
-### Task 'AI Snapshot' – `nonlocal`
+### AI 'Off-By-One Imp' – Debug With AI: Scope Error
 
-- Correct fix: add `nonlocal n` inside `inc`.
-- Bug in Answer B: it tries to assign to `n` without declaring scope.
-- Quick test: calling `inc()` should increment without an `UnboundLocalError`.
+- The AI's fix (`global count`) "works" but breaks independent counters: both share one global.
+- Correct fix: `nonlocal count` inside `increment`.
+- `get()` works without `nonlocal` because it only READS `count`; `increment` tries to WRITE it.
+- LEGB: `count` lives in the Enclosing scope; `global` moves it to Global scope.
 
 ### Task 'Comprehension Check'
 
@@ -26,4 +28,3 @@
   A: It binds assignments to a variable in the nearest enclosing scope.
 - Q: What does LEGB stand for? <br>
   A: Local, Enclosing, Global, Built-in.
-

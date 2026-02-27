@@ -2,15 +2,18 @@
 
 # Unit `0x06` – Scopes and language features
 
+
 ## Overview
 
 This unit explores scopes and related language features, including lambdas, file IO, context
 managers, and pattern matching.
 
+
 ### Focus
 
 Understand how name resolution and resource management work, and apply these tools in small
 utilities.
+
 
 ## Topics
 
@@ -23,7 +26,19 @@ utilities.
 
 ## Tasks
 
----
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Ancestor Clove' 
 
@@ -37,7 +52,6 @@ def fib(n):
     return fib(n-1)+fib(n-2) if n >= 3 else 1 if n >= 1 else 0
 ```
 
----
 
 ### 👉 Task 'Barren Grass' 
 
@@ -74,7 +88,6 @@ Output:
  2| end
 ```
 
----
 
 ### 👉 Task 'Moon Ragweed' 
 
@@ -96,7 +109,6 @@ def close_a_context_manager():
     print(f" 4| after using Resource")
 ```
 
----
 
 ### 👉 Task 'Drowsy Pudina'
 
@@ -106,6 +118,7 @@ def close_a_context_manager():
     with readable_file(filename) as reader:
         text = reader.readlines()
 ```
+
 
 ### 👉 Task 'Silver Fern' (Closures and Lambdas)
 
@@ -136,11 +149,8 @@ Part 4
 - Define `add1`, `double`, and `square` as lambdas.
 
 Check
-- Compare your solution with `silver_fern_one_solution.py` in `solutions`.
-  - Is your solution correct and complete?
-  - What happens if you forget `nonlocal` in Part 3?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
 ### 👉 Task 'Eastern Rye'
 
@@ -150,7 +160,6 @@ formatter to create based on the arguments passed.
 
 Hint: The arguments can be part of the match condition.
 
----
 
 ### 👉 Project 'Moving Blizzard' — Part 6
 
@@ -179,26 +188,10 @@ Part 3
   report via the context manager.
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_6.py` in `solutions`.
-  - Does `CSVDataSource` close the file even if an exception occurs?
-  - What happens if you forget the `finally` clause?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Task 'Self-Study'
-
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – Debug With AI: Late Binding
+### 👉 AI 'Off-By-One Imp'
 
 A fellow student asked an AI for help with this code:
 
@@ -227,9 +220,10 @@ Discuss
 - This is one of Python's most famous gotchas. Would you expect an AI to get it right
   every time?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Debug With AI: Scope Error
+
+### 👉 AI 'Off-By-One Imp'
 
 A student wrote a counter using closures and got `UnboundLocalError`:
 
@@ -262,13 +256,13 @@ Discuss
 - Why does `get()` work without `nonlocal` but `increment()` doesn't? (Hint: reading
   vs. writing.)
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -279,4 +273,4 @@ General
 - What does `nonlocal` do inside a nested function?
 - What does LEGB stand for?
 
----
+[Hints](./solutions/hints.md)

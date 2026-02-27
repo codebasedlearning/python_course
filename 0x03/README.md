@@ -2,15 +2,18 @@
 
 # Unit `0x03` – First Classes – Finalize Basics
 
+
 ## Overview
 
 This unit completes the fundamentals by introducing classes, attributes, properties, methods,
 operators, and single inheritance through several modeling tasks.
 
+
 ### Focus
 
 Focus on solid OOP basics so you can design small class hierarchies and reason about object
 behavior.
+
 
 ## Topics
 
@@ -31,7 +34,19 @@ in unit 0x04.
 
 ## Tasks
 
----
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Whale Coastline' (Pets)
 
@@ -52,7 +67,6 @@ Part 2
   - pylint, mypy - any complaints?
   - an AI agent (e.g. ChatGPT) - any suggestions?
 
----
 
 ### 👉 Task 'Blue Strand' (Random Rolls)
 
@@ -74,7 +88,6 @@ Part 2
   - pylint, mypy - any complaints?
   - an AI agent (e.g. ChatGPT) - any suggestions?
 
----
 
 ### 👉 Task 'Weymis Bay' (Spellbooks)
 
@@ -98,7 +111,6 @@ Part 2
 
 Hint: Use `__contains__`, `__getitem__`, and `__iter__` for intuitive access.
 
----
 
 ### 👉 Task 'Tall Leaf' (Figures)
 
@@ -130,11 +142,8 @@ Part 3
   - pylint, mypy - any complaints?
   - an AI agent (e.g. ChatGPT) - any suggestions?
 
----
 
 ### 👉 Task 'Drift Pebble' (Vectors)
-
-Topics: `__eq__`, `__hash__`, `__lt__`, `total_ordering`, `__add__`
 
 Part 1
 - Create a class `Vec2` representing a 2D vector with read-only properties `x`, `y`, and a computed
@@ -158,12 +167,8 @@ Part 4
 - Use your vectors as dictionary keys (counting occurrences) and in a set (deduplication).
 
 Check
-- Compare your solution with `drift_pebble_one_solution.py` in `solutions`.
-  - Is your solution correct and complete?
-  - Do you have any ideas on how to improve your solution?
-  - Is there a detail where your solution is better or different? Tell us.
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
 ### 🤔 Task 'Canoe Hair' (Window)
 
@@ -180,9 +185,6 @@ different in Python than in other OO-languages.
 
 > Continued from Part 2. Promote raw dicts to proper classes: a `Reading` dataclass, a
 `SensorType` enum, and a `Sensor` class with operators.
-
-Topics: `@dataclass(frozen=True)`, `Enum`, `__repr__`, `__eq__`, `__lt__`, `__hash__`,
-`@total_ordering`
 
 Part 1
 - Create a `Reading` dataclass (frozen) with fields `value: float`, `timestamp: int`, and
@@ -203,32 +205,15 @@ Part 3
   objects.
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_3.py` in `solutions`.
-  - Does `sorted(sensors)` produce the expected order?
-  - What happens if you forget `__hash__` and try to put sensors in a set?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Task 'Self-Study'
-
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-- Run and understand all content from scripts that start with `self_`. Ask if you miss an idea.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – Class vs Instance
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "After this code, what are `Counter.count`, `c1.count`, and `c2.count`?"
+```
+"After this code, what are `Counter.count`, `c1.count`, and `c2.count`?"
 
-```python
 class Counter:
     count = 0
 
@@ -239,21 +224,28 @@ c1.count += 1
 ```
 
 AI Answer A
-`Counter.count == 0, c1.count == 1, c2.count == 0`
+```
+Counter.count == 0, c1.count == 1, c2.count == 0
+```
 
 AI Answer B
-`Counter.count == 1, c1.count == 1, c2.count == 1`
+```
+Counter.count == 1, c1.count == 1, c2.count == 1
+```
 
 Discuss
 - Which answer is correct and why?
 - Explain how instance attributes shadow class attributes.
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Property Validation
+
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Implement a `Temperature` class that rejects values below `-273.15` using a property."
+```
+"Implement a `Temperature` class that rejects values below `-273.15` using a property."
+```
 
 AI Answer A
 ```python
@@ -283,13 +275,13 @@ Discuss
 - Which answer enforces the constraint?
 - What happens if `Temperature(-300)` is created in Answer B?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -307,4 +299,4 @@ Language
 - What is the difference between a class attribute and an instance attribute?
 - What is a property and why would you use it?
 
----
+[Hints](./solutions/hints.md)

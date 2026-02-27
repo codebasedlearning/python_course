@@ -2,14 +2,17 @@
 
 # Unit `0x04` – Types, Inheritance, and Composition
 
+
 ## Overview
 
 This unit dives into typing, inheritance, composition, protocols, and mixins, connecting Python's
 dynamic runtime to its optional static type system.
 
+
 ### Focus
 
 Learn how to structure reusable designs and express intent with types and abstractions.
+
 
 ## Topics
 
@@ -43,6 +46,7 @@ and structural typing via type hints, abstract base classes, and protocols.
 These annotations don’t change program behavior but let type checkers catch bugs early and guide
 tooling—they describe what should work, not what will work.
 
+
 ### Overview
 
 - Nominal Typing: Types are identified by name (class declarations). Mechanism: class
@@ -60,6 +64,7 @@ tooling—they describe what should work, not what will work.
   `Protocol` (optionally `@runtime_checkable`). Checked: static + runtime. Use case:
   use with mypy and optionally `isinstance`.
 
+
 ### Summary in One-Liner Definitions
 - Nominal Typing: "Are you explicitly declared to be this thing?"
 - Subtyping: "Are you a child of this thing?"
@@ -75,6 +80,7 @@ methods and attributes from its parent, optionally overriding or extending them.
 > Python supports multiple inheritance, meaning a class can inherit from more than one parent.
 > Python resolves conflicts via the method resolution order (MRO), which uses the C3 linearization
 algorithm.
+
 
 ### Relationship between Inheritance and Typing
 
@@ -101,7 +107,19 @@ The 'self*'-snippets are associated code to try out.
 
 ## Tasks
 
----
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Shrimp Edge' (Protocol)
 
@@ -143,7 +161,6 @@ Key Points from the Docs
 | Protocol | yes | no | Best for static checking |
 | Protocol + @runtime_checkable | yes | yes | Safest for real-world use |
 
----
 
 ### 👉 Task 'Cornwin Bay' (Mixin)
 
@@ -159,7 +176,6 @@ implement `__str__`.
 using multiple inheritance to add printing behavior.
 - Test your mixin with appropriate instances of the subclasses.
 
----
 
 ### 👉⭐ Task 'Butterfly Hops' (inheritance, composition, and class design)
 
@@ -179,6 +195,7 @@ or not.
 
 A quick look at the tests illustrates the structure. Note that these three
 tests look the same for both parts!
+
 
 #### Tests
 
@@ -230,10 +247,12 @@ def test_amphibian():
 #### Preparation
 - Create a separate solution file for Part 1 and Part 2.
 
+
 #### Constraints
 - The tests can, of course, be commented in and out, but they will not be
 changed in any other way.
 - Of course, you are free to use properties as well.
+
 
 #### Parts
 
@@ -264,14 +283,11 @@ tests, taking into account the MRO (hint: `kwargs`).
 > - 'Boat', 'Cabin', 'object'
 > - 'Amphibian', 'Car', 'Boat', 'Cabin', 'object'
 
----
 
 ### 👉 Project 'Moving Blizzard' — Part 4
 
 > Continued from Part 3. Decouple data acquisition from analysis using protocols and
 composition. The `Station` no longer cares *where* data comes from.
-
-Topics: `Protocol`, composition, structural typing, Open/Closed Principle
 
 Part 1
 - Define a `DataSource` protocol with a method `read_all(sensor_id: str) -> list[Reading]`.
@@ -291,34 +307,20 @@ Part 3
 - Explain how this demonstrates the Open/Closed Principle.
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_4.py` in `solutions`.
-  - Does `ListSource` satisfy `DataSource` without inheriting from it?
-  - Could you add a `CSVSource` without touching `Station`?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Task 'Self-Study'
+### 👉 AI 'Off-By-One Imp'
 
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – Prompt Refinement: Protocol
-
-You asked an AI: *"How do I use Protocol in Python?"*
+You asked an AI:
+```
+"How do I use Protocol in Python?"
+```
 
 The AI answered:
+```
+You can define a Protocol class and have other classes inherit from it to satisfy the interface.
 
-> You can define a Protocol class and have other classes inherit from it to satisfy the interface.
-
-```python
 from typing import Protocol
 
 class Drawable(Protocol):
@@ -345,14 +347,15 @@ Discuss
 - Why might an AI default to showing inheritance-based examples?
 - When is explicit inheritance from a Protocol actually useful? (Hint: `@runtime_checkable`)
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – AI Said It's Fine: `isinstance` and Protocol
 
-An AI generated the following code and said *"This is a complete, working example of runtime
-protocol checking"*:
+### 👉 AI 'Off-By-One Imp'
 
-```python
+An AI generated the following code and said:
+```
+"This is a complete, working example of runtime protocol checking"
+
 from typing import Protocol
 
 class Quackable(Protocol):
@@ -383,13 +386,13 @@ Discuss
   crashes at runtime.)
 - Should you rely on `isinstance` checks with Protocols in production code?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -402,4 +405,4 @@ General
 - What does `@runtime_checkable` enable for a `Protocol`?
 - When would you prefer composition over inheritance?
 
----
+[Hints](./solutions/hints.md)

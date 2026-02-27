@@ -2,14 +2,17 @@
 
 # Unit `0x_tra_unit` – Outlook and Preparation
 
+
 ## Overview
 
 This unit previews advanced topics such as ASTs, the Python disassembler, and metaclasses while also
 covering exam preparation details.
 
+
 ### Focus
 
 Get a high-level orientation to advanced introspection tools and organize your exam strategy.
+
 
 ## Topics
 
@@ -21,7 +24,9 @@ Get a high-level orientation to advanced introspection tools and organize your e
 
 ## Exam – Golden Words
 
+
 ### Randbedingungen
+
 
 #### System
 Für die Prüfung stehen (voraussichtlich) bereit:
@@ -30,9 +35,11 @@ Für die Prüfung stehen (voraussichtlich) bereit:
 - Python Extensions
 - Terminal
 
+
 #### 'Kofferklausur'
 - Material: Bücher, Python-Code, Cheat-Sheets, keine Binaries
 - Offline, aber Abgabe per Mail (Online-Mail-Zugang notwendig)
+
 
 #### Ergebnisse
 - Veröffentlichung im Ilias (Python-Seite oder Ergebnis-Seite)
@@ -57,13 +64,9 @@ Beispiel
   - 9C73 A1 .a 3/7 .b 1/3 ... A2 ... => 34/60 Note 3.7
   - F48A A1 .a 7/7 .b 2/3 ... A2 ... => 58/60 Note 1.0
 
-### Topics?
-
-- ???
-
----
 
 ## Tasks
+
 
 ### 👉 Task 'A1 – 🧑‍🍳 Cooking'
 
@@ -94,6 +97,7 @@ Die Ausgabe soll dann das Dictionary der Instanz zeigen, bspw. so
 a) part={'_name': 'Test'}
 ```
 
+
 #### b) (3P)
 
 1. Erweitern Sie die Klasse `CookingPart` zu einer abstrakten Klasse.
@@ -102,6 +106,7 @@ a) part={'_name': 'Test'}
 
 Anmerkung: Sie müssen ggf. Code auskommentieren, wo Sie Instanzen erzeugen,
 denn die Klasse ist nun abstrakt.
+
 
 #### c) (4P)
 
@@ -116,6 +121,7 @@ c) flour={'_name': 'Flour', '_price_per_unit': 0.2, '_calories_per_unit': 360}
 ```
 2. Für die beiden Nur-Lese-Properties nutzen Sie als Rückgabewert die
 entsprechenden Attribute.
+
 
 #### d) (5P)
 
@@ -147,6 +153,7 @@ Berücksichtigung der Mengenangaben. Berechnen Sie beides und nutzen Sie
 hierzu `sum` mit einer 'generator expression'.
 Im Beispiel ergeben sich `cost=4.9` und `calories=2880`.
 
+
 #### e) (3P)
 
 Für den Umgang mit Rezepten ergänzen Sie die Klasse so, dass
@@ -161,6 +168,8 @@ Beispiel
     for ingr, quantity in flour_with_butter:
         print(f" {ingr.name}:{quantity}", end='')
 ```
+
+
 #### f) (3P)
 
 Die folgende Zeile `line1` enthält Informationen zum Aufbau der Zeilen einer
@@ -191,18 +200,18 @@ Der Code für 3. und 4. sieht (unvollständig) so aus
 ```
 Es sind hier keine Dateioperationen gefordert.
 
----
 
 ### 👉 Task 'Exam Preparation' 
 
 Think about how you can prepare.
 
----
 
-### 👉 Task 'AI Snapshot' – Metaclass vs Decorator
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "When should you use a metaclass instead of a class decorator?"
+```
+When should you use a metaclass instead of a class decorator?
+```
 
 AI Answer A
 Use a metaclass when you need to control class creation or enforce rules across subclasses.
@@ -214,12 +223,15 @@ Discuss
 - Which answer is correct and why?
 - Why is a class decorator often sufficient?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – `ast` vs `dis`
+
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Which tool inspects Python bytecode: `ast` or `dis`?"
+```
+Which tool inspects Python bytecode: `ast` or `dis`?
+```
 
 AI Answer A
 `dis` inspects bytecode; `ast` parses source into a syntax tree.
@@ -231,7 +243,8 @@ Discuss
 - Which answer is correct?
 - When would you prefer `ast` over `dis`?
 
----
+[Hints](./solutions/hints.md)
+
 
 ## Comprehension Check
 
@@ -239,4 +252,4 @@ Discuss
 - Why might you inspect bytecode during debugging?
 - What is a metaclass in Python?
 
----
+[Hints](./solutions/hints.md)

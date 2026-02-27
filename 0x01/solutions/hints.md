@@ -2,7 +2,7 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Main Guard
+### AI 'Off-By-One Imp'
 
 - Correct idea: the guard runs only when the file is executed as a script, not when imported.
 - Bug in Answer B: it claims the guard prevents all code from running; top-level code still runs on
@@ -10,13 +10,13 @@
 - Quick test: importing the module should not run the guarded code, but top-level statements still
   execute.
 
-### Task 'AI Snapshot' – Input Loop
+### AI 'Off-By-One Imp'
 
 - Correct idea: keep looping until an empty line and catch `ValueError`.
 - Bug in Answer B: missing `try`/`except` for invalid input.
 - Quick test: input `x` should not crash the program.
 
-### Task 'Comprehension Check'
+### 'Comprehension Check'
 
 - Q: What ways can you run a Python program (script, module, REPL, IDE, notebook)? <br>
   A: Script with `python file.py`, module with `python -m pkg`, REPL/interactive shell, IDE run, or

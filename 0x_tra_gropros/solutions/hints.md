@@ -2,13 +2,13 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – SRP Design
+### AI 'Off-By-One Imp' – SRP Design
 
 - Correct idea: split responsibilities (`PricingPolicy`, `Receipt`, `Station`).
 - Bug in Answer B: one large class violates SRP and is hard to change.
 - Quick test: list changes that would force the giant class to be edited.
 
-### Task 'AI Snapshot' – Dependency Inversion
+### AI 'Off-By-One Imp' – Dependency Inversion
 
 - Correct idea: depend on an abstraction (protocol/ABC), not a concrete DB.
 - Bug in Answer B: direct dependencies make swapping implementations harder.

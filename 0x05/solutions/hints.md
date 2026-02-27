@@ -2,17 +2,19 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Lazy vs Eager
+### AI 'Off-By-One Imp' – Memory-Efficient Pipeline
 
-- Correct idea: `(x*x for x in range(10))` is lazy; `[x*x for x in range(10)]` is eager.
-- Bug in Answer B: it ignores laziness and memory differences.
-- Quick test: a generator does not compute values until iterated.
+- The code creates 3 full-size intermediate lists: `filtered`, `transformed`, and `sorted(...)`.
+- For 10M elements, that's ~240MB of memory for the intermediates alone.
+- Fix: use generator expressions for steps 1–2. Step 3 (`sorted`) cannot be lazy because sorting needs all values.
+- AI tools frequently produce list comprehensions because they're more "readable" in training data.
 
-### Task 'AI Snapshot' – Iterator Output
+### AI 'Off-By-One Imp' – Iterator Reuse
 
-- Correct result: `list(CountDown(3))` is `[2, 1, 0]`.
-- Bug in Answer B: it assumes the first yield is the initial value.
-- Quick test: print the list to see the off-by-one effect.
+- Second `list(sq)` returns `[]` because `self.i` is already at `n` from the first pass.
+- `__iter__` returns `self` — so there's no way to reset the counter.
+- Fix: `__iter__` should return a NEW iterator (e.g., a helper class or a generator).
+- The difference: an *iterable* creates fresh iterators; an *iterator* IS the iteration state.
 
 ### Task 'Comprehension Check'
 
@@ -26,4 +28,3 @@
   A: It raises `StopIteration` and cannot be iterated further unless recreated.
 - Q: What is a generator expression? <br>
   A: A lazy expression like `(x for x in items)` that returns a generator.
-

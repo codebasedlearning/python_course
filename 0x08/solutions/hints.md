@@ -2,17 +2,19 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Thread Safety
+### AI 'Off-By-One Imp' – Debug With AI: Race Condition
 
-- Correct idea: `counter += 1` is not atomic; use `threading.Lock`.
-- Bug in Answer B: the GIL does not make increments safe.
-- Quick test: run multiple threads and compare expected vs actual count.
+- The AI's fix (plain `int` + `global`) does NOT fix the race condition — `+=` is still non-atomic.
+- `counter["value"] += 1` decomposes to load → add → store; threads can interleave between steps.
+- Correct fix: use `threading.Lock` to serialize the increment.
+- The GIL protects Python internals, not YOUR data structures.
 
-### Task 'AI Snapshot' – Threads vs CPU
+### AI 'Off-By-One Imp' – Debug With AI: Just Add More Threads
 
-- Correct idea: threads help with IO-bound workloads.
-- Bug in Answer B: CPU-bound work is limited by the GIL; use processes instead.
-- Quick test: compare CPU-heavy workloads with threads vs processes.
+- Adding more threads (16, 32) does NOT help CPU-bound tasks because of the GIL.
+- `fib(30)` is CPU-bound; threads take turns on the GIL, giving no speedup.
+- Fix: use `multiprocessing.Pool` for CPU-bound work — each process has its own GIL.
+- Replace `fib(30)` with `time.sleep(0.5)` (IO-bound) and threads DO help because sleep releases the GIL.
 
 ### Task 'Comprehension Check'
 
@@ -27,4 +29,3 @@
 - Q: What is the GIL and how does it affect CPU-bound threads in Python? <br>
   A: The Global Interpreter Lock allows only one thread to run bytecode at a time, limiting
   CPU-bound threads.
-

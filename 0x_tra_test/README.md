@@ -2,14 +2,17 @@
 
 # Unit `0x_tra_test` – Test Exam
 
+
 ## Overview
 
 This unit simulates the exam environment, including rules, constraints, and a full set of tasks to
 complete in a single script.
 
+
 ### Focus
 
 Practice correctness and clarity under time pressure while following exam conventions.
+
 
 ## Topics
 
@@ -17,7 +20,9 @@ Practice correctness and clarity under time pressure while following exam conven
 - Multi-part programming tasks
 - Verification under time pressure
 
+
 ## Prüfung Python – Dauer 120 Min.
+
 
 ### Allgemeine Randbedingungen und Anforderungen
 
@@ -42,6 +47,7 @@ Sie es um (`*.txt`) oder zippen Sie die Datei.
 
 Bitte zuerst den gesamten Text lesen! Viel Erfolg!
 
+
 ## Start
 
 - Durchführung: Legen Sie in Ihrer Entwicklungsumgebung ein Projekt an und 
@@ -53,7 +59,9 @@ bearbeiten Sie die Aufgaben in *genau einer* Quellcodedatei mit dem Namen
 
 - [2P] Achten Sie hier auf Best Practices zum Aufbau des Skripts.
 
+
 ## Aufgabe A1 - Passwort-Validator 
+
 
 ### Beschreibung
 
@@ -89,6 +97,7 @@ hier `a` nur an Position 1, nicht jedoch an Position 3 zu finden ist. Im letzten
 Passwort kommt `c` sowohl an Position 2 als auch an Position 11 vor, d.h. nicht 
 genau einmal und deshalb ist es ungültig. Weitere Vorkommen des Buchstabens 
 sind für die Richtlinie unerheblich.
+
 
 ### Aufgaben
 
@@ -157,13 +166,12 @@ zu ermitteln und zurückzugeben.
 h) [3P] Testen Sie `PasswordValidator` mit beiden Richtlinien und den Beispieldaten 
 von oben in einer `solve` Funktion, die Sie aus dem main-Guard aufrufen.
 
---
-
 
 ## Aufgabe A2 - Generatoren
 
 Platzieren Sie Ihren Code für Aufgabe A2 nach `solve` aus Aufgabe A1 und dem 
 main-Guard am Ende.
+
 
 ### Beschreibung
 
@@ -174,6 +182,7 @@ Sie diesen in einzelnen Teilaufgaben.
 Ein Sensor liefert immer Tupel, bestehend aus einem String, der den Sensor 
 bezeichnet, und einem ganzzahligen Zufallswert, beispielsweise `('a', 23)` 
 für den Wert `23` des Sensors `'a'`.
+
 
 ### Aufgabenstellung
 
@@ -265,15 +274,13 @@ Testen Sie Ihre Implementierung in `sensors` aussagekräftig mit zwei Threads.
 Tipp: Falls Ihr `sensor_a` keine Generatorfunktion ist, sondern direkt eine Liste generiert, 
 können Sie diese Aufgabe dennoch vollkommen analog lösen.
 
---
----
 
-## AI Reflection (No AI in Exam)
-
-### 👉 Task 'AI Snapshot' – Exam Policy
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Is using AI assistance allowed during the exam?"
+```
+Is using AI assistance allowed during the exam?
+```
 
 AI Answer A
 No. Any active AI assistance is forbidden.
@@ -285,12 +292,15 @@ Discuss
 - Which answer matches the exam rules?
 - What is the consequence of violating the policy?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Boundary Tests
+
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Which test strategy best verifies the password policy tasks?"
+```
+Which test strategy best verifies the password policy tasks?
+```
 
 AI Answer A
 Test min/max boundaries and off-by-one positions, plus at least one invalid case.
@@ -302,10 +312,13 @@ Discuss
 - Which answer is more robust under time pressure?
 - What minimal set of tests would you run?
 
+[Hints](./solutions/hints.md)
+
+
 ## Comprehension Check
 
 - What file name format is required for the exam submission?
 - Why should you add small boundary tests before submitting?
 - Why must the solution be in a single `.py` file?
 
----
+[Hints](./solutions/hints.md)

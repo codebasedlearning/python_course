@@ -2,14 +2,17 @@
 
 # Unit `0x02` – First Steps
 
+
 ## Overview
 
 This unit introduces Python's core data types, collections, control flow, and function calling, with
 practical exercises on graphs and student grade analysis.
 
+
 ### Focus
 
 Build fluency with primitives and collections and apply them to small, well-defined problem solvers.
+
 
 ## Topics
 
@@ -19,9 +22,9 @@ Build fluency with primitives and collections and apply them to small, well-defi
 - Functions and parameters
 - Basic exception handling
 
----
 
 ## General Comments
+
 
 ### Primitives
 
@@ -35,6 +38,7 @@ Build fluency with primitives and collections and apply them to small, well-defi
 - These scalar types are immutable. This means that once a variable of a primitive type is assigned
   a value, the value itself cannot be changed. Instead, operations result in new objects being
   created.
+
 
 ### Collections
 
@@ -50,14 +54,14 @@ Build fluency with primitives and collections and apply them to small, well-defi
   - add and remove an element (if mutable)
 
 
----
-
 ## Tasks
+
 
 ### 👉 Task 'Self-Study'
 
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-- Run and understand all content from scripts that start with `self_`. Ask if you miss an idea.
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
 
 
 ### 👉 Task 'Recap'
@@ -103,12 +107,8 @@ Task
   - Hint: 'Dijkstra', `heapq`.
 
 Check
-- Compare your solution with `coral_cove_one_solution.py` in `solutions`. 
-  - Is your solution correct and complete? 
-  - Do you have any ideas on how to improve your solution?
-  - Is there a detail where your solution is better or different? Tell us.
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
 ### 👉 Task 'Buxrose Edge' (Students)
 
@@ -182,135 +182,10 @@ to this particular approach in future lectures.
     only the students.
 
 Check
-- Compare your solution with `buxrose_edge_one_solution.py` in `solutions`. 
-  - Is your solution correct and complete? 
-  - Do you have any ideas on how to improve your solution?
-  - Is there a detail where your solution is better or different? Tell us.
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Project 'Moving Blizzard' — Part 2
-
-> Continued from Part 1. The station now has multiple sensors — refactor the single list into
-a dictionary of sensor data and replace verbose loops with comprehensions.
-
-Topics: dictionaries, comprehensions, `sorted` with `key`, `sum`, `min`, `max`
-
-Part 1
-- Replace the single `READINGS` list with a dictionary `SENSORS` mapping sensor names to
-  value lists (e.g. `"temp_north"`, `"temp_south"`, `"humidity"`, `"water_lvl"`).
-- Write `per_sensor_stats(sensors)` that returns a dict of dicts containing count, avg, min,
-  max, and spike indices — using **dictionary and list comprehensions** throughout.
-- Rewrite `average` as a one-liner with `sum` and `len`.
-
-Part 2
-- Write `sorted_by_average(sensors)` that returns sensor names sorted by average reading,
-  descending. Use `sorted` with a `key` argument.
-- Write `filter_by_range(data, low, high)` that returns only values within `[low, high]` via
-  a list comprehension.
-- Print how many outliers were removed.
-
-Check
-- Compare your solution with `moving_blizzard_next_solution_part_2.py` in `solutions`.
-  - Did you manage to eliminate all explicit `for` loops in favour of comprehensions?
-  - Is your `sorted_by_average` a one-liner?
-
----
-
-### 👉 Task 'AI Snapshot' – Averages
-
-Reference
-- Use the `GRADES` dataset from Task 'Buxrose Edge' above.
-
-Prompt
-- "Compute the average grade per student for `GRADES` and return a dictionary."
-
-AI Answer A
-```python
-average_grades = {}
-for name, grades in GRADES.items():
-    average = sum(grades.values()) / len(GRADES)
-    average_grades[name] = average
-```
-
-AI Answer B
-```python
-average_grades = {
-    name: sum(grades.values()) / len(grades)
-    for name, grades in GRADES.items()
-}
-```
-
-Discuss
-- Which answer is correct and why?
-- Find the bug in the other answer and fix it.
-- What small test would catch the bug immediately?
-
----
-
-### 👉 Task 'AI Snapshot' – Sorting
-
-Prompt
-- "Sort students by average grade descending and return a list of names."
-
-AI Answer A
-```python
-student_names_sorted = sorted(average_grades)
-```
-
-AI Answer B
-```python
-student_names_sorted = sorted(
-    average_grades,
-    key=average_grades.get,
-    reverse=True,
-)
-```
-
-Discuss
-- Which answer matches the task requirements?
-- What does the incorrect version actually sort by?
-- Provide a corrected one-liner.
-
----
-
-### 👉 Task 'AI Snapshot' – Debug With AI: `breakpoint()` vs `print`
-
-A student has a bug: their average function always returns `0`. They asked an AI for help.
-
-```python
-def buggy_average(numbers):
-    total = 0
-    count = 0
-    for n in numbers:
-        total += n
-    return total / count if count != 0 else 0
-
-print(buggy_average([10, 20, 30]))   # prints 0, expected 20.0
-```
-
-The AI suggested: *"The issue is in the return statement. `total / count if count != 0
-else 0` evaluates to `0` because of operator precedence. Add parentheses:
-`(total / count) if count != 0 else 0`."*
-
-Task
-- Is the AI's diagnosis correct? Test it — does adding parentheses fix the bug?
-- The real bug is elsewhere. Open `study_debugging.py` in `snippets`, uncomment the
-  `breakpoint()` line in `buggy_average`, and run the script.
-- At the `(Pdb)` prompt, type `p total` and `p count`. What do you see?
-- Fix the actual bug. Then try the pdb commands `n` (next line) and `c` (continue).
-- Which was faster: reading the AI's wrong diagnosis, or spending 10 seconds in the
-  debugger?
-
-Discuss
-- The AI was distracted by the ternary expression and missed the obvious. Why?
-- When is `breakpoint()` more useful than `print()`? When is `print()` fine?
-
----
-
-### 👉 Task 'Sandy Shoal' (First Tests)
-
-Topics: pytest, assert, boundary cases, error cases
+### 👉 Task 'Sandy Shoal' (tests)
 
 > Testing is not an afterthought — it is part of writing code. A function without a test is a
 function you *hope* works.
@@ -343,13 +218,131 @@ Check
   - Did you cover a case that the snippet missed?
   - Is there a test you could write in one line using a list of `(input, expected)` pairs?
 
----
 
-### 👉 Task 'Couch Potato' - Recurring homework
+### 👉 Project 'Moving Blizzard' — Part 2
+
+> Continued from Part 1. The station now has multiple sensors — refactor the single list into
+a dictionary of sensor data and replace verbose loops with comprehensions.
+
+Part 1
+- Replace the single `READINGS` list with a dictionary `SENSORS` mapping sensor names to
+  value lists (e.g. `"temp_north"`, `"temp_south"`, `"humidity"`, `"water_lvl"`).
+- Write `per_sensor_stats(sensors)` that returns a dict of dicts containing count, avg, min,
+  max, and spike indices — using **dictionary and list comprehensions** throughout.
+- Rewrite `average` as a one-liner with `sum` and `len`.
+
+Part 2
+- Write `sorted_by_average(sensors)` that returns sensor names sorted by average reading,
+  descending. Use `sorted` with a `key` argument.
+- Write `filter_by_range(data, low, high)` that returns only values within `[low, high]` via
+  a list comprehension.
+- Print how many outliers were removed.
+
+Check
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
+
+
+### 👉 AI 'Off-By-One Imp'
+
+Reference: Use the `GRADES` dataset from Task 'Buxrose Edge' above.
+
+Prompt
+```
+Compute the average grade per student for `GRADES` and return a dictionary.
+```
+
+AI Answer A
+```python
+average_grades = {}
+for name, grades in GRADES.items():
+    average = sum(grades.values()) / len(GRADES)
+    average_grades[name] = average
+```
+
+AI Answer B
+```python
+average_grades = {
+    name: sum(grades.values()) / len(grades)
+    for name, grades in GRADES.items()
+}
+```
+
+Discuss
+- Which answer is correct and why?
+- Find the bug in the other answer and fix it.
+- What small test would catch the bug immediately?
+
+[Hints](./solutions/hints.md)
+
+
+### 👉 AI 'Off-By-One Imp'
+
+Prompt
+```
+Sort students by average grade descending and return a list of names.
+```
+
+AI Answer A
+```python
+student_names_sorted = sorted(average_grades)
+```
+
+AI Answer B
+```python
+student_names_sorted = sorted(
+    average_grades,
+    key=average_grades.get,
+    reverse=True,
+)
+```
+
+Discuss
+- Which answer matches the task requirements?
+- What does the incorrect version actually sort by?
+- Provide a corrected one-liner.
+
+[Hints](./solutions/hints.md)
+
+
+### 👉 AI 'Off-By-One Imp'
+
+A student has a bug: their average function always returns `0`. They asked an AI for help.
+
+```python
+def buggy_average(numbers):
+    total = 0
+    count = 0
+    for n in numbers:
+        total += n
+    return total / count if count != 0 else 0
+
+print(buggy_average([10, 20, 30]))   # prints 0, expected 20.0
+```
+
+The AI suggested: *"The issue is in the return statement. `total / count if count != 0
+else 0` evaluates to `0` because of operator precedence. Add parentheses:
+`(total / count) if count != 0 else 0`."*
+
+Task
+- Is the AI's diagnosis correct? Test it — does adding parentheses fix the bug?
+- The real bug is elsewhere. Open `study_debugging.py` in `snippets`, uncomment the
+  `breakpoint()` line in `buggy_average`, and run the script.
+- At the `(Pdb)` prompt, type `p total` and `p count`. What do you see?
+- Fix the actual bug. Then try the pdb commands `n` (next line) and `c` (continue).
+- Which was faster: reading the AI's wrong diagnosis, or spending 10 seconds in the
+  debugger?
+
+Discuss
+- The AI was distracted by the ternary expression and missed the obvious. Why?
+- When is `breakpoint()` more useful than `print()`? When is `print()` fine?
+
+[Hints](./solutions/hints.md)
+
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -368,3 +361,5 @@ Talk with your neighbor.
 - When would you use `any()` versus `all()`?
 - What is `pytest` and how does it discover test functions?
 - What does `breakpoint()` do and when would you use it instead of `print()`?
+
+[Hints](./solutions/hints.md)

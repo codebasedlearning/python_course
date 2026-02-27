@@ -2,15 +2,18 @@
 
 # Unit `0x_tra_gropros` – GroPro Setup
 
+
 ## Overview
 
 This unit prepares you for GroPro-style tasks by emphasizing SOLID design principles and structured
 problem solving.
 
+
 ### Focus
 
 Focus on designing maintainable solutions before coding, using clear responsibilities and
 abstractions.
+
 
 ## Topics
 
@@ -50,6 +53,7 @@ and teamwork.
 
 
 ### Related to Python
+
 
 #### S: Single Responsibility Principle (SRP)
 
@@ -159,13 +163,11 @@ be a bad design.
 
 ## Tasks
 
----
 
 ### 👉 Task 'IPO'
 
 - Review all snippets from the lecture. Ask if there are any outstanding questions.
 
----
 
 ### 👉 Task 'GroPro'
 
@@ -176,7 +178,6 @@ be a bad design.
 
 Try to solve the problem(s), but also try to take the SOLID principles into account.
 
----
 
 ### 👉 Task 'Tangled Reef' (Refactoring)
 
@@ -228,12 +229,13 @@ Part 3 — Reflect
   *open for extension, closed for modification*.
 - Could you now add a "medical" tax category without touching existing classes?
 
----
 
-### 👉 Task 'AI Snapshot' – SRP Design
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Should a `ServiceStation` class handle pricing, IO, and reporting in one place?"
+```
+Should a `ServiceStation` class handle pricing, IO, and reporting in one place?
+```
 
 AI Answer A
 No. Split responsibilities into focused classes such as `PricingPolicy`, `Receipt`, and `Station`.
@@ -245,12 +247,15 @@ Discuss
 - Which answer aligns with the Single Responsibility Principle?
 - What kinds of changes would break the one-class design?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Dependency Inversion
+
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Should a service depend directly on `MySQLDatabase`?"
+```
+Should a service depend directly on `MySQLDatabase`?
+```
 
 AI Answer A
 No. Depend on an abstraction (protocol/ABC) so the database can be swapped.
@@ -262,13 +267,13 @@ Discuss
 - Which answer matches the Dependency Inversion Principle?
 - What benefit do you get from depending on an abstraction?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -278,4 +283,4 @@ General
 - How does the IPO approach help structure a solution?
 - Give one example of a Single Responsibility Principle (SRP) violation.
 
----
+[Hints](./solutions/hints.md)

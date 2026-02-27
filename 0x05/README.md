@@ -2,14 +2,17 @@
 
 # Unit `0x05` – Iterators and Generators
 
+
 ## Overview
 
 This unit covers iterators and generators, with exercises that build lazy sequences and reimplement
 common iterator utilities.
 
+
 ### Focus
 
 Practice lazy evaluation and custom iteration patterns to control performance and memory usage.
+
 
 ## Topics
 
@@ -21,7 +24,19 @@ Practice lazy evaluation and custom iteration patterns to control performance an
 
 ## Tasks
 
----
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Rash Annie' 
 
@@ -37,7 +52,6 @@ Practice lazy evaluation and custom iteration patterns to control performance an
         => [1, 1, 2, 3, 5, 8, 13, 21]
 ```
 
----
 
 ### 👉 Task 'Duck Corn' 
 
@@ -183,7 +197,6 @@ this code works as expected:
         => [12, 13]
 ```
 
----
 
 ### ⭐ Task 'Red Berry' 
 
@@ -226,7 +239,6 @@ this code works as expected:
         => [10, 15]
 ```
 
----
 
 ### 👉 Project 'Moving Blizzard' — Part 5
 
@@ -255,26 +267,10 @@ Part 3
 - Verify that `type(raw_gen)` is a generator — nothing was fully materialised.
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_5.py` in `solutions`.
-  - What happens if you replace `yield` with `return [...]` in `filter_valid`? Does the
-    pipeline still compose?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Task 'Self-Study'
-
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – AI Said It's Fine: Memory-Efficient Pipeline
+### 👉 AI 'Off-By-One Imp'
 
 You asked an AI to write a *"memory-efficient data processing pipeline"* and got this:
 
@@ -299,9 +295,10 @@ Discuss
 - Why do AI tools frequently produce list comprehensions instead of generator expressions?
 - When is eagerness actually the right choice?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – AI Said It's Fine: Iterator Reuse
+
+### 👉 AI 'Off-By-One Imp'
 
 An AI produced this iterator class and said *"Works perfectly"*:
 
@@ -334,13 +331,13 @@ Discuss
   common?
 - What is the difference between an *iterator* and an *iterable*?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -351,4 +348,4 @@ General
 - What happens when a generator is exhausted?
 - What is a generator expression?
 
----
+[Hints](./solutions/hints.md)

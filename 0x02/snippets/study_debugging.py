@@ -30,99 +30,108 @@ by clicking next to the line number. The built-in `breakpoint()` function works
 everywhere — terminal, scripts, tests, remote servers.
 """
 
+from utils import print_function_header
 
-# ---------------------------------------------------------------------------
-# Example 1: Inspect a simple calculation
-# ---------------------------------------------------------------------------
-
-def buggy_average(numbers):
-    """Computes the average — but has a subtle bug. Can you spot it?"""
-    total = 0
-    count = 0
-    for n in numbers:
-        total += n
-    # Oops: count is never incremented inside the loop!
-
-    # Uncomment the next line, run the script, and inspect `total` and `count`:
-    # breakpoint()
-
-    return total / count if count != 0 else 0
+"""
+Topic: Inspect a simple calculation
+"""
 
 
-# ---------------------------------------------------------------------------
-# Example 2: Step through a loop
-# ---------------------------------------------------------------------------
+@print_function_header
+def buggy_average():
+    """ breakpoint() to inspect a subtle bug """
 
-def find_first_duplicate(items):
-    """Returns the first item that appears more than once."""
-    seen = set()
-    for item in items:
-        # Uncomment to pause on every iteration and inspect `seen` and `item`:
+    def average(numbers):
+        total = 0
+        count = 0
+        for n in numbers:
+            total += n
+        # Oops: count is never incremented inside the loop!
+
+        # Uncomment the next line, run the script, and inspect `total` and `count`:
         # breakpoint()
-        if item in seen:
-            return item
-        seen.add(item)
-    return None
+
+        return total / count if count != 0 else 0
+
+    nums = [10, 20, 30]
+    avg = average(nums)
+    print(f" 1| average of {nums} = {avg}")
+    print(" 2| expected 20.0 — is it correct?")
+    print(" 3| uncomment breakpoint(), then type: p total, p count")
 
 
-# ---------------------------------------------------------------------------
-# Example 3: Post-mortem debugging
-# ---------------------------------------------------------------------------
+"""
+Topic: Step through a loop
+"""
 
-def demonstrate_post_mortem():
-    """Shows how to debug *after* an exception has already been raised."""
+
+@print_function_header
+def step_through_loop():
+    """ stepping through iterations with breakpoint() """
+
+    def find_first_duplicate(items):
+        seen = set()
+        for item in items:
+            # Uncomment to pause on every iteration and inspect `seen` and `item`:
+            # breakpoint()
+            if item in seen:
+                return item
+            seen.add(item)
+        return None
+
+    data = ["a", "b", "c", "b", "d"]
+    dup = find_first_duplicate(data)
+    print(f" 1| data:            {data}")
+    print(f" 2| first duplicate: {dup!r}")
+    print(f" 3| use 'n' to step, 'p seen' to inspect the set as it grows")
+
+
+"""
+Topic: Post-mortem debugging
+"""
+
+
+@print_function_header
+def post_mortem_debugging():
+    """ debugging *after* an exception with pdb.post_mortem() """
+
     data = [10, 20, 0, 30]
 
     try:
         results = [100 / x for x in data]
     except ZeroDivisionError:
-        print(" 3| Exception caught! Would enter post-mortem debugger...")
-        print("    (type 'p data', 'p x', 'w', then 'q' to quit)\n")
+        print(f" 1| exception caught! data was {data}")
+        print(f" 2| to debug: uncomment 'import pdb; pdb.post_mortem()' below")
+        print(f" 3| then type 'p data', 'p x', 'w' (where am I?), 'q' (quit)")
         # Uncomment to drop into the debugger at the point of failure:
         # import pdb; pdb.post_mortem()
-        print("    (post-mortem is commented out — uncomment to try it)")
 
 
-# ---------------------------------------------------------------------------
-# Example 4: Conditional breakpoint
-# ---------------------------------------------------------------------------
+"""
+Topic: Conditional breakpoint
+"""
 
-def process_items(items):
-    """Processes a list. We only want to break on the suspicious item."""
+
+@print_function_header
+def conditional_breakpoint():
+    """ break only on suspicious items """
+
+    items = [5, 12, -3, 8, -1, 42]
+
     for i, item in enumerate(items):
         # Only break when the item is negative — skip the boring ones:
         # if item < 0:
         #     breakpoint()
         result = item * 2
-        print(f" 4| item[{i}] = {item:4d}  ->  result = {result}")
+        label = " <-- negative!" if item < 0 else ""
+        print(f" {i+1}| item[{i}] = {item:4d}  ->  result = {result}{label}")
+
+    print()
+    print(" 7| uncomment the conditional breakpoint to pause only on negatives")
 
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Example 1: buggy_average")
-    print("=" * 60)
-    nums = [10, 20, 30]
-    avg = buggy_average(nums)
-    print(f" 1| average of {nums} = {avg}")
-    print(f"    (expected 20.0 — is it correct?)\n")
-
-    print("=" * 60)
-    print("Example 2: find_first_duplicate")
-    print("=" * 60)
-    data = ["a", "b", "c", "b", "d"]
-    dup = find_first_duplicate(data)
-    print(f" 2| first duplicate in {data} = {dup!r}\n")
-
-    print("=" * 60)
-    print("Example 3: post-mortem debugging")
-    print("=" * 60)
-    demonstrate_post_mortem()
-    print()
-
-    print("=" * 60)
-    print("Example 4: conditional breakpoint")
-    print("=" * 60)
-    process_items([5, 12, -3, 8, -1, 42])
-
-    print()
-    print("To try the debugger: uncomment the breakpoint() lines and run again!")
+    buggy_average()
+    step_through_loop()
+    post_mortem_debugging()
+    conditional_breakpoint()

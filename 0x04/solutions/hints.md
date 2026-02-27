@@ -2,17 +2,18 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Protocol Match
+### AI 'Off-By-One Imp' – Prompt Refinement: Protocol
 
-- Correct idea: `Protocol` uses structural typing; inheritance is not required.
-- Bug in Answer B: it treats `Protocol` like an ABC with nominal typing.
-- Quick test: a class with the right methods should satisfy the protocol in type checking.
+- The AI's answer is not wrong but misses the key point: `Protocol` uses structural typing.
+- A class does NOT need to inherit from a Protocol to satisfy it — that's the whole point.
+- Quick test: a class with a `draw()` method satisfies `Drawable` without inheriting from it.
 
-### Task 'AI Snapshot' – `runtime_checkable`
+### AI 'Off-By-One Imp' – AI Said It's Fine: isinstance and Protocol
 
-- Correct idea: `@runtime_checkable` enables `isinstance` checks for protocols.
-- Bug in Answer B: without the decorator, `isinstance` should not be used for protocol checks.
-- Quick test: `isinstance(Duck(), Quackable)` should be `True` only with `@runtime_checkable`.
+- Code crashes at runtime: `TypeError: Protocols with non-method members can't be used with isinstance()`.
+- Fix: add `@runtime_checkable` decorator to the `Quackable` Protocol.
+- Sneaky because it compiles fine and even passes mypy — only crashes at runtime.
+- `isinstance` with `@runtime_checkable` only checks method names, not full signatures.
 
 ### Task 'Comprehension Check'
 
@@ -32,4 +33,3 @@
   A: It allows runtime `isinstance`/`issubclass` checks against the protocol.
 - Q: When would you prefer composition over inheritance? <br>
   A: When you need flexibility without a strict is-a relationship or tight coupling.
-

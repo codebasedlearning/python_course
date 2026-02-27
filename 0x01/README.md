@@ -20,7 +20,8 @@ to manage dependencies, and have practical experience with essential Python prog
 ### Focus
 
 > To get you started quickly, we will touch on many topics and leave the details for later units.
-Think of the examples in `snippets` as templates for various Python features.
+> Think of the examples in `snippets` as templates for various Python features.
+
 
 ## Topics
 
@@ -34,81 +35,37 @@ Think of the examples in `snippets` as templates for various Python features.
 - Pythonic style and conventions
 
 
----
-
-
 ## Tasks
 
-Start with 'Cocoa Coast,' 'Harmony Bay,' 'Silent Strand,' 'Alsano Shore,' and 'Hope Edge' — in
-that exact order. After that, continue however you prefer. End with 'Comprehension 'Check.'
+Start with the following tasks from the [Info](../docs/python_info.pdf).
 
-These are the same setup tasks mentioned in the
-[Info](./docs/python_info.pdf)
+
+### ☝️ Task 'Windy Bank' – `git` setup
+- [Learn git](https://www.w3schools.com/git) <BR>
+- [Install git](https://git-scm.com)
 
 
 ### ☝️ Task 'Cocoa Coast' – Clone `python_course`
-
-- Enter a folder for your python projects (e.g. `ami_python`) and clone the repository
-  `python_course` from [GitHub](https://github.com/codebasedlearning/python_course)
-  with 
-  ```
-  git clone https://github.com/codebasedlearning/python_course.git
-  ```
-  In case of success, you will find the course materials in `python_course`.
+- [GitHub Repo](https://github.com/codebasedlearning/python_course)
 
 
 ### ☝️ Task 'Harmony Bay' – Python Setup
-
-- Install `uv` from [here](https://docs.astral.sh/uv/getting-started/installation).
-- List the currently installed Python versions
-  ```
-  uv python list --only-installed
-  ```
-- followed by the officially available ones
-  ```
-  uv python list
-  ```
-- Make sure you have at least two stable Python variants installed, e.g. 3.12.12 and 3.14.2.
-  Otherwise, install them, e.g.
-  ```
-  uv python install 3.14.2
-  ```
-- Then run a Python script from the repo in both variants, e.g.
-  ```
-  uv run --python 3.14 <path-to-repo>/0x01/preparation/print_python_setup.py
-  ```
+- [Install uv](https://docs.astral.sh/uv/getting-started/installation/) <BR>
+- [uv Commands](https://docs.astral.sh/uv/guides/) <BR>
+- [uv Projects](https://docs.astral.sh/uv/guides/projects/)
 
 
-### ☝️ Task 'Silent Strand' – A new Project
-
-- Create a new folder, e.g. `my_project`, enter it.
-- Initialize the new project with a specific Python version
-  ```
-  uv init --python 3.14
-  ```
-- Run `main` with
-  ```
-  uv run main.py
-  ```
+### ☝️ Task 'Silent Strand' – Create Project
 
 
-### ☝️ Task 'Alsano Shore' – Install CBL and sync
+### ☝️ Task 'Alsano Shore' – Manage CBL Library
 
-- Add the library `CBL` to the project. This adds a dependency in `pyproject.toml` 
-  and installs the library into the project’s `.venv` in one step.
-  ``` 
-  uv add cbl
-  ```
-- Run the script again and verify that `CBL` is found.
-- Remove the library and confirm that it is gone.
-  ```
-  uv remove cbl
-  ```
-- Modify `pyproject.toml` by hand, e.g. add `"cbl>=0.4.2"` to `dependencies`.
-- Sync the virtual environment with 
-  ```
-  uv sync
-  ```
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
 
 
 ### ☝️ Task 'Hope Edge' – Your Solution Project
@@ -126,8 +83,6 @@ These are the same setup tasks mentioned in the
 
 ### 👉 Task 'Eastern Sands'
 
-Topics: functions, loops, exceptions, input, conversions
-
 Part 1
 - Create (or copy) a `eastern_sands.py` file in your solutions project.
 - Read a text from the console,
@@ -141,15 +96,17 @@ Part 2
 - Repeat the whole input and output process until you have an empty text.
 
 Check
-- Compare your solution with `eastern_sands_one_solution.py` in `solutions`. 
+- Compare your solution with an external one and ask yourself:
   - Is your solution correct and complete? 
   - Do you have any ideas on how to improve your solution?
-  - Is there a detail where your solution is better or different? Tell us.
+  - Is there a detail where your solution is better or different? 
+- Compare it with 
+  - the provided one from `solutions` (`eastern_sands_one_solution.py`) and
+  - an AI-generated solution, e.g. from 'Claude Code' or 'OpenAI Codex' 
+    (or any other AI-based code generator).
 
 
 ### 👉 Task 'Sunny Coastline'
-
-Topics: functions, loops, input, dictionaries, recursion
 
 - Create a `sunny_coastline.py` file in your solutions project.
 - Read a number `n` from the console and compute the nth Fibonacci number, see
@@ -160,15 +117,10 @@ Topics: functions, loops, input, dictionaries, recursion
     that you can use these values if the number has already been calculated.
 
 Check
-- Compare your solution with `sunny_coastline_one_solution.py` in `solutions`. 
-  - Is your solution correct and complete? 
-  - Do you have any ideas on how to improve your solution?
-  - Is there a detail where your solution is better or different? Tell us.
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
 
 ### 👉 Task 'Bronze Strand'
-
-Topics: functions, dictionaries, loops
 
 - Create a `bronze_strand.py` file in your solutions project.
 - Create three functions that operate on a dictionary, called 'counter.' Its keys are elements such
@@ -185,21 +137,14 @@ Topics: functions, dictionaries, loops
 Note: There is a collection `Counter` working exactly like your functions.
 
 Check
-- Compare your solution with `bronze_strand_one_solution.py` in `solutions`. 
-  - Is your solution correct and complete? 
-  - Do you have any ideas on how to improve your solution?
-  - Is there a detail where your solution is better or different? Tell us.
-
----
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
 
 ### 👉 Project 'Moving Blizzard' — Part 1
 
 > A coastal research station monitors environmental sensors. This semester-long project starts
-with a simple temperature list and grows week by week — refactoring the same codebase with
-every new concept you learn.
-
-Topics: functions, loops, conditionals, basic types, `if __name__`
+> with a simple temperature list and grows week by week — refactoring the same codebase with
+> every new concept you learn.
 
 Part 1
 - Create a list `READINGS` with at least 10 temperature values (floats), e.g.
@@ -214,16 +159,16 @@ Part 2
 - Call `summarize(READINGS)` from a proper `main()` with `__main__` guard.
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_1.py` in `solutions`.
-  - Is your solution correct and complete?
-  - Does your `detect_spikes` handle an empty list?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
+- Does your `detect_spikes` handle an empty list?
 
----
 
-### 👉 Task 'AI Snapshot' – Main Guard
+### 👉 AI 'Off-By-One Imp'
 
-Prompt
-- "Explain what `if __name__ == '__main__':` does and show a tiny example."
+Prompt 
+```
+Explain what `if __name__ == '__main__':` does and show a tiny example.
+```
 
 AI Answer A
 ```python
@@ -235,21 +180,25 @@ if __name__ == "__main__":  # runs only when executed directly
 ```
 
 AI Answer B
+```
 It prevents all code in the file from running unless the file is imported.
+```
 
 Discuss
 - Which answer is correct and why?
 - What actually happens to top-level code when the file is imported?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Input Loop
 
-Reference
-- Use the input loop idea from Task 'Eastern Sands' above.
+### 👉 AI 'Off-By-One Imp'
 
-Prompt
-- "Read integers until an empty line is entered. Print each number. Ignore invalid input."
+Use the input loop idea from Task 'Eastern Sands' above.
+
+Prompt 
+```
+Read integers until an empty line is entered. Print each number. Ignore invalid input.
+```
 
 AI Answer A
 ```python
@@ -272,16 +221,15 @@ Discuss
 - Which answer is robust for invalid input?
 - What is missing in the other answer?
 
----
+[Hints](./solutions/hints.md)
 
-## Homework
+
+### 👉 Homework 'Couch Potato'
 
 - It is absolutely necessary to have a working Python environment before the next unit.
   If you have any issues with your Python configuration, try to solve them at home or
   reach out to the course staff.
 - If you did not finish the essential tasks in the exercise, complete them at home.
-
----
 
 
 ## Comprehension Check
@@ -308,3 +256,6 @@ Language
 - How do you document modules and functions in Python (docstrings)?
 - What is a virtual environment and why do we use it?
 - What is `pyproject.toml` used for in a Python project?
+
+[Hints](./solutions/hints.md)
+

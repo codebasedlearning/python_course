@@ -2,13 +2,13 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Metaclass vs Decorator
+### AI 'Off-By-One Imp' – Metaclass vs Decorator
 
 - Correct idea: use metaclasses for class creation control; decorators for simple transforms.
 - Bug in Answer B: adding methods does not require a metaclass.
 - Quick test: show a class decorator that adds an attribute.
 
-### Task 'AI Snapshot' – `ast` vs `dis`
+### AI 'Off-By-One Imp' – `ast` vs `dis`
 
 - Correct idea: `dis` inspects bytecode; `ast` parses syntax trees.
 - Bug in Answer B: it swaps their roles.

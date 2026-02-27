@@ -14,6 +14,7 @@ well-known "GroPro".
 
 ## Inspiration
 
+
 ### Advent of Code
 
 The first puzzles presented are inspired by those from [Advent of Code](https://adventofcode.com).
@@ -22,6 +23,7 @@ self-generated data specific to the task to avoid any legal issues.
 
 For more information and to enjoy the engaging story, please visit the website and register for next
 Christmas! Finally, I would like to thank Eric Wastl, who invented and organized 'Advent of Code.'
+
 
 ### LeetCode
 
@@ -45,9 +47,7 @@ Here we add refactoring as the third part, so we have:
   means using or creating appropriate (data) classes and hierarchies, aiming for efficiency in your
   algorithms and solutions, and considering best practices.
 
-
-
-
+  
 ## Input Data
 
 Parts 1 and 2 typically introduce the problem and provide sample data before addressing the actual
@@ -75,6 +75,7 @@ malicious data.
 > Here, we want to improve our problem-solving skills and focus on the algorithmic side. So, all
 files are formatted as promised.
 
+
 ## Overview
 
 - 'Tinted Coast' – find numbers in strings
@@ -84,14 +85,15 @@ files are formatted as promised.
 - 'AoC Originals' – hand-picked examples
 - 'Broken Stats' – pair debugging a buggy statistics calculator
 
-## Puzzles
 
----
+## Tasks and Puzzles
+
 
 ### 👉 Puzzle 'Tinted Coast' (Calibration Values)
 
 You are given a list of strings. Each line contains a mix of letters and digits. Your task is to
 extract digits from each line in a specific way and compute the sum of the results.
+
 
 #### Part 1
 
@@ -103,6 +105,7 @@ combine them to form a two-digit number. For example:
 - "abc" → no digits → 0.
 
 Sum all the resulting two-digit numbers, this is the puzzle solution.
+
 
 #### Example 1
 
@@ -116,6 +119,7 @@ ordmc6ltizb1jutl
 
 The puzzle solution is `10+0+86+65+61=222`.
 
+
 #### Part 2
 
 The twist: digits can be written as words, and those count too! So you must also consider:
@@ -126,6 +130,7 @@ But here’s the catch:
 - You still extract the first and last digit, now allowing digit words as valid digits too.
 
 What is now the sum of all values?
+
 
 #### Example 2
 
@@ -139,6 +144,7 @@ eoneyffoureightpa
 
 The puzzle solution (part 2) is `3+16+17+7+18=61`.
 
+
 #### Part 3
 
 - Refactor your solution to be as Pythonic and object-oriented as possible.
@@ -146,6 +152,7 @@ The puzzle solution (part 2) is `3+16+17+7+18=61`.
 - Feed an AI agent (ChatGPT etc.) with your solution.
 
 You will find the original task [here](https://adventofcode.com/2023/day/1)
+
 
 #### Solutions
 
@@ -155,7 +162,6 @@ You will find the original task [here](https://adventofcode.com/2023/day/1)
 | Example 2 |       90 |     61 |
 |   Input   |    44161 |  51119 |
 
----
 
 ### 👉 Puzzle 'Lonely Seafront' (Cube Games)
 
@@ -174,6 +180,7 @@ This means:
 - Round 2: 17 red, 15 blue
 - Round 3: 12 red, 7 blue, 11 green
 
+
 #### Part 1
 
 You’re told that the maximum number of cubes available per color is:
@@ -183,6 +190,7 @@ Parse each game and check if any round exceeds the allowed cube limits. If the g
 (i.e. all rounds stay within the cube limits), then it’s valid.
 
 Determine the sum of the IDs of all valid games.
+
 
 #### Example 1
 
@@ -195,6 +203,7 @@ Game 5: 11 red, 10 green; 16 blue, 11 green
 ```
 
 Here only games 1 and 2 are valid, so the solution is `1+2=3`.
+
 
 #### Part 2
 
@@ -211,9 +220,11 @@ Max red = 17, max green = 11, max blue = 15, so the 'power' is `17 × 11 × 15 =
 
 Do this for every game and sum all powers.
 
+
 #### Example 1
 
 The sum of all powers in the example is `0+128+627+2805+1936=5496`.
+
 
 #### Part 3
 
@@ -223,6 +234,7 @@ The sum of all powers in the example is `0+128+627+2805+1936=5496`.
 
 You will find the original task [here](https://adventofcode.com/2023/day/2)
 
+
 #### Solutions
 
 |           | Part 1 |  Part 2 |
@@ -230,7 +242,6 @@ You will find the original task [here](https://adventofcode.com/2023/day/2)
 | Example 1 |      3 |    5496 |
 |   Input   |    542 |  206969 |
 
----
 
 ### 👉 Puzzle 'Stonenet Sands' (Symbols)
 
@@ -239,6 +250,7 @@ You are given a 2D grid where each cell contains one of:
 - A period (.), which represents empty space
 - A symbol (any non-digit, non-period character), like *, #, +, etc.
 
+
 #### Part 1
 
 Find all numbers in the grid that are adjacent to a symbol. A number is a sequence of digits (123,
@@ -246,6 +258,7 @@ Find all numbers in the grid that are adjacent to a symbol. A number is a sequen
 symbol in the 8 neighboring positions (up, down, left, right, and the 4 diagonals).
 
 Your task is to add up all these adjacent numbers.
+
 
 #### Example 1
 
@@ -266,6 +279,7 @@ Explanation:
 
 The sum is `51+123+23+24+11+12=244`.
 
+
 #### Example 2
 
 ```
@@ -283,6 +297,7 @@ The sum is `51+123+23+24+11+12=244`.
 
 The sum here is `2120`.
 
+
 #### Part 2
 
 Extra Rule: A gear is defined as a * symbol that is adjacent to exactly two numbers.
@@ -290,10 +305,12 @@ Extra Rule: A gear is defined as a * symbol that is adjacent to exactly two numb
 For each gear, find the two adjacent numbers, and calculate their product (called the gear ratio).
 Sum all such gear ratios.
 
+
 #### Examples
 
 In the first grid the only gear ratio is `51*23=1173`. In the second example there is also only one,
 namely `397*544=215968`. In the final input data, there will be more than one of them.
+
 
 #### Part 3
 
@@ -303,6 +320,7 @@ namely `397*544=215968`. In the final input data, there will be more than one of
 
 You will find the original task [here](https://adventofcode.com/2023/day/3)
 
+
 #### Solutions
 
 |           |    Part 1 |         Part 2 |
@@ -311,7 +329,6 @@ You will find the original task [here](https://adventofcode.com/2023/day/3)
 | Example 2 |      2120 |         215968 |
 |   Input   |    290027 |       15524298 |
 
----
 
 ### 👉 Puzzle 'Tortoise Cove' (Scratchcards)
 
@@ -328,6 +345,7 @@ where
 - `winning_numbers` is a list of integers.
 - `your_numbers` is another list of integers.
 
+
 #### Part 1
 
 For each card:
@@ -338,6 +356,7 @@ For each card:
     matches = 4 points, 4 matches = 8 points, etc.
 
 What is the total score of all scratchcards?
+
 
 #### Example 1
 
@@ -358,6 +377,7 @@ Explanation:
 
 The total score is `2+8+1+0+2=13`.
 
+
 #### Part 2
 
 This time, scratchcards can generate copies of other (following) scratchcards.
@@ -373,6 +393,7 @@ Important notes:
   to Card 100.
 - Cards don’t generate more copies of themselves — only of following cards.
 
+
 #### Example 1
 
 Card 1 has 2 matches, and you have 1 copy of Card 1:
@@ -382,6 +403,7 @@ Card 1 has 2 matches, and you have 1 copy of Card 1:
 In this example you end up with
 `(1)+(1+1)+(1+1+2)+(1+2+4)+(1+2)=17`.
 
+
 #### Part 3
 
 - Refactor your solution to be as Pythonic and object-oriented as possible.
@@ -390,6 +412,7 @@ In this example you end up with
 
 You will find the original task [here](https://adventofcode.com/2023/day/4)
 
+
 #### Solutions
 
 |           | Part 1 |          Part 2 |
@@ -397,7 +420,6 @@ You will find the original task [here](https://adventofcode.com/2023/day/4)
 | Example 1 |     13 |              17 |
 |   Input   |    503 | 203450115848628 |
 
----
 
 ### 👉 Puzzles 'AoC Originals'
 
@@ -409,6 +431,7 @@ help.
 
 My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraption' and 'Sand Slabs'.
 
+
 ### Level-1-Puzzle
 
 - [2023 - Day 11 - Cosmic Expansion](https://adventofcode.com/2023/day/11)
@@ -416,11 +439,13 @@ My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraptio
 - [2024 - Day 04 - Ceres Search](https://adventofcode.com/2024/day/4)
 - [2024 - Day 25 - Code Chronicle - Part 1](https://adventofcode.com/2024/day/25)
 
+
 ### Level-1+-Puzzle
 
 - [2023 - Day 21 - Step Counter - Part 1](https://adventofcode.com/2023/day/21)
 - [2024 - Day 13 - Claw Contraption - Part 1](https://adventofcode.com/2024/day/13)
 - [2024 - Day 17 - Chronospatial Computer - Part 1](https://adventofcode.com/2024/day/17)
+
 
 ### Level-2-Puzzle
 
@@ -428,7 +453,6 @@ My favourites are 'Cosmic Expansion' (warm-up), 'Step Counter', 'Claw Contraptio
 - [2023 - Day 22 - Sand Slabs](https://adventofcode.com/2023/day/22)
 - [2023 - Day 23 - A Long Walk](https://adventofcode.com/2023/day/23)
 
----
 
 ### 👉 Puzzle 'Broken Stats' (Pair Debugging)
 
@@ -438,6 +462,7 @@ standard deviation, median, and mode for a small dataset. It runs without errors
 produces output that *looks* plausible. But almost every result is wrong.
 
 Data: `[2, 7, 3, 8, 2, 5, 1, 9, 4, 6]`
+
 
 #### Correct results
 
@@ -449,6 +474,7 @@ Data: `[2, 7, 3, 8, 2, 5, 1, 9, 4, 6]`
 | median | 4.5 |
 | mode | 2 |
 
+
 #### Part 1 — Find the bugs
 
 - Run the script and compare its output to the table above.
@@ -456,11 +482,13 @@ Data: `[2, 7, 3, 8, 2, 5, 1, 9, 4, 6]`
 - There are **at least 6 bugs** hiding across 5 functions. Categorise each one (e.g.
   off-by-one, integer vs. float, mutation, precision).
 
+
 #### Part 2 — Fix it
 
 - Fix all bugs so that the output matches the correct results.
 - Add a simple self-check at the end (the script already has a partial one — make it
   comprehensive).
+
 
 #### Part 3 — Discuss
 
@@ -469,22 +497,13 @@ Data: `[2, 7, 3, 8, 2, 5, 1, 9, 4, 6]`
   numeric function justified?
 - How would `pytest` have caught these bugs if tests existed from the start?
 
----
 
-## Comprehension Check
-
-- Why refactor after solving Part 1 and Part 2?
-- When does a reusable grid or graph helper class pay off?
-- Why are small custom test cases useful for puzzles?
-
----
-
-## AI Tasks
-
-### 👉 Task 'AI Snapshot' – Shortest Path
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Which algorithm guarantees the shortest path in an unweighted grid: BFS or DFS?"
+```
+Which algorithm guarantees the shortest path in an unweighted grid: BFS or DFS?
+```
 
 AI Answer A
 BFS, because it explores nodes by distance layers.
@@ -496,12 +515,15 @@ Discuss
 - Which answer is correct and why?
 - What would be a counterexample for the wrong answer?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Grid Parsing
+
+### 👉 AI 'Off-By-One Imp'
 
 Prompt
-- "Which version builds a 2D grid of characters from `lines`?"
+```
+Which version builds a 2D grid of characters from `lines`?
+```
 
 AI Answer A
 ```python
@@ -517,6 +539,13 @@ Discuss
 - Which answer creates a list of lists of characters?
 - What does the incorrect version produce?
 
----
+[Hints](./solutions/hints.md)
 
-# Have fun!
+
+## Comprehension Check
+
+- Why refactor after solving Part 1 and Part 2?
+- When does a reusable grid or graph helper class pay off?
+- Why are small custom test cases useful for puzzles?
+
+[Hints](./solutions/hints.md)

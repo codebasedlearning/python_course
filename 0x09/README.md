@@ -2,14 +2,17 @@
 
 # Unit `0x09` – Async and Descriptors
 
+
 ## Overview
 
 This unit introduces async programming with `async` and `await` and continues with descriptors as an
 advanced language feature.
 
+
 ### Focus
 
 Develop a working mental model of cooperative concurrency and attribute control.
+
 
 ## Topics
 
@@ -35,8 +38,10 @@ Python-specific information on asyncio can be found here:
 
 Here are a couple of terms in relation to `async`, `await` and AsyncIO.
 
+
 ### Parallelism
 Parallelism consists of performing multiple operations at the same time. 
+
 
 ### Multiprocessing
 Multiprocessing is a means to affect parallelism, and it entails spreading 
@@ -44,14 +49,17 @@ tasks over a computer’s central processing units (CPUs, or cores).
 Multiprocessing is well-suited for CPU-bound tasks: tightly bound for loops 
 and mathematical computations usually fall into this category.
 
+
 ### Concurrency
 Concurrency is a slightly broader term than parallelism. It suggests that 
 multiple tasks can run in an overlapping manner. It does not imply parallelism.
+
 
 ### Threading
 Threading is a concurrent execution model whereby multiple threads take 
 turns executing tasks. One process can contain multiple threads. Python 
 has a complicated relationship with threading thanks to its GIL.
+
 
 ### AsyncIO Package
 The asyncio package is described by the Python documentation as a library 
@@ -65,6 +73,7 @@ concurrency despite using a single thread in a single process. Coroutines
 (a central feature of async IO) can be scheduled concurrently, but they 
 are not inherently concurrent.
 
+
 ### asynchronous
 What does it mean for something to be asynchronous? This isn’t a rigorous 
 definition:
@@ -73,6 +82,7 @@ definition:
 - Asynchronous code, through the mechanism above, facilitates concurrent 
   execution. To put it differently, asynchronous code gives the look and 
   feel of concurrency.
+
 
 ### Chess Example
 Async IO may at first seem counterintuitive and paradoxical. How does something 
@@ -90,10 +100,12 @@ Assumptions:
 - Opponents each take 55 seconds to make a move
 - Games average 30 pair-moves (60 moves total)
 
+
 ### Synchronous version
 Judit plays one game at a time, never two at the same time, until the game 
 is complete. Each game takes (55 + 5) * 30 == 1800 seconds, or 30 minutes. 
 The entire exhibition takes 24 * 30 == 720 minutes or 12 hours.
+
 
 ### Asynchronous version
 Judit moves from table to table, making one move at each table. She leaves 
@@ -109,11 +121,13 @@ So, cooperative multitasking is a fancy way of saying that a program’s
 event loop (more on that later) communicates with multiple tasks to let 
 each take turns running at the optimal time.
 
+
 ### Coroutines
 At the heart of async IO are coroutines. A coroutine is a specialized version 
 of a Python generator function. A coroutine is a function that can suspend 
 its execution before reaching return, and it can indirectly pass control 
 to another coroutine for some time.
+
 
 ### Event Loop 
 You can think of an event loop as something like a 'while True' loop that 
@@ -151,7 +165,19 @@ Here are a few points worth stressing about the event loop.
 
 ## Tasks
 
----
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Yellow Hemp'—Again (see Unit 0x0b)
 
@@ -171,7 +197,6 @@ constructed in this way, there are no syntax errors or other 'niceties.'
 a virtual environment and compare
 your execution times.
 
----
 
 ### 👉 Task 'Judit' 
 
@@ -179,14 +204,12 @@ Create a serial and an 'async' version of the story of Judith. Use one second
 instead of one hour, so the serial version should take around 12 seconds and 
 the asynchronous version one second.
 
----
 
 ### 👉 Task 'Colemark Cove'
 
 Take any of your thread-based tasks from Unit 0x0b and create
 an 'async' version of it.
 
----
 
 ### 👉 Task 'Cobalt Reef' (Descriptors)
 
@@ -216,11 +239,8 @@ Part 3
 - Observe the log output when creating an instance and reading its attributes.
 
 Check
-- Compare your solution with `cobalt_reef_one_solution.py` in `solutions`.
-  - Is your solution correct and complete?
-  - Could you combine `Bounded` and `Logged` into one descriptor? Should you?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
 ### 👉 Task 'Raven Stickweed' (Descriptor Method Binding)
 
@@ -247,11 +267,8 @@ Part 3
 - Why does this work without any changes to `ClassInstanceMethod`?
 
 Check
-- Compare your solution with `raven_stickweed_one_solution.py` in `solutions`.
-  - What happens if `obj` is `None` (i.e. accessed on the class, not an instance)?
-  - How does this relate to how Python implements regular methods internally?
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
 ### 👉 Project 'Moving Blizzard' — Part 9 (Final)
 
@@ -279,35 +296,10 @@ Part 3
   `ValueError`) and `poll_interval = "fast"` (should raise `TypeError`).
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_9.py` in `solutions`.
-  - What happens if you use `time.sleep` instead of `asyncio.sleep`? Does `gather` still
-    help?
-  - Reflect: how has the project grown from a 30-line script to a full async pipeline with
-    validation?
-
----
-
-### 👉 Task 'Exam Preparation'
-
-Take a look at the topics covered and think about how you can prepare.
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
 
----
-
-### 👉 Task 'Self-Study'
-
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – Generate, Then Critique: Sync to Async
+### 👉 AI 'Off-By-One Imp'
 
 You need to convert this synchronous downloader to async. An AI produced the version below.
 
@@ -359,9 +351,10 @@ Discuss
 - What other blocking calls might hide inside AI-generated async code? (Think: file I/O,
   `requests.get`, database queries.)
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Generate, Then Critique: Your Own Code
+
+### 👉 AI 'Off-By-One Imp'
 
 This is an open-ended task. Use an actual AI tool for it.
 
@@ -386,13 +379,18 @@ Discuss
 - Was the AI's conversion useful, or did it introduce more problems than it solved?
 - For which of your previous tasks does async actually make sense?
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Task 'Exam Preparation'
+
+Take a look at the topics covered and think about how you can prepare.
+
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -402,4 +400,4 @@ General
 - Why should blocking calls be avoided inside `async` functions?
 - What does `await` do in an async function?
 
----
+[Hints](./solutions/hints.md)

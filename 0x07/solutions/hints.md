@@ -2,17 +2,19 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – `functools.wraps`
+### AI 'Off-By-One Imp' – Three Answers: @logged Decorator
 
-- Correct idea: use `@functools.wraps(fn)` to preserve `__name__` and `__doc__`.
-- Bug in Answer B: metadata is lost without `wraps`.
-- Quick test: check `decorated.__name__`.
+- Ranking worst→best: B (no metadata), A (partial metadata copy), C (`functools.wraps`).
+- Answer A manually copies `__name__` but misses `__doc__`, `__module__`, `__qualname__`, `__wrapped__`.
+- Answer B breaks `pytest` discovery and `sphinx` documentation because `__name__` is `wrapper`.
+- Most AIs produce B or C because A (manual partial copy) is uncommon in training data.
 
-### Task 'AI Snapshot' – Decorator Timing
+### AI 'Off-By-One Imp' – Import-Time Side Effects
 
-- Correct idea: `decorating f` is printed at definition/import time.
-- Bug in Answer B: it assumes decoration happens on call.
-- Quick test: import the module and see output before any call to `f()`.
+- `logging.info("Registered: ...")` runs at IMPORT time, not call time — it fires when `@tracked` decorates.
+- Running the file without calling anything prints two "Registered" lines.
+- `call_count` is per-function (each decorator call creates its own closure).
+- Import-time side effects are acceptable for registration (like `@example` in Moon Collard) but not for IO/logging.
 
 ### Task 'Comprehension Check'
 
@@ -24,4 +26,3 @@
   A: It preserves metadata like `__name__`, `__doc__`, and annotations.
 - Q: When would you use a decorator with parameters? <br>
   A: When the decorator needs configuration, e.g., `@retry(times=3)`.
-

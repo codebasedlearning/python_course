@@ -2,14 +2,17 @@
 
 # Unit `0x08` – Threads and Libs
 
+
 ## Overview
 
 This unit introduces threads and selected libraries, covering concurrency concepts and practical
 tooling.
 
+
 ### Focus
 
 Build awareness of Python's concurrency model and apply libraries safely and effectively.
+
 
 ## Topics
 
@@ -38,8 +41,10 @@ Python-specific information on threading can be found here:
 
 Here are a couple of terms from [Realpython](https://realpython.com/intro-to-python-threading).
 
+
 ### Parallelism
 Parallelism consists of performing multiple operations at the same time. 
+
 
 ### Multiprocessing
 Multiprocessing is a means to affect parallelism, and it entails spreading 
@@ -47,14 +52,17 @@ tasks over a computer’s central processing units (CPUs, or cores).
 Multiprocessing is well-suited for CPU-bound tasks: tightly bound for loops 
 and mathematical computations usually fall into this category.
 
+
 ### Concurrency
 Concurrency is a slightly broader term than parallelism. It suggests that 
 multiple tasks can run in an overlapping manner. It does not imply parallelism.
+
 
 ### Threading
 Threading is a concurrent execution model whereby multiple threads take 
 turns executing tasks. One process can contain multiple threads. Python 
 has a complicated relationship with threading thanks to its GIL.
+
 
 ### AsyncIO Package
 The asyncio package is described by the Python documentation as a library 
@@ -68,6 +76,7 @@ concurrency despite using a single thread in a single process. Coroutines
 (a central feature of async IO) can be scheduled concurrently, but they 
 are not inherently concurrent.
 
+
 ### asynchronous
 What does it mean for something to be asynchronous? This isn’t a rigorous 
 definition:
@@ -80,7 +89,19 @@ definition:
 
 ## Tasks
 
----
+
+### 👉 Task 'Self-Study'
+
+- Review all snippets from the lecture.
+- Run and understand all content from scripts that start with `study_` (if any). 
+- Ask if there are any outstanding questions, or if you miss an idea.
+
+
+### 👉 Task 'Recap'
+
+- Review any outstanding tasks from previous units. Is there any task that you should definitely do
+  or have questions about?
+
 
 ### 👉 Task 'Twin Tongue' 
 
@@ -102,7 +123,6 @@ a benchmark.
 2) Measure both solutions and try to find a configuration where the parallel 
    version is faster.
 
----
 
 ### 👉 Task 'Yellow Hemp' 
 
@@ -120,7 +140,6 @@ constructed in this way, there are no syntax errors or other 'niceties.'
 1) Read all the files and check that the given sum is correct in a serial 
    and a parallel version. Use different variants, e.g., a 'ThreadPoolExecutor.'
 
----
 
 ### 👉 Task 'Marsh Wintercress' 
 
@@ -134,7 +153,6 @@ to be involved in exchanging messages.
      Details can be found
      [here](https://docs.python.org/3/library/threading.html#condition-objects).
 
----
 
 ### 👉 Task 'Cave Betty' 
 
@@ -144,7 +162,6 @@ to be involved in exchanging messages.
     the prime sieve. 
   - Measure a serial and a parallel variant.
 
----
 
 ### 👉 Task 'Creepy Wineberry' 
 
@@ -152,7 +169,6 @@ to be involved in exchanging messages.
 
 - Set up a database for your own and perform any SQL statements.
 
----
 
 ### 👉 Task 'Pest Cap' 
 
@@ -161,7 +177,6 @@ to be involved in exchanging messages.
   - Query mail, contact and/or calendar items from your (?) Microsoft 
     Exchange account, if available.
 
----
 
 ### 👉 Task 'Red Castle' 
 
@@ -169,7 +184,6 @@ to be involved in exchanging messages.
 
   - Design a class or a function and write some unit tests.
 
----
 
 ### 👉 Project 'Moving Blizzard' — Part 8
 
@@ -195,26 +209,10 @@ Part 3
   GIL).
 
 Check
-- Compare your solution with `moving_blizzard_next_solution_part_8.py` in `solutions`.
-  - What happens if you remove the `Lock`? Is the result still correct? (It might be — but
-    it's not guaranteed.)
+- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
----
 
-### 👉 Task 'Self-Study'
-
-- Review all snippets from the lecture. Ask if there are any outstanding questions.
-
----
-
-### 👉 Task 'Recap'
-
-- Review any outstanding tasks from previous units. Is there any task that you should definitely do
-  or have questions about?
-
----
-
-### 👉 Task 'AI Snapshot' – Debug With AI: Race Condition
+### 👉 AI 'Off-By-One Imp'
 
 A student showed this code to an AI:
 
@@ -253,9 +251,10 @@ Discuss
   data?
 - When *is* a GIL-protected operation truly atomic? (Hint: single bytecode instruction.)
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'AI Snapshot' – Debug With AI: "Just Add More Threads"
+
+### 👉 AI 'Off-By-One Imp'
 
 A student tried to speed up a CPU-bound task with threads and asked an AI for help:
 
@@ -300,13 +299,13 @@ Discuss
 - Why is "add more threads" such a common (and wrong) AI suggestion for Python?
 - When *should* you use threads in Python? Give two concrete examples.
 
----
+[Hints](./solutions/hints.md)
 
-### 👉 Task 'Couch Potato' - Recurring homework
+
+### 👉 Homework 'Couch Potato'
 
 - If you did not finish the essential tasks in the exercise, finish them at home.
 
----
 
 ## Comprehension Check
 
@@ -317,4 +316,4 @@ General
 - What is a race condition in threaded code?
 - What is the GIL and how does it affect CPU-bound threads in Python?
 
----
+[Hints](./solutions/hints.md)

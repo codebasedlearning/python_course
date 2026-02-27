@@ -2,13 +2,13 @@
 
 ## Hints
 
-### Task 'AI Snapshot' – Exam Policy
+### AI 'Off-By-One Imp' – Exam Policy
 
 - Correct idea: AI assistance is forbidden during the exam.
 - Bug in Answer B: it contradicts the explicit rules.
 - Quick test: quote the exam policy section.
 
-### Task 'AI Snapshot' – Boundary Tests
+### AI 'Off-By-One Imp' – Boundary Tests
 
 - Correct idea: cover boundaries and off-by-one cases, plus invalid input.
 - Bug in Answer B: one happy path is not enough.
