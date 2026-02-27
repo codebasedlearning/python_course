@@ -83,7 +83,7 @@ def step_through_loop():
     dup = find_first_duplicate(data)
     print(f" 1| data:            {data}")
     print(f" 2| first duplicate: {dup!r}")
-    print(f" 3| use 'n' to step, 'p seen' to inspect the set as it grows")
+    print( " 3| use 'n' to step, 'p seen' to inspect the set as it grows")
 
 
 """
@@ -99,10 +99,11 @@ def post_mortem_debugging():
 
     try:
         results = [100 / x for x in data]
+        print(f" 1| {results=}")
     except ZeroDivisionError:
-        print(f" 1| exception caught! data was {data}")
-        print(f" 2| to debug: uncomment 'import pdb; pdb.post_mortem()' below")
-        print(f" 3| then type 'p data', 'p x', 'w' (where am I?), 'q' (quit)")
+        print(f" 2| exception caught! data was {data}")
+        print( " 3| to debug: uncomment 'import pdb; pdb.post_mortem()' below")
+        print( " 4| then type 'p data', 'p x', 'w' (where am I?), 'q' (quit)")
         # Uncomment to drop into the debugger at the point of failure:
         # import pdb; pdb.post_mortem()
 

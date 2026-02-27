@@ -149,7 +149,7 @@ from utils import print_function_header
 Topic: Console IO
 """
 
-@print_function_header                      # Preview: A decorator printing the function's name ("\nusing_print\n===========")
+@print_function_header                      # Preview: A decorator printing the function's name.
 def using_print():
     """ Various printings. """              # Docstring for the function, hold the mouse on 'using_print'.
 

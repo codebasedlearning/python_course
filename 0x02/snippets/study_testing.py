@@ -35,6 +35,9 @@ See also
   - https://docs.python.org/3/library/unittest.html
 """
 
+from typing import TypeVar
+
+T = TypeVar("T")
 
 # ---------------------------------------------------------------------------
 # Functions under test (copied from 0x01 solutions for self-containment)
@@ -54,11 +57,12 @@ def counter_sub(counter: dict, item):
         del counter[item]
 
 
-def counter_most_common(counter: dict):
+def counter_most_common[T](counter: dict[T, int]) -> T | None:
     """Returns the key of the most common item in the provided counter dictionary."""
     if not counter:
         return None
-    return max(counter, key=counter.get)
+    return max(counter.items(), key=lambda kv: kv[1])[0]
+    # return max(counter, key=counter.get)
 
 
 def fib_itr(n: int) -> int:
