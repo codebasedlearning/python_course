@@ -5,21 +5,23 @@
 
 ## Overview
 
-This introductory unit focuses on setting up your Python development environment and getting 
-familiar with Python basics through hands-on tasks. 
+This introductory unit focuses on setting up your Python development environment 
+and getting familiar with Python basics through hands-on tasks. 
 
-You'll install and configure Python using `uv`, create your first project, and explore
-fundamental Python concepts including data types, control flow, functions, and the 
-"Pythonic way" of programming. 
+You'll install and configure Python using `uv`, create your first project, and 
+explore fundamental Python concepts including data types, control flow, functions, 
+and the "Pythonic way" of programming. 
 
-The unit includes setup tasks and coding exercises that progressively build your understanding 
-of core Python features. By the end, you'll have a working Python environment, understand how 
-to manage dependencies, and have practical experience with essential Python programming patterns.
+The unit includes setup tasks and coding exercises that progressively build your 
+understanding of core Python features. By the end, you'll have a working Python 
+environment, understand how to manage dependencies, and have practical experience 
+with essential Python programming patterns.
 
 
 ### Focus
 
-> To get you started quickly, we will touch on many topics and leave the details for later units.
+> To get you started quickly, we will touch on many topics and leave the details 
+> for later units.
 > Think of the examples in `snippets` as templates for various Python features.
 
 
@@ -40,7 +42,7 @@ to manage dependencies, and have practical experience with essential Python prog
 Start with the following tasks from the [Info](../docs/python_info.pdf).
 
 
-### ☝️ Task 'Windy Bank' – `git` setup
+### ☝️ Task 'Windy Bank' – `git` Setup
 - [Learn git](https://www.w3schools.com/git) <BR>
 - [Install git](https://git-scm.com)
 
@@ -109,12 +111,13 @@ Check
 ### 👉 Task 'Sunny Coastline'
 
 - Create a `sunny_coastline.py` file in your solutions project.
-- Read a number `n` from the console and compute the nth Fibonacci number, see
+- Read a number `n` from the console and compute the n'th Fibonacci number, see
   [Fibonacci](https://de.wikipedia.org/wiki/Fibonacci-Folge),
   - iteratively,
   - recursively,
-  - recursively with Memoization, i.e. a dictionary containing all the values calculated so far, so
-    that you can use these values if the number has already been calculated.
+  - recursively with Memoization, i.e. a dictionary containing all the values 
+    calculated so far, so that you can use these values if the number has already 
+    been calculated.
 
 Check
 - Compare your solution with the provided one from `solutions` and an AI-generated one.
@@ -123,17 +126,20 @@ Check
 ### 👉 Task 'Bronze Strand'
 
 - Create a `bronze_strand.py` file in your solutions project.
-- Create three functions that operate on a dictionary, called 'counter.' Its keys are elements such
-  as characters and the corresponding values are the counts. Example: After adding all characters
-  from `banana` the dictionary looks like `{'b': 1, 'a': 3, 'n': 2}`.
-  - Implement a function `counter_add(counter: dict, item)` that increases the count of `item` in
-    the dictionary. If the `item` is not in the dictionary, it should be added with a count of 1. 
-  - Implement a function `counter_sub(counter: dict, item)` that decreases the count of `item` in
-    the dictionary. If the `item`’s count becomes zero or negative, remove it from the dictionary
-    (with `del counter[item]`). 
-  - Implement a function `counter_most_common(counter: dict)` that returns the element with the
-    highest count. If the counter is empty, return `None`.
+- Create three functions that operate on a dictionary, called 'counter.' Its keys 
+  are elements such as characters, and the corresponding values are the counts. 
+  Example: After adding all characters from `banana` the dictionary looks 
+  like `{'b': 1, 'a': 3, 'n': 2}`.
+  - Implement a function `counter_add(counter: dict, item)` that increases the 
+    count of `item` in the dictionary. If the `item` is not in the dictionary, 
+    it should be added with a count of 1. 
+  - Implement a function `counter_sub(counter: dict, item)` that decreases the 
+    count of `item` in the dictionary. If the `item`’s count becomes zero or 
+    negative, remove it from the dictionary (with `del counter[item]`). 
+  - Implement a function `counter_most_common(counter: dict)` that returns the 
+    element with the highest count. If the counter is empty, return `None`.
   - Test your functions with the characters from `banana`.
+
 Note: There is a collection `Counter` working exactly like your functions.
 
 Check
@@ -142,9 +148,9 @@ Check
 
 ### 👉 Project 'Moving Blizzard' — Part 1
 
-> A coastal research station monitors environmental sensors. This semester-long project starts
-> with a simple temperature list and grows week by week — refactoring the same codebase with
-> every new concept you learn.
+> A coastal research station monitors environmental sensors. This semester-long 
+> project starts with a simple temperature list and grows week by week — refactoring 
+> the same codebase with every new concept you learn.
 
 Part 1
 - Create a list `READINGS` with at least 10 temperature values (floats), e.g.
@@ -153,8 +159,8 @@ Part 1
 - Write `minimum(data)` and `maximum(data)` — again, no built-in `min`/`max`.
 
 Part 2
-- Write `detect_spikes(data, threshold=5.0)` that returns the indices where the reading
-  jumps by more than `threshold` from the previous value.
+- Write `detect_spikes(data, threshold=5.0)` that returns the indices where the 
+  reading jumps by more than `threshold` from the previous value.
 - Write `summarize(data)` that prints count, average, min, max, and spike positions.
 - Call `summarize(READINGS)` from a proper `main()` with `__main__` guard.
 
@@ -197,7 +203,8 @@ Use the input loop idea from Task 'Eastern Sands' above.
 
 Prompt 
 ```
-Read integers until an empty line is entered. Print each number. Ignore invalid input.
+Read integers until an empty line is entered. Print each number. 
+Ignore invalid input.
 ```
 
 AI Answer A
@@ -226,32 +233,32 @@ Discuss
 
 ### 👉 Homework 'Couch Potato'
 
-- It is absolutely necessary to have a working Python environment before the next unit.
-  If you have any issues with your Python configuration, try to solve them at home or
-  reach out to the course staff.
+- It is absolutely necessary to have a working Python environment before the 
+  next unit. If you have any issues with your Python configuration, try to solve 
+  them at home or reach out to the course staff.
 - If you did not finish the essential tasks in the exercise, complete them at home.
 
 
 ## Comprehension Check
 
 General
-- What ways can you run a Python program (script, module, REPL, IDE, notebook)?
+- What ways can you run a Python program?
 - What is `uv` used for in Python projects?
-- What does the term “PEP” stand for, and why does it matter?
+- What does the term "PEP" stand for, and why does it matter?
 - Who created Python?
 - What does indentation mean in Python code, and why is it important?
-- What does “Pythonic” mean (the “Pythonic way”)?
+- What does "Pythonic" mean (the "Pythonic way")?
 - What’s the difference between `import x` and `from x import y`?
 
 Language
 - What comment styles can you use in Python?
 - Which primitive/built-in scalar types do you know?
 - Which container/collection types do you know?
-- What is “unpacking” (e.g., tuple/list unpacking, `*args`, `**kwargs`)?
+- What is "unpacking" (e.g., tuple/list unpacking, `*args`, `**kwargs`)?
 - What is string interpolation in Python (e.g., f-strings, `format`)?
 - What is a named parameter / keyword argument?
 - What does the `__name__` variable mean?
-- How do you handle exceptions in Python (`try` / `except` / `else` / `finally`, raising)?
+- How do you handle exceptions in Python?
 - What is the purpose of `if __name__ == "__main__":` compared to code that runs on import?
 - How do you document modules and functions in Python (docstrings)?
 - What is a virtual environment and why do we use it?

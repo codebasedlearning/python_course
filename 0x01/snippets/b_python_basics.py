@@ -32,9 +32,10 @@ Topics
   - preview zip, list comprehension.
 
 'main'-guard
-  - If you want to write Python code that can be imported but also run as a standalone script,
-    this 'if' is important. The code protected by the if clause only runs when executed as
-    a script, because '__name__' is only then set to the value "__main__", see e.g.
+  - If you want to write Python code that can be imported but also run as
+    a standalone script, this 'if' is important. The code protected by the
+    if-clause only runs when executed as a script, because '__name__' is only
+    then set to the value "__main__", see e.g.
     https://docs.python.org/3/reference/toplevel_components.html#complete-python-programs
     https://docs.python.org/3/reference/import.html?highlight=__name__#__name__
     https://stackoverflow.com/questions/419163/what-does-if-name-main-do

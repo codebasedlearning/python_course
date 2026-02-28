@@ -53,8 +53,8 @@ Comments
 
 'print'
   - Output function with string literal and prefix 'f'.
-  - This allows for expressions to be enclosed in a {}. This type of formatting is
-    also known as '(f-)string interpolation' (or 'variable interpolation',
+  - This allows for expressions to be enclosed in a {}. This type of formatting
+    is also known as '(f-)string interpolation' (or 'variable interpolation',
     'variable substitution' or 'variable expansion').
   - https://docs.python.org/3/library/functions.html#print
 """
