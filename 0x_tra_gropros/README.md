@@ -169,6 +169,16 @@ be a bad design.
 - Review all snippets from the lecture. Ask if there are any outstanding questions.
 
 
+### 👉 Task 'Design Memo'
+
+- Write a 1-page design memo before coding a GroPro task:
+  - Problem summary
+  - Data model and key abstractions
+  - Algorithm outline and complexity
+  - Risks and test strategy
+- Use the memo to guide your implementation.
+
+
 ### 👉 Task 'GroPro'
 
 - Choose one (or more) of the GroPros:

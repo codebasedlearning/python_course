@@ -2,6 +2,12 @@
 
 ## Hints
 
+### Task 'Design Memo'
+
+- Keep it short: 1 page is enough if structured.
+- IPO helps: Inputs, Processing, Outputs.
+- Add a test plan: smoke tests, edge cases, and one performance check.
+
 ### AI 'Off-By-One Imp' – SRP Design
 
 - Correct idea: split responsibilities (`PricingPolicy`, `Receipt`, `Station`).
@@ -24,4 +30,3 @@
   A: It separates input, processing, and output to keep logic clear.
 - Q: Give one example of a Single Responsibility Principle (SRP) violation. <br>
   A: A class that handles parsing, business logic, and UI output all together.
-

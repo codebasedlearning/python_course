@@ -146,6 +146,19 @@ Check
 - Compare your solution with the provided one from `solutions` and an AI-generated one.
 
 
+### 👉 Task 'Repro Bay' – Reproducible Setup
+
+- Create a short checklist for one of your tasks that documents:
+  - Python version.
+  - `uv` version.
+  - How to (re)create the environment.
+  - How to run the script.
+- Share the checklist with a peer and ask them to run your task.
+- Update the checklist based on their feedback.
+
+Note: For a GroPro you need to describe your development and run-time system.
+
+
 ### 👉 Project 'Moving Blizzard' — Part 1
 
 > A coastal research station monitors environmental sensors. This semester-long 
@@ -265,4 +278,3 @@ Language
 - What is `pyproject.toml` used for in a Python project?
 
 [Hints](./solutions/hints.md)
-

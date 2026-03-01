@@ -154,6 +154,13 @@ to be involved in exchanging messages.
      [here](https://docs.python.org/3/library/threading.html#condition-objects).
 
 
+### 👉 Task 'Race Bark' (Race Condition Post-Mortem)
+
+- Create or locate a small race condition in one of your thread exercises.
+- Write a short reproduction guide: expected vs actual behavior.
+- Fix the issue and document the synchronization primitive you used.
+
+
 ### 👉 Task 'Cave Betty' 
 
 > Without a proposed solution.

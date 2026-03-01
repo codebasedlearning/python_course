@@ -2,6 +2,12 @@
 
 ## Hints
 
+### Task 'Race Bark'
+
+- A shared counter without a lock is a classic race.
+- Use `threading.Lock` or a `Queue` to protect shared data.
+- Document the non-deterministic symptom and the fix you chose.
+
 ### AI 'Off-By-One Imp' – Debug With AI: Race Condition
 
 - The AI's fix (plain `int` + `global`) does NOT fix the race condition — `+=` is still non-atomic.

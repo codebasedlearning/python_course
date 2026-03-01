@@ -35,4 +35,3 @@
   A: Class attributes are shared; instance attributes belong to each object.
 - Q: What is a property and why would you use it? <br>
   A: A property lets you add validation or computed access while keeping attribute syntax.
-

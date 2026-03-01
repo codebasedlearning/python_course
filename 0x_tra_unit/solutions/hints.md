@@ -22,4 +22,3 @@
   A: To understand what the interpreter actually executes and spot overhead.
 - Q: What is a metaclass in Python? <br>
   A: It is the class of a class and controls how classes are created.
-
