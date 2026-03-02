@@ -39,6 +39,15 @@ Homepage = "https://github.com/codebasedlearning/python_course"
 Repository = "https://github.com/codebasedlearning/python_course"
 Issues = "https://github.com/codebasedlearning/python_course/issues"
 
+# Needed for imports when running the script outside of PyCharm, e.g. with
+#   uv run path-to-script
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["utils"]
+
 [tool.ruff]
 line-length = 120
 

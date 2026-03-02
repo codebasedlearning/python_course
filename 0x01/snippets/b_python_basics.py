@@ -144,6 +144,8 @@ File Header
 """
 
 # Imports function into global namespace.
+from unittest.mock import patch
+
 from utils import print_function_header
 
 """
@@ -231,22 +233,36 @@ def calc_sum_directly(n):
 def calculate_all_sums():
     """ Calculates all sums differently. """
 
-    print(" 1| Sum 1..n (end with n<0)")
+    n = 5
+    print(" 1| Sum 1..n:")
 
-    while True:                             # Classical while-loop.
-        data = input(" 2| Enter n: ")       # Read a string.
-        n = int(data)                       # Convert it to int (possible exception).
-        if n < 0: break                     # If as a one-liner (enabled for Pylint).
+    sum_iteratively = calc_sum_iteratively(n = n)       # Call with a named parameter.
+    sum_recursively = calc_sum_recursively(n = n)       # Pros/cons of named parameters?
+    sum_tail = calc_sum_tail_recursively(n = n)
+    sum_directly = calc_sum_directly(n = n)
+    print(f" 2| 1+..+{n} =\n"
+          f"  |    {sum_iteratively} (iteratively)\n"
+          f"  |    {sum_recursively} (recursively)\n"
+          f"  |    {sum_tail} (tail recursively)\n"
+          f"  |    {sum_directly} (directly)")
 
-        sum_iteratively = calc_sum_iteratively(n = n)       # Call with a named parameter.
-        sum_recursively = calc_sum_recursively(n = n)       # Pros/cons of named parameters?
-        sum_tail = calc_sum_tail_recursively(n = n)
-        sum_directly = calc_sum_directly(n = n)
-        print(f" 3| 1+..+{n} =\n"
-              f"      {sum_iteratively} (iteratively)\n"
-              f"      {sum_recursively} (recursively)\n"
-              f"      {sum_tail} (tail recursively)\n"
-              f"      {sum_directly} (directly)")
+# uv run pytest 0x01/snippets/b_python_basics.py -v
+
+def test_sum_iteratively():
+    """ Test function sum_iteratively. """
+    assert calc_sum_iteratively(n = 5) == 15
+
+def test_sum_recursively():
+    """ Test function sum_recursively. """
+    assert calc_sum_recursively(n = 5) == 15+1                  # Wrong, so the test fails.
+
+def test_sum_tail_recursively():
+    """ Test function sum_tail_recursively. """
+    assert calc_sum_tail_recursively(n = 5) == 15
+
+def test_sum_directly():
+    """ Test function sum_directly. """
+    assert calc_sum_directly(n = 5) == 15
 
 
 """
@@ -261,7 +277,7 @@ def collect_numbers():
     inputs: list[int] = []                  # A list with type hint (better would be a deque).
 
     print(" 1| Collect numbers in a set and all inputs in list of size 5 (FIFO) (end with <Return>)")
-    while (data := input(" 2| Enter number n: ")) != "":        # Preview: Walrus operator (:=)
+    while (data := input(" 2| Enter number n: ")) != "":        # while-loop, preview: Walrus operator (:=)
         try:                                # Exception handling.
             n = int(data)
             if n in numbers:
@@ -319,8 +335,21 @@ def sum_all_positives(variables):
     print(f" 3| {total=}")
 
 
+@print_function_header
+def debug_code():
+    """ Debug code with errors. """
+
+    data = [10, 20, 0, 30]
+
+    try:
+        results = [100 / x for x in data]   # Preview list comprehension, see below
+        print(f" 1| {results=}")
+    except ZeroDivisionError:
+        print(" 2| exception caught!")      # Where is 'results'?
+
+
 """
-Topic: Preview list comprehension
+Topic: Python is dense; preview zip + comprehensions
 """
 
 def build_fruit_history(fruits_block, prices_block):
@@ -381,15 +410,25 @@ def calc_average_prices():
 if __name__ == "__main__":                  # 'main'-guard.
     # Console IO
     using_print()
+
+    # Preview: context manager for (simple) input simulation (Monkey Patching, tests and teaching)
+    # with patch("builtins.input", side_effect=["Bob"]):
     using_input()
 
     # Python structure
     calling_a_function()
     calculate_all_sums()
 
-    # Collections
-    collect_numbers()
-    sum_all_positives(collect_variables())
+    with patch("builtins.input", side_effect=[                  # Simulate inputs.
+        "1","2","3","4","1","2","3","",
+        "x=1","y=2","x=3",""
+    ]):
+        # Collections
+        collect_numbers()
+        sum_all_positives(collect_variables())
+
+    # Debug
+    debug_code()
 
     # Preview
     calc_average_prices()
