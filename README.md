@@ -1,4 +1,4 @@
-[© 2025, A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
+[© 2026, A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 <hr>
 
 # Python Course – Welcome

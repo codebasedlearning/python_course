@@ -155,8 +155,67 @@ def comprehension_limits():
     #        ^-- memory-efficient: does not create an intermediate list
 
 
+"""
+Topic: Python is dense; zip + comprehensions
+"""
+
+def build_fruit_history(fruits_block, prices_block):
+    """ Converts data blocks into a dict of fruits and their individual prices over time. """
+
+    # classical style
+    #   fruits = []
+    #   for fruit in fruits_block.split(","):
+    #       fruits.append(fruit.strip())
+    #
+    # Preview: with list comprehension:
+    fruits = [fruit.strip() for fruit in fruits_block.split(",")]
+    print(f" a| {fruits=}")
+
+    prices_week = [                         # Nested list comprehension.
+        [float(s) for s in row.strip(" []").split(",")]         # strip(chars) removes chars from string.
+        for row in prices_block.strip().split("\n")             # float(s) converts string to float.
+    ]
+    print(f" b| {prices_week=}")
+
+    # classical style
+    #   num_rows = len(prices_week)
+    #   num_cols = len(prices_week[0])                          # Assuming all rows have the same number of columns.
+    #   prices_fruit = [[0]*num_rows for _ in range(num_cols)]  # A list of lists with num_rows zeros; '_' is a name.
+    #   for row_index in range(num_rows):                       # A^T
+    #       for col_index in range(num_cols):
+    #           prices_fruit[col_index][row_index] = prices_week[row_index][col_index]
+    #
+    # but with list comprehension, '*' (expansion) and zip (zip l1,l2 into (l1_i,l2_i)_i) )
+    prices_fruit = list(zip(*prices_week, strict=True))         # Same as: [list(row) for row in zip(*prices_week)]
+    print(f" c| {prices_fruit=}")
+
+    fruit_history = dict(zip(fruits, prices_fruit, strict=True)) # Same as: {k:v for k,v in zip(fruits, prices_fruit)}
+    print(f" d| {fruit_history=}")
+
+    return fruit_history
+
+@print_function_header
+def calc_average_prices():
+    """ Calculates average prices. """
+
+    # Fruits (head) with prices per (line per) week.
+    FRUIT_DATA = """
+    Apple, Banana, Cherry, Mango, Pineapple
+
+    [0.123, 0.678, 0.345, 0.980, 0.456]
+    [0.231, 0.564, 0.897, 0.123, 0.675]
+    [0.423, 0.942, 0.812, 0.503, 0.256]
+    [0.134, 0.789, 0.456, 0.234, 0.897]
+    """
+
+    fruits_block, prices_block = FRUIT_DATA.split("\n\n")
+    fruit_history = build_fruit_history(fruits_block, prices_block)
+    average_prices = [(fruit, sum(values) / len(values)) for fruit, values in fruit_history.items()]
+    print(f" 1| {average_prices=}")
+
 if __name__ == "__main__":
     basic_list_comprehensions()
     dict_and_set_comprehensions()
     nested_comprehensions()
     comprehension_limits()
+    calc_average_prices()
