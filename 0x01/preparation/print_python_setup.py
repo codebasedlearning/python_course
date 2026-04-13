@@ -25,7 +25,7 @@ def main():
     """ Prints platform and setup information and attempts to import the cbl package. """
     print(f"{_m}python version: {platform.python_version()}{_M} ('{pretty_path(sys.executable)}')")
     try:
-        import cbl  # pylint: disable=import-outside-toplevel
+        import cbl  # pylint: disable=import-outside-toplevel # ty:ignore[unresolved-import]
         print(f"{_m}cbl version: {cbl.setup.about_package().version}{_M} ('{pretty_path(cbl.__file__)}')")
     except ModuleNotFoundError:             # Error message replaced for didactic reasons.
         print(f"{_m}'cbl' package not installed{_M}")
