@@ -1,6 +1,6 @@
 [project]
 name = "python_course"
-version = "2.0.1"
+version = "2.0.2"
 authors = [
   { name="Alexander Voß", email="info@codebasedlearning.dev" },
 ]
@@ -16,10 +16,12 @@ keywords = [
 ]
 readme = "README.md"
 license = { file="LICENSE" }
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 dependencies = [
     "cbl==1.0.1",
-    "ruff==0.15.2",
+    "pytest==9.0.3",
+    "ruff==0.15.10",
+    "ty>=0.0.29",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
