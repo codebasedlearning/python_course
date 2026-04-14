@@ -163,13 +163,13 @@ def test_to_positive_int_valid():
 
 
 def test_to_positive_int_rejects_negative():
-    import pytest
+    import pytest  # ty:ignore[unresolved-import]
     with pytest.raises(ValueError):
         to_positive_int("-5")
 
 
 def test_to_positive_int_rejects_garbage():
-    import pytest
+    import pytest  # ty:ignore[unresolved-import]
     with pytest.raises(ValueError):
         to_positive_int("abc")
 

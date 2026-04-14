@@ -91,6 +91,13 @@ Self-documenting expression
   - We also number the outputs, e.g. " 1|..." and so on, in order to
     associate the output with the calling line.
 
+//
+  - / true division, always returns a float
+  - // floor division, returns the largest integer ≤ result
+    (truncates toward negative infinity)
+  - // only returns an int if both operands are int. If either operand is
+    a float, the result is a float — even if the value is mathematically whole.
+
 Tail-call optimization (TCO)
   - A function is tail-recursive if the recursive call is the last thing it
     does. So this is
@@ -246,55 +253,17 @@ def calculate_all_sums():
           f"  |    {sum_tail} (tail recursively)\n"
           f"  |    {sum_directly} (directly)")
 
-# uv run pytest 0x01/snippets/b_python_basics.py -v
-
-def test_sum_iteratively():
-    """ Test function sum_iteratively. """
-    assert calc_sum_iteratively(n = 5) == 15
-
-def test_sum_recursively():
-    """ Test function sum_recursively. """
-    assert calc_sum_recursively(n = 5) == 15+1                  # Wrong, so the test fails.
-
-def test_sum_tail_recursively():
-    """ Test function sum_tail_recursively. """
-    assert calc_sum_tail_recursively(n = 5) == 15
-
-def test_sum_directly():
-    """ Test function sum_directly. """
-    assert calc_sum_directly(n = 5) == 15
-
 
 """
 Topic: Collections
 """
 
 @print_function_header
-def collect_numbers():
-    """ Collects numbers from the console. """
+def collect_items():
+    """ Collects items. """
 
-    numbers = set()                         # A set.
-    inputs: list[int] = []                  # A list with type hint (better would be a deque).
-
-    print(" 1| Collect numbers in a set and all inputs in list of size 5 (FIFO) (end with <Return>)")
-    while (data := input(" 2| Enter number n: ")) != "":        # while-loop, preview: Walrus operator (:=)
-        try:                                # Exception handling.
-            n = int(data)
-            if n in numbers:
-                print(f" 3| {n} already exists")
-            # else:
-            numbers.add(n)                  # A set contains an element only once.
-            if len(inputs) >= 5:
-                del inputs[0]               # Discards the value, or: inputs.pop(0) (removes and returns)
-            inputs.append(n)
-            print(f" 4| {numbers=}, {inputs=}")
-        except ValueError as e:
-            print(f" 5| error: {e}")
-
-@print_function_header
-def collect_variables():
-    """ Collects variables from the console, format 'x=12'. """
-
+    # A local function with exception handling.
+    # Preview: Types as parameter.
     def try_parse(value, target_type):
         """ Converts value into target_type or None. """
         try:
@@ -302,86 +271,30 @@ def collect_variables():
         except (ValueError, TypeError):
             return None
 
-    print(" 1| Enter variables in the form 'x=1' one after the other (end with <Return>)")
-    variables: dict[str, int] = {}          # A dictionary with type hint.
+    print(" 1| Sort items: numbers in a set, positives in a list and assignments in a dictionary.")
 
-    while (data := input(" 2| Enter variable: ")) != "":
-        p1,p2,p3 = data.partition("=")      # Preview: Variable destructuring.
-        if (name:=p1.strip())== "" or (p2 != "=") or (number:=try_parse(p3, int)) is None:
-            print(f" 3|   format error ({name=},{number=})")    # Where is the problem here?
-            continue
-        if name in variables:               # Does the key exist? Get it with variables[name].
-            print(f" 4|   old value: {name}={variables[name]}")
-        variables[name] = number            # Set a new value.
-        print(f" 5| Current (dictionary) {variables=}")
-    return variables
+    # Assume these inputs are from console input, file read or database query.
+    inputs = ["1", "2", "3", "2", "-5", "a=Alice", "b=Bob", "eof"]
 
-@print_function_header
-def sum_all_positives(variables):
-    """ Sums all values >0. """
+    numbers = set()                         # A set of unique numbers.
+    positives: list[int] = []               # A list of positive numbers.
+    variables: dict[str, str] = {}          # A dictionary of assignments.
 
-    print(" 1| sum values>0:")
+    # preview: Walrus operator (:=) and inputs.pop(0) removes and returns at index.
+    while (data := inputs.pop(0)) != "eof": # while-loop
+        if (n:=try_parse(data, int)) is not None:
+            print(f" 2| number: {n=}")
+            numbers.add(n)
+            if n > 0:
+                positives.append(n)
+        elif '=' in data:
+            name, _, value = data.partition("=")  # Preview: Variable destructuring.
+            print(f" 3| key-value: {name=}, {value=}")
+            variables[name] = value
+    print(f" 4| sorted: {numbers=}, {positives=}, {variables=}")
 
-    total = 0
-    for k,v in variables.items():
-        if v>0:
-            total += v
-            print(f" a| -> add {k}={v} => subtotal={total}")
-    print(f" 2| {total=}")
-
-    # Or, more Pythonic? Preview: set comprehension
-    positive_values = { v for v in variables.values() if v > 0}
-    total = sum(positive_values)
-    print(f" 3| {total=}")
-
-
-@print_function_header
-def debug_code():
-    """ Debug code with errors. """
-
-    data = [10, 20, 0, 30]
-
-    try:
-        results = [100 / x for x in data]   # Preview list comprehension, see below
-        print(f" 1| {results=}")
-    except ZeroDivisionError:
-        print(" 2| exception caught!")      # Where is 'results'?
-
-
-"""
-Topic: Python is dense; preview comprehensions
-"""
-
-@print_function_header
-def process_prices():
-    """ Work with prices. """
-
-    # Fruits (head) with prices per (line per) week.
-    FRUIT_DATA = """
-    Apple, Banana, Cherry, Mango, Pineapple
-
-    [0.123, 0.678, 0.345, 0.980, 0.456]
-    [0.231, 0.564, 0.897, 0.123, 0.675]
-    [0.423, 0.942, 0.812, 0.503, 0.256]
-    [0.134, 0.789, 0.456, 0.234, 0.897]
-    """
-
-    fruits_block, prices_block = FRUIT_DATA.split("\n\n")
-
-    # classical style
-    #   fruits = []
-    #   for fruit in fruits_block.split(","):
-    #       fruits.append(fruit.strip())
-    #
-    # Preview: with list comprehension:
-    fruits = [fruit.strip() for fruit in fruits_block.split(",")]
-    print(f" 1| {fruits=}")
-
-    prices_week = [                         # Nested list comprehension.
-        [float(s) for s in row.strip(" []").split(",")]         # strip(chars) removes chars from string.
-        for row in prices_block.strip().split("\n")             # float(s) converts string to float.
-    ]
-    print(f" 2| {prices_week=}")
+    for k,v in variables.items():           # Preview: Dictionary iteration.
+        print(f" 5| {k}={v}")
 
 
 if __name__ == "__main__":                  # 'main'-guard.
@@ -396,16 +309,4 @@ if __name__ == "__main__":                  # 'main'-guard.
     calling_a_function()
     calculate_all_sums()
 
-    with patch("builtins.input", side_effect=[                  # Simulate inputs.
-        "1","2","3","4","1","2","3","",
-        "x=1","y=2","x=3",""
-    ]):
-        # Collections
-        collect_numbers()
-        sum_all_positives(collect_variables())
-
-    # Debug
-    debug_code()
-
-    # Preview
-    process_prices()
+    collect_items()
