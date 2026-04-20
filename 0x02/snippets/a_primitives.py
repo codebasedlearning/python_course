@@ -226,6 +226,8 @@ def using_slicing():
     fib = [1,1,2,3,5,8,13]
     print(f"11| {fib[2:4]=}")               # start- (incl.), end-pos (excl.)
 
+    smile = "smile 😀"
+    print(f"12| {smile=}, {len(smile)=}, {smile[6]=}, {len(smile[6])=}")
 
 """
 Topic: Equality

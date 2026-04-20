@@ -31,7 +31,7 @@ Build fluency with primitives and collections and apply them to small, well-defi
 - The topic of this folder is 'primitives', like in other languages, so here `int`, `bool`, `float`,
   and `str`. We have omitted some standard types here and will deal with them later, e.g. `complex`
   or special types such as `NoneType`. 
-- Actually there are no 'primitives' in Python, only objects. You can see this by looking at the
+- Actually, there are no 'primitives' in Python, only objects. You can see this by looking at the
   definition in builtins.py, e.g. via the 'PyCharm' context menu on `int`, then 'Go To Declaration'.
   
 - `int` and `float` are so-called 'numeric types'.
@@ -46,7 +46,7 @@ Build fluency with primitives and collections and apply them to small, well-defi
   does not __contain__ all the numbers but behaves like a read-only-collection. We have omitted some
   standard types here and will deal with them later, e.g. binary types such as `bytes`, `bytearray`,
   and `memoryview`.
-- Some of the containers are mutable, others are not. For each container or collection, we first
+- Some containers are mutable, others are not. For each container or collection, we first
   consider the operations that do not modify the data (e.g. read, find, contains, traverse,
   construction) and then the operations that modify the data (e.g. write, add/insert, delete). So,
   these are the operations that should always be on a cheat sheet if you are making one:
@@ -198,10 +198,8 @@ function you *hope* works.
   and observe the output: green lines mean passed, red means failed.
 
 Part 1
-- Pick **one** of your solutions from Unit `0x01` (e.g. `counter_add`/`counter_sub` from 'Bronze
-  Strand' or `fib_itr` from 'Sunny Coastline').
-- In a file `test_sandy_shoal.py`, write at least **four** `test_*` functions that verify your
-  solution. Include:
+- Pick **one** of your solutions and write at least **four** `test_*` functions 
+  in a file `test_sandy_shoal.py` that verify your solution. Include:
   - A normal / happy-path case.
   - A boundary case (e.g. `fib(0)`, `fib(1)`, or an empty counter).
   - An edge case or error case (e.g. subtracting from an empty counter, or testing a large `n`).

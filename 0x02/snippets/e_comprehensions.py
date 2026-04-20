@@ -156,6 +156,10 @@ def comprehension_limits():
 
 
 """
+Advanced part
+"""
+
+"""
 Topic: Python is dense; zip + comprehensions
 """
 

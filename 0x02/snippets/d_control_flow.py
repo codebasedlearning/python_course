@@ -9,7 +9,6 @@ Teaching focus
   - if, elif, else
   - while, break, continue
   - for, range, enumerate
-  - list comprehension (preview)
   - exceptions, else in try
 
 'else' in Exception
@@ -101,15 +100,6 @@ def using_for():
 
 
 @print_function_header
-def preview_comprehension():
-    """ preview list comprehension """
-
-    data = [2, 3, 5]
-    dbl_data = [i*2 for i in data]          # list comprehension, later
-    print(f" 1| {data=}, 2*data={dbl_data}")
-
-
-@print_function_header
 def using_exceptions():
     """ for exceptions """
 
@@ -119,6 +109,7 @@ def using_exceptions():
         print(f" {n=}")
     except ValueError as e:
         print(f" => value error: {e}")
+        # raise                             # if you want to raise it again
 
     print(" 2| try again...", end='')
     try:
@@ -158,5 +149,4 @@ if __name__ == "__main__":
     using_if()
     using_while()
     using_for()
-    preview_comprehension()
     using_exceptions()
