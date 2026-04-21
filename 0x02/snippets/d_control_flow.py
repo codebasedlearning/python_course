@@ -147,8 +147,17 @@ def using_exceptions():
 
 @print_function_header
 def using_pass():
-    pass                                    # pass for empty except, if/else branches, empty loops (emphasize).
-    ...                                     # for function/method bodies that are stubs or abstract (comes).
+    x=0
+    # 'pass' for empty except, if/else branches, empty loops (emphasize) – does nothing.
+    if x<=0:
+        pass
+    else:
+        print(" 1| do something")
+
+    # '...' for function/method bodies that are stubs or abstract (comes) – also does nothing.
+    class File:
+        def load(self):
+            ...
 
 
 if __name__ == "__main__":
