@@ -145,8 +145,15 @@ def using_exceptions():
         print(f" => runtime error: {e}")
 
 
+@print_function_header
+def using_pass():
+    pass                                    # pass for empty except, if/else branches, empty loops (emphasize).
+    ...                                     # for function/method bodies that are stubs or abstract (comes).
+
+
 if __name__ == "__main__":
     using_if()
     using_while()
     using_for()
     using_exceptions()
+    using_pass()

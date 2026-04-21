@@ -186,6 +186,7 @@ def string_ops():
     words = t.split()                       # The result is a list.
     print(f" 6| {words=}, {len(words)=}, {type(words)=}")
 
+    # \ still works in strings, but not in comments.
     data = """
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -218,16 +219,17 @@ def using_slicing():
     print(f" 5| {s[:4]=}")                  # start=0, end-pos=4 (excl.)
     print(f" 6| {s[4:]=}")                  # start=4, end-pos=length
     print(f" 7| {s[-4:-2]=}")               # start=length-4, end-pos=length-2
-    print(f" 8| {s[-1:]=}")                 # start=length-1, end-pos=length
-    print(f" 9| {s[3:-2]=}")                # start=3, end-pos=-2
-    print(f"10| {s[::2]=}")                 # start=0, end-pos=length, step=2
+    print(f" 8| {s[-2:-4:-1]=}")               # start=length-4, end-pos=length-2
+    print(f" 9| {s[-1:]=}")                 # start=length-1, end-pos=length
+    print(f"10| {s[3:-2]=}")                # start=3, end-pos=-2
+    print(f"11| {s[::2]=}")                 # start=0, end-pos=length, step=2
 
     # Slicing for lists (preview).
     fib = [1,1,2,3,5,8,13]
-    print(f"11| {fib[2:4]=}")               # start- (incl.), end-pos (excl.)
+    print(f"12| {fib[2:4]=}")               # start- (incl.), end-pos (excl.)
 
     smile = "smile 😀"
-    print(f"12| {smile=}, {len(smile)=}, {smile[6]=}, {len(smile[6])=}")
+    print(f"13| {smile=}, {len(smile)=}, {smile[6]=}, {len(smile[6])=}")
 
 """
 Topic: Equality

@@ -262,7 +262,7 @@ def variable_unpacking():
     print(f" 3| error,data: {error=}, {data=}")
 
     triple = [1, 2, 3]
-    a, _, c = triple                        # '_' means 'unused', it is discarded.
+    a, _, c = triple                        # '_' means 'unused', it is discarded; _ _ is also possible.
     print(f" 4| a,_,c={triple} -> {a=}, {c=}")
 
     values = [1, 2, 3, 4, 5]
