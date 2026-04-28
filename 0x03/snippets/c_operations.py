@@ -71,6 +71,7 @@ class LoggingDict:
         return self.log_dict.__len__()
 
     def __iter__(self):
+        print(" !!iter!!")
         return iter(self.log_dict)
 
     def __contains__(self, key):
@@ -166,6 +167,9 @@ def test_equality_and_hashing():
 
     point_dict = {p1: "origin-ish", p3: "further out"}
     print(f" 5| {point_dict=}, {point_dict[p2]=}")
+    
+    # p1.x=10  # break the dict
+    print(f" 6| {hash(p1)=} {point_dict=}, {point_dict[p1]=}")
 
 
 """
@@ -189,8 +193,8 @@ class Vec2:
     def __mul__(self, scalar):
         return Vec2(self.x * scalar, self.y * scalar)
 
-    def __rmul__(self, scalar):             # called for: scalar * vec
-        return self.__mul__(scalar)
+    def __rmul__(self, scalar):             # right-side multiplication, called for: scalar * vec
+        return self.__mul__(scalar)         # there are more reversed-side-op r<something>
 
     def __repr__(self):
         return f"Vec2({self.x}, {self.y})"

@@ -122,6 +122,7 @@ pylint, error `too-few-public-methods`
 
 """
 
+import sys
 from utils import print_function_header
 
 """
@@ -315,6 +316,10 @@ def show_slots():
     print(f" 3| has __dict__: {hasattr(sp, '__dict__')}")
     print(f" 4| has __slots__: {sp.__slots__=}")
 
+    print(f" 5| {sys.getsizeof(sp)=}")
+    person = Person("Alice", 20)
+    print(f" 6| {sys.getsizeof(person)=}, {sys.getsizeof(person.__dict__)=})")
+
 
 """
 Topic: Instance creation
@@ -354,7 +359,7 @@ def show_new_and_init():
         print(f" 4| {mary.name=}")
 
     inner_func()
-    print(" 5| end")
+    print(" 5| end")                        # sys.getrefcount(paul)
 
 
 """

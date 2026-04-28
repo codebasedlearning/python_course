@@ -20,8 +20,9 @@ NamedTuple
   - Like dataclass, it generates __repr__, __eq__, and supports type hints.
   - Unlike dataclass, instances are immutable by default (they are tuples),
     can be used as dictionary keys, and have less memory overhead.
-  - Prefer NamedTuple for small, immutable records; prefer dataclass for
-    mutable objects or when you need methods and post-init logic.
+
+Prefer NamedTuple for small, immutable records; prefer dataclass for
+mutable objects or when you need methods and post-init logic.
 
 See also
   - https://docs.python.org/3/library/dataclasses.html
@@ -64,7 +65,7 @@ class Point:
     """ point class """
     x: int
     y: int = 0
-    root: int = field(repr=False, default=-1)   # more field info, cf. str()
+    root: int = field(repr=False, default=-1)   # removed from repr, more field info, cf. str()
 
 
 @dataclass
