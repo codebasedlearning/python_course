@@ -70,11 +70,21 @@ class IPOProblem(IPO[I,P,O]):
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        for base in getattr(cls, '__orig_bases__', []):
+        # Use vars(cls), NOT getattr — getattr would walk the MRO and pick up
+        # IPOProblem's own IPO[I,P,O] bases, silently assigning the raw
+        # TypeVars (~I, ~P, ~O) as data classes.
+        for base in vars(cls).get('__orig_bases__', ()):
             args = get_args(base)
             if len(args) == 3:
                 cls.input_data_class, cls.process_data_class, cls.output_data_class = args
-                break
+                return
+        # No [I, P, O] on this class — only fine if a parameterized parent
+        # already provided them (e.g. `class Faster(SquarePlusOneProblem)`).
+        if cls.process_data_class is None or cls.output_data_class is None:
+            raise TypeError(
+                f"{cls.__name__} must be parameterized with data classes: "
+                f"class {cls.__name__}(IPOProblem[InputData, ProcessData, OutputData]): ..."
+            )
 
     def __init__(self) -> None:
         self.producers: list[Producer] = []
@@ -94,6 +104,16 @@ class IPOProblem(IPO[I,P,O]):
         return self
 
     def solve(self) -> list[ResultData[I,P,O]]:
+        # fail fast on a half-wired pipeline instead of silently returning []
+        missing = [name for name, slot in
+                   (("input", self.producers),
+                    ("process", self.processors),
+                    ("output", self.consumers)) if not slot]
+        if missing:
+            raise RuntimeError(
+                f"{type(self).__name__} pipeline incomplete: missing {', '.join(missing)}"
+            )
+
         results = []
         for producer in self.producers:     # or with 'chain'
             for input_data in producer.read():
@@ -105,7 +125,7 @@ class IPOProblem(IPO[I,P,O]):
                     logger.debug(f" P| - {f'processed by {processor.__class__.__name__}:':<40} - {process_data}")
 
                 output_data = self.output_data_class.of(input_data,process_data)
-                results.append(ResultData(producer, input_data, process_data))
+                results.append(ResultData(producer, input_data, process_data, output_data))
                 for consumer in self.consumers:
                     logger.debug(f" C| - {f'write to {consumer.__class__.__name__}:':<40} {output_data}")
                     consumer.write(output_data)

@@ -243,32 +243,155 @@ def solve_with_runtime_args():
         runtime_args_ctx.reset(token)
 
 
-# def test_ConstantProducer_read():
-#     """ test that the producer creates valid InputData """
-#     producer = ConstantProducer(initial_x=23)
-#     result = list(producer.read())
-#     assert len(result) == 1 and result[0].x == 23
-#
-# class BlackHoleConsumer(Consumer):
-#     def write(self, output_data: OutputData) -> None:
-#         pass
-#
-# def test_SquarePlusOneProcessor_results():
-#     """ test that the producer creates valid InputData """
-#     result = SquarePlusOneProblem.of(
-#         input=ConstantProducer(initial_x=3),
-#         process=SquarePlusOneProcessor(),
-#         output=BlackHoleConsumer()
-#     ).solve()
-#     assert len(result) == 1 and result[0].process_data.y==10
-#
-# import pytest
+# Decorator pattern: wrap any Processor to add a cross-cutting concern
+# (timing, here) without touching the wrapped processor itself. Open/Closed
+# principle made physical.
+import time
+
+class TimingProcessor(Processor[ProcessData]):
+    """ measures and prints the elapsed time of an inner processor """
+
+    def __init__(self, inner: Processor) -> None:
+        self.inner = inner
+
+    def apply(self, process_data: ProcessData) -> ProcessData:
+        t0 = time.perf_counter()
+        result = self.inner.apply(process_data)
+        dt_ms = (time.perf_counter() - t0) * 1000
+        print(f"  [TimingProcessor] {self.inner.__class__.__name__}: {dt_ms:.4f} ms")
+        return result
 
 
-# or: uv run pytest 0x_tra_gropros/snippets/b_ipo/c_ipo_examples.py -v
+@print_function_header
+def solve_with_timing():
+    """ wrap a real Processor in TimingProcessor — same pipeline, free timing """
+    SquarePlusOneProblem.of(
+        input=ConstantProducer(initial_x=5),
+        process=TimingProcessor(SquarePlusOneProcessor()),
+        output=ConsoleConsumer()
+    ).solve()
 
-# def run_tests():
-#    pytest.main([__file__, "-v"])
+
+# Bridges the IPO framework and the testing world: the consumer becomes
+# the assertion. Useful for golden-output / regression tests.
+
+class ValidatingConsumer(Consumer[OutputData]):
+    """ asserts OutputData.y matches an expected value """
+
+    def __init__(self, expected_y: int) -> None:
+        self.expected_y = expected_y
+
+    def write(self, output_data: OutputData) -> None:
+        if output_data.y != self.expected_y:
+            raise AssertionError(
+                f"expected y={self.expected_y}, got y={output_data.y} "
+                f"(input x={output_data.x} from {output_data.source!r})"
+            )
+        print(f"  [ValidatingConsumer] PASS: y={output_data.y}")
+
+
+@print_function_header
+def solve_with_validation():
+    """ ValidatingConsumer turns the pipeline into a one-shot test """
+    SquarePlusOneProblem.of(
+        input=ConstantProducer(initial_x=3),
+        process=SquarePlusOneProcessor(),
+        output=ValidatingConsumer(expected_y=10)   # 3^2 + 1 = 10
+    ).solve()
+
+
+# Chained pipelines: feed the OutputData of one IPOProblem in as the
+# InputData of the next via a tiny adapter. The whole framework becomes
+# itself composable — that's the moment the abstraction clicks.
+
+class OutputAdapterProducer(Producer[InputData]):
+    """ feeds the results of a previous .solve() as InputData of the next pipeline """
+
+    def __init__(self, results) -> None:
+        self.results = results
+
+    def read(self) -> Iterator[InputData]:
+        for r in self.results:
+            yield InputData(source=f"{r.input_data.source}->chain", x=r.process_data.y)
+
+
+class DoubleProcessor(Processor[ProcessData]):
+    def apply(self, process_data: ProcessData) -> ProcessData:
+        return ProcessData(y=process_data.y * 2)
+
+
+@print_function_header
+def solve_chained_pipeline():
+    """ Stage 1: x → x²+1 ;  Stage 2: y → 2·y .  Output of stage 1 becomes input of stage 2. """
+
+    # Stage 1: x = 3 → y = 10
+    stage1 = SquarePlusOneProblem.of(
+        input=ConstantProducer(initial_x=3),
+        process=SquarePlusOneProcessor(),
+        output=ConsoleConsumer()
+    ).solve()
+
+    # Stage 2: x = 10 (from stage 1) → y = 20
+    SquarePlusOneProblem.of(
+        input=OutputAdapterProducer(stage1),
+        process=DoubleProcessor(),
+        output=ConsoleConsumer()
+    ).solve()
+
+
+# Tests
+
+import pytest
+
+
+def test_ConstantProducer_read():
+    """ test that the producer creates valid InputData """
+    producer = ConstantProducer(initial_x=23)
+    result = list(producer.read())
+    assert len(result) == 1 and result[0].x == 23
+
+
+class BlackHoleConsumer(Consumer):
+    def write(self, output_data: OutputData) -> None:
+        pass
+
+
+def test_SquarePlusOneProcessor_results():
+    """ test that the producer creates valid InputData """
+    result = SquarePlusOneProblem.of(
+        input=ConstantProducer(initial_x=3),
+        process=SquarePlusOneProcessor(),
+        output=BlackHoleConsumer()
+    ).solve()
+    assert len(result) == 1 and result[0].process_data.y==10
+
+
+def test_solve_rejects_missing_slots():
+    """ solve() refuses to run on a half-wired pipeline """
+    with pytest.raises(RuntimeError, match="missing"):
+        SquarePlusOneProblem().solve()                          # nothing wired
+    with pytest.raises(RuntimeError, match="process, output"):
+        SquarePlusOneProblem().input(ConstantProducer(1)).solve()
+
+
+def test_subclass_without_type_args_fails():
+    """ forgetting [I, P, O] is caught at class-definition time """
+    with pytest.raises(TypeError, match="must be parameterized"):
+        class BrokenProblem(IPOProblem):       # noqa: F841 — defining the class is the test
+            pass
+
+
+def test_subclass_inherits_data_classes():
+    """ subclassing a parameterized problem without re-stating [I, P, O] is OK """
+    class FasterSquare(SquarePlusOneProblem):
+        pass
+    assert FasterSquare.process_data_class is ProcessData
+
+
+def run_tests():
+    """ pytest entry — also: uv run pytest 0x_tra_gropros/snippets/b_ipo/c_examples.py -v """
+    pytest.main([__file__, "-v"])
+
 
 if __name__ == "__main__":
     solve_straight()
@@ -278,4 +401,7 @@ if __name__ == "__main__":
     solve_with_multiple_producers()
     solve_with_lambdas()
     solve_with_runtime_args()
-    # run_tests()
+    solve_with_timing()
+    solve_with_validation()
+    solve_chained_pipeline()
+    run_tests()
