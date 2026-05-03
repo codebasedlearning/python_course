@@ -19,11 +19,11 @@ Best practice
 import os
 from pathlib import Path
 
+from utils import print_function_header
 
+@print_function_header
 def show_io_stats():
     """ show io stats """
-    print("\nshow_io_stats\n=============")
-
     filename = "./data/data9.in"
     dirname = "."
 
@@ -37,10 +37,9 @@ def show_io_stats():
     print(f" 3| '*py'-files in dir? {files_in_dir}")
 
 
+@print_function_header
 def show_file_io():
     """ show file io """
-    print("\nshow_file_io\n============")
-
     filename = "./data/data9.in"
 
     print(" 1| content")
@@ -54,10 +53,9 @@ def show_file_io():
     #     file.write(f"data...\n")
 
 
+@print_function_header
 def show_path_io():
     """ show file io with Path """
-    print("\nshow_path_io\n============")
-
     filename = "./data/data9.in"
     lines = Path(filename).read_text().splitlines()
     print(f" 1| {lines=}")

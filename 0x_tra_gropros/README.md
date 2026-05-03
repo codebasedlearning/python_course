@@ -185,6 +185,7 @@ be a bad design.
   - Crosswords
   - Service Stations
   - Wooden Puzzle
+  - Vehicle Simulation
 
 Try to solve the problem(s), but also try to take the SOLID principles into account.
 

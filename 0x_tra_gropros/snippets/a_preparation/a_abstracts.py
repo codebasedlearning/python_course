@@ -16,6 +16,8 @@ Teaching focus
 
 from abc import ABC, abstractmethod
 
+from utils import print_function_header
+
 
 class Drawable(ABC):
     """ abstract base class for drawable objects """
@@ -43,11 +45,9 @@ class Square(Drawable):
     def draw(self) -> None:
         print(f" c| Drawing a square labeled '{self.label}'")
 
-
+@print_function_header
 def show_abstract_methods():
     """ show abstract methods """
-    print("\nshow_abstract_methods\n=====================")
-
     shapes = [
         # Drawable("Figure"),               # error: abstract class
         Circle("Sun"),

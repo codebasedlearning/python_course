@@ -1,4 +1,4 @@
-# (C) 2025 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 This snippet discusses the idea behind the general IPO approach.
@@ -6,40 +6,46 @@ This snippet discusses the idea behind the general IPO approach.
 Teaching focus
   - IPO idea
 
-Model problem:
-  - Calculate x^2+1 for a given x
+Simple Model problem:
+  - Calculate the root x0 for a given linear equation ax+b=0,
+    given by the coefficients a, b.
 """
 
+from utils import print_function_header
 
-class SquareAdd1Problem:
+
+class RootProblem:
     """ This class is representative of commonly submitted solutions in terms of content and structure. """
 
     def __init__(self, source):
-        self.x = 0                          # init problem data
-        self.y = 0
+        self.a = 0.0                        # init problem data
+        self.b = 0.0
+        self.x0 = 0.0
         self.source = source
 
     def get_data(self):
         """ read data from a source, maybe a file """
-        self.x = 3
-        print(f" -> read x={self.x} from '{self.source}'")
+        self.a = 3.0                        # 3x + 4.5 = 0 => x0 = -1.5
+        self.b = 4.5
+        print(f" -> read coefficients a={self.a}, b={self.b} from '{self.source}'")
 
-    def solve_and_print(self):
+    def get_root(self):
         """ solve the problem and print the solution """
-        print(f" -> solve for x={self.x}...", end='')
-        self.y = self.x * self.x            # x^2 + 1
-        self.y += 1                         # sometimes in multiple steps
-        print(f" -> y={self.y}")
+        print(f" -> solve ({self.a})x + ({self.b}) = 0...", end='')
+        if self.a==0:
+            raise ValueError("a=0, no solution")
+        self.x0 = (-self.b) / self.a
+        print(f" => x={self.x0}")
         dest = self.source.replace(".in",".out")
-        print(f" -> write '{self.x} -> {self.y}' to '{dest}'")
+        print(f" -> write 'a={self.a}, b={self.b}, x0={self.x0}' to '{dest}'")
 
+@print_function_header
 def typical_solution():
     """ main sequence """
-    print("\ntypical_solution\n================")
 
-    problem = SquareAdd1Problem(source="data.in")
+    problem = RootProblem(source="data.in")
     problem.get_data()
-    problem.solve_and_print()
+    problem.get_root()
 
 """
 What could be improved here?

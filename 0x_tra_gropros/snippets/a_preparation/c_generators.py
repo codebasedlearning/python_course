@@ -18,6 +18,8 @@ instead of square brackets [].
 Pro/Con?
 """
 
+from utils import print_function_header
+
 
 def simple_generator():
     """ a simple generator with values 1,2,3 """
@@ -34,9 +36,9 @@ def factorial_generator(limit):
         yield fact                          # also like return, but all local vars live on
 
 
+@print_function_header
 def show_generators():
     """ classes and type hints """
-    print("\nshow_generators\n==================")
 
     print(" 1| gen-values:", end='')
     for value in simple_generator():

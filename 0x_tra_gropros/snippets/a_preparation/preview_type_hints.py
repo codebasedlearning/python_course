@@ -9,15 +9,16 @@ Teaching focus
 
 from typing import Self
 
+from utils import print_function_header
+
 
 def add(a, b):                              # no types, see also 'test_add'
     """ Calculates a+b """
     return a + b
 
-
+@print_function_header
 def test_add():
     """ what can be added? """
-    print("\ntest_add\n========")
 
     print(f" 1| {add(2, 3)=}")
     print(f"    {add('2', '3')=}")          # bug or feature?
@@ -32,9 +33,9 @@ def mul(a: str | int, b: int) -> str | int:                     # type hints, se
     return a * b
 
 
+@print_function_header
 def test_mul():
     """ what can be multiplied? """
-    print("\ntest_mul\n========")
 
     print(f" 3| {mul(2, 3)=}")
     print(f"    {mul('2', 3)=}")            # bug or feature?
@@ -44,9 +45,9 @@ def test_mul():
         print(f" 4| {e=}")
 
 
+@print_function_header
 def vars_and_type_hints():
     """ variables and type hints """
-    print("\nvars_and_type_hints\n===================")
 
     s: str = "Python"                       # variable definition with (optional) type hint
     print(f" 1| Hello '{s}'")
@@ -76,9 +77,9 @@ class Person:
         return self
 
 
+@print_function_header
 def classes_and_type_hints():
     """ classes and type hints """
-    print("\nclasses_and_type_hints\n======================")
 
     hp: Person = Person("Hans-Peter K.")
     print(f" 1| Hello '{hp.name}'")

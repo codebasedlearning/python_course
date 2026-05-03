@@ -23,6 +23,8 @@ Key differences between `time.time()` and `time.process_time()`
 
 import time
 
+from utils import print_function_header
+
 def sum_up():
     """ benchmark function"""
     s = 0
@@ -30,9 +32,9 @@ def sum_up():
         s += i
     return s
 
+@print_function_header
 def show_timing():
     """ show io stats """
-    print("\nshow_timing\n===========")
 
     print(" 1| start...", end='')
 
