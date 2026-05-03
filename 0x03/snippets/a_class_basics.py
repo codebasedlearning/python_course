@@ -125,6 +125,7 @@ pylint, error `too-few-public-methods`
 import sys
 from utils import print_function_header
 
+
 """
 Topic: Class basics
 """
@@ -143,20 +144,45 @@ class TeamMember:
         print(f" b|   TeamMember.greetings: Hello, I am {self.name}, born in {self.born_in}.")
         return self
 
+    def __repr__(self):                     # Comment out and cmp the output.
+        return f"('{self.name}', * {self.born_in})"
+
 
 @print_function_header
 def create_team():
     """ first class instances """
 
     alice = TeamMember("Alice", 2005)       # What is most readable?
-    alice.greetings()
-    print(f" 1| {alice=}")                  # hmmm...
+    alice.greetings()                                       # Call a member functions.
+    print(f" 1| {alice=}, {alice.name=}, {alice.born_in=}") # Access member vars.
 
     bob = TeamMember(name="Bob", born_in=2007)      # or this?
     bob.greetings()
-    print(f" 2| {bob=}")
+    print(f" 2| {bob=}, {bob.name=}, {bob.born_in=}")
 
     TeamMember("Charly", born_in=1999).greetings()  # chaining
+
+
+@print_function_header
+def understand_instance_data():
+    """ discuss instance and dynamic data in __dict__ """
+
+    alice = TeamMember("Alice", 2005)
+    bob = TeamMember(name="Bob", born_in=2007)
+
+    print(f" 1| {alice.__dict__=}")         # Key moment, an important observation.
+    print(f" 2| {bob.__dict__=}")
+
+    alice.has_a_sister = True               # This is about understanding, not best practice!
+    bob.has_a_brother = False               # warning from pylint
+
+    print(f" 3| {alice.has_a_sister=}, {bob.has_a_brother=} -> it works")
+    print(f" 4| {alice.__dict__=}")
+    print(f" 5| {bob.__dict__=}")
+
+    del alice.born_in                       # Even removing works.
+    del alice.has_a_sister
+    print(f" 5| {alice.__dict__=}")
 
 
 class Person:
@@ -167,7 +193,6 @@ class Person:
     def __init__(self, surname: str, age: int):     # initializer (ctor), self = this
         self.surname = surname              # instance attributes
         self.age = age
-        print(f" a|   Person.init: {self}, {self=}")
 
     def one_year_older(self):
         """ increases age by one """
@@ -181,24 +206,32 @@ class Person:
         print(f" c|   Person.celebrate: Happy {self.age}th birthday, {self.surname}!")
         return self
 
-    def __str__(self):
-        return f"('{self.surname}', {self.age})"
-
     def __repr__(self):
         return f"{self.__dict__}"
 
 
 @print_function_header
-def create_crowd():
+def show_class_data():
     """ more class instances """
 
-    peter = Person("Peter", 23)
-    peter.one_year_older().celebrate()
-    print(f" 1| Peter={peter}")
+    print(f" 1| {Person.__dict__=}")
 
-    paul = Person(surname="Paul", age=24)
-    paul.one_year_older().celebrate()
-    print(f" 2| Paul={paul}")
+    mary = Person("Mary", age=25)
+    print(f" 2| {Person.being_old=}, {mary=}, {mary.being_old=}") # Person.being_old accessible by instance.
+    mary.one_year_older()                   # nothing happens
+    print(f" 3| {Person.being_old=}, {mary=}, {mary.being_old=}")
+
+    Person.being_old = 18
+    print(f" 4| {Person.__dict__=}")
+
+    print(f" 5| {Person.being_old=}, {mary=}, {mary.being_old=}")
+    #print(f" 2| {Person.__dict__=}")
+
+    mary.one_year_older()  # class-data has changed
+    print(f" 6| {Person.being_old=}, {mary=}, {mary.being_old=}")
+
+    mary.being_old = 33
+    print(f" 7| {Person.being_old=}, {mary=}, {mary.being_old=}")
 
 
 class Animal:
@@ -209,20 +242,10 @@ class Animal:
         self.legs = legs
 
     def __str__(self):
-        return f"{self.species} ({self.legs} legs)"
+        return f"|{self.species}, {self.legs}| [__str__]"
 
     def __repr__(self):
-        return f"Animal({self.species!r}, {self.legs})"
-
-
-class Color:
-    """ class with only __repr__, no __str__ """
-
-    def __init__(self, name: str):
-        self.name = name
-
-    def __repr__(self):
-        return f"Color({self.name!r})"
+        return f"({self.species}, {self.legs}) [__repr__]"
 
 
 @print_function_header
@@ -231,23 +254,19 @@ def show_str_vs_repr():
 
     cat = Animal("Cat", 4)
 
-    # print() and f-strings use __str__
-    print(f" 1| print uses __str__: {cat}")
+    print(f" 1| {cat}")
+    print(f" 2| {cat!r}") # or repr(cat)
+    print(f" 3| {cat=}")
     # !r in f-strings and repr() use __repr__
-    print(f" 2| !r uses __repr__:   {cat!r}")
-    print(f" 3| repr() call:        {repr(cat)}")
 
     # inside containers, elements always use __repr__
     zoo = [Animal("Dog", 4), Animal("Spider", 8)]
-    print(f" 4| list uses __repr__: {zoo}")
+    print(f" 4| list: {zoo}")
 
-    info = {"pet": Animal("Parrot", 2)}
-    print(f" 5| dict uses __repr__: {info}")
+    s = "Lorem ipsum"
+    print(f" 5| {s}, {s!r}, {s=}")
 
     # when only __repr__ is defined, it serves as fallback for __str__
-    red = Color("red")
-    print(f" 6| fallback to __repr__: {red}")
-    print(f" 7| repr still works:    {red!r}")
 
 
 """
@@ -255,70 +274,50 @@ Topic: Instance and class data
 """
 
 
-@print_function_header
-def show_instance_data():
-    """ discuss instance and dynamic data in __dict__ """
+class IdentPerson:
+    """ simple person class """
 
-    doro = TeamMember("Doro", born_in=2000)
-    mary = Person("Mary", age=25)
+    next_id = 1                             # class attribute
 
-    print(f" 1| {doro.__dict__=}")          # this is an important observation
-    print(f" 2| {mary.__dict__=}")
+    def __init__(self, name):
+        self.name = name                    # instance attribute
 
-    doro.has_a_sister = True                # warning from pylint
-    mary.has_a_brother = True
+        # protected, with prefix '_' (convention)
+        self._id = IdentPerson.next_id
 
-    print(f" 3| {doro.__dict__=}")
-    print(f" 4| {mary.__dict__=}")
+        # private, two '__', not only a convention (renamed to '_Person__secret_number')
+        self.__secret_number = self._id*23
 
-    del doro.born_in
-    del doro.has_a_sister
-    print(f" 5| {doro.__dict__=}")
+        IdentPerson.next_id += 1                 # access class attribute
+        print(f" a|   Person.init: {self}")
 
+    def __str__(self):
+        return f"{self.__dict__}"
 
-@print_function_header
-def show_class_data():
-    """ discuss class and static data """
+    def secret(self):
+        """ getter for private number """
+        return self.__secret_number
 
-    mary = Person("Mary", age=25)
-    print(f" 1| {Person.__dict__=}")
-    mary.one_year_older()                   # nothing happens
+    def __my_internal_secret(self):
+        """ secret function """
+        return self.__secret_number         # also private
 
-    Person.being_old = 18
-    print(f" 2| {Person.__dict__=}")
-    mary.one_year_older()                   # class-data has changed
-
-
-class SlottedPerson:
-    """ person class with __slots__ instead of __dict__ """
-    __slots__ = ('name', 'age')
-
-    def __init__(self, name: str, age: int):
-        self.name = name
-        self.age = age
-
-    def __repr__(self):
-        return f"SlottedPerson({self.name!r}, {self.age})"
+    @classmethod                            # class method with decorator
+    def print_next_id(cls):
+        """ print class attribute """
+        print(f" b|   {IdentPerson.next_id=}")
 
 
 @print_function_header
-def show_slots():
-    """ __slots__ vs __dict__ """
+def show_access_modifiers():
+    """ access different attributes """
 
-    sp = SlottedPerson("Eve", 30)
-    print(f" 1| {sp=}, {sp.name=}, {sp.age=}")
+    peter = IdentPerson(name="Peter")
+    print(f" 1| public:    {peter}")
+    print(f" 2| protected: {peter._id=}")
+    print(f" 3| private:   {peter._IdentPerson__secret_number=}, {peter._IdentPerson__my_internal_secret()=}")
 
-    try:
-        sp.hobby = "chess"                  # AttributeError: no __dict__
-    except AttributeError as e:
-        print(f" 2| cannot add attribute: {e}")
-
-    print(f" 3| has __dict__: {hasattr(sp, '__dict__')}")
-    print(f" 4| has __slots__: {sp.__slots__=}")
-
-    print(f" 5| {sys.getsizeof(sp)=}")
-    person = Person("Alice", 20)
-    print(f" 6| {sys.getsizeof(person)=}, {sys.getsizeof(person.__dict__)=})")
+    IdentPerson.print_next_id()
 
 
 """
@@ -330,7 +329,6 @@ class TrackedPerson:
     """ person class with lifecycle tracking """
     def __new__(cls, *args, **kwargs):      # here not necessary, just to see the args
         print(f" a|   TrackedPerson.new: {cls}, {args=}, {kwargs=}")
-        # return object.__new__(cls)
         return super().__new__(cls)
 
     def __init__(self, name: str):
@@ -349,86 +347,26 @@ def show_new_and_init():
     print(" 1| start")
     peter = TrackedPerson(name="Peter")
     print(f" 2| {peter.name=}")
+    print(f" 3| {sys.getrefcount(peter)=}")
+    vip = peter
+    print(f" 4| {sys.getrefcount(peter)=}")
 
-    if peter.name:
+    if True:
         paul = TrackedPerson("Paul")
-        print(f" 3| {paul.name=}")
+        print(f" 5| {paul.name=}")
 
     def inner_func():
         mary = TrackedPerson(name="Mary")
-        print(f" 4| {mary.name=}")
+        print(f" 6| {mary.name=}")
 
     inner_func()
-    print(" 5| end")                        # sys.getrefcount(paul)
-
-
-"""
-Topic: Singleton pattern
-"""
-
-
-class DatabaseConnector:                    # problems?
-    """ a class meant to be a singleton """
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)  # Call only the first time
-        return cls._instance
-
-    def __init__(self, connection_string):
-        self.connection_string = connection_string
-
-
-class ServiceDetector:
-    """ a class meant to be a singleton - improved """
-    _instance = None
-    _initialized = False
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
-    def __init__(self, url):
-        if not self._initialized:
-            self.url = url
-            self._initialized = True
-
-
-@print_function_header
-def define_a_singleton():
-    """ define a singleton """
-
-    db_connector = DatabaseConnector(connection_string="aws.com")
-    database_access = DatabaseConnector(connection_string="azure.com")
-    print(f" 1|    {id(db_connector)=}, connected to: '{db_connector.connection_string}'")
-    print(f"    {id(database_access)=}, connected to: '{database_access.connection_string}'")
-
-    main_service = ServiceDetector(url="//server")
-    docker_service = ServiceDetector(url="//docker")
-    print(f" 2|   {id(main_service)=}, ask here: '{main_service.url=}'")
-    print(f"    {id(docker_service)=}, ask here: '{docker_service.url=}'")
-
-
-@print_function_header
-def last_function():
-    """ dummy function to clean up before """
-    pass
-
+    print(" 7| end")
 
 if __name__ == '__main__':
-    # Class basics
+
     create_team()
-    create_crowd()
-    show_str_vs_repr()
-
-    # Instance and class data
-    show_instance_data()
+    understand_instance_data()
     show_class_data()
-    show_slots()
-
-    # Instance creation
+    show_str_vs_repr()
+    show_access_modifiers()
     show_new_and_init()
-    define_a_singleton()
-    last_function()

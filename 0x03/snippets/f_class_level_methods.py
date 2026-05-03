@@ -97,53 +97,5 @@ def show_class_level_functions():
     print(f" 5| {boil_opt}, {type(boil_opt)=}")
 
 
-"""
-Topic: Factory methods
-"""
-
-
-class Color:
-    """ color class with multiple factory methods """
-    def __init__(self, r: int, g: int, b: int):
-        self.r = r
-        self.g = g
-        self.b = b
-
-    @classmethod
-    def from_hex(cls, hex_str: str) -> Self:
-        """ create Color from hex string like '#FF8800' """
-        hex_str = hex_str.lstrip('#')
-        r = int(hex_str[0:2], 16)
-        g = int(hex_str[2:4], 16)
-        b = int(hex_str[4:6], 16)
-        return cls(r, g, b)
-
-    @classmethod
-    def from_dict(cls, data: dict) -> Self:
-        """ create Color from a dictionary """
-        return cls(r=data['r'], g=data['g'], b=data['b'])
-
-    def __repr__(self):
-        return f"Color({self.r}, {self.g}, {self.b})"
-
-
-@print_function_header
-def show_factory_methods():
-    """ multiple ways to create instances """
-
-    c1 = Color(255, 136, 0)
-    c2 = Color.from_hex("#FF8800")
-    c3 = Color.from_dict({'r': 255, 'g': 136, 'b': 0})
-
-    print(f" 1| direct:    {c1=}")
-    print(f" 2| from_hex:  {c2=}")
-    print(f" 3| from_dict: {c3=}")
-    print(f" 4| {(c1.r == c2.r == c3.r)=}")
-
-
 if __name__ == '__main__':
-    # Static and class methods
     show_class_level_functions()
-
-    # Factory methods
-    show_factory_methods()

@@ -111,48 +111,6 @@ def work_with_dataclasses():
     # e.a = 12
 
 
-"""
-Topic: NamedTuple comparison
-"""
-
-
-class PointNT(NamedTuple):
-    """ an immutable 2D point as NamedTuple """
-    x: int
-    y: int
-
-
-@print_function_header
-def compare_with_namedtuple():
-    """ dataclass vs NamedTuple """
-
-    p_dc = Point(x=1, y=2)
-    p_nt = PointNT(x=1, y=2)
-
-    print(f" 1| dataclass: {p_dc=}, {type(p_dc)=}")
-    print(f" 2| namedtuple: {p_nt=}, {type(p_nt)=}")
-
-    # NamedTuple supports tuple unpacking
-    x, y = p_nt
-    print(f" 3| unpacking: {x=}, {y=}")
-
-    # NamedTuple can be used as dict key (immutable + hashable)
-    lookup = {p_nt: "origin-ish"}
-    print(f" 4| as dict key: {lookup[PointNT(1, 2)]=}")
-
-    # NamedTuple supports indexing like a tuple
-    print(f" 5| index access: {p_nt[0]=}, {p_nt[1]=}")
-
-    # immutability
-    try:
-        p_nt.x = 99
-    except AttributeError as e:
-        print(f" 6| immutable: {e}")
-
 
 if __name__ == "__main__":
-    # Dataclasses
     work_with_dataclasses()
-
-    # NamedTuple comparison
-    compare_with_namedtuple()
