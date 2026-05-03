@@ -31,7 +31,6 @@ See also
 """
 
 from dataclasses import dataclass, field
-from typing import NamedTuple
 
 from utils import print_function_header
 

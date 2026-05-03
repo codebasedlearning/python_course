@@ -105,15 +105,6 @@ __del__ (Destructors)
     happens after all references have been deleted, so it need not happen
     immediately afterwards, and may not happen at all.
 
-__slots__
-  - By default, Python stores instance attributes in a per-instance dictionary
-    called __dict__. This allows dynamic attribute creation but uses more memory.
-  - __slots__ declares a fixed set of allowed attributes, replacing __dict__
-    with a more compact internal structure.
-  - Using __slots__ prevents adding arbitrary attributes at runtime and can
-    improve memory usage and attribute access speed.
-
-
 pylint, error `too-few-public-methods`
   - The class defines fewer public methods than the threshold specified by
     Pylint (default is 2 methods). Pylint considers that a class with too few
@@ -363,7 +354,6 @@ def show_new_and_init():
     print(" 7| end")
 
 if __name__ == '__main__':
-
     create_team()
     understand_instance_data()
     show_class_data()
