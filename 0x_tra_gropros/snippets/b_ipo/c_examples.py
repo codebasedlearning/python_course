@@ -322,7 +322,7 @@ class OutputAdapterProducer(Producer[InputData]):
 
     def read(self) -> Iterator[InputData]:
         for r in self.results:
-            yield InputData(source=f"{r.input_data.source}->chain", x=r.process_data.y)
+            yield InputData(source=f"{r.input_data.example}->chain", x=r.process_data.y)
 
 
 class DoubleProcessor(Processor[ProcessData]):
