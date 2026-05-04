@@ -1,64 +1,15 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses class attributes, access modifiers, and properties.
+This snippet discusses properties — Python's @property decorator and the
+property() function — and the backing-field convention.
 
 Teaching focus
-  - working with __dict__, class and instance attributes
-  - access modifiers
-  - see Python possibilities, like patching attributes or methods
-    at runtime (uuuh) or 'modify' the access via __getattribute__
   - pros and cons of properties
-  - backing fields
-  - a lot of pylint and mypy errors for didactic reasons
-
-Public, protected and private
-  - In principle, all variables in Python are accessible, i.e. you can use them
-    from a technical point of view.
-  - In practice, there is an agreement that 'public' elements are named without
-    leading underscores, 'protected' elements, accessible in subclasses, are
-    named with one underscore, and 'private' elements, accessible only to
-    class members, are named with two underscores.
-    You should stick to this convention.
-  - Also, the Python compiler changes the name of 'private' members to
-    '_+class name+attribute name'.
-  - A small overview can also be found here
-    https://www.tutorialsteacher.com/python/public-private-protected-modifiers
-
-__dict__
-  - In Python, it is not necessary to declare attributes beforehand, unlike
-    in languages like C++ or Java. They are assigned to the instance, e.g.
-    in the initialization. However, this can be done anywhere.
-  - This is a very basic idea in Python. When you want to access an element,
-    say `x`, `obj.y` or `z()`, there are rules by which the access is resolved.
-    We will look at this in more detail later.
-  - When accessing instance attributes (`y`), Python searches a dictionary
-    called '__dict__'. This dictionary contains all the attributes of the
-    instance. If `y` is not found there, it is looked up in the class dictionary
-    (in fact, the process is a little more complicated).
-  - This is why dictionaries are so important to Python. They implement
-    namespaces.
-  - See
-    https://blog.peterlamut.com/2018/11/04/python-attribute-lookup-explained-in-detail/
-  - So it is also possible to change or add attributes at runtime... but there
-    should be a good discussion about the use cases. You can find something like
-    this under the term 'monkey patch'
-    https://stackoverflow.com/questions/5626193/what-is-monkey-patching
-
-Class members
-  - In Python classes are also objects and can also contain data. This is the
-    concept of 'static', e.g. in C++ or Java.
-  - A class member can be addressed via the class object, i.e. by using the
-    full qualified name. In this sense, members of a class object are treated
-    no differently as members of a class instance.
-  - Analogous to class attributes, there are also class methods. These are
-    called in the same way as the class object (note: self=this does not exist
-    for static methods). The convention is that their name is 'cls' (like 'self').
-  - To mark a method as a class method, so-called 'decorators' are used, e.g.
-    @classmethod. You can also write these yourself, which we will do.
-  - Additionally, there is also @staticmethod. This type of method takes
-    neither a self nor a cls parameter
-    https://realpython.com/instance-class-and-static-methods-demystified/
+  - hand-made getter/setter via property(...)
+  - the @property / @<name>.setter decorator pair
+  - backing fields (`_name`, `_age`) as a convention
+  - validation in setters
 
 Properties
   - Like C#, Python allows you to define special getters and setters, called
@@ -69,8 +20,12 @@ Properties
   - A common use case is validation in the setter, e.g. checking that an
     age value is non-negative before assigning it.
   - See https://docs.python.org/3/library/functions.html#property
-  - Even Python's type hinting system shows a warning, it's better to
-    use more specific types.
+
+See also
+  - a_class_basics.py — for __dict__, class vs instance attributes,
+    and the public / _protected / __private naming convention.
+  - preview_getattribute.py — for overriding attribute access via
+    __getattribute__.
 """
 
 from utils import print_function_header

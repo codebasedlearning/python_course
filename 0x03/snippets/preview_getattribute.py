@@ -1,10 +1,21 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses ...
+This snippet previews how Python's attribute lookup can be customised by
+overriding __getattribute__.
 
 Teaching focus
-  - getatribute
+  - intercepting *every* attribute access via __getattribute__
+  - returning a transformed value instead of the stored one
+  - why this is rarely the right tool (use @property in almost all cases)
+
+__getattribute__
+  - __getattribute__ is called for *every* attribute access on an instance,
+    not just for missing attributes (that's __getattr__).
+  - Inside the override you must use super().__getattribute__(name) to read
+    the real stored value — otherwise you recurse forever.
+  - Use cases are niche: proxies, ORMs, debugging hooks. For value-checking
+    or validation, prefer @property (see b_properties.py).
 """
 
 

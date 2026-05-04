@@ -9,6 +9,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Self, Iterator, Generic, TypeVar, Protocol, get_args
+from contextlib import contextmanager
+from contextvars import ContextVar
 
 import logging
 logger = logging.getLogger('ipo')
@@ -141,3 +143,13 @@ class IPOProblem(IPO[I,P,O]):
             .input(input) \
             .process(process) \
             .output(output)
+
+T = TypeVar('T')
+
+@contextmanager
+def ipo_context(ctx_var: ContextVar[T], value: T):
+    token = ctx_var.set(value)
+    try:
+        yield
+    finally:
+        ctx_var.reset(token)

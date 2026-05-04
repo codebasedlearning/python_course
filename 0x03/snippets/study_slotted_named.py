@@ -1,19 +1,14 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses data classes and named tuples.
+This snippet discusses __slots__ and NamedTuple — two memory-light /
+immutable-friendly alternatives to a plain class with __dict__ or to a
+@dataclass.
 
 Teaching focus
-  - using special data oriented classes
-  - comparison with NamedTuple
-
-Dataclass
-  - Simple data storage classes containing the 'usual' methods such as
-    initialisation, output, comparison operators are tedious to write.
-  - The `dataclass' decorator selectively generates such methods for the class
-    if they are not specified.
-  - Without example: There are 'members' such as 'KW_ONLY', defining keyword-only
-    parameters.
+  - __slots__ instead of __dict__ (no dynamic attributes, smaller footprint)
+  - NamedTuple as an immutable, hashable, tuple-compatible data container
+  - tradeoffs vs. @dataclass (mutability, methods, post-init)
 
 __slots__
   - By default, Python stores instance attributes in a per-instance dictionary
@@ -29,13 +24,15 @@ NamedTuple
   - Unlike dataclass, instances are immutable by default (they are tuples),
     can be used as dictionary keys, and have less memory overhead.
 
-Prefer NamedTuple for small, immutable records; prefer dataclass for
-mutable objects or when you need methods and post-init logic.
+Rule of thumb
+  - Prefer NamedTuple for small, immutable records.
+  - Prefer @dataclass (see e_dataclass.py) for mutable objects or when you
+    need methods and post-init logic.
 
 See also
-  - https://docs.python.org/3/library/dataclasses.html
-  - https://realpython.com/python-data-classes/
   - https://docs.python.org/3/library/typing.html#typing.NamedTuple
+  - https://docs.python.org/3/reference/datamodel.html#slots
+  - e_dataclass.py — for the @dataclass counterpart.
 """
 
 import sys

@@ -1,31 +1,26 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses enum flags.
+This snippet discusses Flag enums and bitwise combination of flag values.
 
 Teaching focus
-  - define and work with various enums
-  - combining flags with Flag enum
-
-Class constants
-  - In principle, you can define constants as class variables. The class
-    is then a kind of namespace. Iterating over all constants is not
-    that easy. This is better done with an 'enum'.
-
-Enum
-  - The class 'Enum' brings some convenience in dealing with the constants.
-    Without the @unique decorator, an equal value would be possible.
+  - combining flags with the Flag enum
+  - bitwise operations (|, &, <<) on flag values
+  - a chmod-style example: r/w/x bits shifted into owner/group/other slots
 
 Flag
-  - In this special case you can also combine flags, e.g. for bitwise
-    operations like file permissions.
+  - Flag is a special Enum subclass: members can be combined with bitwise
+    operators (|, &, ^, ~) to form composite values.
+  - Useful for permission masks, feature toggles, and any 'set of options'
+    that you want to pack into a single value.
 
 See also
   - https://docs.python.org/3/howto/enum.html
-  - https://docs.python.org/3/library/enum.html
+  - https://docs.python.org/3/library/enum.html#enum.Flag
+  - d_enums.py — for the regular Enum and @unique / auto basics.
 """
 
-from enum import Enum, Flag, auto, unique
+from enum import Flag, auto
 
 from utils import print_function_header
 

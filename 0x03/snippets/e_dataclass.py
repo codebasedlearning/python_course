@@ -1,33 +1,28 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses data classes and named tuples.
+This snippet discusses data classes.
 
 Teaching focus
-  - using special data oriented classes
-  - comparison with NamedTuple
+  - using @dataclass for plain data-holding classes
+  - generated __init__, __repr__ and equality
+  - field(default_factory=...) for mutable defaults
+  - __post_init__ hook
+  - frozen=True for immutable instances
 
 Dataclass
   - Simple data storage classes containing the 'usual' methods such as
     initialisation, output, comparison operators are tedious to write.
-  - The `dataclass' decorator selectively generates such methods for the class
+  - The `dataclass` decorator selectively generates such methods for the class
     if they are not specified.
   - Without example: There are 'members' such as 'KW_ONLY', defining keyword-only
     parameters.
 
-NamedTuple
-  - NamedTuple is an alternative for simple immutable data containers.
-  - Like dataclass, it generates __repr__, __eq__, and supports type hints.
-  - Unlike dataclass, instances are immutable by default (they are tuples),
-    can be used as dictionary keys, and have less memory overhead.
-
-Prefer NamedTuple for small, immutable records; prefer dataclass for
-mutable objects or when you need methods and post-init logic.
-
 See also
   - https://docs.python.org/3/library/dataclasses.html
   - https://realpython.com/python-data-classes/
-  - https://docs.python.org/3/library/typing.html#typing.NamedTuple
+  - study_slotted_named.py — for NamedTuple and __slots__ as alternative
+    immutable / memory-light data containers.
 """
 
 from dataclasses import dataclass, field

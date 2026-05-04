@@ -8,6 +8,7 @@ Teaching focus
   - Focus on element access.
   - Equality and hashing for custom objects.
   - Arithmetic operator overloading.
+  - Comparison operators with @functools.total_ordering.
 
 Operations (container access)
   - Python allows you to define special functions for index access, deletion

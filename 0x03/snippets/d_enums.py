@@ -1,11 +1,12 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses enums and enum flags.
+This snippet discusses enums.
 
 Teaching focus
   - define and work with various enums
-  - combining flags with Flag enum
+  - @unique, auto(), value vs name access
+  - iterating over an Enum class
 
 Class constants
   - In principle, you can define constants as class variables. The class
@@ -16,16 +17,14 @@ Enum
   - The class 'Enum' brings some convenience in dealing with the constants.
     Without the @unique decorator, an equal value would be possible.
 
-Flag
-  - In this special case you can also combine flags, e.g. for bitwise
-    operations like file permissions.
-
 See also
   - https://docs.python.org/3/howto/enum.html
   - https://docs.python.org/3/library/enum.html
+  - study_flags.py — for combining flags with the Flag enum (bitwise ops,
+    file-mode style permissions).
 """
 
-from enum import Enum, Flag, auto, unique
+from enum import Enum, auto, unique
 
 from utils import print_function_header
 

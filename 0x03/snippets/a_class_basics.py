@@ -7,6 +7,7 @@ Teaching focus
   - create instances
   - learn the concept of dynamic data
   - __str__ vs __repr__ in different contexts
+  - access modifiers (public / _protected / __private name-mangling)
   - internals of instance creation
   - __new__, __init__, __del__
 

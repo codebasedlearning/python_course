@@ -6,6 +6,7 @@ This snippet discusses (single) inheritance in Python.
 Teaching focus
   - inheritance
   - isinstance and issubclass
+  - method resolution order (MRO)
 
 Inheritance
   - Inherits implicitly from 'object'.

@@ -1,11 +1,35 @@
 # (C) A.Voss, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
-This snippet discusses ...
+This snippet discusses two ways of bending instance creation: the Singleton
+pattern (one shared instance) and multiple @classmethod factory methods
+(several alternative constructors).
 
 Teaching focus
-  -
+  - Singleton pattern via __new__ (one shared instance per class)
+  - the re-initialisation trap when __init__ runs every time
+  - alternative constructors as @classmethod factories (from_hex, from_dict, ...)
+
+Singleton
+  - Override __new__ to return a cached instance instead of building a new
+    one. This guarantees `Class(...) is Class(...)` for every call.
+  - Pitfall: __init__ still runs on every call, which can quietly overwrite
+    state. The improved variant uses a `_initialized` flag to skip re-init.
+  - In practice, prefer module-level singletons or dependency injection over
+    this pattern unless you really need it.
+
+Factory methods
+  - A common way to offer multiple input formats (hex string, dict, JSON, …)
+    without overloading __init__ with type-switch logic.
+  - Each factory is a @classmethod returning `cls(...)`, so subclasses get
+    instances of their own type for free (polymorphic construction).
+
+See also
+  - f_class_level_methods.py — for the basic @staticmethod / @classmethod
+    distinction and the Temperature example.
 """
+
+from typing import Self  # Python 3.11+
 
 from utils import print_function_header
 
