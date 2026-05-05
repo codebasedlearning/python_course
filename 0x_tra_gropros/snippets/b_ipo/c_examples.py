@@ -76,10 +76,12 @@ class InputData:
 
 @dataclass
 class ProcessData:
+    # we skip x here and see all processors as updaters, not initializers
     y: int = 0
 
     @classmethod
     def of(cls, input_data: InputData) -> Self:
+        # init y with the original x, such that updates mean: y = processor(y)
         return cls(y=input_data.x)
 
 
