@@ -8,6 +8,7 @@ Teaching focus
   - subtyping
   - duck typing
   - structural typing
+  - generic types / TypeVar
 
 Summary
 
@@ -16,6 +17,7 @@ Topics
   - subtyping
   - duck typing
   - structural typing
+  - generic types / TypeVar
 
 See also
   - Typing module (standard library)
@@ -38,7 +40,7 @@ See also
 """
 
 from types import SimpleNamespace
-from typing import Protocol
+from typing import Generic, Protocol, TypeVar, get_args
 
 from utils import print_function_header
 
@@ -169,10 +171,111 @@ def show_structural_typing():
 
     # quack(SimpleNamespace(quack=lambda: print("'Quack!!!!!'"))
 
+@print_function_header
+def show_generic_types():
+    """
+    Generic Types (a.k.a. "parameterized containers")
+
+    A TypeVar is a placeholder for a type — it says "some type T, to be determined later".
+    Generic[T] makes a class parameterized over T, so the type checker can track
+    what's actually inside without forcing you to use Any.
+    """
+
+    T = TypeVar('T')
+
+    class Box(Generic[T]):              # Box is generic over T
+        def __init__(self, value: T) -> None:
+            self.value = value
+
+        def unwrap(self) -> T:          # return type follows from T
+            return self.value
+
+    int_box: Box[int] = Box(42)
+    str_box: Box[str] = Box("hello")
+
+    print(f" 1| int_box.unwrap() -> {int_box.unwrap()!r}  (type: {type(int_box.unwrap()).__name__})")
+    print(f" 2| str_box.unwrap() -> {str_box.unwrap()!r}  (type: {type(str_box.unwrap()).__name__})")
+
+    # TypeVar also constrains generic functions
+    def first(items: list[T]) -> T:     # T binds to the element type at call site
+        return items[0]
+
+    print(f" 3| first([1, 2, 3])     -> {first([1, 2, 3])!r}")
+    print(f" 4| first(['a', 'b'])    -> {first(['a', 'b'])!r}")
+
+@print_function_header
+def use_type_annotations():
+    """
+    Calling a class method on a generic type — two approaches.
+
+    TypeVar T is erased at runtime. You cannot do T() or T.create() inside a
+    generic function/class body, because T is just a checker-level name.
+
+    Approach A — pass type[T] explicitly:
+        Simple, explicit, type-checker friendly. Use when the caller knows T.
+
+    Approach B — extract T via __orig_bases__ + get_args:
+        The concrete subclass (e.g. SensorRepo(Repository[Sensor])) carries the
+        parameterized base in __orig_bases__ before erasure. get_args recovers
+        the bound type at runtime. Use when T must be implicit (framework-style).
+    """
+
+    T = TypeVar('T')
+
+    class Sensor:
+        def __init__(self, value: float) -> None:
+            self.value = value
+
+        @classmethod
+        def default(cls) -> 'Sensor':
+            return cls(0.0)
+
+        def __repr__(self) -> str:
+            return f"{type(self).__name__}(value={self.value})"
+
+    class PressureSensor(Sensor):
+        @classmethod
+        def default(cls) -> 'PressureSensor':
+            return cls(1013.25)             # standard atmosphere as default
+
+    # --- Approach A: pass the class explicitly ---
+
+    def make_default(cls: type[T]) -> T:   # cls IS the class object; T tracks its type
+        return cls.default()
+
+    print(f" 1| make_default(Sensor)         -> {make_default(Sensor)!r}")
+    print(f" 2| make_default(PressureSensor) -> {make_default(PressureSensor)!r}")
+
+    # --- Approach B: extract T from __orig_bases__ ---
+    # Useful inside a base class that needs to know its own type argument without
+    # any explicit parameter — the subclass declaration carries that information.
+
+    class Repository(Generic[T]):
+        def _entity_class(self) -> type:
+            for base in vars(type(self)).get('__orig_bases__', ()):
+                args = get_args(base)        # e.g. (Sensor,) or (PressureSensor,)
+                if args:
+                    return args[0]          # first (and only) type argument
+            raise TypeError(f"{type(self)} has no generic type argument")
+
+        def make_default_entity(self) -> T:
+            cls = self._entity_class()
+            return cls.default()            # call the class method on the recovered type
+
+    class SensorRepo(Repository[Sensor]):           pass
+    class PressureSensorRepo(Repository[PressureSensor]):  pass
+
+    sr = SensorRepo().make_default_entity()
+    pr = PressureSensorRepo().make_default_entity()
+
+    print(f" 3| SensorRepo().make_default_entity()         -> {sr!r}")
+    print(f" 4| PressureSensorRepo().make_default_entity() -> {pr!r}")
+
 
 if __name__ == "__main__":
     show_nominal_typing()
     show_nominal_subtyping()
     show_duck_typing()
     show_structural_typing()
-
+    show_generic_types()
+    use_type_annotations()
