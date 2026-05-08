@@ -10,8 +10,8 @@ Model problem:
   - Calculate the root x0 for a given linear equation ax+b=0,
     given by the coefficients a, b.
 """
-
-from dataclasses import dataclass
+import math
+from dataclasses import dataclass, replace, field
 from typing import Self, Iterator #, Callable, Sequence
 
 from utils import print_function_header
@@ -75,9 +75,10 @@ def solve_step_by_step():
 @dataclass
 class InputData:
     """ all data extracted from a source by a Producer """
-    source: str
-    a: float
-    b: float
+    source: str = ""
+    a: float = math.nan
+    b: float = math.nan
+
 
 @dataclass
 class ProcessData:
@@ -95,17 +96,14 @@ class ProcessData:
 class OutputData:
     """ all data needed for a final output for a Consumer """
     source: str
-    #dest: str
     a: float
     b: float
     x0: float
 
     @classmethod
     def of(cls, input_data: InputData, process_data: ProcessData) -> Self:
-        return cls(
-            source=input_data.source,
-            #dest=input_data.source.replace(".in",".out"),
-            a=process_data.a, b=process_data.b, x0=process_data.x0)
+        return cls(source=input_data.source, a=process_data.a, b=process_data.b, x0=process_data.x0)
+
 
 class SampleProducer:
     """ produce InputData """
@@ -113,9 +111,9 @@ class SampleProducer:
         self.source = source
 
     def read(self) -> InputData:
-        """ read data from a source """
-        # read a,b from source
+        """ read data from a source and return it """
         return InputData(source=self.source, a=3, b=4.5)
+
 
 class SampleProcessor:
     """ process ProcessData """
@@ -124,8 +122,8 @@ class SampleProcessor:
         """ solve the problem and return the result/next ProcessData """
         a, b = process_data.a, process_data.b
         x0 = root_solver(a, b)
-        process_data = ProcessData(a=a, b=b, x0=x0)
-        return process_data # ProcessData(a=a, b=b, x0=x0)
+        return ProcessData(a=a, b=b, x0=x0)
+
 
 class SampleConsumer:
     """ consume OutputData """
@@ -134,6 +132,7 @@ class SampleConsumer:
         """ write it to a destination """
         dest = output_data.source.replace(".in", ".out")
         print(f"    -> write to '{dest}'")
+
 
 @print_function_header
 def solve_with_objects():
@@ -157,6 +156,7 @@ def solve_with_objects():
     print(f" -> write '{output_data=} ")
     SampleConsumer().write(output_data)
 
+
 class SimpleIPO:
     """ problem solver """
 
@@ -166,7 +166,7 @@ class SimpleIPO:
         self.consumer = None
 
     # 'input', 'process', and 'output' simply collect
-    # the real components; 'run' does the work
+    # the real components; 'solve' does the work
 
     def input(self, producer) -> Self:
         """ collect a Producer """
@@ -186,7 +186,7 @@ class SimpleIPO:
     def solve(self):
         """ take all components and call them in a chain """
 
-        # simplified approach: work only when all components are in place
+        # simplified approach: works only when all components are in place
         if self.producer and self.processor and self.consumer:
             print(" 1| read data...   ", end='')
             input_data = self.producer.read()
@@ -204,6 +204,7 @@ class SimpleIPO:
             print(f" -> write '{output_data=} ")
             self.consumer.write(output_data)
 
+
 @print_function_header
 def solve_with_simple_ipo():
     """ solver workflow, compare to the workflow before """
@@ -216,10 +217,13 @@ def solve_with_simple_ipo():
 
 # use IPO
 
-from gropro import Producer, Processor, Consumer, IPOProblem
+from gropro import Producer, Processor, Consumer, IPOProblem, Fan, Chain
 
+
+# important: defines the problem in terms of the data classes
 class RootProblem(IPOProblem[InputData, ProcessData, OutputData]):
     pass
+
 
 class ConstantProducer(Producer[InputData]):
     def __init__(self, source: str, initial_a: float, initial_b: float):
@@ -227,29 +231,96 @@ class ConstantProducer(Producer[InputData]):
         self.initial_a = initial_a
         self.initial_b = initial_b
 
-    def read(self) -> Iterator[InputData]:
-        yield InputData(source=self.source, a=self.initial_a, b=self.initial_b)
+    # difference to SimpleIPO: generator (yield instead of return)
+    def read(self, input_data: InputData) -> Iterator[InputData]:
+        yield replace(input_data, source=self.source, a=self.initial_a, b=self.initial_b)
+
 
 class AlgebraicProcessor(Processor[ProcessData]):
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        return ProcessData(
-            a = process_data.a,
-            b = process_data.b,
-            x0 = root_solver(process_data.a, process_data.b)
-        )
+    # difference to SimpleIPO: generator
+    def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+        a, b = process_data.a, process_data.b
+        x0 = root_solver(a, b)
+        yield replace(process_data, x0 = x0)
+
 
 class ConsoleConsumer(Consumer[OutputData]):
     def write(self, output_data: OutputData) -> None:
         print(f"write '{output_data}' to 'console'")
 
+
 @print_function_header
 def solve_with_ipo():
     """ solver workflow, compare to the workflow before """
     RootProblem.of(
-        input=ConstantProducer(source="data.in", initial_a=3, initial_b=4.5),
-        process=AlgebraicProcessor(),
-        output=ConsoleConsumer()
+       input=ConstantProducer(source="data.in", initial_a=3, initial_b=4.5),
+       process=AlgebraicProcessor(),
+       output=ConsoleConsumer()
     ).solve()
+
+    # class ConstantFilePartProducer(Producer[InputData]):
+    #     def __init__(self, source: str):
+    #         self.source = source
+    #
+    #     def read(self, input_data: InputData) -> Iterator[InputData]:
+    #         # input_data = replace(input_data, a=0.0, b=0.0) if input_data else InputData()
+    #         #base = input_data or InputData()
+    #         #base = input_data if input_data is not None else InputData()
+    #         yield replace(input_data, source=self.source)  # InputData(source=self.source, a=0.0, b=0.0)
+    #
+    # class ConstantNumberPartProducer(Producer[InputData]):
+    #     def __init__(self, initial_a: float, initial_b: float):
+    #         self.initial_a = initial_a
+    #         self.initial_b = initial_b
+    #
+    #     def read(self, input_data: InputData) -> Iterator[InputData]:
+    #         #base = input_data if input_data is not None else InputData()
+    #         yield replace(input_data, a=self.initial_a, b=self.initial_b)
+    #         #yield InputData(source="", a=self.initial_a, b=self.initial_b)
+    #
+    # RootProblem.of(
+    #     input=ConstantProducer(source="data0.in", initial_a=-1, initial_b=0.5),
+    #     process=AlgebraicProcessor(),
+    #     output=ConsoleConsumer()
+    # ).solve()
+    # print()
+    #
+    # RootProblem.of(
+    #     input=Fan(
+    #         ConstantProducer(source="data1.in", initial_a=1, initial_b=1.5),
+    #         ConstantProducer(source="data2.in", initial_a=2, initial_b=2.5)
+    #     ),
+    #     process=AlgebraicProcessor(),
+    #     output=ConsoleConsumer()
+    # ).solve()
+    # print()
+    # RootProblem.of(
+    #     input=Chain(
+    #         ConstantFilePartProducer(source="data1.in"),
+    #         ConstantNumberPartProducer(initial_a=2, initial_b=2.5)
+    #     ),
+    #     process=AlgebraicProcessor(),
+    #     output=ConsoleConsumer()
+    # ).solve()
+    # print()
+    #
+    # class AlgebraicSolver(Processor[ProcessData]):
+    #     def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+    #         l = list(process_data.trace)
+    #         l.append("algebraic")
+    #         yield replace(process_data, x0 = root_solver(process_data.a, process_data.b), trace=l)
+    # class Shift(Processor[ProcessData]):
+    #     def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+    #         l = list(process_data.trace)
+    #         l.append("shift")
+    #         yield replace(process_data, x0 = process_data.x0 + 23.0, trace=l)
+    #
+    # RootProblem.of(
+    #     input=ConstantProducer(source="data23.in", initial_a=2, initial_b=2.5),
+    #     process=Chain(AlgebraicSolver(),Shift()),
+    #     output=Fan(ConsoleConsumer(),ConsoleConsumer())
+    # ).solve()
+    # print()
 
 
 if __name__ == "__main__":
@@ -257,4 +328,3 @@ if __name__ == "__main__":
     solve_with_objects()
     solve_with_simple_ipo()
     solve_with_ipo()
-

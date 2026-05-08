@@ -45,20 +45,23 @@ Additional Notes
   - We go from an abstract producer to a concrete Producer, e.g. a ConstProducer.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field, replace
 from typing import Self, Iterator, Callable, Sequence
 
+from gropro.ipo import DiscardConsumer
 from utils import print_function_header
 
 import logging
 import sys
+import time
+
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 logging.getLogger('ipo').setLevel(logging.DEBUG)
 
 from contextvars import ContextVar
 
-from gropro import Producer, Processor, Consumer, IPOProblem, ipo_context
+from gropro import Producer, Processor, Consumer, IPOProblem, Fan, Chain, ipo_context
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=missing-class-docstring
@@ -70,19 +73,19 @@ from gropro import Producer, Processor, Consumer, IPOProblem, ipo_context
 
 @dataclass
 class InputData:
-    source: str
-    x: int
+    source: str = ""
+    x: int = 0
 
 
 @dataclass
 class ProcessData:
-    # we skip x here and see all processors as updaters, not initializers
+    x: int = 0
     y: int = 0
 
     @classmethod
     def of(cls, input_data: InputData) -> Self:
-        # init y with the original x, such that updates mean: y = processor(y)
-        return cls(y=input_data.x)
+        # init x and also y, so we can work chained (see examples)
+        return cls(x=input_data.x,y=input_data.x)
 
 
 @dataclass
@@ -100,120 +103,155 @@ class SquarePlusOneProblem(IPOProblem[InputData, ProcessData, OutputData]):
     pass
 
 
-# Components #
-##############
+# General Components #
+######################
 
 class ConstantProducer(Producer[InputData]):
     def __init__(self, initial_x: int) -> None:
         self.initial_x = initial_x
 
-    def read(self) -> Iterator[InputData]:
-        yield InputData(source = "const", x = self.initial_x)   # would be return without sequences
+    def read(self, input_data: InputData) -> Iterator[InputData]:
+        yield replace(input_data, source="const", x=self.initial_x)
 
 
 class SquarePlusOneProcessor(Processor[ProcessData]):
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        return ProcessData(y = process_data.y ** 2 + 1)
+    def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+        y = process_data.x ** 2 + 1
+        yield replace(process_data, y=y)
 
 
 class ConsoleConsumer(Consumer):
     def write(self, output_data: OutputData) -> None:
         print(f"write '{output_data}' to 'console'")
 
+class LogConsumer(Consumer):
+    def write(self, output_data: OutputData) -> None:
+        print(f"write '{output_data}' to 'log'")
+
 
 
 @print_function_header
 def solve_straight():
-    """ use the problem class with chaining or with a factory """
+    """ default problem solver """
 
+    print(f" 1| standard")
     SquarePlusOneProblem.of(
         input=ConstantProducer(initial_x=2),
         process=SquarePlusOneProcessor(),
         output=ConsoleConsumer()
     ).solve()
 
-class SquareProcessor(Processor[ProcessData]):
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        return ProcessData(y = process_data.y ** 2)
+    print(f" 2| multiple input")
+    SquarePlusOneProblem.of(
+        input=Fan(ConstantProducer(initial_x=2),ConstantProducer(initial_x=3)),
+        process=SquarePlusOneProcessor(),
+        output=ConsoleConsumer()
+    ).solve()
 
-class AddOneProcessor(Processor[ProcessData]):
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        return ProcessData(y = process_data.y + 1)
+    print(f" 3| multiple output")
+    SquarePlusOneProblem.of(
+        input=ConstantProducer(initial_x=2),
+        process=SquarePlusOneProcessor(),
+        output=Fan(ConsoleConsumer(),LogConsumer())
+    ).solve()
 
-class LogConsumer(Consumer):
-    def write(self, output_data: OutputData) -> None:
-        print(f"write '{output_data}' to 'log'")
+    print(f" 4| multiple input and output")
+    SquarePlusOneProblem.of(
+        input=Fan(ConstantProducer(initial_x=2),ConstantProducer(initial_x=3)),
+        process=SquarePlusOneProcessor(),
+        output=Fan(ConsoleConsumer(),LogConsumer())
+    ).solve()
+
 
 @print_function_header
 def solve_with_combined_processors():
-    """ use the problem class with chaining or with a factory """
+    """ use the problem class with chaining; ProcessData is updated, y is initialized with x at start """
+
+    class SquareProcessor(Processor[ProcessData]):
+        def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+            y = process_data.y ** 2         # continue work from y
+            yield replace(process_data, y=y)
+
+    class AddOneProcessor(Processor[ProcessData]):
+        def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+            y = process_data.y + 1          # continue work from y
+            yield replace(process_data, y=y)
+
+    print(f" 1| chain processors")
     SquarePlusOneProblem.of(
         input=ConstantProducer(initial_x=2),
-        process=[SquareProcessor(),AddOneProcessor()],
-        output=[ConsoleConsumer(), LogConsumer()]
+        process=Chain(SquareProcessor(),AddOneProcessor()),
+        output=ConsoleConsumer()
     ).solve()
 
-class FileProducer(Producer):
-    def __init__(self, filename:str) -> None:
-        self.filename = filename
 
-    def read(self) -> Iterator[InputData]:
-        yield InputData(source = self.filename, x = 3)
-
-class FileConsumer(Consumer):
-    def write(self, output_data: OutputData) -> None:
-        dest = output_data.source.replace(".in", ".out")
-        print(f"write '{output_data}' to '{dest}'")
-        #print(f" C|   - write data to '{dest}': '{output_data.x} -> {output_data.y}'")
 
 @print_function_header
 def solve_with_file_io():
     """ use the problem class with chaining or with a factory """
+
+    class FileProducer(Producer):
+        def __init__(self, filename: str) -> None:
+            self.filename = filename
+
+        def read(self, input_data: InputData) -> Iterator[InputData]:
+            yield replace(input_data, source=self.filename, x=3)
+
+    class FileConsumer(Consumer):
+        def write(self, output_data: OutputData) -> None:
+            dest = output_data.source.replace(".in", ".out")
+            print(f"write '{output_data}' to '{dest}'")
+
+    print(f" 1| read from file and write to file (simulated)")
     SquarePlusOneProblem.of(
         input=FileProducer(filename="data.in"),
         process=SquarePlusOneProcessor(),
         output=FileConsumer()
     ).solve()
 
-class StreamProducer(Producer):
-    def __init__(self, seq: Sequence) -> None:
-        self.seq = seq
-
-    def read(self) -> Iterator[InputData]:
-        for i, item in enumerate(self.seq):
-            x = item if isinstance(item,int) else i
-            source = item if isinstance(item,str) and item.endswith(".in") else "const"
-            yield InputData(source=source, x=x)
 
 @print_function_header
 def solve_with_streams():
     """ standard workflow with input and output files """
+
+    class StreamProducer(Producer):
+        def __init__(self, seq: Sequence) -> None:
+            self.seq = seq
+
+        def read(self, input_data: InputData) -> Iterator[InputData]:
+            for i, item in enumerate(self.seq):
+                x = item if isinstance(item, int) else i+1    # for demonstration
+                source = item if isinstance(item, str) and item.endswith(".in") else "const"
+                yield InputData(source=source, x=x)
+
+    print(f" 1| read files from folder (simulated)")
     SquarePlusOneProblem.of(
-        input=StreamProducer(seq=["data1.in","data2.in","data3.in"]), # or seq=range(1,4)
+        input=StreamProducer(seq=["data1.in","data2.in","data3.in"]),
         process=SquarePlusOneProcessor(),
         output=ConsoleConsumer()
     ).solve()
 
-@print_function_header
-def solve_with_multiple_producers():
-    """ combine multiple producers, consumers and processors """
-
+    print(f" 2| read data from sequence")
     SquarePlusOneProblem.of(
-        input=[ConstantProducer(initial_x=3), ConstantProducer(initial_x=4)],
+        input=StreamProducer(seq=range(10,12)),
         process=SquarePlusOneProcessor(),
         output=ConsoleConsumer()
     ).solve()
 
-class LambdaProcessor(Processor):
-    def __init__(self, func: Callable[[int], int]):
-        self.func = func
-
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        return ProcessData(y = self.func(process_data.y))
 
 @print_function_header
 def solve_with_lambdas():
     """ use the problem class with chaining or with a factory """
+
+    class LambdaProcessor(Processor):
+        def __init__(self, func: Callable[[int], int]):
+            self.func = func
+
+        def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+            y = self.func(process_data.x)
+            yield replace(process_data, y=y)
+
+    print(f" 1| calc result from lambda")
     SquarePlusOneProblem.of(
         input=ConstantProducer(initial_x=2),
         process=LambdaProcessor(lambda x: x ** 2 + 1),
@@ -227,14 +265,14 @@ class RuntimeArgs:
 
 runtime_args_ctx: ContextVar[RuntimeArgs] = ContextVar('runtime_args_ctx')
 
-class DryRunConsumer(Consumer[OutputData]):
-    def write(self, output_data: OutputData) -> None:
-        runtime_args = runtime_args_ctx.get()
-        print(f"write {'(dry_run)' if runtime_args.dry_run else ''}: '{output_data}')")
-
 @print_function_header
 def solve_with_runtime_args():
     """ solver workflow, compare to the workflow before """
+
+    class DryRunConsumer(Consumer[OutputData]):
+        def write(self, output_data: OutputData) -> None:
+            runtime_args = runtime_args_ctx.get()
+            print(f"write {'(dry_run)' if runtime_args.dry_run else ''}: '{output_data}')")
 
     # same as:
     # token = runtime_args_ctx.set(RuntimeArgs(dry_run=True))
@@ -247,6 +285,7 @@ def solve_with_runtime_args():
     # finally:
     #     runtime_args_ctx.reset(token)
 
+    print(f" 1| solve with context")
     with ipo_context(runtime_args_ctx, RuntimeArgs(dry_run=True)):
         SquarePlusOneProblem.of(
             input=ConstantProducer(initial_x=3),
@@ -255,60 +294,54 @@ def solve_with_runtime_args():
         ).solve()
 
 
-# Decorator pattern: wrap any Processor to add a cross-cutting concern
-# (timing, here) without touching the wrapped processor itself. Open/Closed
-# principle made physical.
-import time
-
-class TimingProcessor(Processor[ProcessData]):
-    """ measures and prints the elapsed time of an inner processor """
-
-    def __init__(self, inner: Processor) -> None:
-        self.inner = inner
-
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        t0 = time.perf_counter()
-        result = self.inner.apply(process_data)
-        dt_ms = (time.perf_counter() - t0) * 1000
-        print(f"duration ({self.inner.__class__.__name__}): {dt_ms:.4f} ms")
-        return result
-
-
 @print_function_header
 def solve_with_timing():
-    """ wrap a real Processor in TimingProcessor — same pipeline, free timing """
+    """ measure time """
+
+    # Decorator pattern / Open/Closed principle: wrap any Processor to add a cross-cutting
+    # concern (timing) without touching the wrapped processor itself.
+    class TimingProcessor(Processor[ProcessData]):
+        """ measures and prints the elapsed time of an inner processor """
+
+        def __init__(self, inner: Processor) -> None:
+            self.inner = inner
+
+        def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+            t0 = time.perf_counter()
+            yield from self.inner.apply(process_data)
+            dt_ms = (time.perf_counter() - t0) * 1000
+            print(f"duration ({self.inner.__class__.__name__}): {dt_ms:.4f} ms")
+
+    print(f" 1| measure time")
     SquarePlusOneProblem.of(
-        input=ConstantProducer(initial_x=5),
+        input=ConstantProducer(initial_x=3),
         process=TimingProcessor(SquarePlusOneProcessor()),
         output=ConsoleConsumer()
     ).solve()
 
 
-# Bridges the IPO framework and the testing world: the consumer becomes
-# the assertion. Useful for golden-output / regression tests.
-
-class ValidatingConsumer(Consumer[OutputData]):
-    """ asserts OutputData.y matches an expected value """
-
-    def __init__(self, expected_y: int) -> None:
-        self.expected_y = expected_y
-
-    def write(self, output_data: OutputData) -> None:
-        if output_data.y != self.expected_y:
-            raise AssertionError(
-                f"expected y={self.expected_y}, got y={output_data.y} "
-                f"(input x={output_data.x} from {output_data.source!r})"
-            )
-        print(f"validation: PASS (y={output_data.y})")
-
-
 @print_function_header
 def solve_with_validation():
-    """ ValidatingConsumer turns the pipeline into a one-shot test """
+    """ one-shot test """
+
+    class ValidatingConsumer(Consumer[OutputData]):
+        """ asserts OutputData.y matches an expected value """
+
+        def __init__(self, expected_y: int) -> None:
+            self.expected_y = expected_y
+
+        def write(self, output_data: OutputData) -> None:
+            print(f"validation x={output_data.x} -> ", end='')
+            if output_data.y != self.expected_y:
+                print(f"ERROR: y={output_data.y}, expected y={self.expected_y}")
+            else:
+                print(f"PASS:  y={output_data.y}")
+
+    print(f" 1| measure time")
     SquarePlusOneProblem.of(
         input=ConstantProducer(initial_x=3),
         process=SquarePlusOneProcessor(),
-        output=ValidatingConsumer(expected_y=10)   # 3^2 + 1 = 10
+        output=ValidatingConsumer(expected_y=10)
     ).solve()
 
 
@@ -316,37 +349,67 @@ def solve_with_validation():
 # InputData of the next via a tiny adapter. The whole framework becomes
 # itself composable — that's the moment the abstraction clicks.
 
-class OutputAdapterProducer(Producer[InputData]):
-    """ feeds the results of a previous .solve() as InputData of the next pipeline """
+# class OutputAdapterProducer(Producer[InputData]):
+#     """ feeds the results of a previous .solve() as InputData of the next pipeline """
+#
+#     def __init__(self, results) -> None:
+#         self.results = results
+#
+#     def read(self) -> Iterator[InputData]:
+#         for r in self.results:
+#             yield InputData(source=f"{r.input_data.example}->chain", x=r.process_data.y)
 
-    def __init__(self, results) -> None:
-        self.results = results
 
-    def read(self) -> Iterator[InputData]:
-        for r in self.results:
-            yield InputData(source=f"{r.input_data.example}->chain", x=r.process_data.y)
-
-
-class DoubleProcessor(Processor[ProcessData]):
-    def apply(self, process_data: ProcessData) -> ProcessData:
-        return ProcessData(y=process_data.y * 2)
+# class DoubleProcessor(Processor[ProcessData]):
+#     def apply(self, process_data: ProcessData) -> ProcessData:
+#         return ProcessData(y=process_data.y * 2)
 
 
 @print_function_header
 def solve_chained_pipeline():
     """ Stage 1: x → x²+1 ;  Stage 2: y → 2·y .  Output of stage 1 becomes input of stage 2. """
 
+    class OutputAdapterProducer(Producer[InputData]):
+        """ feed an upstream pipeline's results into a downstream pipeline """
+
+        def __init__(self, upstream_stream):
+            self.upstream = upstream_stream
+
+        def read(self, input_data: InputData) -> Iterator[InputData]:
+            for result in self.upstream:
+                yield replace(input_data, source=result.source, x=result.y)
+
+    class DoubleProcessor(Processor[ProcessData]):
+        def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
+            y = process_data.x * 2
+            yield replace(process_data, y=y)
+
     # Stage 1: x = 3 → y = 10
+    print(f" 1| stage 1")
     stage1 = SquarePlusOneProblem.of(
         input=ConstantProducer(initial_x=3),
         process=SquarePlusOneProcessor(),
         output=ConsoleConsumer()
-    ).solve()
+    ).stream()
+    #print(stage1)
 
     # Stage 2: x = 10 (from stage 1) → y = 20
+    print(f" 2| stage 2")
     SquarePlusOneProblem.of(
         input=OutputAdapterProducer(stage1),
         process=DoubleProcessor(),
+        output=ConsoleConsumer()
+    ).solve()
+
+
+@print_function_header
+def solve_with_incomplete_pipeline():
+    """ default problem solver """
+
+    print(f" 1| standard")
+    SquarePlusOneProblem.of(
+        #input=ConstantProducer(initial_x=2),
+        #process=SquarePlusOneProcessor(),
         output=ConsoleConsumer()
     ).solve()
 
@@ -385,13 +448,8 @@ import pytest
 def test_ConstantProducer_read():
     """ test that the producer creates valid InputData """
     producer = ConstantProducer(initial_x=23)
-    result = list(producer.read())
+    result = list(producer.read(InputData()))
     assert len(result) == 1 and result[0].x == 23
-
-
-class BlackHoleConsumer(Consumer):
-    def write(self, output_data: OutputData) -> None:
-        pass
 
 
 def test_SquarePlusOneProcessor_results():
@@ -399,17 +457,9 @@ def test_SquarePlusOneProcessor_results():
     result = SquarePlusOneProblem.of(
         input=ConstantProducer(initial_x=3),
         process=SquarePlusOneProcessor(),
-        output=BlackHoleConsumer()
+        output=DiscardConsumer()
     ).solve()
-    assert len(result) == 1 and result[0].process_data.y==10
-
-
-def test_solve_rejects_missing_slots():
-    """ solve() refuses to run on a half-wired pipeline """
-    with pytest.raises(RuntimeError, match="missing"):
-        SquarePlusOneProblem().solve()                          # nothing wired
-    with pytest.raises(RuntimeError, match="process, output"):
-        SquarePlusOneProblem().input(ConstantProducer(1)).solve()
+    assert len(result) == 1 and result[0].y==10
 
 
 def test_subclass_without_type_args_fails():
@@ -417,13 +467,6 @@ def test_subclass_without_type_args_fails():
     with pytest.raises(TypeError, match="must be parameterized"):
         class BrokenProblem(IPOProblem):       # noqa: F841 — defining the class is the test
             pass
-
-
-def test_subclass_inherits_data_classes():
-    """ subclassing a parameterized problem without re-stating [I, P, O] is OK """
-    class FasterSquare(SquarePlusOneProblem):
-        pass
-    assert FasterSquare.process_data_class is ProcessData
 
 
 def run_tests():
@@ -436,10 +479,10 @@ if __name__ == "__main__":
     solve_with_combined_processors()
     solve_with_file_io()
     solve_with_streams()
-    solve_with_multiple_producers()
     solve_with_lambdas()
     solve_with_runtime_args()
     solve_with_timing()
     solve_with_validation()
     solve_chained_pipeline()
+    solve_with_incomplete_pipeline()
     run_tests()

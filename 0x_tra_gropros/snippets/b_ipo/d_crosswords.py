@@ -25,9 +25,9 @@ We keep the three IPO concerns strictly separated:
 @dataclass
 class InputData:
     """ everything a producer extracts from one input block """
-    source: str          # logical name of the source (e.g. 'example_1')
-    comment: str         # the '# ...' comment line (kept verbatim)
-    words: list[str]     # the parsed, uppercased word list
+    source: str = ""         # logical name of the source (e.g. 'example_1')
+    comment: str = ""        # the '# ...' comment line (kept verbatim)
+    words: list[str] = field(default_factory=list)     # the parsed, uppercased word list
 
     @classmethod
     def of(cls, source: str, textblock: str) -> Self:
@@ -135,7 +135,7 @@ class StreamProducer(Producer[InputData]):
     def __init__(self, items: Sequence[tuple[str, str]]) -> None:
         self.items = items
 
-    def read(self) -> Iterator[InputData]:
+    def read(self, input_data) -> Iterator[InputData]:
         for source, textblock in self.items:
             yield InputData.of(source=source, textblock=textblock)
 
@@ -235,9 +235,9 @@ through crossings.
 class CrosswordSolver(Processor[ProcessData]):
     """ backtracking solver minimising the bounding-box area """
 
-    def apply(self, pd: ProcessData) -> ProcessData:
+    def apply(self, pd: ProcessData) -> Iterator[ProcessData]:
         if not pd.words:
-            return pd
+            yield pd
 
         # one-time precomputation: char_dist + keys per word
         pd.char_dist = [self._char_distribution(w) for w in pd.words]
@@ -271,7 +271,7 @@ class CrosswordSolver(Processor[ProcessData]):
             cells_set = pd.v_cells if vertical else pd.h_cells
             for cell in pd.all_cells_stack.pop():
                 cells_set.discard(cell)
-        return pd
+        yield pd
 
     # backtracking core
 
