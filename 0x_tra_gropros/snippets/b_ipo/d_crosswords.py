@@ -1,4 +1,4 @@
-# (C) 2026 Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+# (C) Alexander Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
 """
 Solve the crossword task using the IPO structure.
@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 from typing import Self, Sequence, Iterator
 import random
 
-from gropro import Producer, Processor, Consumer, IPOProblem
+from gropro import Producer, Processor, Consumer, IPO
 
 
 """
@@ -235,9 +235,9 @@ through crossings.
 class CrosswordSolver(Processor[ProcessData]):
     """ backtracking solver minimising the bounding-box area """
 
-    def apply(self, pd: ProcessData) -> Iterator[ProcessData]:
+    def apply(self, pd: ProcessData) -> ProcessData:
         if not pd.words:
-            yield pd
+            return pd
 
         # one-time precomputation: char_dist + keys per word
         pd.char_dist = [self._char_distribution(w) for w in pd.words]
@@ -271,7 +271,7 @@ class CrosswordSolver(Processor[ProcessData]):
             cells_set = pd.v_cells if vertical else pd.h_cells
             for cell in pd.all_cells_stack.pop():
                 cells_set.discard(cell)
-        yield pd
+        return pd
 
     # backtracking core
 
@@ -440,7 +440,7 @@ class CrosswordSolver(Processor[ProcessData]):
             pd.best_placements = list(pd.placements)
 
 
-class CrosswordsProblem(IPOProblem[InputData, ProcessData, OutputData]):
+class CrosswordsProblem(IPO[InputData, ProcessData, OutputData]):
     """ binds Input/Process/Output classes to the generic IPO solver """
 
 """

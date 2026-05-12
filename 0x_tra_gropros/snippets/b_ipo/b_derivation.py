@@ -11,8 +11,8 @@ Model problem:
     given by the coefficients a, b.
 """
 import math
-from dataclasses import dataclass, replace, field
-from typing import Self, Iterator #, Callable, Sequence
+from dataclasses import dataclass, replace
+from typing import Self, Iterator
 
 from utils import print_function_header
 
@@ -73,7 +73,7 @@ def solve_step_by_step():
 
 
 @dataclass
-class InputData:
+class RootProblemSpec: # InputData
     """ all data extracted from a source by a Producer """
     source: str = ""
     a: float = math.nan
@@ -81,19 +81,19 @@ class InputData:
 
 
 @dataclass
-class ProcessData:
+class RootProblemSolution: # ProcessData
     """ all data needed to process (solve) a problem by a Processor """
     a: float
     b: float
     x0: float
 
     @classmethod
-    def of(cls, input_data: InputData) -> Self:
+    def of(cls, input_data: RootProblemSpec) -> Self:
         return cls(a=input_data.a, b=input_data.b, x0=0.0)
 
 
 @dataclass
-class OutputData:
+class RootProblemResult: # OutputData
     """ all data needed for a final output for a Consumer """
     source: str
     a: float
@@ -101,63 +101,65 @@ class OutputData:
     x0: float
 
     @classmethod
-    def of(cls, input_data: InputData, process_data: ProcessData) -> Self:
+    def of(cls, input_data: RootProblemSpec, process_data: RootProblemSolution) -> Self:
         return cls(source=input_data.source, a=process_data.a, b=process_data.b, x0=process_data.x0)
 
 
-class SampleProducer:
+from gropro import Producer, Processor, Consumer, IPO
+
+class ConfigData(Producer[RootProblemSpec]):
     """ produce InputData """
-    def __init__(self, source: str):
+    def __init__(self, source: str, initial_a: float, initial_b: float):
         self.source = source
+        self.initial_a = initial_a
+        self.initial_b = initial_b
 
-    def read(self) -> InputData:
-        """ read data from a source and return it """
-        return InputData(source=self.source, a=3, b=4.5)
+    def read(self, input_data: RootProblemSpec) -> Iterator[RootProblemSpec]:
+        yield replace(input_data, source=self.source, a=self.initial_a, b=self.initial_b)
 
 
-class SampleProcessor:
+class AlgebraicSolver(Processor[RootProblemSolution]):
     """ process ProcessData """
 
-    def apply(self, process_data: ProcessData) -> ProcessData:
+    def apply(self, process_data: RootProblemSolution) -> RootProblemSolution:
         """ solve the problem and return the result/next ProcessData """
-        a, b = process_data.a, process_data.b
-        x0 = root_solver(a, b)
-        return ProcessData(a=a, b=b, x0=x0)
+        return replace(process_data, x0=root_solver(process_data.a, process_data.b))
 
 
-class SampleConsumer:
+class Console(Consumer[RootProblemResult]):
     """ consume OutputData """
 
-    def write(self, output_data: OutputData) -> None:
+    def write(self, output_data: RootProblemResult) -> None:
         """ write it to a destination """
         dest = output_data.source.replace(".in", ".out")
         print(f"    -> write to '{dest}'")
 
 
 @print_function_header
-def solve_with_objects():
+def solve_with_ipo_objects():
     """ solver workflow, compare to the workflow before """
 
     print(" 1| read data...   ", end='')
-    input_data = SampleProducer(source="data.in").read()
+    input_data_stream = ConfigData(source="data.in", initial_a=3, initial_b=4.5).read(RootProblemSpec())
+    input_data = next(input_data_stream)
     print(f" -> {input_data=}'")
 
     # general idea: producer, processor, and consumer need to know only
     # the data they need, not everything; so this form of 'information hiding'
     # comes at a cost in the form of intermediate data objects and copying
 
-    process_data = ProcessData.of(input_data)
+    process_data = RootProblemSolution.of(input_data)
     print(f" 2| process data...", end='')
-    process_data = SampleProcessor().apply(process_data)
+    process_data = AlgebraicSolver().apply(process_data)
     print(f" -> {process_data=}")
 
     print(" 3| write data...  ", end='')
-    output_data = OutputData.of(input_data, process_data)
+    output_data = RootProblemResult.of(input_data, process_data)
     print(f" -> write '{output_data=} ")
-    SampleConsumer().write(output_data)
+    Console().write(output_data)
 
 
-class SimpleIPO:
+class RootProblemExplicit:
     """ problem solver """
 
     def __init__(self):
@@ -189,142 +191,52 @@ class SimpleIPO:
         # simplified approach: works only when all components are in place
         if self.producer and self.processor and self.consumer:
             print(" 1| read data...   ", end='')
-            input_data = self.producer.read()
+            input_data_stream = self.producer.read(RootProblemSpec())
+            input_data = next(input_data_stream)
             print(f" -> {input_data=}'")
 
             # convert input to process as start data, then work on this
             print(" 2| process data...", end='')
-            process_data = ProcessData.of(input_data)
+            process_data = RootProblemSolution.of(input_data)
             process_data = self.processor.apply(process_data)
             print(f" -> {process_data=}")
 
             # same here, prepare output from input and process data
             print(" 3| write data...  ", end='')
-            output_data = OutputData.of(input_data, process_data)
+            output_data = RootProblemResult.of(input_data, process_data)
             print(f" -> write '{output_data=} ")
             self.consumer.write(output_data)
 
 
 @print_function_header
-def solve_with_simple_ipo():
+def solve_with_explicit_ipo():
     """ solver workflow, compare to the workflow before """
-    SimpleIPO() \
-        .input(SampleProducer(source="data.in")) \
-        .process(SampleProcessor()) \
-        .output(SampleConsumer()) \
+    RootProblemExplicit() \
+        .input(ConfigData(source="data.in", initial_a=3, initial_b=4.5)) \
+        .process(AlgebraicSolver()) \
+        .output(Console()) \
         .solve()
 
 
 # use IPO
 
-from gropro import Producer, Processor, Consumer, IPOProblem, Fan, Chain
-
-
 # important: defines the problem in terms of the data classes
-class RootProblem(IPOProblem[InputData, ProcessData, OutputData]):
+class RootProblem(IPO[RootProblemSpec, RootProblemSolution, RootProblemResult]):
     pass
-
-
-class ConstantProducer(Producer[InputData]):
-    def __init__(self, source: str, initial_a: float, initial_b: float):
-        self.source = source
-        self.initial_a = initial_a
-        self.initial_b = initial_b
-
-    # difference to SimpleIPO: generator (yield instead of return)
-    def read(self, input_data: InputData) -> Iterator[InputData]:
-        yield replace(input_data, source=self.source, a=self.initial_a, b=self.initial_b)
-
-
-class AlgebraicProcessor(Processor[ProcessData]):
-    # difference to SimpleIPO: generator
-    def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
-        a, b = process_data.a, process_data.b
-        x0 = root_solver(a, b)
-        yield replace(process_data, x0 = x0)
-
-
-class ConsoleConsumer(Consumer[OutputData]):
-    def write(self, output_data: OutputData) -> None:
-        print(f"write '{output_data}' to 'console'")
 
 
 @print_function_header
 def solve_with_ipo():
     """ solver workflow, compare to the workflow before """
     RootProblem.of(
-       input=ConstantProducer(source="data.in", initial_a=3, initial_b=4.5),
-       process=AlgebraicProcessor(),
-       output=ConsoleConsumer()
+       input=ConfigData(source="data.in", initial_a=3, initial_b=4.5),
+       process=AlgebraicSolver(),
+       output=Console()
     ).solve()
-
-    # class ConstantFilePartProducer(Producer[InputData]):
-    #     def __init__(self, source: str):
-    #         self.source = source
-    #
-    #     def read(self, input_data: InputData) -> Iterator[InputData]:
-    #         # input_data = replace(input_data, a=0.0, b=0.0) if input_data else InputData()
-    #         #base = input_data or InputData()
-    #         #base = input_data if input_data is not None else InputData()
-    #         yield replace(input_data, source=self.source)  # InputData(source=self.source, a=0.0, b=0.0)
-    #
-    # class ConstantNumberPartProducer(Producer[InputData]):
-    #     def __init__(self, initial_a: float, initial_b: float):
-    #         self.initial_a = initial_a
-    #         self.initial_b = initial_b
-    #
-    #     def read(self, input_data: InputData) -> Iterator[InputData]:
-    #         #base = input_data if input_data is not None else InputData()
-    #         yield replace(input_data, a=self.initial_a, b=self.initial_b)
-    #         #yield InputData(source="", a=self.initial_a, b=self.initial_b)
-    #
-    # RootProblem.of(
-    #     input=ConstantProducer(source="data0.in", initial_a=-1, initial_b=0.5),
-    #     process=AlgebraicProcessor(),
-    #     output=ConsoleConsumer()
-    # ).solve()
-    # print()
-    #
-    # RootProblem.of(
-    #     input=Fan(
-    #         ConstantProducer(source="data1.in", initial_a=1, initial_b=1.5),
-    #         ConstantProducer(source="data2.in", initial_a=2, initial_b=2.5)
-    #     ),
-    #     process=AlgebraicProcessor(),
-    #     output=ConsoleConsumer()
-    # ).solve()
-    # print()
-    # RootProblem.of(
-    #     input=Chain(
-    #         ConstantFilePartProducer(source="data1.in"),
-    #         ConstantNumberPartProducer(initial_a=2, initial_b=2.5)
-    #     ),
-    #     process=AlgebraicProcessor(),
-    #     output=ConsoleConsumer()
-    # ).solve()
-    # print()
-    #
-    # class AlgebraicSolver(Processor[ProcessData]):
-    #     def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
-    #         l = list(process_data.trace)
-    #         l.append("algebraic")
-    #         yield replace(process_data, x0 = root_solver(process_data.a, process_data.b), trace=l)
-    # class Shift(Processor[ProcessData]):
-    #     def apply(self, process_data: ProcessData) -> Iterator[ProcessData]:
-    #         l = list(process_data.trace)
-    #         l.append("shift")
-    #         yield replace(process_data, x0 = process_data.x0 + 23.0, trace=l)
-    #
-    # RootProblem.of(
-    #     input=ConstantProducer(source="data23.in", initial_a=2, initial_b=2.5),
-    #     process=Chain(AlgebraicSolver(),Shift()),
-    #     output=Fan(ConsoleConsumer(),ConsoleConsumer())
-    # ).solve()
-    # print()
 
 
 if __name__ == "__main__":
     solve_step_by_step()
-    solve_with_objects()
-    solve_with_simple_ipo()
+    solve_with_ipo_objects()
+    solve_with_explicit_ipo()
     solve_with_ipo()
