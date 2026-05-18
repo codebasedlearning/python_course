@@ -23,10 +23,9 @@ See also
   https://mypy.readthedocs.io/en/stable/more_types.html
 """
 
-from typing import overload, Literal, Final, TypeGuard
+from typing import Final, Literal, TypeGuard, overload
 
 from utils import print_function_header
-
 
 """
 Topic: @overload — multiple signatures, one implementation

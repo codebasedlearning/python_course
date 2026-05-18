@@ -43,16 +43,14 @@ Callable
     https://docs.python.org/3/library/typing.html#typing.Callable
 """
 
-from typing import Type, Callable
-from abc import ABC, abstractmethod
 import json
+from abc import ABC, abstractmethod
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
-
 from utils import print_function_header
 
 
-def extract_class_names(cls: Type[object]):
+def extract_class_names(cls: type[object]):
     return [item.__name__ for item in cls.__mro__]
 
 @print_function_header

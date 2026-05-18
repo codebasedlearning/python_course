@@ -47,15 +47,13 @@ OrderedDict
     https://realpython.com/python-ordereddict/
 """
 
-from typing import Type
 from collections import OrderedDict
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
-
 from utils import print_function_header
 
 
-def extract_class_names(cls: Type[object]):
+def extract_class_names(cls: type[object]):
     return [item.__name__ for item in cls.__mro__]
 
 

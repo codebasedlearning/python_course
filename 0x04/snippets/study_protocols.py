@@ -92,7 +92,6 @@ Variants
 from typing import Protocol, TypeVar
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
-
 from utils import print_function_header
 
 

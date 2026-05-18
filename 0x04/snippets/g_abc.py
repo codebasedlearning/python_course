@@ -61,15 +61,13 @@ Duck typing
         base class, or inherit from another class.
 """
 
-from typing import Type, override
 from abc import ABC, abstractmethod
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
-
 from utils import print_function_header
 
 
-def extract_class_names(cls: Type[object]):
+def extract_class_names(cls: type[object]):
     return [item.__name__ for item in cls.__mro__]
 
 
