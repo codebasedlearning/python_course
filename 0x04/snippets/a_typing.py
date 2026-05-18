@@ -74,7 +74,7 @@ def show_nominal_typing():
     dog = Dog()
     maybe_dog = Cat()
     print(" 1| call pet")
-    pet(maybe_dog)
+    pet(maybe_dog)                          # ty:ignore[invalid-argument-type]
 
     # Note: excessive use of type checking can lead to code that's not very Pythonic.
     print(f" 2| type check: {isinstance(dog, Dog)=}, {isinstance(maybe_dog, Dog)=}")
