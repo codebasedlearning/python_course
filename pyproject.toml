@@ -21,8 +21,9 @@ dependencies = [
     "cbl==1.0.1",
     "contextvars==2.4",
     "pytest==9.0.3",
-    "ruff==0.15.12",
-    "ty>=0.0.34",
+    "ruff==0.15.13",
+    "ty>=0.0.35",
+    "typer==0.25.1",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

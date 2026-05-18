@@ -72,7 +72,7 @@ def show_clickable_mixin():
     class Clickable:
         """ clickable area we want to 'mix-in' """
 
-        def __init__(self, *args, handler: Callable[[Window], None] = None, **kwargs):
+        def __init__(self, *args, handler: Callable[[Window], None] | None = None, **kwargs):
             self.handler = handler or (lambda x: None)
             # remember the MRO issues
             super().__init__(*args, **kwargs)

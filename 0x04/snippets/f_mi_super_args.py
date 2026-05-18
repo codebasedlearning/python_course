@@ -36,14 +36,12 @@ Basically, there are two possible solutions:
     parameters' makes things worse rather than better (imho).
 """
 
-from typing import Type
-
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 
 from utils import print_function_header
 
 
-def extract_class_names(cls: Type[object]):
+def extract_class_names(cls: type[object]):
     return [item.__name__ for item in cls.__mro__]
 
 

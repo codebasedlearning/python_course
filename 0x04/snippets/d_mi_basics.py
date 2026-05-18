@@ -80,7 +80,7 @@ def recap_single_inheritance():
     class D(C):
         def __init__(self):
             print("D (skip C) ", end='')    # this is _not_ best practice...
-            super(B,self).__init__()        # look in mro, find 'Self' or here 'C', call next in mro
+            super(C,self).__init__()        # look in mro, find 'C', call next in mro
 
     print(" 3| init order: ", end='')
     D()
@@ -162,7 +162,8 @@ def show_diamond_problem():
 
 @print_function_header
 def show_mro_c3_linearization():
-    """ large mro example, see https://en.wikipedia.org/wiki/C3_linearization """
+    """ large mro example, see https://en.wikipedia.org/wiki/C3_linearization
+    or https://en.wikipedia.org/wiki/File:C3_linearization_example.svg """
 
     class O:
         def __init__(self): print("O ", end=''); super().__init__()

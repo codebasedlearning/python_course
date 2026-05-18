@@ -61,7 +61,7 @@ Duck typing
         base class, or inherit from another class.
 """
 
-from typing import Type
+from typing import Type, override
 from abc import ABC, abstractmethod
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
@@ -87,9 +87,9 @@ def show_informal_interfaces():
     class Canvas(Window):
         ...
 
-    print(f" 1| is IWindow a subclass of Canvas? {issubclass(Canvas, Window)}")
+    print(f" 1| is Window a subclass of Canvas? {issubclass(Canvas, Window)}")
     canvas = Canvas()
-    print(f" 2| is 'canvas' an instance of IWindow? {isinstance(canvas, Window)}")
+    print(f" 2| is 'canvas' an instance of Window? {isinstance(canvas, Window)}")
     canvas.draw()
     # ...even when it is missing!?
 
@@ -110,6 +110,7 @@ def show_abstract_base_classes():
     #     ...
 
     class Button(Window):
+        # @override                         # added in 3.12
         def draw(self):
             print(" b|  - Button.draw")
             super().draw()
@@ -140,7 +141,14 @@ def show_abstract_base_classes():
     for wnd in windows:
         wnd.draw()
         print(f" e|    - instance of Window? {isinstance(wnd, Window)}")
+    print()
 
+    print(" 3| register as a subclass of Window")
+
+    Window.register(StrangeWidget)
+    for wnd in windows:
+        wnd.draw()
+        print(f" e|    - instance of Window? {isinstance(wnd, Window)}")
 
 if __name__ == "__main__":
     show_informal_interfaces()

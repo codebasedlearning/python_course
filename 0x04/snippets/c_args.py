@@ -74,7 +74,7 @@ def sum_iterables(iterable):
     # variant 2
     return sum(iterable)
 
-def sum_varying_number(*args):              # (A) iterable
+def sum_varying_number(*args):              # iterable
     """ sum up a varying number of positional arguments """
     print(f" a|   {type(args)=}")
     # variant 1 (as before)

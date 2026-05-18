@@ -40,7 +40,7 @@ See also
 """
 
 from types import SimpleNamespace
-from typing import Generic, Protocol, TypeVar, get_args
+from typing import Generic, Protocol, Self, TypeVar, get_args
 
 from utils import print_function_header
 
@@ -66,8 +66,9 @@ def show_nominal_typing():
     # Is it running?
     # How can we check it (if we want to)?
     #
-    # pylint 0x06/snippets/a_typing.py      -> rated at 10.00/10
-    # mypy 0x06/snippets/a_typing.py        -> error: incompatible type "Cat"; expected "Dog"
+    # pylint 0x04/snippets/a_typing.py      -> rated at 10.00/10
+    # mypy 0x04/snippets/a_typing.py        -> error: incompatible type "Cat"; expected "Dog"
+    # ty check 0x04/snippets/a_typing.py    -> error: Argument to function `pet` is incorrect...
     # => Even if Cat and Dog look the same, their names are different, so the type checker objects.
 
     dog = Dog()
@@ -169,21 +170,30 @@ def show_structural_typing():
     print(" 2| now you -> ", end='')
     quack(Snake())
 
-    # quack(SimpleNamespace(quack=lambda: print("'Quack!!!!!'"))
+    # quack(object())
+    # quack(SimpleNamespace(quack=lambda: print("'Quack!!!!!'")))
+
+
+"""
+    A TypeVar is a placeholder for a type — it says "some type T, to be determined later".
+    Generic[T] makes a class parameterized over T, so the type checker can track
+    what's actually inside without forcing you to use Any.
+    
+    From Python 3.12 a new syntax 
+        def foo[T](x: T) -> T 
+    or
+        class Box[T]
+    creates implicit TypeVars.
+"""
+T = TypeVar('T')
 
 @print_function_header
 def show_generic_types():
     """
     Generic Types (a.k.a. "parameterized containers")
-
-    A TypeVar is a placeholder for a type — it says "some type T, to be determined later".
-    Generic[T] makes a class parameterized over T, so the type checker can track
-    what's actually inside without forcing you to use Any.
     """
 
-    T = TypeVar('T')
-
-    class Box(Generic[T]):              # Box is generic over T
+    class Box(Generic[T]):              # Box is generic over T, or: class Box[T]
         def __init__(self, value: T) -> None:
             self.value = value
 
@@ -220,14 +230,12 @@ def use_type_annotations():
         the bound type at runtime. Use when T must be implicit (framework-style).
     """
 
-    T = TypeVar('T')
-
     class Sensor:
         def __init__(self, value: float) -> None:
             self.value = value
 
         @classmethod
-        def default(cls) -> 'Sensor':
+        def default(cls) -> Self:           # or 'Sensor'
             return cls(0.0)
 
         def __repr__(self) -> str:
@@ -235,7 +243,7 @@ def use_type_annotations():
 
     class PressureSensor(Sensor):
         @classmethod
-        def default(cls) -> 'PressureSensor':
+        def default(cls) -> Self:           # or 'PressureSensor'
             return cls(1013.25)             # standard atmosphere as default
 
     # --- Approach A: pass the class explicitly ---
@@ -262,8 +270,8 @@ def use_type_annotations():
             cls = self._entity_class()
             return cls.default()            # call the class method on the recovered type
 
-    class SensorRepo(Repository[Sensor]):           pass
-    class PressureSensorRepo(Repository[PressureSensor]):  pass
+    class SensorRepo(Repository[Sensor]): pass
+    class PressureSensorRepo(Repository[PressureSensor]): pass
 
     sr = SensorRepo().make_default_entity()
     pr = PressureSensorRepo().make_default_entity()

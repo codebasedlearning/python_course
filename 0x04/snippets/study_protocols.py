@@ -138,12 +138,11 @@ def show_protocol_example():
     print(f" 1| lines: {run_processor(LineCounter(), data)}")
     print(f" 2| words: {run_processor(UniqueWordCollector(), data)}")
 
+T = TypeVar('T', covariant=True)        # for static check, a template variable that keeps track of the types
 
 @print_function_header
 def show_generic_protocol_example():
     """ discuss a generic protocol example """
-
-    T = TypeVar('T', covariant=True)        # for static check, a template variable that keeps track of the types
 
     class MyIterator(Protocol[T]):
         def current(self) -> T: ...
