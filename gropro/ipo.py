@@ -7,7 +7,11 @@ Here the IPO framework is defined.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Self, Iterator, Generic, TypeVar, Protocol, get_args
+from typing import Iterator, Generic, TypeVar, Protocol, get_args
+try:
+    from typing import Self
+except ImportError:                                  # Python < 3.11
+    from typing_extensions import Self
 from contextlib import contextmanager
 from contextvars import ContextVar
 
