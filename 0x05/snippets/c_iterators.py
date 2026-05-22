@@ -4,8 +4,8 @@
 This snippet explains iterables and iterators.
 
 Teaching focus
-  - iterables
-  - iterators
+  - Iterables
+  - Iterators
 
 Iterables have an .__iter__() method that produces items on demand.
 Iterators implement an .__iter__() method that typically returns self and
@@ -14,15 +14,6 @@ a .__next__() method that returns an item in every call.
 According to this internal structure, you can conclude that all iterators
 are iterables because they meet the iterable protocol. However, not all
 iterables are iterators — only those implementing the .__next__() method.
-
-check types
-  - From https://realpython.com/python-iterators-iterables
-    Iterables have an .__iter__() method that produce items on demand.
-    Iterators implement an .__iter__() method that typically returns self
-    and a .__next__() method that returns an item in every call.
-    According to this internal structure, you can conclude that all iterators
-    are iterables because they meet the iterable protocol. However, not all
-    iterables are iterators — only those implementing the .__next__() method.
 
 next item and StopIteration
   - From https://realpython.com/python-iterators-iterables
@@ -43,7 +34,7 @@ Built-in Example    list, str, dict     iter(list), file obj        Generator fu
 Custom Example      Class w/ __iter__() Class w/ __next__()         Function w/ yield
 """
 
-from collections.abc import Iterator, Iterable
+from collections.abc import Iterable, Iterator
 
 from utils import print_function_header
 
@@ -136,9 +127,9 @@ def check_its(obj):                         # check types
         _has = hasattr(_obj, "__iter__")
         try:
             iter(_obj)
-            return True, _is, _has
+            return True, _is, _has          # True if iter() worked
         except TypeError:
-            return False, _is, _has
+            return False, _is, _has         # False if TypeError
 
     def check_iterator(_obj):
         _is = isinstance(_obj, Iterator)
@@ -201,7 +192,7 @@ def check_iterables_and_iterators():
             self.data = data
             self.index = 0
 
-        # def __iter__(self): ...           # missing, but base has it
+        # def __iter__(self): ...           # missing, but base has it (=self)
 
         def __next__(self): ...             # as before, see above
 
@@ -213,4 +204,3 @@ if __name__ == "__main__":
     show_iterables()
     show_iterators()
     check_iterables_and_iterators()
-

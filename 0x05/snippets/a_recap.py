@@ -75,7 +75,7 @@ def recap_protocol():
         for c in clickable:
             c.on_click()
 
-    print(f" 1| click all")
+    print(" 1| click all")
     click_all([Button(), Switch()])
 
 

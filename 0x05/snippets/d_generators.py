@@ -65,7 +65,7 @@ send
 """
 
 import itertools
-from inspect import isgeneratorfunction, isgenerator
+from inspect import isgenerator, isgeneratorfunction
 
 from utils import print_function_header
 
@@ -84,7 +84,7 @@ def motivate_generators():
 
     print(" 1| start reading ")
     items_all = read_data(7, 1, 20)         # what is the 'problem' here?
-    print(f" 2| items_all=...: ", end='')
+    print(" 2| items_all=...: ", end='')
     for n in items_all:
         print(f"{n} ", end='')
     print()
@@ -94,8 +94,8 @@ def motivate_generators():
         for i in range(lower_limit, upper_limit+1):     # the 'algorithm'
             yield i * base                  # instead of .append
 
-    items_gen = generate_data(7, 1, 20)     # generator iterator = "generator" (is a iterator)
-    print(f" 3| items_gen=...: ", end='')
+    items_gen = generate_data(7, 1, 20)     # generator iterator = "generator" (is an iterator)
+    print(" 3| items_gen=...: ", end='')
     for n in items_gen:
         print(f"{n} ", end='')
     print()
@@ -110,13 +110,13 @@ def motivate_generators():
         print("(end) ", end='')
 
     item123 = generate_123()
-    print(f" 4| item123=...: ", end='')
+    print(" 4| item123=...: ", end='')
     for n in item123:
         print(f"{n} ", end='')
     print()
 
     data123 = generate_123()                # basically iter(generate_123())
-    print(f" 5| data123=...: ", end='')
+    print(" 5| data123=...: ", end='')
     try:
         while True:
             n = next(data123)               # also starts and gets the next value from the generator
@@ -140,24 +140,25 @@ def generator_function_examples():
     fib10 = gen_fib_seq(10)
     print(f" 1| fib10={" ".join(map(str, fib10))}")
 
+    print(f" 2| => list  {list(gen_fib_seq(10))}")
+    print(f" 3| => list  {[*gen_fib_seq(10)]}")
+    print(f" 4| => tuple {(*gen_fib_seq(10),)}")
+
     def gen_countdown(n):                   # generator function with state
         while n > 0:
             yield n
             n -= 1
 
     cnt10 = gen_countdown(10)
-    print(f" 2| cnt10={" ".join(map(str, cnt10))}")
+    print(f" 5| cnt10={" ".join(map(str, cnt10))}")
 
     def gen_from_iterable(it):              # generator function from iterable
-        for item in it:
-            yield item
+        # for item in it:
+        #    yield item
+        yield from it                       # same as the for loop, see also below
 
     prim7 = gen_from_iterable([2,3,5,7])
-    print(f" 3| prim7={" ".join(map(str, prim7))}")
-
-    print(f" 4| => list  {list(gen_fib_seq(10))}")
-    print(f" 5| => list  {[*gen_fib_seq(10)]}")
-    print(f" 6| => tuple {(*gen_fib_seq(10),)}")
+    print(f" 6| prim7={" ".join(map(str, prim7))}")
 
 
 @print_function_header
@@ -184,7 +185,6 @@ Generator Expression    (expr for item in iterable) inline, lazy generator      
                                                     producing values on demand  immediately
 Generator (informal)    Often used to refer to      Usually means 
                         any of the above            generator iterator
-
 """
 
 
@@ -248,62 +248,6 @@ def introducing_yield_from():
     print(f" 3| chain3={list(gen_chained3)}")
 
 
-@print_function_header
-def using_generator_send():                 # send... what?
-    """ using generator send """
-
-    def count_from(n):                      # idea: count, but set 'start'
-        while True:
-            m = yield n
-            if isinstance(m, int):
-                n = m
-            n += 1
-
-    gen_n = count_from(20)
-
-    lst = [next(gen_n) for _ in range(1, 11)]           # which numbers?
-    print(f" 1| {lst=}")
-
-    lst = [next(gen_n) for _ in range(1, 11)]           # which numbers?
-    print(f" 2| {lst=}")
-
-    x0 = gen_n.send(100)                    # x0 = ?
-    x1 = next(gen_n)                        # debug from 'send' with 'step into'
-    x2 = next(gen_n)
-    lst = [x0, x1, x2] + [next(gen_n) for _ in range(1, 11-3)]
-    print(f" 3| {lst=}")
-
-    def resettable_average():               # living generator, controllable
-        total = 0
-        count = 0
-        average = None
-        while True:
-            try:
-                number = yield average
-                total += number
-                count += 1
-                average = total / count
-            except ZeroDivisionError:
-                print(" a| - reset average")
-                total = 0
-                count = 0
-                average = None
-
-    def start(generator):
-        next(generator)
-        return generator
-
-    avg = start(resettable_average())
-
-    print(f" 4| {avg.send(10)=}")
-    print(f" 5| {avg.send(20)=}")
-
-    avg.throw(ZeroDivisionError)            # reset the state
-
-    print(f" 6| {avg.send(30)=}")
-    print(f" 7| {avg.send(40)=}")
-
-
 if __name__ == "__main__":
     motivate_generators()
     generator_function_examples()
@@ -311,5 +255,4 @@ if __name__ == "__main__":
     using_pipelines()
     reuse_generators()
     introducing_yield_from()
-    using_generator_send()
 
