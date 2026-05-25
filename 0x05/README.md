@@ -1,6 +1,6 @@
 [© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x05` – Recap, Iterators, and Generators
+# Unit `0x05` – Recap & Roadmap, Iterators, and Generators
 
 
 ## Overview
@@ -26,7 +26,9 @@ Practice lazy evaluation and custom iteration patterns to control performance an
 - 80%-Exam
 
 
-## Recap — Topics from Units `0x01`–`0x05`
+## Recap & Roadmap
+
+### Recap – Topics from Units `0x01`–`0x05`
 
 Compact map of everything we touched so far. The rightmost column rates how
 "standard" a topic is, on a four-tier scale — most "advanced" Python topics
@@ -98,9 +100,70 @@ deserve their own tier:
 | Fluent / LINQ-style chained API (`PINQ`) | 3 |
 | Cross-cutting project: streaming pipeline (`filter → moving avg → anomaly`) | 1 |
 
+### Roadmap — Topics from Units `0x06`–`0x09 + 0x_tra_unit`
+
+What lies ahead, on the same four-tier scale. Most of it sits at tier 2, reading
+"you'll write this in week one on the job." (professional).
+Tier 3 here is more the genuine library-author corner.
+
+| Python Topic | Std/Niche |
+|---|---|
+| LEGB scope rule, name resolution | 1 |
+| `global` / `nonlocal` | 1 |
+| Closures (capture by reference, late-binding gotcha) | 2 |
+| Lambdas (and when *not* to use them) | 0 |
+| Context managers: `with`, `__enter__` / `__exit__` | 2 |
+| `contextlib.@contextmanager` (generator-based CMs) | 2 |
+| `contextlib.closing` | 1 |
+| File I/O: `open`, modes, encodings | 0 |
+| `match` / `case` pattern matching (literal, sequence, class patterns) | 2 |
+| Module imports, packages, `__init__.py`, relative imports | 0 |
+| `argparse` (CLI parsing, subcommands, type conversion) | 2 |
+| `json` (dumps/loads, `default=`, dataclass round-tripping) | 2 |
+| `pickle` (binary serialization, arbitrary-code-execution caveat) | 1 |
+| `re` (regex: `search`, `match`, `findall`, `sub`, named groups, `VERBOSE`) | 2 |
+| `subprocess` (`run`, capture, `shell=True` security) | 2 |
+| `map` / `filter` / `functools.reduce` revisited | 1 |
+| Function decorators (basic `def wrapper(*a, **kw)` pattern) | 2 |
+| Parameterized decorators (decorator factories: `@retry(3)`) | 2 |
+| `functools.wraps` (preserving `__name__`, `__doc__`, `__wrapped__`) | 2 |
+| Decorator classes (callable instances with `__call__`) | 2 |
+| Class decorators (decorating the class itself) | 2 |
+| Registration pattern via decorators (plugin/route registries) | 2 |
+| `functools.lru_cache` / `@cache` (memoization) | 2 |
+| `functools.singledispatch` (type-based dispatch) | 2 |
+| Cache introspection (`cache_info()`, `cache_clear()`) | 1 |
+| Threading: `threading.Thread`, `start` / `join` | 1 |
+| `threading.Lock`, mutexes, race conditions | 2 |
+| `threading.Condition` (condition variables) | 2 |
+| `concurrent.futures.ThreadPoolExecutor`, `as_completed` | 2 |
+| The GIL and its implications for CPU- vs IO-bound work | 2 |
+| `multiprocessing.Pool` (CPU-bound parallelism) | 2 |
+| `queue.Queue` (thread-safe producer/consumer) | 2 |
+| `logging` (loggers, handlers, levels, `basicConfig`) | 2 |
+| `sqlite3` / SQL basics from Python | 2 |
+| NumPy / SciPy (vectorized numerics) | 2 |
+| Microsoft Exchange / mail-calendar integration | 3 |
+| OpenAI / ChatGPT API usage | 2 |
+| Packaging & distribution (`pyproject.toml` for wheels) | 2 |
+| Timing & profiling (`time.perf_counter`, `timeit`, `cProfile`) | 2 |
+| `async` / `await`, coroutines | 2 |
+| Event loop, `asyncio.run` | 2 |
+| `asyncio.gather`, `asyncio.sleep` | 2 |
+| `asyncio.TaskGroup` (Python 3.11+) | 2 |
+| Common async pitfalls (`time.sleep` in `async def`, hidden blocking I/O) | 2 |
+| Awaitable protocol (`__await__`) | 3 |
+| Free-threaded Python (PEP 703, Python 3.13+ no-GIL) | 3 |
+| Descriptor protocol (`__get__`, `__set__`, `__delete__`, `__set_name__`) | 3 |
+| Data vs non-data descriptors | 3 |
+| Reusable validation via descriptors (`Bounded`, `Logged`) | 3 |
+| Method binding via descriptors, `types.MethodType` | 3 |
+| `ast` (parse source into syntax tree, `eval`) | 3 |
+| `dis` (bytecode disassembler) | 3 |
+| Metaclasses (custom `type` subclasses, class-creation hooks) | 3 |
+
 
 ## Tasks
-
 
 ### 👉 Task 'Self-Study'
 
