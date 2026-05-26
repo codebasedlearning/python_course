@@ -42,63 +42,65 @@ deserve their own tier:
 - **3** = esoteric — genuinely niche, library-author territory, or a
   stylistic flourish you can live without
 
-| Python Topic | Std/Niche |
-|---|---|
-| Program structure: comments, imports, docstrings, indentation | 0 |
-| `__name__ == "__main__"` guard | 0 |
-| Scalar types: `int`, `float`, `bool`, `str` (immutability, no real primitives) | 0 |
-| Console I/O: `input`, `print`, f-strings, `format` | 0 |
-| Control flow: `if`/`while`/`for`, `try`/`except`, `ValueError` | 0 |
-| Functions, default args, named/keyword args, `*args`/`**kwargs` | 0 |
-| Unpacking (tuple/list, `*`, `**`) | 0 |
-| Collections: `list`, `tuple`, `dict`, `set`, `frozenset`, `range` | 0 |
-| Slicing, `is` vs `==`, short-circuiting | 0 |
-| Shallow vs deep copy, default-argument pitfalls | 2 |
-| List / dict / set comprehensions, generator expressions | 0 |
-| `any` / `all` / `sum` / `len` / `min` / `max` (with `key=`) | 0 |
-| Counter pattern on `dict` (`counter_add/sub/most_common`) | 0 |
-| Fibonacci: iterative, recursive, memoised | 0 |
-| Graph as dict-of-dicts, Dijkstra w/ `heapq` | 1 |
-| Testing with `pytest`, `pytest.raises`, `-v` flag | 2 |
-| Debugging: `breakpoint()` / `pdb` (`p`, `n`, `c`) | 1 |
-| Tooling: `uv`, `pyproject.toml`, virtual envs, Python version | 2 |
-| Lint / typecheck workflow: `pylint`, `mypy` | 2 |
-| Classes, `__init__`, attributes, "Pythonic" instantiation | 0 |
-| `@property` (read/write, computed), encapsulation, "protected" `_x` | 0 |
-| Class vs instance attributes (shadowing) | 2 |
-| Instance / `@classmethod` / `@staticmethod` | 0 |
-| Dunder methods: `__str__`, `__repr__`, `__eq__`, `__hash__`, `__lt__`, `__add__`, `__contains__`, `__getitem__`, `__iter__` | 2 |
-| `@functools.total_ordering` | 2 |
-| `@dataclass` (incl. `frozen=True`) | 2 |
-| `enum` / `Enum` / flags | 2 |
-| Single inheritance, method overriding ("virtual"-style) | 0 |
-| Custom exceptions | 2 |
-| `__slots__`, named tuples | 2 |
-| Type hints / annotations, `Optional`, `list[T]` | 2 |
-| Static analysis: `mypy`, `pyright`, IDE checks | 2 |
-| Duck typing vs nominal vs structural typing | 2 |
-| `typing.Protocol`, structural subtyping (PEP 544) | 2 |
-| `@runtime_checkable` on Protocols | 2 |
-| Abstract base classes (`abc.ABC`, `@abstractmethod`) | 2 |
-| Mixins, multiple inheritance | 2 |
-| MRO / C3 linearisation, `super()` with cooperative `kwargs` | 2 |
-| Composition vs inheritance trade-offs | 2 |
-| Generics: `TypeVar`, variance | 2 |
-| PEP 695 generic class syntax (`class Box[T]:`, Python 3.12+) | 1 |
-| Covariant / contravariant `TypeVar` declarations (`covariant=True`, `contravariant=True`) | 3 |
-| `Callable[[X], Y]` variance (contravariant in input, covariant in output) | 2 |
-| Generic `Protocol[T]` (parameterised structural typing) | 3 |
-| `Iterable[T]` typing | 2 |
-| `iter()` / `next()` built-ins, manual iteration, `StopIteration` handling | 0 |
-| Iterator vs iterable distinction; iterator-exhaustion / reuse bug | 1 |
-| Iterator protocol (`__iter__` + `__next__`, `StopIteration`) | 0 |
-| Generator functions, `yield`, generator expressions | 0 |
-| `isinstance(x, Iterable)` via `collections.abc` (runtime structural check) | 1 |
-| Using `itertools` from the stdlib (`count`, `islice`, `chain`, …) | 1 |
-| Re-implementing `itertools`/built-ins (`count`, `chain`, `dropwhile`, `takewhile`, `zip`, `compress`, `product`, `enumerate`) | 1 |
-| Lazy evaluation, memory profiling (`sys.getsizeof`, `tracemalloc`) | 2 |
-| Fluent / LINQ-style chained API (`PINQ`) | 3 |
-| Cross-cutting project: streaming pipeline (`filter → moving avg → anomaly`) | 1 |
+| Python Topic                                                                                                                  | Std/Niche |
+|-------------------------------------------------------------------------------------------------------------------------------|-----------|
+| Program structure: comments, imports, docstrings, indentation                                                                 | 0         |
+| `__name__ == "__main__"` guard                                                                                                | 0         |
+| Scalar types: `int`, `float`, `bool`, `str` (immutability, no real primitives)                                                | 0         |
+| Console I/O: `input`, `print`, f-strings, `format`                                                                            | 0         |
+| Control flow: `if`/`while`/`for`, `try`/`except`, `ValueError`                                                                | 0         |
+| Functions, default args, named/keyword args, `*args`/`**kwargs`                                                               | 0         |
+| Unpacking (tuple/list, `*`, `**`)                                                                                             | 0         |
+| Collections: `list`, `tuple`, `dict`, `set`, `frozenset`, `range`                                                             | 0         |
+| Slicing, `is` vs `==`, short-circuiting                                                                                       | 0         |
+| Shallow vs deep copy, default-argument pitfalls                                                                               | 2         |
+| List / dict / set comprehensions, generator expressions                                                                       | 0         |
+| `any` / `all` / `sum` / `len` / `min` / `max` (with `key=`)                                                                   | 0         |
+| Counter pattern on `dict` (`counter_add/sub/most_common`)                                                                     | 0         |
+| Fibonacci: iterative, recursive, memoised                                                                                     | 0         |
+| Graph as dict-of-dicts, Dijkstra w/ `heapq`                                                                                   | 1         |
+| Testing with `pytest`, `pytest.raises`, `-v` flag                                                                             | 2         |
+| Debugging: `breakpoint()` / `pdb` (`p`, `n`, `c`)                                                                             | 1         |
+| Tooling: `uv`, `pyproject.toml`, virtual envs, Python version                                                                 | 2         |
+| Lint / typecheck workflow: `pylint`, `mypy`                                                                                   | 2         |
+| Classes, `__init__`, attributes, "Pythonic" instantiation                                                                     | 0         |
+| `@property` (read/write, computed), encapsulation, "protected" `_x`                                                           | 0         |
+| Class vs instance attributes (shadowing)                                                                                      | 2         |
+| Instance / `@classmethod` / `@staticmethod`                                                                                   | 0         |
+| Dunder methods: `__str__`, `__repr__`, `__eq__`, `__hash__`, `__lt__`, `__add__`, `__contains__`, `__getitem__`, `__iter__`   | 2         |
+| `@functools.total_ordering`                                                                                                   | 3         |
+| `@dataclass` (incl. `frozen=True`)                                                                                            | 2         |
+| `enum` / `Enum`                                                                                                               | 2         |
+| `enum` / flags                                                                                                                | 3         |
+| Single inheritance, method overriding ("virtual"-style)                                                                       | 0         |
+| Custom exceptions                                                                                                             | 2         |
+| `__slots__`, named tuples                                                                                                     | 3         |
+| Type hints / annotations, `Optional`, `list[T]`                                                                               | 2         |
+| Static analysis: `mypy`, `pyright`, IDE checks                                                                                | 2         |
+| Duck typing vs nominal vs structural typing                                                                                   | 2         |
+| `typing.Protocol`, structural subtyping (PEP 544)                                                                             | 2         |
+| `@runtime_checkable` on Protocols                                                                                             | 2         |
+| Abstract base classes (`abc.ABC`, `@abstractmethod`)                                                                          | 2         |
+| Mixins, multiple inheritance                                                                                                  | 2         |
+| MRO, `super()` with cooperative `kwargs`                                                                                      | 2         |
+| C3 linearisation                                                                                                              | 3         |
+| Composition vs inheritance trade-offs                                                                                         | 2         |
+| Generics: `TypeVar`, variance                                                                                                 | 2         |
+| PEP 695 generic class syntax (`class Box[T]:`, Python 3.12+)                                                                  | 1         |
+| Covariant / contravariant `TypeVar` declarations (`covariant=True`, `contravariant=True`)                                     | 3         |
+| `Callable[[X], Y]` variance (contravariant in input, covariant in output)                                                     | 3         |
+| Generic `Protocol[T]` (parameterised structural typing)                                                                       | 2         |
+| `Iterable[T]` typing                                                                                                          | 2         |
+| `iter()` / `next()` built-ins, manual iteration, `StopIteration` handling                                                     | 0         |
+| Iterator vs iterable distinction; iterator-exhaustion / reuse bug                                                             | 1         |
+| Iterator protocol (`__iter__` + `__next__`, `StopIteration`)                                                                  | 0         |
+| Generator functions, `yield`, generator expressions                                                                           | 0         |
+| `isinstance(x, Iterable)` via `collections.abc` (runtime structural check)                                                    | 1         |
+| Using `itertools` from the stdlib (`count`, `islice`, `chain`, …)                                                             | 1         |
+| Re-implementing `itertools`/built-ins (`count`, `chain`, `dropwhile`, `takewhile`, `zip`, `compress`, `product`, `enumerate`) | 1         |
+| Lazy evaluation, memory profiling (`sys.getsizeof`, `tracemalloc`)                                                            | 2         |
+| Fluent / LINQ-style chained API (`PINQ`)                                                                                      | 3         |
+| Cross-cutting project: streaming pipeline (`filter → moving avg → anomaly`)                                                   | 1         |
 
 ### Roadmap — Topics from Units `0x06`–`0x09 + 0x_tra_unit`
 
@@ -107,60 +109,60 @@ What lies ahead, on the same four-tier scale. Most of it sits at tier 2, reading
 Tier 3 here is more the genuine library-author corner.
 
 | Python Topic | Std/Niche |
-|---|---|
-| LEGB scope rule, name resolution | 1 |
-| `global` / `nonlocal` | 1 |
-| Closures (capture by reference, late-binding gotcha) | 2 |
-| Lambdas (and when *not* to use them) | 0 |
-| Context managers: `with`, `__enter__` / `__exit__` | 2 |
-| `contextlib.@contextmanager` (generator-based CMs) | 2 |
-| `contextlib.closing` | 1 |
-| File I/O: `open`, modes, encodings | 0 |
-| `match` / `case` pattern matching (literal, sequence, class patterns) | 2 |
-| Module imports, packages, `__init__.py`, relative imports | 0 |
-| `argparse` (CLI parsing, subcommands, type conversion) | 2 |
-| `json` (dumps/loads, `default=`, dataclass round-tripping) | 2 |
-| `pickle` (binary serialization, arbitrary-code-execution caveat) | 1 |
-| `re` (regex: `search`, `match`, `findall`, `sub`, named groups, `VERBOSE`) | 2 |
-| `subprocess` (`run`, capture, `shell=True` security) | 2 |
-| `map` / `filter` / `functools.reduce` revisited | 1 |
-| Function decorators (basic `def wrapper(*a, **kw)` pattern) | 2 |
-| Parameterized decorators (decorator factories: `@retry(3)`) | 2 |
-| `functools.wraps` (preserving `__name__`, `__doc__`, `__wrapped__`) | 2 |
-| Decorator classes (callable instances with `__call__`) | 2 |
-| Class decorators (decorating the class itself) | 2 |
-| Registration pattern via decorators (plugin/route registries) | 2 |
-| `functools.lru_cache` / `@cache` (memoization) | 2 |
-| `functools.singledispatch` (type-based dispatch) | 2 |
-| Cache introspection (`cache_info()`, `cache_clear()`) | 1 |
-| Threading: `threading.Thread`, `start` / `join` | 1 |
-| `threading.Lock`, mutexes, race conditions | 2 |
-| `threading.Condition` (condition variables) | 2 |
-| `concurrent.futures.ThreadPoolExecutor`, `as_completed` | 2 |
-| The GIL and its implications for CPU- vs IO-bound work | 2 |
-| `multiprocessing.Pool` (CPU-bound parallelism) | 2 |
-| `queue.Queue` (thread-safe producer/consumer) | 2 |
-| `logging` (loggers, handlers, levels, `basicConfig`) | 2 |
-| `sqlite3` / SQL basics from Python | 2 |
-| NumPy / SciPy (vectorized numerics) | 2 |
-| Microsoft Exchange / mail-calendar integration | 3 |
-| OpenAI / ChatGPT API usage | 2 |
-| Packaging & distribution (`pyproject.toml` for wheels) | 2 |
-| Timing & profiling (`time.perf_counter`, `timeit`, `cProfile`) | 2 |
-| `async` / `await`, coroutines | 2 |
-| Event loop, `asyncio.run` | 2 |
-| `asyncio.gather`, `asyncio.sleep` | 2 |
-| `asyncio.TaskGroup` (Python 3.11+) | 2 |
-| Common async pitfalls (`time.sleep` in `async def`, hidden blocking I/O) | 2 |
-| Awaitable protocol (`__await__`) | 3 |
-| Free-threaded Python (PEP 703, Python 3.13+ no-GIL) | 3 |
-| Descriptor protocol (`__get__`, `__set__`, `__delete__`, `__set_name__`) | 3 |
-| Data vs non-data descriptors | 3 |
-| Reusable validation via descriptors (`Bounded`, `Logged`) | 3 |
-| Method binding via descriptors, `types.MethodType` | 3 |
-| `ast` (parse source into syntax tree, `eval`) | 3 |
-| `dis` (bytecode disassembler) | 3 |
-| Metaclasses (custom `type` subclasses, class-creation hooks) | 3 |
+|---|-----------|
+| LEGB scope rule, name resolution | 1         |
+| `global` / `nonlocal` | 1         |
+| Closures (capture by reference, late-binding gotcha) | 2         |
+| Lambdas (and when *not* to use them) | 0         |
+| Context managers: `with`, `__enter__` / `__exit__` | 2         |
+| `contextlib.@contextmanager` (generator-based CMs) | 2         |
+| `contextlib.closing` | 1         |
+| File I/O: `open`, modes, encodings | 0         |
+| `match` / `case` pattern matching (literal, sequence, class patterns) | 2         |
+| Module imports, packages, `__init__.py`, relative imports | 0         |
+| `argparse` (CLI parsing, subcommands, type conversion) | 3         |
+| `json` (dumps/loads, `default=`, dataclass round-tripping) | 3         |
+| `pickle` (binary serialization, arbitrary-code-execution caveat) | 3         |
+| `re` (regex: `search`, `match`, `findall`, `sub`, named groups, `VERBOSE`) | 3         |
+| `subprocess` (`run`, capture, `shell=True` security) | 3         |
+| `map` / `filter` / `functools.reduce` revisited | 1         |
+| Function decorators (basic `def wrapper(*a, **kw)` pattern) | 2         |
+| Parameterized decorators (decorator factories: `@retry(3)`) | 2         |
+| `functools.wraps` (preserving `__name__`, `__doc__`, `__wrapped__`) | 2         |
+| Decorator classes (callable instances with `__call__`) | 2         |
+| Class decorators (decorating the class itself) | 2         |
+| Registration pattern via decorators (plugin/route registries) | 2         |
+| `functools.lru_cache` / `@cache` (memoization) | 2         |
+| `functools.singledispatch` (type-based dispatch) | 2         |
+| Cache introspection (`cache_info()`, `cache_clear()`) | 1         |
+| Threading: `threading.Thread`, `start` / `join` | 1         |
+| `threading.Lock`, mutexes, race conditions | 2         |
+| `threading.Condition` (condition variables) | 2         |
+| `concurrent.futures.ThreadPoolExecutor`, `as_completed` | 3         |
+| The GIL and its implications for CPU- vs IO-bound work | 2         |
+| `multiprocessing.Pool` (CPU-bound parallelism) | 3         |
+| `queue.Queue` (thread-safe producer/consumer) | 2         |
+| `logging` (loggers, handlers, levels, `basicConfig`) | 2         |
+| `sqlite3` / SQL basics from Python | 3         |
+| NumPy / SciPy (vectorized numerics) | 3         |
+| Microsoft Exchange / mail-calendar integration | 3         |
+| OpenAI / ChatGPT API usage | 3         |
+| Packaging & distribution (`pyproject.toml` for wheels) | 2         |
+| Timing & profiling (`time.perf_counter`, `timeit`, `cProfile`) | 2         |
+| `async` / `await`, coroutines | 2         |
+| Event loop, `asyncio.run` | 2         |
+| `asyncio.gather`, `asyncio.sleep` | 2         |
+| `asyncio.TaskGroup` (Python 3.11+) | 2         |
+| Common async pitfalls (`time.sleep` in `async def`, hidden blocking I/O) | 2         |
+| Awaitable protocol (`__await__`) | 3         |
+| Free-threaded Python (PEP 703, Python 3.13+ no-GIL) | 2         |
+| Descriptor protocol (`__get__`, `__set__`, `__delete__`, `__set_name__`) | 3         |
+| Data vs non-data descriptors | 3         |
+| Reusable validation via descriptors (`Bounded`, `Logged`) | 3         |
+| Method binding via descriptors, `types.MethodType` | 3         |
+| `ast` (parse source into syntax tree, `eval`) | 3         |
+| `dis` (bytecode disassembler) | 3         |
+| Metaclasses (custom `type` subclasses, class-creation hooks) | 3         |
 
 
 ## Tasks
