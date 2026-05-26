@@ -60,8 +60,8 @@ Duck typing
         required interface in your class, but you don't need to provide a
         base class, or inherit from another class.
 """
-
 from abc import ABC, abstractmethod
+from typing import Protocol, runtime_checkable
 
 # pylint: disable=missing-function-docstring, missing-class-docstring, multiple-statements, too-few-public-methods
 from utils import print_function_header
@@ -148,7 +148,41 @@ def show_abstract_base_classes():
         wnd.draw()
         print(f" e|    - instance of Window? {isinstance(wnd, Window)}")
 
+
+@print_function_header
+def show_protocols():
+    """ shows an example of a 'protocol' """
+
+    @runtime_checkable
+    class Window(Protocol):
+        """ a protocol """
+        def draw(self): ...
+
+    class Button:
+        def draw(self):
+            print(" b|  - Button.draw")
+            # super().draw()
+
+    class Checkbox:
+        def draw(self):
+            print(" c|  - Checkbox.draw")
+            # super().draw()
+
+    print(" 1| create drawables and check instances")
+
+    windows = [
+            Button(),
+            Checkbox(),
+    ]
+    for wnd in windows:
+        wnd.draw()
+        # isinstance works because of @runtime_checkable
+        print(f" e|    - instance of Window? {isinstance(wnd, Window)}")
+    print()
+
+
 if __name__ == "__main__":
     show_informal_interfaces()
     show_abstract_base_classes()
+    show_protocols()
 
