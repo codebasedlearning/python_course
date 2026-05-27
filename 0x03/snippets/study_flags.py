@@ -24,7 +24,6 @@ from enum import Flag, auto
 
 from utils import print_function_header
 
-
 """
 Topic: Enum flags
 """

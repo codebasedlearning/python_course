@@ -4,7 +4,6 @@
 This snippet demonstrates advanced typing features.
 
 Teaching focus
-  - @overload for type-safe function signatures
   - Literal for restricting string/int values
   - Final for preventing reassignment
   - TypeGuard for type narrowing
@@ -12,8 +11,6 @@ Teaching focus
 Advanced typing
   - Python's type system is gradually typed: you opt in where you want
     static checking (mypy, pyright) without losing dynamic flexibility.
-  - @overload tells the type checker about different call signatures,
-    but only one implementation runs at runtime.
   - Literal restricts a parameter to specific constant values.
   - Final marks variables as not-to-be-reassigned.
 
@@ -26,48 +23,6 @@ See also
 from typing import Final, Literal, TypeGuard, overload
 
 from utils import print_function_header
-
-"""
-Topic: @overload — multiple signatures, one implementation
-"""
-
-
-# overload signatures (for the type checker only, never executed)
-@overload
-def get_item(index: int) -> str: ...
-@overload
-def get_item(index: str) -> list[str]: ...
-
-# actual implementation (must handle all overloaded cases)
-def get_item(index):
-    items = ["alpha", "bravo", "charlie", "delta"]
-    if isinstance(index, int):
-        return items[index]
-    elif isinstance(index, str):
-        return [item for item in items if index.lower() in item.lower()]
-    raise TypeError(f"Expected int or str, got {type(index).__name__}")
-
-
-@print_function_header
-def using_overload():
-    """ @overload gives the type checker precise return types """
-
-    # the type checker knows:
-    # get_item(int) → str
-    # get_item(str) → list[str]
-
-    result_int = get_item(0)                # type checker infers: str
-    print(f" 1| get_item(0) = {result_int!r} (type: {type(result_int).__name__})")
-
-    result_str = get_item("a")              # type checker infers: list[str]
-    print(f" 2| get_item('a') = {result_str} (type: {type(result_str).__name__})")
-
-    # without @overload, the type checker would only know: str | list[str]
-    # with @overload, it narrows based on the argument type
-
-    print(f" 3| note: @overload is for the type checker, not runtime dispatch")
-    print(f" 4| for runtime dispatch by type, use @functools.singledispatch")
-
 
 """
 Topic: Literal — restrict to specific values
@@ -168,7 +123,6 @@ def using_typeguard():
 
 
 if __name__ == "__main__":
-    using_overload()
     using_literal()
     using_final()
     using_typeguard()

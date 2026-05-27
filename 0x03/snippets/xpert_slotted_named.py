@@ -37,7 +37,9 @@ See also
 
 import sys
 from typing import NamedTuple
+
 from utils import print_function_header
+
 
 class SlottedPerson:
     """ person class with __slots__ instead of __dict__ """
@@ -59,7 +61,7 @@ def show_slots():
     print(f" 1| {sp=}, {sp.name=}, {sp.age=}")
 
     try:
-        sp.hobby = "chess"                  # AttributeError: no __dict__
+        sp.hobby = "chess"                  # AttributeError: no __dict__  # ty:ignore[unresolved-attribute]
     except AttributeError as e:
         print(f" 2| cannot add attribute: {e}")
 
@@ -105,7 +107,7 @@ def compare_with_namedtuple():
 
     # immutability
     try:
-        p_nt.x = 99
+        p_nt.x = 99                         # ty:ignore[invalid-assignment]
     except AttributeError as e:
         print(f" 6| immutable: {e}")
 

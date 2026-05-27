@@ -9,7 +9,7 @@ Teaching focus
 See https://docs.python.org/3/library/itertools.html
 """
 
-import itertools                                                    #
+import itertools  #
 
 from utils import print_function_header
 

@@ -33,7 +33,6 @@ from typing import Self  # Python 3.11+
 
 from utils import print_function_header
 
-
 """
 Topic: Singleton pattern
 """
