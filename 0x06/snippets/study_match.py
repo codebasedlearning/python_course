@@ -27,8 +27,9 @@ PEP 636 – Structural Pattern Matching: Tutorial
     https://peps.python.org/pep-0636
 """
 
-from enum import Enum, auto
 from dataclasses import dataclass
+from enum import Enum, auto
+
 from utils import print_function_header
 
 

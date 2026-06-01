@@ -12,7 +12,6 @@ comprehension
 
 from utils import print_function_header
 
-
 # comprehension variables Scope: lists, dictionaries and sets
 
 @print_function_header
@@ -24,9 +23,9 @@ def show_comprehension_scope():
         s += i
     print(f" 1| locals={locals()}")         # 'i' is known (last value)
 
-    lst = [item*2 for item in range(5)]     # (A) comprehensions, 'item' is not
+    lst = [item*2 for item in range(5)]     # comprehensions, 'item' is not in locals
     dct = {item: item**2 for item in range(5)}
-    loc = [f"{locals()}" for item in range(1)]                      # try to access temp. locals()
+    loc = [f"{locals()['item']}" for item in range(1)]  # temp. locals()
     print(f" 2| locals={locals()}")
 
 
@@ -39,12 +38,12 @@ def show_exception_scope():
     err = 1                                 # 'err' is defined here...
     print(f" 1| {err=}, {locals()=}")
     try:
+        # pass                              # comment out raise
         raise RuntimeError("something wrong")
     except RuntimeError as err:             # exception blocks, 'err' local to the block
         print(f" 2| {err=}, {locals()=}")
-    # print(err)
+    # 'err' may be unknown here, depending on flow before
     print(f" 3| {err if 'err' in locals() else "?"}, {locals()=}")
-    # print(err)                                                    # and 'err' may be unknown here (in case of exc.)
 
 
 def non_dunder_names(dct):
@@ -54,10 +53,10 @@ def non_dunder_names(dct):
 # class scope, defining a class creates a new local Python scope with different rules
 
 class Base:
-    attr = 123                              # class attributes
+    attr = 123                              # class attribute
 
     def __init__(self, n):
-        self.n = n
+        self.n = n                          # instance attribute
 
 
 class Derived(Base):

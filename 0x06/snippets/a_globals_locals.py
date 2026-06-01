@@ -22,7 +22,7 @@ From https://realpython.com/python-scope-legb-rule/#using-scope-related-built-in
       - Enclosing (or nonlocal) scope is a special scope that only exists
         for nested functions.
       - Global (or module) scope is the top-most scope in a Python program,
-        script, or module. This Python scope contains all of the names that
+        script, or module. This Python scope contains all the names that
         you define at the top level of a program or a module. Names in this
         Python scope are visible from everywhere in your code.
       - Built-in scope is a special Python scope that's created or loaded
@@ -35,7 +35,7 @@ From https://realpython.com/python-scope-legb-rule/#using-scope-related-built-in
       - Comprehensions
       - Exception blocks
       - Classes and instances
-    We now (in a minute) look at these different scopes.
+    We look at these different scopes.
 
 ---
 dir() and vars():
@@ -94,10 +94,22 @@ Same 'id' means same object in memory. In CPython 'id' returns the
 memory location (i.e. a pointer to the object).
 """
 x = 123
-globals()['xyz'] = "HiHo"                   # change globals is (tech.) ok (IDE is surprised...)
-print(f" 3| define x: {non_dunder_names(G)}\n"
-      f"    {x=}, {xyz=}\n"
-      f"    id(x)==id(globals[x])? {id(x) == id(G['x'])} or, eq., x is globals[x]? {x is G['x']}\n")
+globals()['xyz'] = "HiHo"                   # change globals this way is technically ok but questionable (IDE surprised)
+print(f" 3| define x, xyz: {non_dunder_names(G)}\n"
+      f"    {x=}, {xyz=}\n"                 # ty:ignore[unresolved-reference]
+      f"    id(x)==id(globals[x])? {id(x) == id(G['x'])} or, eq., x is globals[x]? {x is G['x']}")
+
+# functional demo for 'some' application (not best practice) - pros/cons?
+
+def windows_print(): print(" a| - printing from Windows...")
+def darwin_print(): print(" b| - printing from macOS...")
+def linux_print(): print(" c| - printing from Linux...")
+
+import platform
+os_printer = globals()[platform.system().lower() + '_print']   # 'Linux', 'Darwin', 'Java', 'Windows'
+os_printer()
+print()
+
 
 """
 What exactly is done by the import command? In the first case ('math') it adds 
@@ -107,7 +119,8 @@ We now know a number of ways to add objects to globals: x=, import, def f
 """
 import math
 from math import pi
-print(f" 4| import math, pi: {non_dunder_items(G)}\n")
+print(f" 4| import math, pi: {non_dunder_items(G)}\n"
+      f"    {pi is math.pi=}\n")
 
 
 """
@@ -133,9 +146,7 @@ Again from https://realpython.com/python-scope-legb-rule/#using-scope-related-bu
     or lambda expression. The names that you define in this scope are only 
     available or visible to the code within the scope.
 """
-
-
-def access_x_v1():
+def access_vars():
     # locals() implements the local scope.
     print(f" 6| locals type:{type(locals())}, locals={locals()}")
 
@@ -147,31 +158,27 @@ def access_x_v1():
     if False:
         a = 1
 
-    print(f"    define x2 and f: locals={locals()}, x2={locals()['x2']}\n")
-
-    # x = 1  # technically ok, but IDE signals a warning...
-
-
-access_x_v1()
-
-
-def access_x_v2():
-    global x  # comment out this line to create an error -> why?
-    x = x + 1
-    for i in range(5):
+    for i in range(5):                      # see 'locals'
         pass
 
+    print(f" 7| define x2, f, i, maybe a: locals={locals()}\n"
+          f"    x2={locals()['x2']}\n"
+          f"    {vars()=}\n"
+          f"    {dir()=}\n")
+
+    # x = 1                                 # IDE signals a warning - why?
+    # x = x + 1                             # creates an error -> why?
+
+    # global x                              # ok, we meant global x, but also an error - why?
+    # x = 2
+
+access_vars()
 
 # btw. functions know their variables, even if they have not come across
-print(f" 7| local vars in 'access_x_v1': {access_x_v1.__code__.co_varnames}\n"
-      f"    local vars in 'access_x_v2': {access_x_v2.__code__.co_varnames}\n")
+print(f" 8| local vars in 'access_vars': {access_vars.__code__.co_varnames}\n")
 
-# finally
-
-print(f" 8|   globals={globals()}\n"        # globals()
-      f"      non_dunder={non_dunder_names(G)}\n"
-      f"       locals={locals()}\n"         # at module level, locals and globals same dict.
-      f"       id(locals)={id(locals())}, id(globals)={id(globals())}\n"
-      f"         vars={vars()}\n"           # here vars = globals = locals
+# at module level, locals and globals same dict.
+print(f" 9| id(locals)={id(locals())}, id(globals)={id(globals())}\n"   
+      f"    vars={vars()}\n"           # here vars = globals = locals
       f"    vars.keys={sorted(vars().keys())}\n"
-      f"          dir={sorted(dir())}")     # here vars.key() = dir()
+      f"    dir={sorted(dir())}")     # here vars.key() = dir()

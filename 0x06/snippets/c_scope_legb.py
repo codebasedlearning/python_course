@@ -24,11 +24,11 @@ From https://en.wikipedia.org/wiki/Closure_(computer_programming)
 See https://realpython.com/inner-functions-what-are-they-good-for/
 """
 
-# Recap: For the sake of clarity, let's look at the global namespace first,
-# because there aren't that many elements at the moment.
+from utils import print_function_header
+
+# globals recap (leGb)
 
 x = 123
-
 
 def non_dunder_names(dct):
     """ returns 'non-dunder' names from dictionary. """
@@ -36,25 +36,9 @@ def non_dunder_names(dct):
 
 
 print(f" 1| globals={non_dunder_names(globals())}")     # globals() = dict. impl. current module namespace
-globals()['xyz'] = "HiHo"                   # change globals is (tech.) ok (IDE is surprised...)
-print(f" 2| def. xyz: xyz='{xyz}', globals={non_dunder_names(globals())}")
 
 
-# application... to be discussed
-
-def windows_print(): print(" a| printing from Windows...")
-def darwin_print(): print(" b| printing from macOS...")
-def linux_print(): print(" c| printing from Linux...")
-
-
-import platform                             # https://docs.python.org/3/library/platform.html
-from utils import print_function_header
-
-printer = globals()[platform.system().lower() + '_print']   # 'Linux', 'Darwin', 'Java', 'Windows'
-printer()
-
-
-# local
+# locals recap (Legb)
 
 @print_function_header
 def show_local_scope():
@@ -66,7 +50,7 @@ def show_local_scope():
     d = {1: 'one'}
     if True:
         e = 2.71                            # note, 'e' is known from here (compare with Java)
-    from math import pi
+    from math import pi                     # see locals
     def f(): return 1
     print(f" 1|      locals={locals()}\n"
           f"    locals.keys={locals().keys()}\n"
@@ -79,7 +63,8 @@ def show_local_scope():
     # be modified; changes may not affect the values of local and free variables
     # used by the interpreter.
 
-# enclosing
+
+# enclosing (new, lEgb)
 
 @print_function_header
 def show_enclosing_scope():
@@ -93,9 +78,9 @@ def show_enclosing_scope():
         z = 2
         # accessing 'y' is interesting... comment in and out 'y=11'
         print(f" a| locals 'f': {locals()}, {y}")
-        # y = 11  # shadows 'enclosing' y and 'y' becomes a local variable, existing from here
+        # y = 11        # shadows 'enclosing' y and 'y' becomes a local variable, existing from here
         print(f" b| def. y, locals 'f': {locals()}")
-        # nonlocal y   # no explicit scope for 'nonlocal' vars -> appear in locals...
+        # nonlocal y    # no explicit scope for 'nonlocal' vars -> appear in locals...
         # y = 13
         print(f" c| non.loc. y, locals 'f': {locals()}")
         # z local, y enclosing or local, x global -> LEG
@@ -105,7 +90,7 @@ def show_enclosing_scope():
 
 # closures
 
-def doubled_power_factory(exp):             # closure fact., exp and scaling are free variables
+def scaled_power_factory(exp):              # closure fact., exp and scaling are free variables
     scaling = 2                             # "private", i.e. cannot be accessed from outside
 
     def power(base):
@@ -117,8 +102,8 @@ def doubled_power_factory(exp):             # closure fact., exp and scaling are
 def show_enclosing_application():
     """ show enclosing scope and application of a closure """
 
-    square = doubled_power_factory(2)
-    cube = doubled_power_factory(3)
+    square = scaled_power_factory(2)
+    cube = scaled_power_factory(3)
     print(f" 1| 2*5^2={square(5)}, 2*10^2={square(10)}\n"
           f"    2*5^3={cube(5)}, 2*10^3={cube(10)}\n")
 
@@ -139,22 +124,22 @@ def create_func_tuple():
 def show_enclosing_edge_case():
     """ show enclosing scope and application of a closure """
 
-    print(f" 1| create two closures with shared state")
+    print(" 1| create two closures with shared state")
     add_x, add_2x = create_func_tuple()
     add_x(1)
     add_2x(3)
     print()
 
 
-# builtin
+# builtin (new, legB)
 
 @print_function_header
 def show_builtin_scope():
     """ show builtin scope """
 
-    print(f" 1| builtin: {non_dunder_names(__builtins__.__dict__)}\n")
-    # change builtins ok
-    __builtins__.__dict__['code_based'] = "CBL"         # similar to globals()
+    print(f" 1| builtin: {non_dunder_names(__builtins__.__dict__)}")
+    # change builtins is ok for libraries but usually not for user code - ideas?
+    __builtins__.__dict__['code_based'] = "CBL"
     print(f" 2| new def.: {code_based}")
 
 
@@ -163,7 +148,7 @@ def show_builtin_application():
     """ show builtin application """
 
     import builtins as std                  # in case of name conflicts
-    print(f" 1| {std.abs(-5)=}")
+    print(f" 1| {std.abs(-5)=}")            # abs still working
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@ https://docs.python.org/3/glossary.html#term-generator-iterator
 """
 
 from functools import reduce
+
 from utils import print_function_header
 
 

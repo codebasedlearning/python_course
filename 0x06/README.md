@@ -42,8 +42,9 @@ utilities.
 
 ### 👉 Task 'Ancestor Clove' 
 
-- Think about how you could design a 'Timer' class implementing the 'ContextManager' protocol to
-  measure time. Test it.
+- Implement a 'Timer' class using the 'ContextManager' protocol to
+  measure execution time of a code block. 
+  Yes, we saw this, now try on your own and test it.
 - What would a function 'timer' look like that uses '@contextmanager.' Also test it.
 
 In both cases you can use the `fib(n)` function as a workload.

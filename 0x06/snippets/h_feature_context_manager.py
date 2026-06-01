@@ -42,67 +42,76 @@ closing
     https://docs.python.org/3/library/contextlib.html#contextlib.closing
 """
 
+import time
 import unittest
-from contextlib import contextmanager, closing
+from contextlib import closing, contextmanager
+
 from utils import print_function_header
 
 """
-'with' use cases
-  - Open and close          e.g. file io
-  - Lock and release            ?
-  - Change and reset            ?
-  - Create and delete           ?
-  - Enter and exit              ?
-  - Start and stop              ?
-  - Setup and teardown          ?
+'with' use cases see above
 
 with expression as target_var:
     do_something(target_var)
 """
 
-
-@print_function_header
-def context_manager_examples():
-    """ context manager examples """
-
-    # example 1 - see a_file_io.py
-    # with open(filename, 'w') as writer:
-    #     ...
-
-    # example 2
-    class ExampleTestCase(unittest.TestCase):
-        def test_int_ops(self):
-            with self.assertRaises(Exception):
-                1 + '1'  # op not defined -> an exception is expected
-
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(ExampleTestCase)
-    unittest.TextTestRunner().run(suite)
-
-    # more examples as tasks
-
-
 @print_function_header
 def new_context_managers():
     """ new context managers """
 
-    class SimpleIncrementContextManager:    # (A) ContextManager
-        def __init__(self, n: int):
-            self.n = n + 1
-            print(f" a|     init {n=}, {self.n=}")
+    def do_something_important():
+        print(" x| - do something important...", end='')
+        time.sleep(0.1)
+        print("done")
+    
+    class TimerV1:
+        # perf_counter is a high-resolution timer that returns a float of seconds;
+        # it uses the most precise clock available on the platform
+        def __enter__(self):
+            self.start = time.perf_counter()
+            print(" a| - start")
+    
+        def __exit__(self, *args):          # args needed but unused, see below
+            elapsed = time.perf_counter() - self.start
+            print(f" b| - stop, {elapsed=:0.4f}s")
 
-        def __enter__(self):                # context manager protocol
-            self.n = self.n + 1
-            print(f" b|     enter {self.n=}")
-            return self.n
+    print(" 1| timer class version 1")
+    with TimerV1():
+        do_something_important()
+    print()
 
-        def __exit__(self, *args_not_used_see_below):               # context manager protocol
-            self.n = self.n + 1
-            print(f" c|     exit {self.n=}")
+    # __enter__ returns self, __exit__ writes to self, => standard pattern
 
-    print(f" 1| use SimpleIncrementContextManager")
-    with SimpleIncrementContextManager(23) as k:                    # 'k' is the result of enter
-        print(f" d|   {k=}")
-    print(f" 2| after SimpleIncrementContextManager")
+    class TimerV2:
+        def __enter__(self):
+            self.start = time.perf_counter()
+            self.elapsed = 0.0
+            return self                     # becomes the 'as' variable
+
+        def __exit__(self, *args):
+            self.elapsed = time.perf_counter() - self.start
+
+    print( " 2| timer class version 2, start")
+    with TimerV2() as t2:
+        do_something_important()
+    print(f"  | stop, {t2.elapsed=:0.4f}s")
+    print()
+
+    # what about this version, does it work?
+
+    class TimerV3:
+        def __enter__(self):
+            self.start = time.perf_counter()
+            return lambda: time.perf_counter() - self.start
+
+        def __exit__(self, *args):
+            pass
+
+    print( " 3| timer class version 3, start")
+    with TimerV3() as t3:
+        do_something_important()
+    print(f"  | stop, elapsed={t3():0.4f}s")
+    print()
 
     class PrintContextManager:
         def __init__(self, indent):
@@ -112,17 +121,17 @@ def new_context_managers():
             print(f"{self.spaces}Enter...")
             return self
 
-        def __exit__(self, *args_not_used_see_below):
+        def __exit__(self, *args):
             print(f"{self.spaces}Leave...")
 
         def print(self, *args, **kwargs):
             print(f"{self.spaces}", end='')
             print(*args, **kwargs)
 
-    print(f" 3| use PrintContextManager")
+    print(" 4| use PrintContextManager")
     with PrintContextManager(4) as pcm:     # 'pcm' is the result of enter
-        pcm.print(f"more output... type pcm: {type(pcm)}")
-    print(f" 4| after PrintContextManager")
+        pcm.print(f"more output... {type(pcm)=}")
+    print(" 5| after PrintContextManager")
 
     class Guard:
         def __init__(self, items):
@@ -131,7 +140,7 @@ def new_context_managers():
         def __enter__(self):
             return self
 
-        def __exit__(self, exc_type, exc_value, exc_tb):            # _tb traceback
+        def __exit__(self, exc_type, exc_value, exc_tb):        # _tb traceback
             if isinstance(exc_value, IndexError):
                 print(f">>>>>>>>>> IndexError... Really? Again?")
                 print(f"           block: {exc_type}")
@@ -143,28 +152,28 @@ def new_context_managers():
             return self.items[key]
 
     primes = [2, 3, 5, 7, 11]
-    print(f" 5| use Guard")
+    print(" 6| use Guard")
     with Guard(primes) as guarded:
-        print(f" 6|   items[3]={guarded[3]}")
-        print(f" 7|   items[7]={guarded[7]}")
-    print(f" 8| after Guard\n")
+        print(f" 7|   items[3]={guarded[3]}")
+        print(f" 8|   items[7]={guarded[7]}")
+    print(" 9| after Guard\n")
 
 
 @print_function_header
 def annotated_context_managers():
     """ annotated context managers """
 
-    @contextmanager                         # (B) @contextmanager
+    @contextmanager                         # @contextmanager
     def indent_context_manager(indent_level):
         spaces = ' ' * indent_level
         print(f"{spaces}Enter...")
         yield spaces
         print(f"{spaces}Leave...")
 
-    print(f" 1| use indent_context_manager")
+    print(" 1| use indent_context_manager")
     with indent_context_manager(4) as indent:                       # 'indent' stems from yield
-        print(f"{indent}more output... type indent: {type(indent)}")
-    print(f" 2| after indent_context_manager")
+        print(f"{indent}more output... {type(indent)=}")
+    print(" 2| after indent_context_manager")
 
 
 @print_function_header
@@ -175,15 +184,15 @@ def close_a_context_manager():
         def close(self):
             print(" a|   clean me")
 
-    print(f" 1| use Resource")
-    # with Resource():                                              # does not support protocol
-    with closing(Resource()) as res:        # (C) closing
+    print(" 1| use Resource")
+    # with Resource():                      # Resource does not support protocol
+    with closing(Resource()) as res:        # closing
         print(f"    type res: {type(res)}")
-    print(f" 2| after using Resource")
+    print(" 2| after using Resource")
 
+    # more examples as tasks
 
 if __name__ == "__main__":
-    context_manager_examples()
     new_context_managers()
     annotated_context_managers()
     close_a_context_manager()

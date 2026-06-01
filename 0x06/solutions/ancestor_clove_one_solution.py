@@ -2,8 +2,8 @@
 
 """ Task 'Ancestor Clove' """
 
-from contextlib import contextmanager
 import time
+from contextlib import contextmanager
 
 benchmark_n = 35
 
@@ -18,21 +18,20 @@ def use_perf_counter():
     t1 = time.perf_counter()
     print(f" 1| perf_counter: fib({benchmark_n})={fib_n} in {t1 - t0:0.4f} seconds | t0={t0}, t1={t1}")
 
-
 class Timer:
     def __enter__(self):
         self.start = time.perf_counter()
-        self.end = 0.0
-        return lambda: self.end - self.start
+        self.elapsed = 0.0
+        return self                     # becomes the 'as' variable
 
     def __exit__(self, *args):
-        self.end = time.perf_counter()
+        self.elapsed = time.perf_counter() - self.start
 
 
 def use_timer_class():
     with Timer() as dt:
         fib_n = fib(benchmark_n)
-    print(f" 2| timer class: fib({benchmark_n})={fib_n} in {dt():0.4f} seconds")
+    print(f" 2| timer class:  fib({benchmark_n})={fib_n} in {dt.elapsed:0.4f} seconds")
 
 
 @contextmanager
@@ -47,7 +46,7 @@ def timer():
 def use_timer_fct():
     with timer() as dt:
         fib_n = fib(benchmark_n)
-    print(f" 3| timer fct: fib({benchmark_n})={fib_n} in {dt():0.4f} seconds")
+    print(f" 3| timer fct:    fib({benchmark_n})={fib_n} in {dt():0.4f} seconds")
 
 
 if __name__ == "__main__":

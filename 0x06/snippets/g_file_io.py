@@ -67,6 +67,7 @@ See
 """
 
 from pathlib import Path, PurePath
+
 from utils import print_function_header
 
 """
@@ -75,7 +76,7 @@ What are the general issues with IO, especially file IO?
 
 
 @print_function_header
-def read_file_version1(filename):           # (A) file io
+def read_file_version1(filename):           # file io
     """ read file version 1 """
 
     # pro/con?
@@ -95,7 +96,7 @@ def read_file_version2(filename):
     text = None
     try:
         print(f" 1| try to open '{filename}'")
-        file = open(filename, "r")          # or 'open' before, i.e. try-except for 'read' only
+        file = open(filename, "r")
         text = file.readlines()
     except OSError as e:
         print(f"    -> IO error: {e}")
@@ -114,7 +115,7 @@ def read_file_version3(filename):
     text = None
     try:
         print(f" 1| try to open '{filename}'")
-        with open(filename, "r") as reader:                         # (B) with
+        with open(filename, "r") as reader:                         # with
             text = reader.readlines()
         print(f"    reader closed? {reader.closed}")
     except OSError as e:
