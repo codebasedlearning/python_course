@@ -16,6 +16,7 @@ from dataclasses import dataclass
 
 from utils import print_function_header
 
+
 @print_function_header
 def use_singleton():
     """ example for classes """

@@ -116,7 +116,7 @@ def create_func_tuple():
         shared_state += _s
         print(f" a| {who}, +={_s} => {shared_state}, {locals()=}, {id(locals())=}")
 
-    # a form of currying
+    # a form of partial application
     return lambda _x: add_to_sum("f1", _x), lambda _x: add_to_sum("f2", _x + _x)
 
 

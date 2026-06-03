@@ -20,8 +20,7 @@ from utils import print_function_header
 def do_twice_without_args():
     """ work with functions as objects """
 
-    # 'decorator' that runs a function twice
-    def do_twice(some_f):
+    def do_twice(some_f):                   # 'decorator' that runs a function twice
         def wrapper_do_twice():             # so many 'wrapper'...
             some_f()
             some_f()
@@ -61,6 +60,7 @@ def do_twice_with_args():
     # print_text_v1('ok, here is the text')
 
     # => error: [...] takes 0 positional arguments, but 1 was given
+
     print(f" 2| whats is 'print_text_v1': {print_text_v1=}")
     print(f" 3| name of 'print_text_v1': '{print_text_v1.__name__}'\n")
     # keep this 'name problem' in mind for later!
@@ -155,7 +155,7 @@ def time_it_with_return():
             z = some_f(*args, **kwargs)     # just return the result from the wrapper
             t1 = time.process_time()
             print(f"--- duration: dt={t1 - t0}")
-            return z # ,t1-t0; if you want both, return a tuple
+            return z                        # return z,t1-t0; if you want both
         return wrapper
 
     @time_it
@@ -200,4 +200,3 @@ if __name__ == "__main__":
     do_twice_with_args()
     time_it_with_return()
     who_am_I()
-

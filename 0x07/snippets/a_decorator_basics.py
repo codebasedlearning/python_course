@@ -18,9 +18,9 @@ Refs:
   - https://peps.python.org/pep-0318/#background
 """
 
+import time
 from datetime import datetime
 from typing import Callable
-import time
 
 from utils import print_function_header
 
@@ -36,8 +36,8 @@ def call_op_with(a: int, b: int, op: Callable[[int, int], int]) -> int:
 
 
 @print_function_header
-def functions_are_first_class_citizens():  # functions as arguments
-    """ work with functions as objects """
+def functions_are_first_class_citizens():
+    """ recap: work with functions as objects, seen before """
 
     n, m = 3, 2
 
@@ -61,15 +61,16 @@ def functions_as_results():
 
     def op_from_input(op_str):
         if op_str == "+":
-            return op_plus
-        if op_str == "*":
+            return op_plus                  # some function
+        elif op_str == "*":
             def op_mul(a, b):
                 return a * b
-            return op_mul
+            return op_mul                   # local function
         raise NotImplementedError(f"op {op_str} not defined")
 
     n, m = 3, 2
-    print(f" 1| {n=}, {m=}, n*m={call_op_with(n, m, op_from_input('*'))}")
+    input_operator = op_from_input('*')
+    print(f" 1| {n=}, {m=}, n*m={call_op_with(n, m, input_operator)}")
 
 
 """
@@ -90,12 +91,12 @@ def print_text_around():
     # function as its argument and returns a new function (often wrapping
     # the original function with some additional behavior).
 
-    def with_text_around(some_f):  # a decorator function
+    def with_text_around(some_f):           # a decorator function
         def wrapper():
             print("--- text before")
             some_f()
             print("--- text after")
-        return wrapper  # return the inner function
+        return wrapper                      # return the inner function
 
     # the function we want to wrap (aka 'decorate')
     def print_something():
@@ -121,7 +122,7 @@ def print_text_around():
 def more_decorator_functions():
     """ more decorator functions """
 
-    def at_office_hours_only(some_f):  # another decorator function
+    def at_office_hours_only(some_f):       # another decorator function
         def wrapper():
             if 7 <= datetime.now().hour < 22:
                 some_f()  # conditional calling
@@ -132,13 +133,13 @@ def more_decorator_functions():
     # same as: print_more = at_office_hours_only(print_more)
 
     @at_office_hours_only
-    def print_more():  # function we want to 'decorate'
+    def print_more():                       # function we want to 'decorate'
         print(" a| -> 'more'")
 
     print(f" 1| call function at {datetime.now().hour}h")
     print_more()
 
-    def time_it(some_f):
+    def time_it(some_f):                    # another decorator function
         def wrapper():
             t0 = time.process_time()
             some_f()
@@ -146,7 +147,7 @@ def more_decorator_functions():
             print(f"--- duration: dt={t1 - t0}")
         return wrapper
 
-    @time_it  # syntactic sugar for f = decorator(f)
+    @time_it                                # again: syntactic sugar for f = decorator(f)
     def print_fibs():
         def fib(n):
             return fib(n - 1) + fib(n - 2) if n >= 3 else 1 if n >= 1 else 0
@@ -154,7 +155,7 @@ def more_decorator_functions():
         fibs = [fib(n) for n in range(1, 30)]
         print(f" b| -> {fibs=}")
 
-    print(f" 2| call fib(1..)")
+    print(" 2| call fib(1..)")
     print_fibs()
 
 
@@ -182,9 +183,9 @@ def nested_decorator():
     @deco1
     def g(): print(" d| -> in g")
 
-    print(f" 1| call f")
+    print(" 1| call f")
     f()
-    print(f" 2| call g")
+    print(" 2| call g")
     g()
 
 

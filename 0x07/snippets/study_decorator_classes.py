@@ -77,18 +77,19 @@ def use_class_as_decorator():
                 return instance.__call__(args[0])
             return super().__new__(cls)
 
-        def __init__(self, doc:str="?"):
-            self.doc = doc
+        def __init__(self, intro:str="?"):
+            self.intro = intro
 
         def __call__(self, some_f):
             @functools.wraps(some_f)
             def wrapper(*args):
-                return call_and_log("c", some_f, *args)
+                return call_and_log(self.intro, some_f, *args)
             return wrapper
 
-    @LogCallsFlexible(doc="333")
+    @LogCallsFlexible(intro="!")
     def h1(x):
         return x*2
+
     @LogCallsFlexible
     def h2(x):
         return x*2
@@ -99,4 +100,3 @@ def use_class_as_decorator():
 
 if __name__ == "__main__":
     use_class_as_decorator()
-

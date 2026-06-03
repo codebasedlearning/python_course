@@ -22,45 +22,48 @@ from utils import print_function_header
 def do_twice_or_more():
     """ decorate a function and call it a number of times """
 
-    # remember do_twice
+    # remember do_twice; skip args, return values and @functools.wraps
 
     def do_repeat(some_f, n):               # first try
-        @functools.wraps(some_f)
-        def wrapper_do_repeat(*args, **kwargs):
-            value = None
-            for _ in range(n):
-                value = some_f(*args, **kwargs)
-            return value
+        def wrapper_do_repeat():
+            for _ in range(n): some_f()
         return wrapper_do_repeat
 
     def f():
-        print(f" a| -> in 'f'")
+        print(" a| -> in 'f'")
 
     print(" 1| define 'f'")
     f = do_repeat(f, 3)                     # remember the original idea
-    print(f" 2| call 'f'")                  # -> this works
+    print(" 2| call 'f'")                   # -> this works
     f()
 
     # let's try the @-syntax
 
+    print(" 3| define 'g'")
+
     # @do_repeat(3)
     def g():
-        print(f" b| -> in 'g'")
-    print(f" 3| call 'g'")
+        print(" b| -> in 'g'")
+    print(" 4| call 'g'")
     g()
 
     # => error: [...] missing 1 required positional argument: 'n'
-    #
+
     # 'do_repeat' expects the target function `some_f` and the parameter `n`
     # simultaneously, but that does not work with the decorator syntax,
-    # or short
-    #   do_repeat(3)(g) != do_repeat(g,3)
     #
     # any idea?
 
 
-    # do_repeat(3) must return a decorator function, and this decorator
-    # must then be applied to g => increase level, return a decorator...
+    # What if we think of 'currying', first apply `n`, then `some_f`
+    #
+    # g = do_repeat(3)(g)
+    #
+    # Here do_repeat(3) must return a decorator function, and this decorator
+    # must then be applied to g => ok, increase level, return a decorator...
+    #
+    # and the reason is did not work before is simply
+    #   do_repeat(3)(g) != do_repeat(g,3)
 
 
 @print_function_header
@@ -68,38 +71,38 @@ def do_repeat_with_params():
     """ decorator function with parameters """
 
     def do_repeat(n):
-        # here is the decorator function
-        def decorator_repeat(f):
-            @functools.wraps(f)
-            def wrapper_repeat(*args, **kwargs):    # btw. closure for 'n' and 'f'
-                value = None
-                for _ in range(n):
-                    value = f(*args, **kwargs)
-                return value
-            return wrapper_repeat
-        # end of decorator function
+        def decorator_repeat(some_f):            # here is the decorator function as before
+            def wrapper_repeat():
+                for _ in range(n): some_f()
+            return wrapper_repeat           # end of decorator function
         return decorator_repeat
 
     @do_repeat(3)
-    def g():
-        print(f" a| -> in 'g'")
+    def f():
+        print(" a| -> in 'f'")
+    print(" 1| call 'f'")                   # -> this works
+    f()
 
-    print(f" 1| call 'g'")                  # -> this works
+    def g():
+        print(" b| -> in 'g'")
+    g = do_repeat(n=4)(g)                   # our motivation – works as well
+    print(" 2| call 'g'")
     g()
 
-    """
-    Now we have a decorator function with parameters. But what if we want to
-    use this decorator function with or without parameters?
-    """
+
+    # Now we have a decorator function with parameters. But what if we want to
+    # use this decorator function with or without parameters?
 
     # @do_repeat
     # def h():
-    #     print(f" b| -> in 'h'")
+    #     print(f" c| -> in 'h'")
     #
-    # print(f" 2| call 'h'")
+    # print(f" 3| call 'h'")
     # h()
     #
     # => error, pos. arg. missing...
+    #
+    # We need to differentiate the two cases.
 
 
 @print_function_header
@@ -109,65 +112,90 @@ def do_repeat_flexible_style():
     # remember: any argument after '*' must be specified using a keyword
 
     def do_repeat(_f=None, *, n=2):
-        def decorator_repeat(f):            # as before
-            @functools.wraps(f)
-            def wrapper_repeat(*args, **kwargs):
-                print(f" a| _f callable? {callable(_f)}, {_f=}")
-                value = None
-                for _ in range(n):
-                    value = f(*args, **kwargs)
-                return value
+        def decorator_repeat(some_f):            # as before
+            def wrapper_repeat():
+                for _ in range(n): some_f()
             return wrapper_repeat
 
         # two cases: if _f is given, apply the decorator,
-        #            otherwise use the parameterized version
+        #            otherwise n is given, then use the parameterized version
 
+        print(f" a| callable? {callable(_f)}, {_f=}")
         if callable(_f):
             return decorator_repeat(_f)
         else:
             return decorator_repeat
 
     @do_repeat(n=3)                         # need to use named parameters
-    def g():
-        print(f" b| -> in 'g'")
+    def f():
+        print(" b| -> in 'f'")
 
-    print(f" 1| repeat 'g' 3 times, name of g: '{g.__name__}'")
-    g()
+    print(" 1| call 'f'")
+    f()
 
     @do_repeat
-    def h():
-        print(f" c| -> in 'h'")
-    print(f" 2| repeat 'h' 2 times, name of h: '{h.__name__}'")
-    h()
-    print()
+    def g():
+        print(" c| -> in 'g'")
+    print(" 2| call 'g'")
+    g()
 
-    # there is another way to do the same thing: using 'partial'
 
-    def my_pow(base, n): return base ** n
+@print_function_header
+def do_repeat_partially():
+    """do_repeat again, but using 'partial' """
+
+    # there is another way to do the same thing: 'partial'
+
+    def my_pow(base, n):
+        return base ** n
+
     pow2 = partial(my_pow, base=2)          # partial -> fix some args (as in math.)
-    print(f" 3| 2^3={my_pow(2, 3)}={pow2(n=3)}\n")
+    print(f" 1| 2^3={my_pow(2, 3)}={pow2(n=3)}\n")
 
-    def do_repeat_alt(_f=None, *, n=2):     # one level less
-        if callable(_f):                    # the no-param case
-            @functools.wraps(_f)
-            def wrapper_repeat(*args, **kwargs):
+    def do_repeat(_f=None, *, n=2):         # like the initial version
+        if callable(_f):                    # the no-param = function-only case
+            def wrapper_repeat():
+                for _ in range(n): _f()
+            return wrapper_repeat
+        return partial(do_repeat, n=n)      # _f is still a free parameter, only n is fixed
+
+    @do_repeat(n=3)                         # need to use named parameters
+    def f():
+        print(" a| -> in 'f'")
+    print(" 1| call 'f'")
+    f()
+
+    @do_repeat
+    def g():
+        print(" b| -> in 'g'")
+    print(" 2| call 'g'")
+    g()
+
+
+@print_function_header
+def show_complete():
+
+    def do_repeat(_f=None, *, n=2):
+        if callable(_f):                            # two cases
+            @functools.wraps(_f)                    # for the function name
+            def wrapper_repeat(*args, **kwargs):    # for the function args
                 value = None
-                for _ in range(n):
-                    value = _f(*args, **kwargs)
-                return value
-            return wrapper_repeat           # _f is given
-        return partial(do_repeat_alt, n=n)  # _f is still a free parameter, only n is fixed
+                for _ in range(n):                  # functionality of do_repeat
+                    _f(*args, **kwargs)             # call of original function
+                return value                        # return value
+            return wrapper_repeat                   # case 1: function only
+        return partial(do_repeat, n=n)              # case 2: do_repeat with parameters
 
-    @do_repeat_alt(n=3)
+    @do_repeat(n=3)
     def p():
-        print(f" d| -> in 'p'")
-    print(f" 4| repeat 'p' 3 times")
+        print(" a| -> in 'p'")
+    print(" 1| repeat 'p' 3 times")
     p()
 
-    @do_repeat_alt
+    @do_repeat
     def q():
-        print(f" e| -> in 'q'")
-    print(f" 5| repeat 'q' 2 times")
+        print(" b| -> in 'q'")
+    print(" 2| repeat 'q' 2 times")
     q()
 
 
@@ -175,4 +203,5 @@ if __name__ == "__main__":
     do_twice_or_more()
     do_repeat_with_params()
     do_repeat_flexible_style()
-
+    do_repeat_partially()
+    show_complete()

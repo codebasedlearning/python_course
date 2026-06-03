@@ -52,10 +52,8 @@ def show_funcs_are_first_class():
 
     def tripple_x(x): return 3*x
 
-    print(f" 3| 3*5={tripple_x(5)}")
-
-    # lambda is a first-class function
-    print(f" 4| 2,3->2+3={(lambda x, y: x+y)(2, 3)}")
+    print(f" 3| g(5)={eval_x(5, tripple_x)}")
+    print(f" 4| h(5)={eval_x(5, lambda x: x*x)}")   # use a lambda as an anonymous function
 
 
 if __name__ == "__main__":
