@@ -21,7 +21,6 @@ utilities.
 - Lambdas and closures
 - Context managers
 - File I/O patterns
-- Pattern matching (`match`)
 
 
 ## Tasks
@@ -151,15 +150,6 @@ Part 4
 
 Check
 - Compare your solution with the provided one from `solutions` and an AI-generated one.
-
-
-### 👉 Task 'Eastern Rye'
-
-The `match` snippet contains the `from_chat` function, which decides which 
-formatter to create based on the arguments passed.
-- Change the function implementation to use only the `match` command for selection.
-
-Hint: The arguments can be part of the match condition.
 
 
 ### 👉 Project 'Moving Blizzard' — Part 6

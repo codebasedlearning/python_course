@@ -18,9 +18,9 @@ Learn to wrap and enhance functions cleanly while preserving behavior and metada
 
 - Decorators (basics)
 - Decorators with parameters and return values
-- Default values and metadata preservation
 - Class-based decorators
 - Class decorators
+- Pattern matching (`match`)
 
 
 ## Tasks
@@ -150,6 +150,15 @@ def slow():
 '@lru_cache' decorator, which gives you the ability 
 to cache the result of your functions using the Least Recently Used (LRU) strategy. 
 For more background see also [here](https://realpython.com/lru-cache-python/).
+
+
+### 👉 Task 'Eastern Rye'
+
+The `match` snippet contains the `from_chat` function, which decides which 
+formatter to create based on the arguments passed.
+- Change the function implementation to use only the `match` command for selection.
+
+Hint: The arguments can be part of the match condition.
 
 
 ### 👉 Project 'Moving Blizzard' — Part 7
