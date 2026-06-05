@@ -117,7 +117,7 @@ def match_with_content():
                 print(f" a| - {d=} -> {index=}, {name=}")
             case {"sleep": duration}:
                 print(f" b| - {d=} -> 'sleep', {duration=}")
-            case {"text": str(message)}:                        # check for types, same as str() as message
+            case {"text": str(message)}:                        # check for types, same as str() as message or if isinstance(message, str)
                 print(f" c| - {d=} -> 'text', {message=}")
 
 @print_function_header
