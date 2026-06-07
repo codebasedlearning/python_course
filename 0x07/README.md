@@ -72,12 +72,12 @@ def countdown_v1(from_number):
 
 def test_slow_down():
     n = 3
-    print(f"02| countdown from {n=} ...")
+    print(f" 2| countdown from {n=} ...")
     countdown_v1(n)
 ```
 this prints
 ```
-02| countdown from n=3 ...
+ 2| countdown from n=3 ...
 --- cnt: 3...
 --- cnt: 2...
 --- cnt: 1...
@@ -120,14 +120,14 @@ def test_case3():
 [...]
 
 def test_example_test_cases():
-    print(f"03| call a random test case: test value={random.choice(list(EXAMPLES.values()))()}")
-    print(f"04| {EXAMPLES.items()}")
+    print(f" 3| call a random test case: test value={random.choice(list(EXAMPLES.values()))()}")
+    print(f" 4| {EXAMPLES.items()}")
 
 ```
 This results in:
 ``` 
-03| call a random test case: test value=23
-04| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>),
+ 3| call a random test case: test value=23
+ 4| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>),
     ('test_case3', <function test_case3 at 0x106a1b420>)])
 ```
 
@@ -154,8 +154,36 @@ For more background see also [here](https://realpython.com/lru-cache-python/).
 
 ### 👉 Task 'Eastern Rye'
 
-The `match` snippet contains the `from_chat` function, which decides which 
-formatter to create based on the arguments passed.
+The following function `from_chat` decides which formatter to create 
+based on the arguments passed.
+
+```
+class Formatter: ...
+
+class JsonFormatter(Formatter): ...
+
+class XmlFormatter(Formatter): ...
+
+def from_chat(text: str | None = None, force_json: bool = False, force_xml: bool = False) -> Formatter | None:
+    if force_json or "json" in text:
+        return JsonFormatter()
+    elif force_xml or "xml" in text:
+        return XmlFormatter()
+    else:
+        return None
+```
+
+Here are some test cases:
+```
+    print(f" 1| None? {from_chat('Lorem Ipsum')}")
+    print(f" 2| json? {from_chat('Lorem json Ipsum')}")
+    print(f" 3| json? {from_chat('Lorem Ipsum', force_json=True)}")
+    print(f" 4| None? {from_chat('Lorem json', force_json=True, force_xml=True)}")
+    print(f" 5| xml? {from_chat('Lorem xml Ipsum')}")
+    print(f" 6| xml? {from_chat('Lorem Ipsum', force_xml=True)}")
+    print(f" 7| None? {from_chat('Lorem xml', force_xml=True, force_json=True)}")
+```
+
 - Change the function implementation to use only the `match` command for selection.
 
 Hint: The arguments can be part of the match condition.
@@ -307,5 +335,6 @@ General
 - What is the reason for using `functools`?
 - Why is `functools.wraps` recommended in decorators?
 - When would you use a decorator with parameters?
+- What is the advantage of using `match`?
 
 [Hints](./solutions/hints.md)

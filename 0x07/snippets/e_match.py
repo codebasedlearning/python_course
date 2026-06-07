@@ -149,47 +149,9 @@ def match_with_attributes():
                 print(f" e| - {point=} -> not a point")
 
 
-class Formatter:
-    ...
-
-
-class JsonFormatter(Formatter):
-    ...
-
-
-class XmlFormatter(Formatter):
-    ...
-
-
-def from_chat(text: str | None = None, force_json: bool = False, force_xml: bool = False) -> Formatter | None:
-    # Classical! Implement a matching variation in the 'Eastern Rye' task.
-    if force_json or "json" in text:
-        return JsonFormatter()
-    elif force_xml or "xml" in text:
-        return XmlFormatter()
-    else:
-        return None
-
-
-@print_function_header
-def formatter_example():
-    """ command_example """
-
-    # the 'Eastern Rye' task provides unit tests for this
-    print()
-    print(f" 1| None? {from_chat('Lorem Ipsum')}")
-    print(f" 2| json? {from_chat('Lorem json Ipsum')}")
-    print(f" 3| json? {from_chat('Lorem Ipsum', force_json=True)}")
-    print(f" 4| None? {from_chat('Lorem json', force_json=True, force_xml=True)}")
-    print(f" 5| xml? {from_chat('Lorem xml Ipsum')}")
-    print(f" 6| xml? {from_chat('Lorem Ipsum', force_xml=True)}")
-    print(f" 7| None? {from_chat('Lorem xml', force_xml=True, force_json=True)}")
-
-
 if __name__ == "__main__":
     classical_switch()
     match_with_structure()
     match_with_structure_and_value()
     match_with_content()
     match_with_attributes()
-    formatter_example()
