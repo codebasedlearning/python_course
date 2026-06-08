@@ -19,8 +19,8 @@ Refs:
 """
 
 import time
+from collections.abc import Callable
 from datetime import datetime
-from typing import Callable
 
 from utils import print_function_header
 

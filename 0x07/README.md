@@ -38,10 +38,10 @@ Learn to wrap and enhance functions cleanly while preserving behavior and metada
   or have questions about?
 
 
-### 👉 Task 'Moon Collard' 
+### 👉 Task 'Corside Sands' 
 
-1) Write a 'debug' decorator that prints all arguments and the result of a 
-decorated function. Example: 
+1) Write a 'debug' decorator function that prints all arguments and 
+the result of a decorated function. Example: 
 ```
 @debug
 def concat(a: str, b: int) -> str:
@@ -49,89 +49,60 @@ def concat(a: str, b: int) -> str:
 
 def test_debug():
     result = concat("and the answer is: ", 42)
-    print(f"01| concat: '{result}'\n")
+    print(f" 1| concat: '{result}'\n")
 ```
 this prints
 ``` 
 >>> called concat('and the answer is: ', 42)
 <<< result 'and the answer is: 42'
-01| concat: 'and the answer is: 42'
+ 1| concat: 'and the answer is: 42'
 ```
 
-2) Write a 'slow_down_v1' decorator that prints a countdown from a given number 
-with a delay of 1s between each step. 
-Example:
-```
-@slow_down_v1
-def countdown_v1(from_number):
-    if from_number < 1:
-        print("--- Liftoff")
-    else:
-        print(f"--- cnt: {from_number}...")
-        countdown_v1(from_number - 1)
+2) Now write the decorator as a class `Debug`.
 
-def test_slow_down():
-    n = 3
-    print(f" 2| countdown from {n=} ...")
-    countdown_v1(n)
-```
-this prints
-```
- 2| countdown from n=3 ...
---- cnt: 3...
---- cnt: 2...
---- cnt: 1...
---- Liftoff
-```
-with 1s delay between each line. Use `time.sleep(1)` for 1s delay.
 
-3) Extend the previous decorator to 'slow_down_v2'. You may or may not specify a time delay `dt`
-(default 1s).  
-That means, both 
-```
-@slow_down_v2(dt=0.5)
-def countdown_v2(from_number):
-    ...
-```
-and
-```
-@slow_down_v2
-def countdown_v2(from_number):
-    ...
-```
-are valid. 
+### 👉 Task 'Moon Collard' 
 
-4) Write an 'example' decorator that 'registers' a function in a global dictionary. 
-Here we use this idea to select a random test case (see `test_example_test_cases`).
+1) Write an 'example' decorator function that 'registers' a function 
+in a global dictionary. 
+Here we use this idea to select a random test case.
+
 ```
 EXAMPLES = dict()
 
+# def example [...]
+
 @example
-def test_case1():
+def case1():
     return 23
 
-def other_function():
+# @example # skip this
+def case2():
     return -1
 
 @example
-def test_case3():
+def case3():
     return 42
 
-[...]
-
-def test_example_test_cases():
-    print(f" 3| call a random test case: test value={random.choice(list(EXAMPLES.values()))()}")
-    print(f" 4| {EXAMPLES.items()}")
-
+def call_example_cases():
+    print(f" 1| call a random case: test value={random.choice(list(EXAMPLES.values()))()}")
+    print(f" 2| {EXAMPLES.items()}")
 ```
+
 This results in:
 ``` 
- 3| call a random test case: test value=23
- 4| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>),
+ 1| call a random test case: test value=23
+ 2| dict_items([('test_case1', <function test_case1 at 0x106a1b2e0>),
     ('test_case3', <function test_case3 at 0x106a1b420>)])
 ```
 
-5) Write a timer decorator class (!) that measures the execution time of a function
+2) So this is a decorator with some sort of state (`EXAMPLES`). 
+Why is this not an optimal solution? Find a better one.
+
+
+### 👉 Task 'Lonlet Strand' 
+
+Write a timer decorator class (!) that measures the execution time of a function
 and prints a label if one is given.
 
 Usage examples
@@ -145,11 +116,27 @@ def slow():
     time.sleep(0.5)
 ```
 
-6) ⭐ Write your own `functools.lru_cache`. This
+
+### ⭐ Task 'Diamond Bay' 
+
+Write your own `functools.lru_cache`. This
 [module](https://docs.python.org/3/library/functools.html#functools.lru_cache) comes with a
-'@lru_cache' decorator, which gives you the ability 
-to cache the result of your functions using the Least Recently Used (LRU) strategy. 
+'@lru_cache' decorator, which gives you the ability to cache the result 
+of your functions using the Least Recently Used (LRU) strategy. 
 For more background see also [here](https://realpython.com/lru-cache-python/).
+
+
+### 👉 Task 'Coral Ridge'
+
+A log entry looks like this: `"ERROR:timeout after 30s"`, `"WARN:retry 2/3"`, `"INFO:started"`.
+
+Write a `parse_log_entry(entry: str)` that uses **only** `match` to return:
+- `("error", message)` for `ERROR`
+- `("warning", message)` for `WARN`
+- `("info", message)` for `INFO`
+- `("unknown", entry)` for everything else
+
+Then decorate it with `@debug` from Task 'Corside Sands' to see it in action.
 
 
 ### 👉 Task 'Eastern Rye'
