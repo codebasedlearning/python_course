@@ -7,6 +7,7 @@
 
 This unit focuses on decorators, including variations with parameters, return values, and
 class-based usage.
+The unit also covers the `match` pattern.
 
 
 ### Focus
