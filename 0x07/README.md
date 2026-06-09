@@ -105,7 +105,7 @@ Why is this not an optimal solution? Find a better one.
 Hint: See expert level snippet `xpert_decorator_classes.py`.
 
 
-### ⭐ Task 'Lonlet Strand' 
+### 👉 Task 'Lonlet Strand' 
 
 1) Write a timer decorator function `timer` that measures the execution time 
 of a function and prints a label if one is given.
