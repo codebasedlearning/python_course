@@ -152,9 +152,40 @@ def add_repr_flexible_style():
     print(f" 2| {type(Data2)=}, {Data2.__name__=}")
 
 
+@print_function_header
+def preview_using_class_decorators():
+    """ using a class as a function decorator """
+
+    # Without params, there's only one call to __init__.
+    # __call__ is the wrapper.
+
+    class with_text_around:
+        def __init__(self, some_f):
+            self._some_f = some_f
+            # instead of @functools.wraps(some_f)
+            functools.update_wrapper(self, some_f)      # copies __name__, __doc__, etc.
+
+        def __call__(self):
+            print("--- text before")
+            self._some_f()
+            print("--- text after")
+
+    # expands to:
+    # print_something = with_text_around(print_something) and __init__(some_f=print_something)
+
+    @with_text_around
+    def print_something():
+        print(" a| -> 'something'")
+
+    print(" 1| call 'print_something'")
+    print_something()
+    print(f" 2| {print_something.__name__=}")       # ty:ignore[unresolved-attribute]
+
+
 if __name__ == "__main__":
     define_singleton_with_function()
     define_singleton_with_class()
     add_repr_to_class()
     add_repr_with_parameters()
     add_repr_flexible_style()
+    preview_using_class_decorators()

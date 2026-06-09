@@ -66,7 +66,7 @@ def match_with_structure():
     """ match with structure """
 
     print(" 1| match structure only")
-    for line in ["look", "look here", "oops"]:
+    for line in ["look", "look here", "oops ? ??"]:
         match line.split():
             case [action]:                  # bind name
                 print(f" a| - {line=} -> {action=}")
@@ -139,8 +139,8 @@ def match_with_attributes():
         match point:
             case Point(x=0, y=0):
                 print(f" a| - {point=} -> origin")
-            case Point(x=0, y=y):
-                print(f" b| - {point=} -> y-axis, {y=}")
+            case Point(x=0, y=y1):          # y is the attribut, y1 is the binding
+                print(f" b| - {point=} -> y-axis, {y1=}")
             case Point(x=x, y=0):
                 print(f" c| - {point=} -> x-axis, {x=}")
             case Point():

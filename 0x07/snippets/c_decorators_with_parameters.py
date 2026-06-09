@@ -175,28 +175,53 @@ def do_repeat_partially():
 @print_function_header
 def show_complete():
 
-    def do_repeat(_f=None, *, n=2):
-        if callable(_f):                            # two cases
-            @functools.wraps(_f)                    # for the function name
+    def do_repeat(_f=None, *, n=2):                 # case 1 or 2 depends on _f==None
+        def decorator_repeat(some_f):
+            @functools.wraps(some_f)                # for the function name
             def wrapper_repeat(*args, **kwargs):    # for the function args
                 value = None
                 for _ in range(n):                  # functionality of do_repeat
-                    _f(*args, **kwargs)             # call of original function
+                    value = some_f(*args, **kwargs)
                 return value                        # return value
-            return wrapper_repeat                   # case 1: function only
-        return partial(do_repeat, n=n)              # case 2: do_repeat with parameters
+            return wrapper_repeat
+
+        # two cases: if _f is given, apply the decorator resulting in a wrapper,
+        #            otherwise if n is given, then use the parameterized version being a decorator
+
+        print(f" a| callable? {callable(_f)}, {_f=}")
+        if callable(_f):                            # case 1: function only
+            return decorator_repeat(_f)
+        else:
+            return decorator_repeat                 # case 2: do_repeat with parameters
+
+    # with partial
+    #
+    # def do_repeat(_f=None, *, n=2):
+    #     if callable(_f):                            # two cases
+    #         @functools.wraps(_f)                    # for the function name
+    #         def wrapper_repeat(*args, **kwargs):    # for the function args
+    #             value = None
+    #             for _ in range(n):                  # functionality of do_repeat
+    #                 value = _f(*args, **kwargs)     # call of original function
+    #             return value                        # return value
+    #         return wrapper_repeat                   # case 1: function only
+    #     return partial(do_repeat, n=n)              # case 2: do_repeat with parameters
 
     @do_repeat(n=3)
     def p():
         print(" a| -> in 'p'")
-    print(" 1| repeat 'p' 3 times")
-    p()
+        return 1
+    print(" 1| repeat 'p' 3 times", end='')
+    r1 = p()
+    print(f" -> {r1=}")
 
     @do_repeat
     def q():
         print(" b| -> in 'q'")
-    print(" 2| repeat 'q' 2 times")
-    q()
+        return 2
+    print(" 2| repeat 'q' 2 times", end='')
+    r2 = q()
+    print(f" -> {r2=}")
 
 
 if __name__ == "__main__":
