@@ -24,6 +24,18 @@ from datetime import datetime
 
 from utils import print_function_header
 
+"""
+Goal:
+    @decorator_name
+    def decorated_function():
+        ...
+
+    We need to work with functions as objects => Recap: 
+    - functions are first-class objects (global and local)
+    - functions can be assigned to variables
+    - functions can be passed as arguments
+    - functions can be returned as results
+"""
 
 def op_plus(a: int, b: int) -> int:
     """ simple addition """
