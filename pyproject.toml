@@ -16,6 +16,8 @@ keywords = [
 ]
 readme = "README.md"
 license = { file="LICENSE" }
+# for 3.14 or 3.14t you need to change .python-version
+# rm -rf .venv (unix), uv sync
 requires-python = ">=3.14"
 dependencies = [
     "cbl==1.0.1",

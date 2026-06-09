@@ -27,29 +27,37 @@ Also note 'README.md' for terms and references, and
 'thread_helper.py' for relative time durations.
 """
 
-import threading
-import time
 import atexit
-from thread_helper import dt
+import threading
+
+from thread_helper import load_image, sign_in, timing_reset, tprint
+
 from utils import print_function_header
 
 
+@timing_reset
 @print_function_header
-def start_a_thread_without_join(as_daemon: bool):       # daemons and threads
+def start_a_thread_without_join(as_daemon: bool):
     """ start a thread without a join """
 
-    def runnable():
-        print(f"{dt()}  a|  - start of {threading.current_thread().name!r}")
-        time.sleep(0.5)
-        print(f"{dt()}  b|  - end of {threading.current_thread().name!r}")
+    def load_job():
+        tprint(f" a| - start of {threading.current_thread().name!r}")
+        load_image(budget=0.5)
+        tprint(f" b| - end of {threading.current_thread().name!r}")
 
-    print(f"{dt()}  1| start thread")
-    thread = threading.Thread(target=runnable, daemon=as_daemon)  # new thread, not started
+    tprint(" 1| start thread")
+    thread = threading.Thread(target=load_job, daemon=as_daemon)
     thread.start()
-    time.sleep(0.3)
+    # sign in is shorter than loading the image, so
+    sign_in(budget=0.3)                     
+    tprint(" 2| end of 'start_a_thread_without_join'")
 
+
+atexit.register(lambda: tprint(" c| - end of script"))
 
 if __name__ == "__main__":
-    atexit.register(lambda: print(f"{dt()}  2| end of script"))
-    start_a_thread_without_join(as_daemon=False)         # try to start as daemon
-    print(f"{dt()}  3| end of 'main-guard'")
+    # start as daemon or not
+    # -> as deamon: do not wait for it, end script immediately
+    # -> not a daemon: wait for it, end script only after it is done
+    start_a_thread_without_join(as_daemon=False)
+    tprint(" 3| end of 'main-guard'")

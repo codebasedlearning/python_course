@@ -18,6 +18,9 @@ From https://peps.python.org/pep-0636/
 match with type and value
   - A match is valid if the type and values match.
 
+match expressions
+  - Match is a statement, not an expression.
+
 The topic is not that easy. You can imagine that because of the number of PEPs:
 PEP 634 – Structural Pattern Matching: Specification
     https://peps.python.org/pep-0634

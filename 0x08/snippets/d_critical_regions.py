@@ -41,8 +41,11 @@ Also note 'README.md' for terms and references, and
 """
 
 import threading
-from thread_helper import dt, gil_info
+
+from thread_helper import dt, gil_info, timing_reset, tprint
+
 from utils import print_function_header
+
 
 @print_function_header
 def determine_gil_info():
@@ -52,93 +55,88 @@ def determine_gil_info():
     print(f" 1| GIL removed: {gil_removed}, active: {gil_active}")
 
 
+@timing_reset
 @print_function_header
-def sum_benchmark(n: int):
+def sum_benchmark(loops: int):
     """ sum benchmark """
 
-    dt(reset=True)
     total_sum = 0
 
     def worker(n_, inc_):
         nonlocal total_sum
-        for i in range(n_):
-            current = total_sum
-            current = current + inc_
-            #if hasattr(worker, 'logger'): ... # or a call, or a print
-            total_sum = current
+        for _ in range(n_):
+            total_sum += inc_
 
-    print(f"{dt()}  1| start benchmark, {n=}")
-    worker(n, +1)
-    print(f"{dt()}  2| done, {total_sum=}")
+    tprint(f" 1| start benchmark, {loops=}")
+    worker(loops, +1)
+    tprint(f" 2| done, {total_sum=}")
 
 
+@timing_reset
 @print_function_header
-def race_conditions(n: int):
+def race_conditions(loops: int):
     """ understand race conditions """
 
-    dt(reset=True)
     total_sum = 0
 
     def worker(n_, inc_):
         nonlocal total_sum
-        for i in range(n_):
-            current = total_sum
-            current = current + inc_
-            # if hasattr(worker, 'logger'): ... # or a call, or a print
-            total_sum = current
+        for _ in range(n_):
+            total_sum += inc_
+            # print("", end='')             # or a call
 
-    print(f"{dt()}  1| start threads, {n=}")
+    tprint(f" 1| start threads, {loops=}")
 
-    t1 = threading.Thread(target=worker, args=(n, +1))     # test with +2
-    t2 = threading.Thread(target=worker, args=(n, -1))
+    t1 = threading.Thread(target=worker, args=(loops, +1))
+    t2 = threading.Thread(target=worker, args=(loops, -1))
     t1.start()
     t2.start()
 
-    print(f"{dt()}  2| wait for threads")
+    tprint(" 2| wait for threads")
     t1.join()
     t2.join()
 
-    print(f"{dt()}  3| done, {total_sum=}")
+    tprint(f" 3| done, {total_sum=}")
+
 
 lock = threading.Lock()                     # Lock, RLock
 
+@timing_reset
 @print_function_header
-def critical_regions(n: int):
+def critical_regions(loops: int):
     """ define critical regions """
 
-    dt(reset=True)
     total_sum = 0
 
     def worker(n_, inc_):
         nonlocal total_sum
-        # with lock                                                 # why is this not a good place?
-        for i in range(n_):
-            with lock:                      # use contextmanager! (see below)
-                current = total_sum
-                current = current + inc_
-                # if hasattr(worker, 'logger'): ...
-                total_sum = current
-            # lock.acquire()                                        # do not do this, why?
+        # with lock - why is here not a good place?
+        for _ in range(n_):
+            with lock:                      # use contextmanager
+                total_sum += inc_
+                print("", end="")
+
+            # lock.acquire()                # do not do this, why?
             # current = ...
             # lock.release()
 
-    print(f"{dt()}  1| start threads, {n=}")
+    tprint(f" 1| start threads, {loops=}")
 
-    t1 = threading.Thread(target=worker, args=(n, +1))
-    t2 = threading.Thread(target=worker, args=(n, -1))
+    t1 = threading.Thread(target=worker, args=(loops, +1))
+    t2 = threading.Thread(target=worker, args=(loops, -1))
     t1.start()
     t2.start()
 
-    print(f"{dt()}  2| wait for threads")
+    tprint(" 2| wait for threads")
 
     t1.join()
     t2.join()
-    print(f"{dt()}  3| done, {total_sum=}")
+    tprint(f" 3| done, {total_sum=}")
 
 
 if __name__ == "__main__":
     determine_gil_info()
-    n = 10000000
-    sum_benchmark(n=n)
-    race_conditions(n=n)             # n=10000 is ok
-    critical_regions(n=n)
+    n = 1000                                # =1000 is ok
+    sum_benchmark(loops=n)
+    race_conditions(loops=n)
+    critical_regions(loops=n)
