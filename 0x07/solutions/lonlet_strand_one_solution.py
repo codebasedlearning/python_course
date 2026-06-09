@@ -7,6 +7,24 @@ import time
 
 
 def use_timer():
+
+    def timer(func=None, *, label=None):
+        def decorator(f):
+            @functools.wraps(f)
+            def wrapper(*args, **kwargs):
+                start = time.perf_counter()
+                result = f(*args, **kwargs)
+                duration = time.perf_counter() - start
+                name = label or f.__name__
+                print(f"{name} took {duration:.4f} seconds")
+                return result
+
+            return wrapper
+
+        if func is not None:                # @timer — no params
+            return decorator(func)
+        return decorator                    # @timer(label="...") — with params
+
     class Timer:
         def __new__(cls, *args, **kwargs):
             if args and callable(args[0]):
@@ -29,11 +47,11 @@ def use_timer():
                 return result
             return wrapper
 
-    @Timer
+    @timer
     def quick():
         time.sleep(0.3)
 
-    @Timer(label="slow!")
+    @timer(label="slow!")
     def slow():
         time.sleep(0.5)
 

@@ -59,7 +59,9 @@ this prints
  1| concat: 'and the answer is: 42'
 ```
 
-2) Now write the decorator as a class `Debug`.
+2) ⭐ Now write the decorator as a class `Debug`.
+
+Hint: See expert level snippet `xpert_decorator_classes.py`.
 
 
 ### 👉 Task 'Moon Collard' 
@@ -97,25 +99,31 @@ This results in:
     ('test_case3', <function test_case3 at 0x106a1b420>)])
 ```
 
-2) So this is a decorator with some sort of state (`EXAMPLES`). 
+2) ⭐ So this is a decorator with some sort of state (`EXAMPLES`). 
 Why is this not an optimal solution? Find a better one.
 
+Hint: See expert level snippet `xpert_decorator_classes.py`.
 
-### 👉 Task 'Lonlet Strand' 
 
-Write a timer decorator class (!) that measures the execution time of a function
-and prints a label if one is given.
+### ⭐ Task 'Lonlet Strand' 
+
+1) Write a timer decorator function `timer` that measures the execution time 
+of a function and prints a label if one is given.
 
 Usage examples
 ```
-@Timer
+@timer
 def quick():
     time.sleep(0.3)
 
-@Timer(label="slow!")
+@timer(label="slow!")
 def slow():
     time.sleep(0.5)
 ```
+
+2) ⭐ Use a decorator class `Timer` to implement the timer.
+
+Hint: See expert level snippet `xpert_decorator_classes.py`.
 
 
 ### ⭐ Task 'Diamond Bay' 
