@@ -17,67 +17,12 @@ from utils import print_function_header
 
 
 @print_function_header
-def define_singleton_with_function():
-    """ example for classes, version 1 """
-
-    def singleton(cls):
-        @functools.wraps(cls)               # preserves name as before, but for classes
-        def wrapper_singleton(*args, **kwargs):
-            # the attribute is set at the time the function is called
-            if wrapper_singleton._instance is None:                         # ty:ignore[unresolved-attribute]
-                wrapper_singleton._instance = cls(*args, **kwargs)          # ty:ignore[unresolved-attribute]
-            return wrapper_singleton._instance                              # ty:ignore[unresolved-attribute]
-
-        wrapper_singleton._instance = None  # save _the_ instance  here     # ty:ignore[unresolved-attribute]
-        return wrapper_singleton
-
-    @singleton
-    class LightSensor: ...
-
-    s1 = LightSensor()
-    s2 = LightSensor()
-    print(f" 1| {id(s1)=}, {id(s2)=}, identical? {s1 is s2}")
-    print(f" 2| {type(LightSensor)=}, {LightSensor.__name__=}")
-
-
-@print_function_header
-def define_singleton_with_class():
-    """ example for classes, version 2 """
+def add_repr_to_class():
+    """ modify class, same idea as in @dataclass """
 
     # In fact, we do not wrap the class but replace a function in the original
     # class – called 'monkey-patching'.
     # The class itself is returned unchanged in identity, just modified.
-
-    def singleton(cls):
-        cls._instance = None                # note, __instance do not use name mangling here
-    
-        def __new__(inner_cls):
-            if inner_cls._instance is None:
-                inner_cls._instance = object.__new__(inner_cls)
-            return inner_cls._instance
-    
-        cls.__new__ = __new__
-        return cls
-
-    @singleton
-    class LightSensor:
-        # Note, __init__ is always called, even if the class is already
-        # initialized. So maybe you want to check for that.
-        def __init__(self):
-            if hasattr(self, "_initialized"):   # optional, protect a second init
-                return
-            self._initialized = True
-        ...
-
-    s1 = LightSensor()
-    s2 = LightSensor()
-    print(f" 1| {id(s1)=}, {id(s2)=}, identical? {s1 is s2}")
-    print(f" 2| {type(LightSensor)=}, {LightSensor.__name__=}")
-
-
-@print_function_header
-def add_repr_to_class():
-    """ modify class, same idea as in @dataclass """
 
     def add_repr(cls):
         def __repr__(self):
@@ -153,6 +98,38 @@ def add_repr_flexible_style():
 
 
 @print_function_header
+def define_singleton_example():
+    """example for classes """
+
+    def singleton(cls):
+        cls._instance = None  # note, __instance do not use name mangling here
+
+        def __new__(inner_cls):
+            if inner_cls._instance is None:
+                inner_cls._instance = object.__new__(inner_cls)
+            return inner_cls._instance
+
+        cls.__new__ = __new__
+        return cls
+
+    @singleton
+    class LightSensor:
+        # Note, __init__ is always called, even if the class is already
+        # initialized. So maybe you want to check for that.
+        def __init__(self):
+            if hasattr(self, "_initialized"):  # optional, protect a second init
+                return
+            self._initialized = True
+
+        ...
+
+    s1 = LightSensor()
+    s2 = LightSensor()
+    print(f" 1| {id(s1)=}, {id(s2)=}, identical? {s1 is s2}")
+    print(f" 2| {type(LightSensor)=}, {LightSensor.__name__=}")
+
+
+@print_function_header
 def preview_using_class_decorators():
     """ using a class as a function decorator """
 
@@ -183,9 +160,8 @@ def preview_using_class_decorators():
 
 
 if __name__ == "__main__":
-    define_singleton_with_function()
-    define_singleton_with_class()
     add_repr_to_class()
     add_repr_with_parameters()
     add_repr_flexible_style()
+    define_singleton_example()
     preview_using_class_decorators()
