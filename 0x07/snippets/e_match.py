@@ -75,6 +75,7 @@ def match_with_structure():
             case _:                         # default or wildcard
                 print(f" c| - {line=} -> unknown")
 
+
 @print_function_header
 def match_with_structure_and_value():
     """ match with structure and value """
@@ -101,6 +102,7 @@ def match_with_structure_and_value():
             case ["run", _]:                                    # '_' wildcard, no '_' variable
                 print(f" g| - {line=} -> 'run' unknown direction")
 
+
 @print_function_header
 def match_with_content():
     """ match with content """
@@ -120,6 +122,7 @@ def match_with_content():
             case {"text": str(message)}:                        # check for types, same as str() as message or if isinstance(message, str)
                 print(f" c| - {d=} -> 'text', {message=}")
 
+
 @print_function_header
 def match_with_attributes():
     """ match with attributes """
@@ -132,9 +135,7 @@ def match_with_attributes():
 
     print(" 1| match according to attributes")
     for point in [
-        Point(0, 0),
-        Point(0, 1),
-        (1,2,3)
+        Point(0, 0), Point(0, 1), Point(3,4), (1,2,3)
     ]:
         match point:
             case Point(x=0, y=0):
@@ -149,9 +150,28 @@ def match_with_attributes():
                 print(f" e| - {point=} -> not a point")
 
 
+@print_function_header
+def match_with_types():
+    """ match with types """
+    print(" 1| match according to types")
+    for obj in [
+        "abc", 42, ('pair', 23), {}
+    ]:
+        match obj:
+            case str(text):                 # bind obj to text
+                print(f" a| -> str {text=}")
+            case int(n):                    # same as: obj as n if isinstance(obj, int):
+                print(f" b| -> int {n=}")
+            case (kind, int(n)):            # tuple, bind kind and n
+                print(f" c| -> pair {kind=}, {n=}")
+            case _:
+                print(f" d| -> {obj=} being not a string or int")
+
+
 if __name__ == "__main__":
     classical_switch()
     match_with_structure()
     match_with_structure_and_value()
     match_with_content()
     match_with_attributes()
+    match_with_types()
