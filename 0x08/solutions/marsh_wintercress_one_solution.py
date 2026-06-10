@@ -1,79 +1,65 @@
 # (C) A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
 
-""" Task 'Marsh Wintercress' """
+""" Task 'Marsh Wintercress'
+
+Count primes in a range, parallelized with processes instead of threads.
+  1) serial vs. ThreadPoolExecutor vs. ProcessPoolExecutor -> only processes
+     actually speed up this CPU-bound work (the GIL serializes the threads).
+  2) the pickle boundary: a lambda / nested function cannot be submitted to a
+     process pool (it is not picklable); a module-level function can.
+
+The same Future API (submit / result / map) works for threads AND processes -
+only the worker must be importable (top-level), because it is pickled and sent
+to a child process with its own memory.
+"""
 
 import concurrent.futures
-import threading
 import time
-import collections
-
-import sys
-sys.path.append("../snippets/a_threads")
-from thread_helper import dt
 
 
-class MessageQueue:
-    neutral_message = 0
-    poison_pill = -1
-
-    def __init__(self):
-        self.message_list = collections.deque()  # or []
-        self.signal = threading.Condition()
-        print(f"{dt()}  a|   - init, {self._status()}")
-
-    @property
-    def message(self):
-        with self.signal:
-            while not self.message_list:
-                self.signal.wait()
-            message = self.message_list.popleft()  # pop(0)
-            print(f"{dt()}  b|   - red slot from {id(threading.current_thread())}, {self._status()}")
-            return message
-
-    @message.setter
-    def message(self, message):
-        with self.signal:
-            self.message_list.append(message)
-            print(f"{dt()}  c|   - wrote slot from {id(threading.current_thread())}, {self._status()}")
-            self.signal.notify()
-
-    def _status(self):
-        slot = f"{self.message_list}" if self.message_list else "-"
-        return f"slot:{slot}"
+def is_prime(n: int) -> bool:               # top-level -> picklable -> ships to a child
+    if n < 2:
+        return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
 
 
-def producer(pipeline):
-    for index in range(1, 5):
-        message = index
-        print(f"{dt()}  1|   write message: {message}")
-        pipeline.message = message
-        time.sleep(0.1)
-
-    print(f"{dt()}  3|   write poison pill")
-    pipeline.message = MessageQueue.poison_pill
-    print(f"{dt()}  4|   producer done")
+def count_in_range(n0: int, n1: int) -> int:
+    return sum(1 for n in range(n0, n1) if is_prime(n))
 
 
-def consumer(pipeline):
-    message = MessageQueue.neutral_message
-    while message != MessageQueue.poison_pill:
-        message = pipeline.message
-        print(f"{dt()}  5|   got message: {message}")
-        time.sleep(0.5)
-    pipeline.message = MessageQueue.poison_pill
-    print(f"{dt()}  6|   consumer done")
+def chunks(n0: int, n1: int, workers: int):
+    step = (n1 - n0) // workers
+    bounds = [n0 + k * step for k in range(workers)] + [n1]
+    return list(zip(bounds, bounds[1:]))
 
 
-def run_messages():
-    pipeline = MessageQueue()
-    print(f"{dt()}  1|   start threads")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
-        executor.submit(producer, pipeline)
-        executor.submit(consumer, pipeline)
-        executor.submit(consumer, pipeline)
+def run_serial(n0: int, n1: int) -> int:
+    t0 = time.perf_counter()
+    total = count_in_range(n0, n1)
+    print(f" .| {'serial':<20} -> {total}, {time.perf_counter() - t0:.3f}s")
+    return total
 
-    print(f"{dt()}  7| main done")
+
+def run_pool(title: str, executor_cls, n0: int, n1: int, workers: int):
+    """ identical code for threads and processes - just a different executor class """
+    t0 = time.perf_counter()
+    with executor_cls(max_workers=workers) as executor:
+        futures = [executor.submit(count_in_range, a, b) for a, b in chunks(n0, n1, workers)]
+        total = sum(f.result() for f in futures)
+    print(f" .| {title:<20} -> {total}, {time.perf_counter() - t0:.3f}s")
+    return total
 
 
 if __name__ == "__main__":
-    run_messages()
+    n0, n1, workers = 2, 200_000, 8
+    print(f" 1| primes in [{n0}, {n1}), {workers=}\n")
+
+    print(" 2| CPU-bound: threads don't help, processes do:")
+    run_serial(n0, n1)
+    run_pool("ThreadPoolExecutor", concurrent.futures.ThreadPoolExecutor, n0, n1, workers)
+    run_pool("ProcessPoolExecutor", concurrent.futures.ProcessPoolExecutor, n0, n1, workers)

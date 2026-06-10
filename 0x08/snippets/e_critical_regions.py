@@ -42,20 +42,22 @@ Also note 'README.md' for terms and references, and
 
 import threading
 
-from thread_helper import dt, gil_info, timing_reset, tprint
+from utils import (
+    print_function_header,
+    print_gil_info,
+    reset_timing,
+    tprint,
+)
 
-from utils import print_function_header
+# @print_function_header
+# def determine_gil_info():
+#     """ determine GIL info """
+#
+#     gil_removed, gil_active = gil_info()
+#     print(f" 1| GIL removed: {gil_removed}, active: {gil_active}")
 
 
-@print_function_header
-def determine_gil_info():
-    """ determine GIL info """
-
-    gil_removed, gil_active = gil_info()
-    print(f" 1| GIL removed: {gil_removed}, active: {gil_active}")
-
-
-@timing_reset
+@reset_timing
 @print_function_header
 def sum_benchmark(loops: int):
     """ sum benchmark """
@@ -72,7 +74,7 @@ def sum_benchmark(loops: int):
     tprint(f" 2| done, {total_sum=}")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def race_conditions(loops: int):
     """ understand race conditions """
@@ -101,7 +103,7 @@ def race_conditions(loops: int):
 
 lock = threading.Lock()                     # Lock, RLock
 
-@timing_reset
+@reset_timing
 @print_function_header
 def critical_regions(loops: int):
     """ define critical regions """
@@ -135,8 +137,9 @@ def critical_regions(loops: int):
 
 
 if __name__ == "__main__":
-    determine_gil_info()
     n = 1000                                # =1000 is ok
     sum_benchmark(loops=n)
     race_conditions(loops=n)
     critical_regions(loops=n)
+
+    print_gil_info()

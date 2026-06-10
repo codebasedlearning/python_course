@@ -2,11 +2,10 @@
 
 """ Task 'Yellow Hemp' """
 
-from pathlib import Path
 import concurrent.futures
 import functools
 import time
-
+from pathlib import Path
 
 """ code to write data files
 def write_test_files_to_data(samples: int):
@@ -64,7 +63,7 @@ def check_range(n0: int, n1: int):
 def check_all_files_serial(samples):
     print(f" 1| check {samples=} files serial")
     t0 = time.process_time()
-    result = f"no errors" if not (ec := check_range(1, samples+1)) else f"errors in samples {ec}"
+    result = "no errors" if not (ec := check_range(1, samples+1)) else f"errors in samples {ec}"
     dt = time.process_time() - t0
     print(f" 2| {result}, {dt=}\n")
 
@@ -76,7 +75,7 @@ def check_all_files_parallel(samples: int, workers: int):
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         results = [executor.submit(check_range, n0=k * dn+1, n1=(k + 1) * dn+1) for k in range(workers)]
         ec = functools.reduce(lambda x, w: x + w.result(), results, [])  # assuming all tasks need nearly same time
-    result = f"no errors" if not ec else f"errors in samples {ec}"
+    result = "no errors" if not ec else f"errors in samples {ec}"
     dt = time.process_time() - t0
     print(f" 2| {result}, {dt=}\n")
 

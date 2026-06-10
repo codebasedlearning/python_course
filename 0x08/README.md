@@ -137,28 +137,52 @@ The first line contains the example number in the comment. The second line
 contains the summands and the third line contains the sum. All files are 
 constructed in this way, there are no syntax errors or other 'niceties.'
 
-1) Read all the files and check that the given sum is correct in a serial 
-   and a parallel version. Use different variants, e.g., a 'ThreadPoolExecutor.'
+Read all the files and check that the given sum is correct in a serial 
+and a parallel version. Use different variants, e.g., a 'ThreadPoolExecutor.'
 
 
-### 👉 Task 'Marsh Wintercress' 
+### 👉 Task 'Marsh Wintercress'
 
-Revise the `f_messaging` example to allow multiple producers and consumers 
-to be involved in exchanging messages.
+Count how many numbers in a range are prime — but make it *truly* parallel with processes.
 
-1) Design appropriate consumer, producer, and hold-my-messages classes. 
-   Also allow more than one message to be ready to be picked up.
-   - It is crucial that you take care of the thread safety of your data structures. 
-   - Use so-called 'Condition Objects' (or 'Condition Variables') to synchronize. 
-     Details can be found
-     [here](https://docs.python.org/3/library/threading.html#condition-objects).
+1) same interface, real parallelism
+- Write `is_prime(n)` and a worker that counts primes in a sub-range.
+- Split the range across workers and run it three ways: serial, `ThreadPoolExecutor`, and
+  `ProcessPoolExecutor`.
+- Measure all three. Which one actually speeds up this CPU-bound work, and why?
+
+2) the pickle boundary
+- Try submitting the work as a `lambda` or a function defined *inside* another function to
+  the process pool. What error do you get, and why did the thread pool not care?
+
+Check
+- Compare your solution with the provided one in `solutions`.
 
 
-### 👉 Task 'Race Bark' (Race Condition Post-Mortem)
+### 👉 Task 'Race Bark'
 
-- Create or locate a small race condition in one of your thread exercises.
-- Write a short reproduction guide: expected vs actual behavior.
-- Fix the issue and document the synchronization primitive you used.
+A pool of worker threads counts how many numbers in a range are prime by incrementing a
+**shared** counter.
+
+1) reproduce the race
+- Have each worker increment a shared `prime_count` for every prime it finds. 
+- Run it repeatedly and compare against the true count. Which line is the critical region?
+- Tip: on the standard (GIL) build the bug may hide; run it on the free-threading build
+  (`3.14t`) to see it reliably.
+
+2) fix it with a mutex
+- Protect the increment with a `threading.Lock`. Verify the count is now correct and
+  reproducible.
+- Does the `with lock:` go around the whole prime check or just the increment? Which is
+  correct, and which throws away your parallelism?
+
+3) the better fix: no shared state
+- Refactor so each worker *returns* its partial count via its `Future`; sum the results in
+  the main thread. No lock needed.
+- Why is "don't share, return instead" usually the better design?
+
+Check
+- Compare your solution with the provided one in `solutions`.
 
 
 ### 👉 Task 'Cave Betty' 

@@ -18,9 +18,12 @@ import queue
 import threading
 from collections import deque
 
-from thread_helper import timing_reset, tprint
-
-from utils import print_function_header
+from utils import (
+    print_function_header,
+    print_gil_info,
+    reset_timing,
+    tprint,
+)
 
 
 def is_prime(n: int) -> bool:               # the task - check for prime
@@ -85,7 +88,7 @@ class LockTurnstile:
         self.producer_lock.release()        # free the slot for the producer
         return item
 
-@timing_reset
+@reset_timing
 @print_function_header
 def use_paired_lock_turnstile(numbers):
     """ run the producer/consumer with a turnstile """
@@ -118,14 +121,14 @@ class ConditionQueue:
             return item
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def use_condition_queue(numbers):
     """ run the producer/consumer with a condition queue """
     run_variant(ConditionQueue(maxsize=2), numbers, num_consumers=3)
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def use_queue_queue(numbers):
     """ run the producer/consumer with stdlib queue.Queue """
@@ -138,3 +141,4 @@ if __name__ == "__main__":
     use_paired_lock_turnstile(maybe_primes)
     use_condition_queue(maybe_primes)
     use_queue_queue(maybe_primes)
+    print_gil_info()

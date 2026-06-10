@@ -30,9 +30,17 @@ Also note 'README.md' for terms and references, and
 
 import threading
 
-from thread_helper import connect_database, load_image, query_database, sign_in, thread_info, timing_reset, tprint
-
-from utils import print_function_header
+from utils import (
+    connect_database,
+    load_image,
+    print_function_header,
+    print_gil_info,
+    query_database,
+    reset_timing,
+    sign_in,
+    thread_info,
+    tprint,
+)
 
 # Note:
 # - tprint is a wrapper around print, that adds a timestamp and a thread name.
@@ -44,7 +52,7 @@ from utils import print_function_header
 # - thread_info is a function that returns a string with thread info.
 # - "!r" is a string formatting operator that prints the value of an object in a 'repr' style.
 
-@timing_reset                               # reset relative times in output
+@reset_timing                               # reset relative times in output
 @print_function_header
 def start_a_thread_and_join():
     """ start a thread and join """
@@ -82,7 +90,7 @@ def start_a_thread_and_join():
     tprint(f" 9| thread info: {thread_info(load)}")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def start_two_threads_and_join():
     """ start two threads and join """
@@ -128,3 +136,4 @@ def start_two_threads_and_join():
 if __name__ == "__main__":
     start_a_thread_and_join()
     start_two_threads_and_join()
+    print_gil_info()

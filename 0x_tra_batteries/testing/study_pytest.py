@@ -28,8 +28,6 @@ See also
 import pytest
 
 
-# ---- The code under test ---- #
-
 def add(a, b):
     """Add two numbers."""
     return a + b

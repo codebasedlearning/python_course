@@ -2,11 +2,11 @@
 
 """ Task 'Twin Tongue' """
 
-from typing import Callable
-import math
-import time
 import concurrent.futures
 import functools
+import math
+import time
+from collections.abc import Callable
 from dataclasses import dataclass
 
 
@@ -20,11 +20,11 @@ class TestConfig:
 
 def trapezoidal_rule(a: float, b: float, f: Callable, n: int):
     h = (b-a)/n
-    return h*(0.5*(f(a)+f(b))+sum((f(a+i*h) for i in range(1, n))))
+    return h*(0.5*(f(a)+f(b))+sum(f(a+i*h) for i in range(1, n)))
 
 
 def measure_serial(config: TestConfig, m: int, repeat: int):
-    print(f" 2| start serial calc.")
+    print(" 2| start serial calc.")
     area = 0
     t0 = time.process_time()
     for _ in range(repeat):
@@ -35,7 +35,7 @@ def measure_serial(config: TestConfig, m: int, repeat: int):
 
 
 def measure_parallel(config: TestConfig, m: int, repeat: int, workers: int):
-    print(f" 4| start parallel calc.")
+    print(" 4| start parallel calc.")
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         a, b, f = config.a, config.b, config.f
         n = m//workers

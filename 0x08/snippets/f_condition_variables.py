@@ -21,12 +21,17 @@ Also note 'README.md' for terms and references, and
 import concurrent.futures
 import threading
 
-from thread_helper import load_image, sign_in, timing_reset, tprint
+from utils import (
+    load_image,
+    print_function_header,
+    print_gil_info,
+    reset_timing,
+    sign_in,
+    tprint,
+)
 
-from utils import print_function_header
 
-
-@timing_reset
+@reset_timing
 @print_function_header
 def combine_notify_and_wait_careless():
     """ combine notify and wait """
@@ -56,7 +61,7 @@ def combine_notify_and_wait_careless():
     tprint(" 2| done")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def combine_notify_and_wait_reliable():
     """ combine notify and wait correctly """
@@ -91,3 +96,4 @@ def combine_notify_and_wait_reliable():
 if __name__ == "__main__":
     combine_notify_and_wait_careless()
     combine_notify_and_wait_reliable()
+    print_gil_info()

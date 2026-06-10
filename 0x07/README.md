@@ -85,53 +85,6 @@ def slow():
 Hint: See expert level snippet `xpert_decorator_classes.py`.
 
 
-### 👉 Task 'Hazel Cove'
-
-Write a `deprecated` decorator that emits a `DeprecationWarning` whenever the
-decorated function is called.
-
-- The warning message should include the function name.
-- The warning should point to the **caller's** line, not the inside of the wrapper.
-- ⭐ Extend it to `@deprecated(message="use new_api instead")` with an optional custom message.
-
-Usage:
-```python
-@deprecated
-def old_api(x):
-    return x * 2
-
-def use_deprecated():
-    old_api(5)   # DeprecationWarning: old_api is deprecated
-```
-
-Hint: `warnings.warn` has a `stacklevel` parameter — what value makes the warning
-point at the caller?
-
-
-### 👉 Task 'Ember Croft'
-
-Write a `typecheck` decorator function that enforces type annotations at runtime.
-
-- Check all annotated parameters against their declared types.
-- Raise a `TypeError` with a clear message if a type mismatch is found.
-- Skip parameters with no annotation.
-- ⭐ Also check the return value annotation.
-
-Usage:
-```python
-@typecheck
-def add(a: int, b: int) -> int:
-    return a + b
-
-def use_typecheck():
-    print(f" 1| {add(1, 2)}")        # ok: 3
-    add(1, "2")                      # TypeError: arg 'b' expected int, got str
-```
-
-Hint: Use `inspect.signature` to map positional arguments to parameter names
-and `sig.bind(*args, **kwargs)` to resolve them.
-
-
 ### 👉 Task 'Moon Collard'
 
 1) Write an 'example' decorator function that 'registers' a function 
@@ -171,6 +124,53 @@ This results in:
 Why is this not an optimal solution? Find a better one.
 
 Hint: See expert level snippet `xpert_decorator_classes.py`.
+
+
+### ⭐ Task 'Hazel Cove'
+
+Write a `deprecated` decorator that emits a `DeprecationWarning` whenever the
+decorated function is called.
+
+- The warning message should include the function name.
+- The warning should point to the **caller's** line, not the inside of the wrapper.
+- Extend it to `@deprecated(message="use new_api instead")` with an optional custom message.
+
+Usage:
+```python
+@deprecated
+def old_api(x):
+    return x * 2
+
+def use_deprecated():
+    old_api(5)   # DeprecationWarning: old_api is deprecated
+```
+
+Hint: `warnings.warn` has a `stacklevel` parameter — what value makes the warning
+point at the caller?
+
+
+### ⭐ Task 'Ember Croft'
+
+Write a `typecheck` decorator function that enforces type annotations at runtime.
+
+- Check all annotated parameters against their declared types.
+- Raise a `TypeError` with a clear message if a type mismatch is found.
+- Skip parameters with no annotation.
+- Also check the return value annotation.
+
+Usage:
+```python
+@typecheck
+def add(a: int, b: int) -> int:
+    return a + b
+
+def use_typecheck():
+    print(f" 1| {add(1, 2)}")        # ok: 3
+    add(1, "2")                      # TypeError: arg 'b' expected int, got str
+```
+
+Hint: Use `inspect.signature` to map positional arguments to parameter names
+and `sig.bind(*args, **kwargs)` to resolve them.
 
 
 ### ⭐ Task 'Diamond Bay' 

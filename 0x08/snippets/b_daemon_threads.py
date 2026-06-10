@@ -30,12 +30,17 @@ Also note 'README.md' for terms and references, and
 import atexit
 import threading
 
-from thread_helper import load_image, sign_in, timing_reset, tprint
+from utils import (
+    load_image,
+    print_function_header,
+    print_gil_info,
+    reset_timing,
+    sign_in,
+    tprint,
+)
 
-from utils import print_function_header
 
-
-@timing_reset
+@reset_timing
 @print_function_header
 def start_a_thread_without_join(as_daemon: bool):
     """ start a thread without a join """
@@ -61,3 +66,4 @@ if __name__ == "__main__":
     # -> not a daemon: wait for it, end script only after it is done
     start_a_thread_without_join(as_daemon=False)
     tprint(" 3| end of 'main-guard'")
+    print_gil_info()

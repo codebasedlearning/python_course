@@ -32,9 +32,13 @@ import concurrent.futures
 import threading
 import time
 
-from thread_helper import thread_info, timing_reset, tprint
-
-from utils import print_function_header
+from utils import (
+    print_function_header,
+    print_gil_info,
+    reset_timing,
+    thread_info,
+    tprint,
+)
 
 
 def general_worker(budget:float):
@@ -43,7 +47,7 @@ def general_worker(budget:float):
     tprint(f" b|  - end of {thread_info(threading.current_thread())}")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def start_multiple_threads():
     """ start multiple threads """
@@ -64,7 +68,7 @@ def start_multiple_threads():
     tprint(" 3| joined - done here")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def start_multiple_threads_from_pool():
     """ start multiple threads from a thread pool """
@@ -89,7 +93,7 @@ def start_multiple_threads_from_pool():
     tprint(" 3| joined - done here")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def threads_with_results():
     """ start multiple threads and get a result """
@@ -112,7 +116,7 @@ def threads_with_results():
     tprint(" 4| joined - done here")
 
 
-@timing_reset
+@reset_timing
 @print_function_header
 def threads_with_exceptions():
     """ show where exceptions surface for submit vs. map """
@@ -174,3 +178,4 @@ if __name__ == "__main__":
     start_multiple_threads_from_pool()
     threads_with_results()
     threads_with_exceptions()
+    print_gil_info()
