@@ -76,7 +76,7 @@ def start_multiple_threads_from_pool():
     num_threads = 3
 
     # play with it; if it is smaller than the number of threads, they queue up
-    max_workers = 4                         
+    max_workers = 4
 
     tprint(" 1| create new threads")
     

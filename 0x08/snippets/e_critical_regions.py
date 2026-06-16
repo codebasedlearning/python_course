@@ -85,7 +85,9 @@ def race_conditions(loops: int):
         nonlocal total_sum
         for _ in range(n_):
             total_sum += inc_
-            # print("", end='')             # or a call
+            #x = total_sum
+            #print("", end='')  # or a call
+            #total_sum = x + inc_
 
     tprint(f" 1| start threads, {loops=}")
 
@@ -116,7 +118,7 @@ def critical_regions(loops: int):
         for _ in range(n_):
             with lock:                      # use contextmanager
                 total_sum += inc_
-                print("", end="")
+                # print("", end="")
 
             # lock.acquire()                # do not do this, why?
             # current = ...
@@ -137,7 +139,7 @@ def critical_regions(loops: int):
 
 
 if __name__ == "__main__":
-    n = 1000                                # =1000 is ok
+    n = 100000                                # =1000 is ok
     sum_benchmark(loops=n)
     race_conditions(loops=n)
     critical_regions(loops=n)
