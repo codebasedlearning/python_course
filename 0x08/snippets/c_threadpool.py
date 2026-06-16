@@ -145,6 +145,7 @@ def threads_with_exceptions():
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         # handle each task as it finishes, errors and all
         futures = [executor.submit(flaky_worker, n/10.0) for n in range(1, 5)]
+        # as_completed yields futures in completion order, not submission/creation order
         for future in concurrent.futures.as_completed(futures):
             try:
                 tprint(f" 4| result: {future.result()}")

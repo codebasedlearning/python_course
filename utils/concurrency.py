@@ -70,7 +70,7 @@ def ptprint(label, *args, **kwargs):
 
 def thread_info(thread):
     # !r uses __repr__, ident is Python-specific, native_id is OS-native thread ID
-    alive_info = f"{'alive' if thread.is_alive() else 'dead'}"
+    alive_info = f"{'alive' if thread.is_alive() else 'not alive'}"
     ident_info = f"{thread.ident if thread.ident else '-'}"
     native_info = f"{thread.native_id if thread.native_id else '-'}"
     return f"[{thread.name!r},{ident_info}|{native_info},{alive_info!r}]"

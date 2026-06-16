@@ -68,6 +68,7 @@ from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 from utils import print_function_header, print_gil_info, process_info, ptprint, reset_timing
 
+# multiprocessing.set_start_method("spawn")
 
 def busy_worker(budget):
     """A CPU-bound worker function (runs in a child process)."""

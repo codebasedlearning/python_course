@@ -18,7 +18,6 @@ Build awareness of Python's concurrency model and apply libraries safely and eff
 
 - Threads and concurrency basics
 - Locks and shared-state pitfalls
-- Selected libraries (tests, databases, NumPy/SciPy, Exchange, ChatGPT)
 - Timing and profiling
 
 
@@ -192,28 +191,6 @@ Check
   - See if you can come up with a nice and sensible way to parallelize 
     the prime sieve. 
   - Measure a serial and a parallel variant.
-
-
-### 👉 Task 'Creepy Wineberry' 
-
-> Without a proposed solution.
-
-- Set up a database for your own and perform any SQL statements.
-
-
-### 👉 Task 'Pest Cap' 
-
-> Without a proposed solution.
-
-  - Query mail, contact and/or calendar items from your (?) Microsoft 
-    Exchange account, if available.
-
-
-### 👉 Task 'Red Castle' 
-
-> Without a proposed solution.
-
-  - Design a class or a function and write some unit tests.
 
 
 ### 👉 Project 'Moving Blizzard' — Part 8

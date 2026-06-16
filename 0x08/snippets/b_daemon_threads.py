@@ -64,6 +64,6 @@ if __name__ == "__main__":
     # start as daemon or not
     # -> as deamon: do not wait for it, end script immediately
     # -> not a daemon: wait for it, end script only after it is done
-    start_a_thread_without_join(as_daemon=False)
+    start_a_thread_without_join(as_daemon=True)
     tprint(" 3| end of 'main-guard'")
     print_gil_info()
