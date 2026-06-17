@@ -150,9 +150,10 @@ Count how many numbers in a range are prime — but make it *truly* parallel wit
   `ProcessPoolExecutor`.
 - Measure all three. Which one actually speeds up this CPU-bound work, and why?
 
-2) the pickle boundary
+2) ⭐ the pickle boundary
 - Try submitting the work as a `lambda` or a function defined *inside* another function to
   the process pool. What error do you get, and why did the thread pool not care?
+Note: The pickle library is used to serialize. We will not cover it in this lecture.
 
 Check
 - Compare your solution with the provided one in `solutions`.
@@ -320,7 +321,7 @@ Discuss
 General
 - What is special in Python concerning parallel execution?
 - What is the difference between a process and a thread?
-- What is a mutex for?
+- What is a lock (mutex) for?
 - What is a race condition in threaded code?
 - What is the GIL and how does it affect CPU-bound threads in Python?
 
