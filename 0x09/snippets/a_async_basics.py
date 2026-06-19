@@ -30,7 +30,7 @@ import concurrent
 import concurrent.futures
 import time
 
-from utils import print_function_header, reset_timing, tprint
+from utils import print_function_header, reset_timing, set_current_task_name, tprint, ttprint
 
 """
 Async/await terminology:
@@ -160,12 +160,12 @@ def the_idea_of_suspending():
 
 async def signin_async(name:str):
     """ simulate a sign-in call and return an identifier """
-    tprint(f" a| - sign in of {name!r} starts")
+    ttprint(f" a| - sign in of {name!r} starts")
 
     await asyncio.sleep(0.1)                # instead of time.sleep, discussed later
     user_id = 23 if name=="Alice" else 42 if name=="Bob" else 99
 
-    tprint(f" b| - {name!r} signed in, coro returns with {user_id=}")
+    ttprint(f" b| - {name!r} signed in, coro returns with {user_id=}")
     return user_id
 
 @reset_timing
@@ -173,15 +173,15 @@ async def signin_async(name:str):
 async def the_idea_of_coros_focus_starting():
     """ coroutines, focus on the timing """
 
-    tprint( " 1| call coro")
+    ttprint( " 1| call coro")
     coro_alice = signin_async("Alice")      # no code runs, similar to the generator function
-    tprint(f" 2| the body has not run yet, {coro_alice=}")
+    ttprint(f" 2| the body has not run yet, {coro_alice=}")
 
     await asyncio.sleep(0.05)               # we wait a little bit, nothing runs
 
-    tprint( " 3| start sign-in ")
+    ttprint( " 3| start sign-in ")
     id_alice = await coro_alice             # now it runs
-    tprint(f" 4| got {id_alice=}\n")
+    ttprint(f" 4| got {id_alice=}\n")
 
     """
       - a coroutine can 'await' another coroutine and use its result, just like 
@@ -205,23 +205,23 @@ async def the_idea_of_coros_focus_starting():
 async def the_idea_of_coros_focus_mainthread():
     """ coroutines, focus on the running (main)thread """
 
-    tprint( " 1| call coros")
+    ttprint( " 1| call coros")
     coro_bob = signin_async("Bob")
     coro_charly = signin_async("Charly")
-    tprint(f" 2| got only coros, {coro_bob=}, {coro_charly=}")
+    ttprint(f" 2| got only coros, {coro_bob=}, {coro_charly=}")
 
     await asyncio.sleep(0.05)               # we wait a little bit, nothing runs
 
-    tprint( " 3| start both sign-in")       # 'start' is precised below
+    ttprint( " 3| start both sign-in")       # 'start' is precised below
     task_alice = asyncio.create_task(coro_bob)
     task_charly = asyncio.create_task(coro_charly)
 
     await asyncio.sleep(0.05)
 
-    tprint( " 4| wait for user ids")
+    ttprint( " 4| wait for user ids")
     id_bob = await task_alice
     id_charly = await task_charly
-    tprint(f" 5| got {id_bob=} {id_charly=}")
+    ttprint(f" 5| got {id_bob=} {id_charly=}")
 
     """
         both sign-in need 0.1s and run on main-thread, and
@@ -254,13 +254,13 @@ async def the_idea_of_coros_event_loop():
         a 'blocking' call
     """
     
-    tprint(f" 1| check loop: {len(asyncio.all_tasks())}")       # one task from 'asyncio.run(coro)'
+    ttprint(f" 1| check loop: {len(asyncio.all_tasks())}")       # one task from 'asyncio.run(coro)'
     
     coro_alice = signin_async("Alice")                          # no task created
-    tprint(f" 2| tasks on loop: {len(asyncio.all_tasks())}")
+    ttprint(f" 2| tasks on loop: {len(asyncio.all_tasks())}")
     
     id_alice = await coro_alice                                 # run coro to completion
-    tprint(f" 3| {id_alice=}, tasks on loop: {len(asyncio.all_tasks())}")
+    ttprint(f" 3| {id_alice=}, tasks on loop: {len(asyncio.all_tasks())}")
 
     """
       - 'await f' is like a subroutine call that's allowed to suspend;
@@ -272,7 +272,7 @@ async def the_idea_of_coros_event_loop():
     task_alice = asyncio.create_task(signin_async("Bob"))       # create tasks with the coros
     task_charly = asyncio.create_task(signin_async("Charly"))
 
-    tprint(f" 4| tasks on loop: {len(asyncio.all_tasks())}")
+    ttprint(f" 4| tasks on loop: {len(asyncio.all_tasks())}")
     # await asyncio.sleep(0)
 
     """
@@ -285,7 +285,7 @@ async def the_idea_of_coros_event_loop():
 
     id_bob = await task_alice
     id_charly = await task_charly
-    tprint(f" 5| {id_bob=}, {id_charly=}, tasks on loop: {len(asyncio.all_tasks())}")
+    ttprint(f" 5| {id_bob=}, {id_charly=}, tasks on loop: {len(asyncio.all_tasks())}")
 
 
 #
@@ -295,19 +295,19 @@ async def the_idea_of_coros_event_loop():
 async def fetch_stats(table:str, default:int):
     """ fetch some statistical data from a database table """
 
-    tprint(f" .|   - fetch stats from {table!r}")
+    ttprint(f" .|   - fetch stats from {table!r}")
     await asyncio.sleep(0.1)
-    tprint(f" :|   - {table!r} processed, result: {default}")
+    ttprint(f" :|   - {table!r} processed, result: {default}")
     return default
 
 async def collect_data(schema:str):
     """ collect data from different tables; process them when available """
 
-    tprint(f" a| - collect from {schema!r}")
+    ttprint(f" a| - collect from {schema!r}")
     salary = await fetch_stats(table=f"{schema}.salary", default=1)
-    tprint(f" b| - got {salary=} from {schema!r}")
+    ttprint(f" b| - got {salary=} from {schema!r}")
     bonus = await fetch_stats(table=f"{schema}.bonus", default=2)
-    tprint(f" c| - got {bonus=} from {schema!r}")
+    ttprint(f" c| - got {bonus=} from {schema!r}")
     return salary+bonus
 
 @reset_timing
@@ -315,7 +315,7 @@ async def collect_data(schema:str):
 async def all_coros_in_main():
     """ concurrently collect data from different schemes """
 
-    tprint( " 1| start employee and freelancer coro")
+    ttprint( " 1| start employee and freelancer coro")
 
     # instead of creating two tasks we delegate this to 'asyncio.gather'
     #   employee_task = asyncio.create_task(collect_data(schema="employee"))
@@ -328,7 +328,7 @@ async def all_coros_in_main():
         collect_data(schema="freelancer")
     )
 
-    tprint(f" 2| done, {employee_costs=}, {freelancer_costs=}")
+    ttprint(f" 2| done, {employee_costs=}, {freelancer_costs=}")
 
 
 #
@@ -339,30 +339,40 @@ async def all_coros_in_main():
 
 async def heat_soup_async():
     """ heat soup, return temperature (°C) """
-    tprint(" a| - heat soup (needs 0.3s) [coro]")
+    ttprint(" a| - heat soup (needs 0.3s) [coro]")
     await asyncio.sleep(0.3)
-    tprint(" b| - soup is hot")
+    ttprint(" b| - soup is hot")
     return 60.0
 
 async def fry_onions_async():
     """ fry onions, return number of onions """
-    tprint(" c| - frying onions (needs 0.2s) [coro]")
+    ttprint(" c| - frying onions (needs 0.2s) [coro]")
     await asyncio.sleep(0.2)
-    tprint(" d| - onions are ready")
+    ttprint(" d| - onions are ready")
     return 5
 
 @reset_timing
 @print_function_header
 async def cooking_to_gather():
     """ cooking with tasks """
-    tprint(" 1| soup and onions")
+    ttprint(" 1| soup and onions")
 
     # multiple create_tasks here, no worker limit
     soup_temp, num_onions = await asyncio.gather(
         heat_soup_async(),
         fry_onions_async()
     )
-    tprint(f" 2| wait, done; soup:{soup_temp}°C, #onions:{num_onions}")
+    ttprint(f" 2| wait, done; soup:{soup_temp}°C, #onions:{num_onions}")
+
+async def main():
+    set_current_task_name("run")
+
+    await the_idea_of_coros_focus_starting()
+    await the_idea_of_coros_focus_mainthread()
+    await the_idea_of_coros_event_loop()
+
+    await all_coros_in_main()
+    await cooking_to_gather()
 
 
 if __name__ == "__main__":
@@ -371,10 +381,12 @@ if __name__ == "__main__":
 
     the_idea_of_suspending()
 
-    # 'asyncio.run' provides the event loop ('runner') for the async stuff
-    asyncio.run(the_idea_of_coros_focus_starting())
-    asyncio.run(the_idea_of_coros_focus_mainthread())
-    asyncio.run(the_idea_of_coros_event_loop())
+    asyncio.run(main())
 
-    asyncio.run(all_coros_in_main())
-    asyncio.run(cooking_to_gather())
+    # 'asyncio.run' provides the event loop ('runner') for the async stuff
+    # asyncio.run(the_idea_of_coros_focus_starting())
+    # asyncio.run(the_idea_of_coros_focus_mainthread())
+    # asyncio.run(the_idea_of_coros_event_loop())
+    #
+    # asyncio.run(all_coros_in_main())
+    # asyncio.run(cooking_to_gather())
