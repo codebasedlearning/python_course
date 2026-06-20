@@ -382,11 +382,3 @@ if __name__ == "__main__":
     the_idea_of_suspending()
 
     asyncio.run(main())
-
-    # 'asyncio.run' provides the event loop ('runner') for the async stuff
-    # asyncio.run(the_idea_of_coros_focus_starting())
-    # asyncio.run(the_idea_of_coros_focus_mainthread())
-    # asyncio.run(the_idea_of_coros_event_loop())
-    #
-    # asyncio.run(all_coros_in_main())
-    # asyncio.run(cooking_to_gather())

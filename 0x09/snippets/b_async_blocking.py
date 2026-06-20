@@ -42,7 +42,7 @@ import time
 
 import httpx
 
-from utils import print_function_header, reset_timing, reset_timing_now, set_current_task_name, tprint, ttprint
+from utils import print_function_header, reset_timing, reset_timing_now, set_current_task_name, ttprint
 
 #
 # benchmark first

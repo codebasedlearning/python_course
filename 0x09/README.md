@@ -179,7 +179,7 @@ Here are a few points worth stressing about the event loop.
   or have questions about?
 
 
-### 👉 Task 'Yellow Hemp'—Again (see Unit 0x0b)
+### 👉 Task 'Yellow Hemp' — Again (see Unit 0x08)
 
 In the directory `data` you will find 120 small text files, all of which have 
 the following structure (example `test001.txt`):
@@ -207,67 +207,10 @@ the asynchronous version one second.
 
 ### 👉 Task 'Colemark Cove'
 
-Take any of your thread-based tasks from Unit 0x0b and create
+Take any of your thread-based tasks from units before and create
 an 'async' version of it.
 
 
-### 👉 Task 'Cobalt Reef' (Descriptors)
-
-Topics: descriptor protocol (`__get__`, `__set__`, `__set_name__`), data descriptors, reusable
-validation
-
-Part 1
-- Create a descriptor class `Bounded` that enforces numeric min/max bounds on any attribute it
-  guards. The descriptor should:
-  - Accept `min_value` and `max_value` in `__init__`.
-  - Use `__set_name__` to learn the attribute name automatically.
-  - In `__set__`, raise `TypeError` if the value is not numeric and `ValueError` if it is out of
-    bounds.
-  - In `__get__`, return the stored value (use a private attribute on the instance).
-
-Part 2
-- Create a class `Sensor` with two descriptor-guarded attributes:
-  - `temperature = Bounded(-40.0, 80.0)`
-  - `humidity = Bounded(0.0, 100.0)`
-- The `__init__` takes `name`, `temperature`, and `humidity`.
-- Test: verify that valid values are accepted, and that out-of-range or non-numeric values raise the
-  expected exceptions.
-
-Part 3
-- Create a second descriptor `Logged` that prints a message on every `__get__` and `__set__` access.
-- Use it in a small `Config` class with attributes `debug` and `language`.
-- Observe the log output when creating an instance and reading its attributes.
-
-Check
-- Compare your solution with the provided one from `solutions` and an AI-generated one.
-
-
-### 👉 Task 'Raven Stickweed' (Descriptor Method Binding)
-
-Topics: non-data descriptors, `__get__`, `types.MethodType`, method binding
-
-In Python, `@classmethod` gives you `cls` and regular methods give you `self` — but what
-if you want *both*?
-
-Part 1
-- Write a descriptor class `ClassInstanceMethod` that, when used as a decorator, provides the
-  decorated function with a single argument that bundles both the class and the instance.
-  - Implement `__get__` so it returns a bound method via `types.MethodType`.
-  - The bound argument should be the tuple `(cls, obj)`.
-
-Part 2
-- Use your descriptor in a class `C` with an `__init__` that stores a `base: int`.
-- Decorate a method `mult(clsSelf, n_times)` that unpacks `cls, self = clsSelf` and returns
-  a string like `"self.base*n_times=35 in <class '__main__...C'>"`.
-- Test with `c7 = C(base=7)` and `c7.mult(5)`.
-
-Part 3
-- Create a subclass `D(C)` (no extra code needed) and verify that `d4 = D(base=4)` with
-  `d4.mult(3)` correctly reports class `D`, not `C`.
-- Why does this work without any changes to `ClassInstanceMethod`?
-
-Check
-- Compare your solution with the provided one from `solutions` and an AI-generated one.
 
 
 ### 👉 Project 'Moving Blizzard' — Part 9 (Final)

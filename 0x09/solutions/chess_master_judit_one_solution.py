@@ -5,7 +5,8 @@
 import time
 import asyncio
 
-from thread_helper import dt
+#from thread_helper import dt
+from utils import print_function_header, reset_timing, set_current_task_name, ttprint
 
 MOVES_PER_GAME = 30
 NUM_GAMES = 24
@@ -25,28 +26,31 @@ JUDIT_MOVE_TIME = JUDIT_MOVE_TIME_SEC/60.0/60.0
 OPPONENT_MOVE_TIME = OPPONENT_MOVE_TIME_SEC/60.0/60.0
 
 
+@reset_timing
+@print_function_header
 def synchronous_exhibition():
     """ play the synchronized exhibition """
-    print("\nsynchronous_exhibition\n======================")
-    dt(reset=True)
+    #print("\nsynchronous_exhibition\n======================")
+    #dt(reset=True)
 
-    print(f"{dt()}  1| expected: {NUM_GAMES*MOVES_PER_GAME*(JUDIT_MOVE_TIME+OPPONENT_MOVE_TIME)}s")
+    ttprint(f" 1| expected: {NUM_GAMES*MOVES_PER_GAME*(JUDIT_MOVE_TIME+OPPONENT_MOVE_TIME)}s")
     start = time.monotonic()
-    print(f"{dt()}  2| games:", end='')
+    ttprint(" 2| games")
     for game_id in range(NUM_GAMES):
-        print(f" {game_id + 1}", end='')
+        ttprint(f" a| - {game_id + 1}")
         for move in range(MOVES_PER_GAME):
             time.sleep(JUDIT_MOVE_TIME)     # Judit thinks
             time.sleep(OPPONENT_MOVE_TIME)  # Opponent thinks
-    print()
     end = time.monotonic()
-    print(f"{dt()}  3| synchronous exhibition took {(end - start):.2f} seconds")
+    ttprint(f" 3| synchronous exhibition took {(end - start):.2f} seconds")
 
 
+@reset_timing
+@print_function_header
 async def asynchronous_exhibition():
     """ play the asynchronized exhibition """
-    print("\nasynchronous_exhibition\n=======================")
-    dt(reset=True)
+    #print("\nasynchronous_exhibition\n=======================")
+    #dt(reset=True)
 
     def blocking_think():
         time.sleep(OPPONENT_MOVE_TIME)      # blocking!
@@ -54,21 +58,24 @@ async def asynchronous_exhibition():
     async def opponent_think(game_id):      # 'converted' to async
         await asyncio.to_thread(blocking_think)
 
-    print(f"{dt()}  1| expected: min. {MOVES_PER_GAME*NUM_GAMES*JUDIT_MOVE_TIME+(OPPONENT_MOVE_TIME-JUDIT_MOVE_TIME)}s")
+    ttprint(f" 1| expected: min. {MOVES_PER_GAME*NUM_GAMES*JUDIT_MOVE_TIME+(OPPONENT_MOVE_TIME-JUDIT_MOVE_TIME)}s")
     start = asyncio.get_running_loop().time()
-    print(f"{dt()}  2| moves:", end='')
+    ttprint(" 2| moves")
     tasks = []
     for move in range(MOVES_PER_GAME):
-        print(f" {move + 1}", end='')
+        ttprint(f" a| - {move + 1}")
         for game_id in range(NUM_GAMES):
             await asyncio.sleep(JUDIT_MOVE_TIME)                        # Judit plays move
             tasks.append(asyncio.create_task(opponent_think(game_id)))  # Opponent starts thinking
-    print()
     await asyncio.gather(*tasks)
     end = asyncio.get_running_loop().time()
-    print(f"{dt()}  3| asynchronous exhibition took {(end - start):.2f} seconds")
+    ttprint(f" 3| asynchronous exhibition took {(end - start):.2f} seconds")
 
+
+async def main():
+    set_current_task_name("run")
+    await asynchronous_exhibition()
 
 if __name__ == "__main__":
     synchronous_exhibition()
-    asyncio.run(asynchronous_exhibition())
+    asyncio.run(main())
