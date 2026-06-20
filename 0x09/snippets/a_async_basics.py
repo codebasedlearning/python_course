@@ -8,6 +8,7 @@ Teaching focus
   - async, await
   - the trap: 'await a; await b' is sequential, not concurrent
   - how to actually overlap work (gather / create_task)
+  - completion order
 
 Note (compare with unit 0x08)
   - In 0x08 the 'tprint' prefix showed different thread names (T-1, T-2),
@@ -364,6 +365,39 @@ async def cooking_to_gather():
     )
     ttprint(f" 2| wait, done; soup:{soup_temp}°C, #onions:{num_onions}")
 
+
+@reset_timing
+@print_function_header
+async def cooking_as_completed():
+    """ react to results in the order they finish, not the order submitted """
+
+    ttprint(" 1| soup and onions")
+
+    """
+      - 'for' pulls the next item synchronously via __next__ (the iterable 
+        must have it ready immediately), while 'async for' awaits the next 
+        item via __anext__, letting the coroutine suspend at each step until 
+        the value is ready
+      - 'async for' available for 3.13+
+      
+      - asyncio.gather returns all results together, in submission order, and
+        only after the slowest one finishes
+      - asyncio.as_completed yields each awaitable as it finishes, so the fast
+        one is handled first (fast, mid, slow here)
+      - use gather when you need the whole batch at once; use as_completed when
+        you want to start processing whichever finishes first
+    """
+
+    # handle each as soon as it is ready
+    async for finished in asyncio.as_completed([
+            heat_soup_async(),
+            fry_onions_async()
+    ]):
+        result = await finished
+        # finished._coro not always defined for a future, but it is for the coroutine
+        ttprint(f" e| - first-ready: {result!r} from {finished._coro.__name__!r}")  # ty:ignore[unresolved-attribute]
+
+
 async def main():
     set_current_task_name("run")
 
@@ -373,6 +407,7 @@ async def main():
 
     await all_coros_in_main()
     await cooking_to_gather()
+    await cooking_as_completed()
 
 
 if __name__ == "__main__":
