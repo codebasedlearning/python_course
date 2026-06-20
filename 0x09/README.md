@@ -1,12 +1,11 @@
 [© A.Voß, FH Aachen, codebasedlearning.dev](mailto:info@codebasedlearning.dev)
 
-# Unit `0x09` – Async and Descriptors
+# Unit `0x09` – async and await
 
 
 ## Overview
 
-This unit introduces async programming with `async` and `await` and continues with descriptors as an
-advanced language feature.
+This unit introduces async programming with `async` and `await`.
 
 
 ### Focus
@@ -18,7 +17,6 @@ Develop a working mental model of cooperative concurrency and attribute control.
 
 - Async programming (`async`/`await`)
 - AsyncIO and task scheduling
-- Descriptors
 
 
 ## Terms
@@ -209,8 +207,6 @@ the asynchronous version one second.
 
 Take any of your thread-based tasks from units before and create
 an 'async' version of it.
-
-
 
 
 ### 👉 Project 'Moving Blizzard' — Part 9 (Final)
