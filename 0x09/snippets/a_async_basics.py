@@ -11,11 +11,9 @@ Teaching focus
   - completion order
 
 Note (compare with unit 0x08)
-  - In 0x08 the 'tprint' prefix showed different thread names (T-1, T-2),
+  - In 0x08 the 'tprint' prefix showed different thread names (t-1, t-2),
     because work ran on several OS threads.
-  - Here every line says 'main': async concurrency happens on ONE thread.
-    The event loop interleaves coroutines at each 'await' (suspension point).
-    Concurrency without threads, no locks needed for the shared state.
+  - Here we use 'ttprint' to show the current task name (ts-1).
 
 Also note 'README.md' for terms and references, and
 'thread_helper.py' for relative time durations.
@@ -45,10 +43,10 @@ Async/await terminology:
                         — it can be suspended and resumed.
 - Awaitable             Any object you can await — typically a coroutine.
 
-'Using' an Async function:
-- fetch_user            A reference to the async function.
-- fetch_user(42)        Returns a coroutine object (nothing runs yet!).
-- await fetch_user(42)  Runs the coroutine to the next await or completion.
+'Using' an Async function 'f':
+- f                     A reference to the async function.
+- f(42)                 Returns a coroutine object (nothing runs yet!).
+- await f(42)           Runs the coroutine to the next await or completion.
 
 'cooperative multitasking':
 - A coroutine can be scheduled to run concurrently with other coroutines.
