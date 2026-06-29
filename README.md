@@ -31,7 +31,7 @@ the end. After that, you can start following the README in the units.
 - Unit 0x07 – Decorators
 
 ### Sophisticated
-- Unit 0x08 – threads + libs
+- Unit 0x08 – threads
 - Unit 0x09 – asyncio + descriptors
 
 ### Prep
@@ -39,6 +39,7 @@ the end. After that, you can start following the README in the units.
 
 ### Advanced
 - Unit 0x_tra_unit – Ast + Dis + Meta Classes
+- Unit 0x_tra_batteries – work in progress
 
 
 ## References

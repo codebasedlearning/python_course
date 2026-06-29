@@ -33,7 +33,7 @@ def _process_name_translation(name:str):
         name="pmain"
     elif match:=_process_regex.search(name):
         number = int(match.group(1))
-        name = f"prc-{number}"
+        name = f"pr-{number}"
     # there is also SpawnPoolWorker - skip for now
     return name
 
@@ -55,7 +55,7 @@ def set_current_task_name(name:str):
 def _task_name_translation(name:str):
     if match:=_task_regex.search(name):
         number = int(match.group(1))
-        name = f"tsk-{number}"
+        name = f"ts-{number}"
     return name
 
 def _timing_info(*, incl_proc=False, incl_task=False):
