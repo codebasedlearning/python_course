@@ -243,14 +243,14 @@ async def the_idea_of_coros_event_loop():
         thousands of suspended coroutines
       - 'asyncio.run(coro)' also wraps the coro in a task and schedules 
         it on the loop
-    A metaphor is a single waiter in a restaurant. 
+    Think on the single restaurant waiter metaphor from the readme: 
       - take an order (start a coroutine), and instead of standing at 
         the table while the kitchen cooks (await), they go serve other tables
       - they never cook or wait idly — they just keep moving between tables 
         whose food is ready; one waiter, many tables
       - the kitchen (the OS/kernel) does the slow work
       - the waiter only gets stuck if one customer monologues without pausing
-        a 'blocking' call
+        or the delivery driver needs immediate action – a 'blocking' call
     """
     
     ttprint(f" 1| check loop: {len(asyncio.all_tasks())}")       # one task from 'asyncio.run(coro)'

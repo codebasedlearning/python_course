@@ -202,9 +202,11 @@ async def blocking_in_pool():
     url = "https://example.com"
 
     """
-    run_in_executor submits the call to the executor and bridges the worker's thread-Future to an asyncio-Future, so that when the thread finishes it wakes the loop (via call_soon_threadsafe) and the await resumes with the result.
-    to_thread is literally run_in_executor(None, functools.partial(fn, *args, **kwargs)) — same bridge, default executor.
-    
+    run_in_executor submits the call to the executor and bridges the worker's 
+    thread-Future to an asyncio-Future, so that when the thread finishes 
+    it wakes the loop and the await resumes with the result.
+    to_thread is literally run_in_executor(None, functools.partial(fn, *args, **kwargs)) 
+    — same bridge, default executor.
     """
 
     loop = asyncio.get_running_loop()       # the event loop

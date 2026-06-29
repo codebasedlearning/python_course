@@ -127,6 +127,52 @@ its execution before reaching return, and it can indirectly pass control
 to another coroutine for some time.
 
 
+### Restaurant Analogy
+Here's another mental model for the same idea, this time from a restaurant 
+rather than a chess exhibition.
+
+A single waiter works the floor. They walk from table to table, take an 
+order, and carry it to the kitchen — but they never stand at the table 
+waiting for the food to be cooked. They immediately move on to the next 
+table. The kitchen cooks in the background, and once a meal is ready, it 
+gets placed on a serving counter. The waiter only swings by the counter 
+when they choose to, and only picks something up if it is actually sitting 
+there.
+
+Mapped onto asyncio terms:
+- The waiter is the thread running the event loop. (In default asyncio 
+  these are literally the same thing — the loop runs in a single thread, 
+  so there's no separate dispatcher standing behind the waiter.)
+- Each table is a coroutine, with its own local state (what was ordered, 
+  what is still outstanding).
+- Handing an order to the kitchen and walking off is `await`: the coroutine 
+  suspends without blocking the thread, and control returns to the loop.
+- The kitchen is whatever does the actual non-CPU work — disk, network, a 
+  timer — running entirely outside the Python interpreter.
+- The counter is the loop's readiness check: a meal not yet on the counter 
+  simply isn't collectible, so there's no point polling for it early.
+- Because the waiter decides for themselves when to leave a table or check 
+  the counter, switching is cooperative and non-preemptive. Nobody can drag 
+  them away from a table the way an OS scheduler can preempt a thread 
+  mid-instruction.
+
+One aspect worth bolting on, since it resolves the 'paradox' question raised 
+above for Judit: the kitchen can have several cooks actually working in 
+parallel — or, in real I/O terms, the OS and hardware servicing several sockets 
+or disks at once — while the waiter themselves stays strictly serial, one action 
+at a time. 
+That's the trick behind async IO looking concurrent: the layer doing the I/O 
+really is concurrent (sometimes even parallel); the Python-level orchestration on 
+top of it is not, and does not need to be.
+
+If the waiter gets cornered by the delivery driver and has to deal with them 
+right there (the equivalent of a `time.sleep()` or a synchronous DB call 
+sitting inside an `async def`), every table goes unserved for as long as that 
+takes — not because the kitchen stopped cooking, but because the one and only 
+waiter is unavailable to take the next order or collect the next finished meal.
+That's exactly the bug to hunt for in the 'Off-By-One Imp' task below.
+
+
 ### Event Loop 
 You can think of an event loop as something like a 'while True' loop that 
 monitors coroutines, taking feedback on what’s idle, and looking around for 
@@ -216,7 +262,7 @@ descriptor for sensor configuration validation — tying into 'Cobalt Reef'.
 
 Topics: `async`/`await`, `asyncio.gather`, descriptors (`__get__`, `__set__`, `__set_name__`)
 
-Part 1
+Part 1 (moved to 0x_tra_unit, so skip it here)
 - Create a `Bounded` descriptor class (reuse or adapt from 'Cobalt Reef') that enforces
   min/max bounds on numeric attributes.
 - Create a `SensorConfig` class with descriptor-guarded attributes: `poll_interval`,
