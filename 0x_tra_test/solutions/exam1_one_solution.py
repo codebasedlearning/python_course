@@ -4,7 +4,7 @@ import functools
 import random
 import threading
 import time
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Protocol  #, Self
 
 """
@@ -58,6 +58,10 @@ class PolicyBase(ABC):
         """ _data, damit es protected ist """
         self._data = data
 
+    @staticmethod
+    @abstractmethod
+    def name() -> str:
+        ...
 
 """
 A1.c [2P]
@@ -166,7 +170,7 @@ A1.h [3P]
   .2    1P korrekte Nutzung 'PasswordValidator'
   .3    1P in 'solve' mit 'main-Guard'
 """
-def solve(input_data: str, policy_class: type):
+def solve(input_data: str, policy_class: type[PolicyBase]):
     lines = input_data.splitlines()
     validator = PasswordValidator(lines, policy_class)
     print(f"[{policy_class.name()}] valid passwords: {validator.count_valid_passwords()}")
